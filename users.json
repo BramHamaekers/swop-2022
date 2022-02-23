@@ -1,0 +1,14 @@
+[
+	{	
+		"name": "a",
+		"job": "garage holder"
+	},
+	{
+		"name": "b",
+		"job": "car mechanic"
+	},
+	{
+		"name": "c",
+		"job": "manager"
+	}
+]

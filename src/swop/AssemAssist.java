@@ -3,6 +3,7 @@ package swop;
 public class AssemAssist {
 
     public AssemAssist() {
-        System.out.println("Test");
+        State_Controller control = new State_Controller();
+        
     }
 }
