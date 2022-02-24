@@ -27,10 +27,9 @@ public class Login_UI extends UI{
 
 		// Check if userID is a valid userID
 		if (isValidUserID(userID, userMap)) {
-			System.out.println("Succes! Changing State/UI");
+			System.out.println("Success! Changing State/UI");
 		}
 		else System.out.println("Fail! userID not valid");
-		
 	}
 
 
