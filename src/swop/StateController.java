@@ -1,12 +1,9 @@
 package swop;
 
-import java.io.Console;
-
 enum State {
 	LOGIN("login"), GARAGE_HOLDER("garage holder"), CAR_MECHANIC("car mechanic"), MANAGER("manager");
-	
 	private final String state;
-	
+
 	State(String str){
 		state = str;
 	}
@@ -19,13 +16,12 @@ enum State {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-public class State_Controller {
+public class StateController {
 	
-	private State state = State.LOGIN; 
-
+	private State state = State.LOGIN;
 	private UI active_UI;
 	
-	public State_Controller() {
+	public StateController() {
 		this.initiate();
 		
 	}
@@ -37,7 +33,7 @@ public class State_Controller {
 	}
 
 	private void setState(State state) {
-		// (°_°)
+		// (ï¿½_ï¿½)
 		
 	}
 	

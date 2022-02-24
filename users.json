@@ -1,14 +1,14 @@
 [
 	{	
-		"name": "a",
+		"id": "a",
 		"job": "garage holder"
 	},
 	{
-		"name": "b",
+		"id": "b",
 		"job": "car mechanic"
 	},
 	{
-		"name": "c",
+		"id": "c",
 		"job": "manager"
 	}
 ]

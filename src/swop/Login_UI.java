@@ -1,41 +1,46 @@
 package swop;
 
-import java.io.FileReader;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Scanner;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import java.io.FileReader;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
 public class Login_UI extends UI{
 
-	
-	
-	private Scanner input_scanner;
-	private String user_name;
-	private Map usermap;
+	private Scanner inputScanner;
+	private String userID;
+	private Map<String, String> userMap;
+
 	@Override
-	public void load() {	
-		
-		this.input_scanner = new Scanner(System.in);
-		System.out.println("Please login with username 2 continue");
-		user_name = input_scanner.nextLine();
-		usermap = this.loadUserDatabase();
-		if(usermap.containsKey(user_name)) System.out.println("Succes! change State/UI");
-		else System.out.println("Fail! User not found");
+	public void load() {
+		// Load user map
+		this.userMap = this.loadUserDatabase();
+
+		// Ask userID
+		this.inputScanner = new Scanner(System.in);
+		System.out.println("Please login with userID.");
+		this.userID = inputScanner.nextLine();
+
+		// Check if userID is a valid userID
+		if (isValidUserID(userID, userMap)) {
+			System.out.println("Succes! Changing State/UI");
+		}
+		else System.out.println("Fail! userID not valid");
 		
 	}
+
+
 	
 	private Map<String, String> loadUserDatabase() {
 		JSONParser jsonParser = new JSONParser();
-        
         try (FileReader data = new FileReader("users.json"))
         {
             Object data_obj = jsonParser.parse(data);
-            return parseJSONArrayToMap ((JSONArray) data_obj);
+            return parseUserJSONArrayToMap((JSONArray) data_obj);
         } 
         catch (Exception e) {
         	e.printStackTrace();
@@ -44,19 +49,28 @@ public class Login_UI extends UI{
 		return null;
 		
 	}
-	
-	private Map<String, String> parseJSONArrayToMap(JSONArray userlist) {
+
+	/**
+	 * Parses the JSONArray obtainded from users.json and returns it as a map
+	 * @param userList JSONArray containing the users currently in the system
+	 * @return Map<name,job> of all users in the system
+	 */
+	Map<String, String> parseUserJSONArrayToMap(JSONArray userList) {
 		Map <String, String> map = new HashMap<>();
-		String name;
-		String job;
-		Iterator<JSONObject> it = userlist.iterator();
-		while(it.hasNext()) {
-			JSONObject user = it.next();
-			name = (String) user.get("name");
-			job = (String) user.get("job");
-			map.put(name, job);
+		for (JSONObject user : (Iterable<JSONObject>) userList) {
+			map.put((String) user.get("id"), (String) user.get("job"));
 		}
 		return map;
+	}
+
+	/**
+	 * Check if the given userID is a valid userID
+	 * @param userID userID to check
+	 * @param userMap Map<name,job> of all users in the system
+	 * @return userMap.containsKey(userID);
+	 */
+	public boolean isValidUserID(String userID, Map<String, String> userMap){
+		return userMap.containsKey(userID);
 	}
 
 }
