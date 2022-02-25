@@ -19,6 +19,8 @@ public class Login_UI extends UI{
 	public void load() {
 		// Load user map
 		this.userMap = this.loadUserDatabase();
+		if (!isValidUserMap(userMap))
+			System.out.println("Fail! userMap not valid"); //Should throw error
 
 		// Ask userID
 		this.inputScanner = new Scanner(System.in);
@@ -26,27 +28,25 @@ public class Login_UI extends UI{
 		this.userID = inputScanner.nextLine();
 
 		// Check if userID is a valid userID
-		if (isValidUserID(userID, userMap)) {
+		if (!isValidUserID(userID, userMap))
+			System.out.println("Fail! userID not valid");  //Should throw error
+		else {
 			System.out.println("Success! Changing State/UI");
 		}
-		else System.out.println("Fail! userID not valid");
 	}
 
 
-	
+	/**
+	 * Parses the users.json file and returns it as a Map<String, String> of all user in the system
+	 * @return Map<String, String> || null
+	 */
 	private Map<String, String> loadUserDatabase() {
 		JSONParser jsonParser = new JSONParser();
-        try (FileReader data = new FileReader("users.json"))
-        {
-            Object data_obj = jsonParser.parse(data);
-            return parseUserJSONArrayToMap((JSONArray) data_obj);
+        try (FileReader data = new FileReader("users.json")) {
+            return parseUserJSONArrayToMap((JSONArray) jsonParser.parse(data));
         } 
-        catch (Exception e) {
-        	e.printStackTrace();
-            //System.out.println("ERROR COULDN'T CONNECT TO DATABASE");
-        }
+        catch (Exception e) {e.printStackTrace();}
 		return null;
-		
 	}
 
 	/**
@@ -63,12 +63,21 @@ public class Login_UI extends UI{
 	}
 
 	/**
+	 * Check if given userMap is a valid userMap
+	 * @param userMap Map<name,job> to check
+	 * @return userMap != null
+	 */
+	private boolean isValidUserMap(Map<String, String> userMap) {
+		return userMap != null;
+	}
+
+	/**
 	 * Check if the given userID is a valid userID
 	 * @param userID userID to check
 	 * @param userMap Map<name,job> of all users in the system
 	 * @return userMap.containsKey(userID);
 	 */
-	public boolean isValidUserID(String userID, Map<String, String> userMap){
+	private boolean isValidUserID(String userID, Map<String, String> userMap){
 		return userMap.containsKey(userID);
 	}
 
