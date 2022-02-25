@@ -54,7 +54,7 @@ public class Login_UI extends UI{
 	 * @param userList JSONArray containing the users currently in the system
 	 * @return Map<name,job> of all users in the system
 	 */
-	Map<String, String> parseUserJSONArrayToMap(JSONArray userList) {
+	private Map<String, String> parseUserJSONArrayToMap(JSONArray userList) {
 		Map <String, String> map = new HashMap<>();
 		for (JSONObject user : (Iterable<JSONObject>) userList) {
 			map.put((String) user.get("id"), (String) user.get("job"));
