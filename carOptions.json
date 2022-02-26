@@ -1,9 +1,53 @@
-{
-  "body": ["sedan", "break"],
-  "color": ["red", "black", "white"],
-  "engine": ["standard 2l 4 cilinders", "performance 2.5l 6 cilinders"],
-  "gearBox": [": 6 speed manual", "5 speed automatic"],
-  "seats": ["leather black", "leather white", "vinyl grey"],
-  "airco": ["manual", "automatic climate control"],
-  "wheels": ["comfort", "sports"]
-}
+[
+  {
+    "component": "body",
+    "options": [
+      "sedan",
+      "break"
+    ]
+  },
+  {
+    "component": "color",
+    "options": [
+      "red",
+      "black",
+      "white"
+    ]
+  },
+  {
+    "component": "engine",
+    "options": [
+      "standard 2l 4 cilinders",
+      "performance 2.5l 6 cilinders"
+    ]
+  },
+  {
+    "component": "gearBox",
+    "options": [
+      "6 speed manual",
+      "5 speed automatic"
+    ]
+  },
+  {
+    "component": "seats",
+    "options": [
+      "leather black",
+      "leather white",
+      "vinyl grey"
+    ]
+  },
+  {
+    "component": "airco",
+    "options": [
+      "manual",
+      "automatic climate control"
+    ]
+  },
+  {
+    "component": "wheels",
+    "options": [
+      "comfort",
+      "sports"
+    ]
+  }
+]

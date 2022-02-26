@@ -39,16 +39,16 @@ public class UIController {
 	 */
 	void setUIType(String type) {
 		if(type.equals(UIType.LOGIN.getType())) {
-			legalType = UIType.LOGIN;
+			this.legalType = UIType.LOGIN;
 		}
 		if(type.equals(UIType.GARAGE_HOLDER.getType())) {
-			legalType = UIType.GARAGE_HOLDER;
+			this.legalType = UIType.GARAGE_HOLDER;
 		}
 		if(type.equals(UIType.CAR_MECHANIC.getType())) {
-			legalType = UIType.CAR_MECHANIC;
+			this.legalType = UIType.CAR_MECHANIC;
 		}
 		if(type.equals(UIType.MANAGER.getType())) {
-			legalType = UIType.MANAGER;
+			this.legalType = UIType.MANAGER;
 		}
 		
 	}
