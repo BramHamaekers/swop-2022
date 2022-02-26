@@ -1,6 +1,4 @@
-package swop;
-
-import java.util.Objects;
+package swop.UI;
 
 enum UIType {
 	LOGIN("login"), GARAGE_HOLDER("garage holder"), CAR_MECHANIC("car mechanic"), MANAGER("manager");
@@ -12,7 +10,7 @@ enum UIType {
 	
 	/**
 	 * 
-	 * @return String of current UI type in lowercase
+	 * @return String of current swop.CarManufactoring.UI type in lowercase
 	 */
 	public String getType() {
 		return type;
@@ -55,15 +53,15 @@ public class UIController {
 		
 	}
 	/**
-	 * Will check if current active UI is legally active.
-	 * @param activeUI is the active UI
+	 * Will check if current active swop.CarManufactoring.UI is legally active.
+	 * @param activeUI is the active swop.CarManufactoring.UI
 	 * @return true if activeUI.id == legalType.getType()
 	 */
 	public boolean isCorrectUIType(UI activeUI) {
 		return legalType.getType().equals(activeUI.getID());
 	}
 	/**
-	 * Returns a new instance of legal UI 
+	 * Returns a new instance of legal swop.CarManufactoring.UI
 	 * @param activeUI
 	 * @return
 	 */

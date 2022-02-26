@@ -1,4 +1,4 @@
-package swop;
+package swop.UI;
 
 public class ManagerUI extends UI {
 

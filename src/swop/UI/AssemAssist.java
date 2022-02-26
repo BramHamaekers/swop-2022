@@ -1,4 +1,4 @@
-package swop;
+package swop.UI;
 
 public class AssemAssist {
 	
@@ -24,14 +24,14 @@ public class AssemAssist {
 	}
 	
 	/**
-	 * Loads login UI
+	 * Loads login swop.CarManufactoring.UI
 	 */
 	private void login() {
 		uiController.setUIType(UIType.LOGIN);
 		this.loadUI();
 	}
 	/**
-	 * Loads new instance of legal UI
+	 * Loads new instance of legal swop.CarManufactoring.UI
 	 */
 	private void loadUI() {
 		activeUI = uiController.getInstanceOfCorrectUI();

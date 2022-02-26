@@ -1,4 +1,4 @@
-package swop;
+package swop.UI;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
