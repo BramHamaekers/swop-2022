@@ -21,14 +21,14 @@ public class AssemAssist {
 	 * Loads login UI
 	 */
 	private void login() {
-		activeUI = new LoginUI();
+		uiController.setUIType(UIType.LOGIN);
 		this.loadUI();
 	}
 	/**
-	 * Loads current active UI
+	 * Loads new instance of legal UI
 	 */
 	private void loadUI() {
-		if(uiController.isCorrectUIType(activeUI))
+		activeUI = uiController.getInstanceOfCorrectUI(activeUI);
 		activeUI.load();
 	}
 }

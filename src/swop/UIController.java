@@ -27,17 +27,15 @@ public class UIController {
 	private UIType legalType;
 	
 	public UIController() {
-		legalType = UIType.LOGIN;
 	}
 
 
-	private void setUIType(UIType t) {
-		legalType = t;
+	void setUIType(UIType type) {
+		legalType = type;
 		
 	}
 	
 	private void updateAcitveUI(String strUIType) {
-		this.setUIType(legalType);
 	}
 	
 	/**
@@ -48,6 +46,26 @@ public class UIController {
 	public boolean isCorrectUIType(UI activeUI) {
 		return legalType.getType().equals(activeUI.getID());
 	}
+	
+	public UI getInstanceOfCorrectUI(UI activeUI) {
+		switch(legalType) {
+			case LOGIN: 
+				activeUI = new LoginUI();
+				return activeUI;
+			case GARAGE_HOLDER:
+				activeUI = new GarageHolderUI();
+				return activeUI;			
+			case CAR_MECHANIC:
+				activeUI = new CarMechanicUI();
+				return activeUI;	
+			case MANAGER:
+				activeUI = new ManagerUI();
+				return activeUI;	
+			default:
+				return null;
+		}
+	}
+	
 
 	
 }
