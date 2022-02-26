@@ -35,9 +35,25 @@ public class UIController {
 		
 	}
 	
-	private void updateAcitveUI(String strUIType) {
+	/**
+	 * snelle oplossing
+	 * @param type
+	 */
+	void setUIType(String type) {
+		if(type.equals(UIType.LOGIN.getType())) {
+			legalType = UIType.LOGIN;
+		}
+		if(type.equals(UIType.GARAGE_HOLDER.getType())) {
+			legalType = UIType.GARAGE_HOLDER;
+		}
+		if(type.equals(UIType.CAR_MECHANIC.getType())) {
+			legalType = UIType.CAR_MECHANIC;
+		}
+		if(type.equals(UIType.MANAGER.getType())) {
+			legalType = UIType.MANAGER;
+		}
+		
 	}
-	
 	/**
 	 * Will check if current active UI is legally active.
 	 * @param activeUI is the active UI

@@ -14,6 +14,12 @@ public class AssemAssist {
 	private void run() {
 		uiController = new UIController();
 		login();
+		//temp oplossing voor uit login te geraken
+		if(activeUI instanceof LoginUI) {
+			String type = ((LoginUI)activeUI).getKeyValue();
+			uiController.setUIType(type);
+			loadUI();
+		}
 		
 	}
 	

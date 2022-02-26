@@ -38,7 +38,15 @@ public class LoginUI extends UI{
 			System.out.println("Fail! userID not valid");  //Should throw error
 		else {
 			System.out.println("Success! Changing State/UI");
+			
 		}
+	}
+	
+	/**
+	 * temporary
+	 */
+	public String getKeyValue() {
+		return userMap.get(userID);
 	}
 
 
