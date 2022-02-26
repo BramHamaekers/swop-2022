@@ -46,8 +46,13 @@ public class UIController {
 	public boolean isCorrectUIType(UI activeUI) {
 		return legalType.getType().equals(activeUI.getID());
 	}
-	
-	public UI getInstanceOfCorrectUI(UI activeUI) {
+	/**
+	 * Returns a new instance of legal UI 
+	 * @param activeUI
+	 * @return
+	 */
+	public UI getInstanceOfCorrectUI() {
+		UI activeUI;
 		switch(legalType) {
 			case LOGIN: 
 				activeUI = new LoginUI();

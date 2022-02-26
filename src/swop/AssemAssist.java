@@ -28,7 +28,7 @@ public class AssemAssist {
 	 * Loads new instance of legal UI
 	 */
 	private void loadUI() {
-		activeUI = uiController.getInstanceOfCorrectUI(activeUI);
+		activeUI = uiController.getInstanceOfCorrectUI();
 		activeUI.load();
 	}
 }
