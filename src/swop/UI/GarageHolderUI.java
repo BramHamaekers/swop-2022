@@ -35,6 +35,10 @@ public class GarageHolderUI extends UI {
 		this.displayOrderingForm(optionsMap);
 	}
 
+	/**
+	 * Displays the ordering from given a list of components and its options
+	 * @param optionsMap list of components and its options
+	 */
 	private void displayOrderingForm(Map<String, List<String>> optionsMap) {
 		System.out.println("============ Ordering Form ============");
 		optionsMap.forEach((key, value) -> {
@@ -46,6 +50,10 @@ public class GarageHolderUI extends UI {
 		System.out.println("=======================================");
 	}
 
+	/**
+	 * Parses the carOptions.json file and returns it as a LinkedHashMap<String, List<String>> of all available options
+	 * @return LinkedHashMap<String, List<String>> || null
+	 */
 	private LinkedHashMap<String, List<String>> loadOptionsDatabase() {
 		JSONParser jsonParser = new JSONParser();
 		try (FileReader data = new FileReader("carOptions.json")) {
@@ -55,6 +63,11 @@ public class GarageHolderUI extends UI {
 		return null;
 	}
 
+	/**
+	 * Parses the JSONArray obtainded from carOptions.json and returns it as a linked hashmap
+	 * @param optionsList JSONArray containing the components and its available options
+	 * @return LinkedHashMap<String, List<String>> of all components and its available options
+	 */
 	private LinkedHashMap<String, List<String>> parseOptionsJSONArrayToMap(JSONArray optionsList) {
 		LinkedHashMap <String, List<String>> map = new LinkedHashMap<>();
 		for (JSONObject user : (Iterable<JSONObject>) optionsList) {
@@ -65,7 +78,7 @@ public class GarageHolderUI extends UI {
 
 	/**
 	 * Check if given optionsMap is a valid userMap
-	 * @param optionsMap Map<name,job> to check
+	 * @param optionsMap LinkedHashMap<String, List<String>> to check
 	 * @return optionsMap != null
 	 */
 	private boolean isValidOptionsMap(Map<String, List<String>> optionsMap) {
