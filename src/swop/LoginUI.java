@@ -9,12 +9,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Login_UI extends UI{
+public class LoginUI extends UI{
 
 	private Scanner inputScanner;
 	private String userID;
 	private Map<String, String> userMap;
-
+	
+	public LoginUI() {
+		super("login");
+	}
+	
+	
 	@Override
 	public void load() {
 		// Load user map
@@ -24,6 +29,7 @@ public class Login_UI extends UI{
 
 		// Ask userID
 		this.inputScanner = new Scanner(System.in);
+		System.out.println("Welcome!");
 		System.out.println("Please login with userID.");
 		this.userID = inputScanner.nextLine();
 
