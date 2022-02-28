@@ -26,20 +26,21 @@ public class LoginUI extends UI{
 		this.userMap = this.loadUserDatabase();
 		if (!isValidUserMap(userMap))
 			System.out.println("Fail! userMap not valid"); //Should throw error
-
-		// Ask userID
-		this.inputScanner = new Scanner(System.in);
 		System.out.println("Welcome!");
-		System.out.println("Please login with userID.");
-		this.userID = inputScanner.nextLine();
+		// Ask userID
+		do {
+			this.inputScanner = new Scanner(System.in);
+			System.out.print("Please login with userID: ");
+			this.userID = inputScanner.nextLine();
 
-		// Check if userID is a valid userID
-		if (!isValidUserID(userID, userMap))
-			System.out.println("Fail! userID not valid");  //Should throw error
-		else {
-			System.out.println("Success! Changing State/UI");
-			
-		}
+			// Check if userID is a valid userID
+			if (!isValidUserID(userID, userMap))
+				System.out.println("Fail! userID not valid");  //Should throw error
+			else {
+				System.out.println("Success! Changing State/UI");
+
+			}
+		} while (!isValidUserID(userID, userMap));
 	}
 	
 	/**

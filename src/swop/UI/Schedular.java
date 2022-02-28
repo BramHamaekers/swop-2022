@@ -8,13 +8,14 @@ import swop.CarManufactoring.Order;
 public class Schedular {
 	
 	
-	private  Queue<Order> waitingOrderQueue = new LinkedList<Order>();
-	private  Queue<Order> CarBodyPostQueue = new LinkedList<Order>();
-	private  Queue<Order> DrivetrainPostQueue = new LinkedList<Order>();
-	private  Queue<Order> AccessoriesPostQueue = new LinkedList<Order>();
+	private Queue<Order> waitingOrderQueue = new LinkedList<Order>();
+	private Queue<Order> CarBodyPostQueue = new LinkedList<Order>();
+	private Queue<Order> DrivetrainPostQueue = new LinkedList<Order>();
+	private Queue<Order> AccessoriesPostQueue = new LinkedList<Order>();
 	private double totalWorkHours; 
 	
-	//opm: er moet niet rekening gehouden worden bij scheduling met aantal werkeners dus je hebt enkel 2 schiften 
+	//opm: er moet niet rekening gehouden worden bij scheduling met aantal werkeners dus je hebt enkel 2 schiften
+	// ^ kan misschien een uitbreiding zijn
 	
 	public Schedular() {
 		waitingOrderQueue = this.getToCompleteOrderList(); //get not yet completed order list
