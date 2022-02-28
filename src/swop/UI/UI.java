@@ -9,6 +9,6 @@ public abstract class UI {
 	private String id;
 
 	public String getID() {
-		return id;
+		return this.id;
 	}
 }

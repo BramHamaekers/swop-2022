@@ -23,31 +23,31 @@ public class LoginUI extends UI{
 	@Override
 	public void load() {
 		// Load user map
-		this.userMap = this.loadUserDatabase();
-		if (!isValidUserMap(userMap))
+		this.setUserMap(this.loadUserDatabase("users.json"));
+		if (!isValidUserMap(getUserMap()))
 			System.out.println("Fail! userMap not valid"); //Should throw error
 		System.out.println("Welcome!");
 		// Ask userID
 		do {
 			this.inputScanner = new Scanner(System.in);
 			System.out.print("Please login with userID: ");
-			this.userID = inputScanner.nextLine();
+			this.setUserID(inputScanner.nextLine());
 
 			// Check if userID is a valid userID
-			if (!isValidUserID(userID, userMap))
+			if (!isValidUserID(getUserID(), getUserMap()))
 				System.out.println("Fail! userID not valid");  //Should throw error
 			else {
 				System.out.println("Success! Changing State/UI");
 
 			}
-		} while (!isValidUserID(userID, userMap));
+		} while (!isValidUserID(getUserID(), getUserMap()));
 	}
 	
 	/**
 	 * temporary
 	 */
 	public String getKeyValue() {
-		return userMap.get(userID);
+		return getUserMap().get(getUserID());
 	}
 
 
@@ -55,9 +55,9 @@ public class LoginUI extends UI{
 	 * Parses the users.json file and returns it as a Map<String, String> of all user in the system
 	 * @return Map<String, String> || null
 	 */
-	private Map<String, String> loadUserDatabase() {
+	private Map<String, String> loadUserDatabase(String fileName) {
 		JSONParser jsonParser = new JSONParser();
-        try (FileReader data = new FileReader("users.json")) {
+        try (FileReader data = new FileReader(fileName)) {
             return parseUserJSONArrayToMap((JSONArray) jsonParser.parse(data));
         } 
         catch (Exception e) {e.printStackTrace();}
@@ -96,4 +96,19 @@ public class LoginUI extends UI{
 		return userMap.containsKey(userID);
 	}
 
+	public Map<String, String> getUserMap() {
+		return userMap;
+	}
+
+	public void setUserMap(Map<String, String> userMap) {
+		this.userMap = userMap;
+	}
+
+	public String getUserID() {
+		return userID;
+	}
+
+	public void setUserID(String userID) {
+		this.userID = userID;
+	}
 }
