@@ -3,15 +3,15 @@ package swop.Users;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import swop.CarManufactoring.Order;
 import swop.UI.GarageHolderUI;
 
 import java.io.FileReader;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class GarageHolder extends User{
-    private Map<String, List<String>> optionsMap;
+    private LinkedHashMap<String, List<String>> optionsMap;
 
     public GarageHolder(String id) {
         super(id);
@@ -64,15 +64,15 @@ public class GarageHolder extends User{
      * @param optionsMap LinkedHashMap<String, List<String>> to check
      * @return optionsMap != null
      */
-    private boolean isValidOptionsMap(Map<String, List<String>> optionsMap) {
+    private boolean isValidOptionsMap(LinkedHashMap<String, List<String>> optionsMap) {
         return optionsMap != null;
     }
 
-    public Map<String, List<String>> getOptionsMap() {
+    public LinkedHashMap<String, List<String>> getOptionsMap() {
         return optionsMap;
     }
 
-    public void setOptionsMap(Map<String, List<String>> optionsMap) {
+    public void setOptionsMap(LinkedHashMap<String, List<String>> optionsMap) {
         if (!isValidOptionsMap(optionsMap)) {
             System.out.println("Fail! optionsMap not valid"); //TODO: should throw error
         }

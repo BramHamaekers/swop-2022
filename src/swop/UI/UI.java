@@ -1,7 +1,7 @@
 package swop.UI;
 
-public abstract interface UI {
+import java.util.Scanner;
 
-	static void init() {
-	}
+interface UI {
+	Scanner inputScanner = new Scanner(System.in);
 }

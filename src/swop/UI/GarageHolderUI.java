@@ -1,4 +1,6 @@
 package swop.UI;
+import swop.CarManufactoring.Order;
+
 import java.util.*;
 
 public class GarageHolderUI implements UI {
@@ -6,6 +8,13 @@ public class GarageHolderUI implements UI {
 	// Dummy init
 	public static void init(String id) {
 		System.out.println("Welcome Garage Holder: " + id);
+	}
+
+	public static void displayOrders(Set<Order> orders) {
+		System.out.println("============ Pending Orders ============");
+		//orders.forEach(o -> {o.getBuildState()});
+		System.out.println("============ Completed Orders ============");
+
 	}
 
 	/**

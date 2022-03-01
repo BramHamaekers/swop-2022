@@ -4,9 +4,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import swop.UI.LoginUI;
-import swop.UI.UI;
-import swop.UI.UIController;
-import swop.UI.UIType;
 import swop.Users.CarMechanic;
 import swop.Users.GarageHolder;
 import swop.Users.Manager;
@@ -49,8 +46,9 @@ public class AssemAssist {
 	private void login() {
 		LoginUI.init();
 		String id = LoginUI.getUserID();
-		if (!isValidUserID(id)) {
-			throw new IllegalArgumentException(id + "is not a valid user."); //TODO: different error?
+		while (!isValidUserID(id)) {
+			System.out.println("Invalid user ID.");
+			id = LoginUI.getUserID();
 		}
 		this.activeUser = this.userMap.get(id);
 		this.activeUser.load();
