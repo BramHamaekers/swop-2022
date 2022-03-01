@@ -1,21 +1,6 @@
+
+
 package swop.UI;
-
-enum UIType {
-	LOGIN("login"), GARAGE_HOLDER("garage holder"), CAR_MECHANIC("car mechanic"), MANAGER("manager");
-	private final String type;
-
-	UIType(String str){
-		type = str;
-	}
-	
-	/**
-	 * 
-	 * @return String of current swop.CarManufactoring.UI type in lowercase
-	 */
-	public String getType() {
-		return type;
-	}
-}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -37,7 +22,7 @@ public class UIController {
 	 * snelle oplossing
 	 * @param type
 	 */
-	void setUIType(String type) {
+	public void setUIType(String type) {
 		if(type.equals(UIType.LOGIN.getType())) {
 			this.legalType = UIType.LOGIN;
 		}
@@ -57,12 +42,10 @@ public class UIController {
 	 * @param activeUI is the active swop.CarManufactoring.UI
 	 * @return true if activeUI.id == legalType.getType()
 	 */
-	public boolean isCorrectUIType(UI activeUI) {
-		return legalType.getType().equals(activeUI.getID());
-	}
+	//public boolean isCorrectUIType(UI activeUI) {
+	//	return legalType.getType().equals(activeUI.getID());}
 	/**
 	 * Returns a new instance of legal swop.CarManufactoring.UI
-	 * @param activeUI
 	 * @return
 	 */
 	public UI getInstanceOfCorrectUI() {
