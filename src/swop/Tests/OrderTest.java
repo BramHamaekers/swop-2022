@@ -9,7 +9,7 @@ import java.util.List;
 
 class OrderTest {
 
-    Order order = new Order(List.of("a"),0);
+    Order order = new Order(List.of("a"));
 
     @Test
     void constructor() {
@@ -26,7 +26,7 @@ class OrderTest {
 
     @Test
     void isCompleted() {
-        assertEquals(new Order(List.of(" "),3).isCompleted(),true);
+        assertEquals(new Order(List.of(" ")).isCompleted(),true);
         assertEquals(order.isCompleted(),false);
     }
 }
