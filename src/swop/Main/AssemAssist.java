@@ -52,6 +52,8 @@ public class AssemAssist {
 		}
 		this.activeUser = this.userMap.get(id);
 		this.activeUser.load();
+		this.activeUser = null;
+		login();	//TODO: option to exit the program
 	}
 
 	/**
@@ -84,7 +86,6 @@ public class AssemAssist {
 				return null; //TODO: should just throw an error and not return anything
 		}
 	}
-
 
 	/************************ User Database *************************/
 

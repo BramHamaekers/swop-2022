@@ -1,16 +1,5 @@
 package swop.Tests;
 
-import org.json.simple.JSONObject;
-import org.junit.jupiter.api.Test;
-import swop.UI.LoginUI;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public class LoginUITest {
 
     // TEST OUTDATED

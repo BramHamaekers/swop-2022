@@ -14,4 +14,6 @@ public abstract class User {
     public String getId() {
         return id;
     }
+
+    protected void logout() {}
 }

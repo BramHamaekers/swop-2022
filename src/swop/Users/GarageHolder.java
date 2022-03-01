@@ -7,17 +7,30 @@ import swop.CarManufactoring.Order;
 import swop.UI.GarageHolderUI;
 
 import java.io.FileReader;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 
 public class GarageHolder extends User{
     private LinkedHashMap<String, List<String>> optionsMap;
+    private Set<Order> orders;
 
     public GarageHolder(String id) {
         super(id);
         this.setOptionsMap(loadOptionsDatabase());
         // TODO: move to different location? -> everytime new Garageholder loads optionsMap. Should not be the case
         // -> create static database somehow
+        this.orders = new HashSet<>();
+
+        /////////// TEST ///////////
+        List<String> parts = new ArrayList<>();
+        parts.add("wheeeeel");
+        Order a = new Order(parts);
+        this.addOrder(a);
+
+        Order b = new Order(parts);
+        b.upBuildState();
+        b.upBuildState();
+        b.upBuildState();
+        this.addOrder(b);
     }
 
     /**
@@ -25,11 +38,51 @@ public class GarageHolder extends User{
      */
     public void load() {
         GarageHolderUI.init(this.getId());
+        GarageHolderUI.displayOrders(this.orders);
+
+        String action = GarageHolderUI.confirmAction();
+        while (!isValidAction(action)) {
+            action = GarageHolderUI.confirmAction();
+        }
+        if (Objects.equals(action, "n")) return;
+
+        String model = GarageHolderUI.indicateCarModels();
+        while (!isValidModel(model)) {
+            model = GarageHolderUI.indicateCarModels();
+        }
+
         GarageHolderUI.displayOrderingForm(this.getOptionsMap());
+        //TODO alternate flow: cancel placing order
+        List<Integer> order = GarageHolderUI.fillOrderingForm(this.getOptionsMap());
+
+        //TODO: update production schedule
+        //TODO: present an estimated completion date
+
+        this.logout();
     }
 
+    /************************ Checkers *************************/
 
+    private boolean isValidAction(String action) {
+        return Objects.equals(action, "y") || Objects.equals(action, "n");
+    }
 
+    private boolean isValidModel(String model) {
+        return Objects.equals(model, "0");
+    }
+
+    /************************ Orders *************************/
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
+    }
+
+    public void addOrder(Order order) {
+        this.orders.add(order);
+    }
 
     /************************ Options Database *************************/
 
