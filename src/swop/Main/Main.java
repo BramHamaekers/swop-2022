@@ -1,4 +1,4 @@
-package swop.UI;
+package swop.Main;
 
 public class Main {
 
