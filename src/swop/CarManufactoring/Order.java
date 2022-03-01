@@ -6,12 +6,12 @@ import java.util.UUID;
 public class Order {
 
 	private int buildState; //laten we 0 is nog niet begonnen, 1 means completed belt 1,... tot 3
-	private List<String> parts;
+	private List<Car> cars;
 	private String uniqueID;
 	private String userID; // ID of user that ordered this order
 	
-	public Order(List<String> prts) {
-		this.parts = prts;
+	public Order(List<Car> cars) {
+		this.cars = cars;
 		uniqueID = UUID.randomUUID().toString();
 		buildState = 0;
 	}
@@ -24,8 +24,8 @@ public class Order {
 		return buildState == 3;
 	}
 
-	public List<String> getParts() {
-		return parts;
+	public List<Car> getCars() {
+		return cars;
 	}
 
 	public String getUniqueID() {

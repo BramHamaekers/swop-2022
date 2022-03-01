@@ -1,23 +1,26 @@
 package swop.CarManufactoring;
 
+import swop.Database.Database;
+
+import java.util.*;
+
 public class CarModel {
 
-    // TODO: need to make more expandable
-    private String body;
-    private String color;
-    private String engine;
-    private String gearbox;
-    private String seats;
-    private String airco;
-    private String wheels;
+    private Map<String, String> parts= new HashMap<>();
 
-    public CarModel(String body, String color, String engine, String gearbox, String seats, String airco, String wheels) {
-        this.body = body;
-        this.color = color;
-        this.engine = engine;
-        this.gearbox = gearbox;
-        this.seats = seats;
-        this.airco = airco;
-        this.wheels = wheels;
+    public CarModel(Map<String, String> parts) throws IllegalAccessException {
+        LinkedHashMap<String, List<String>> optionsMap = Database.openDatabase("carOptions.json", "component", "options");
+        List<String> reqParts = new ArrayList<>();
+        optionsMap.forEach((String component, List<String> opts) -> reqParts.add(component));
+        for(String comp : parts.keySet()){
+            //check if all components are present
+            if (!reqParts.contains(comp))
+                throw new IllegalAccessException("not all parts selected");
+            //check if selected option is valid
+            if (!optionsMap.get(comp).contains(parts.get(comp)))
+                throw new IllegalAccessException("not a valid option");
+        }
+        this.parts = parts;
+        System.out.println(parts);
     }
 }

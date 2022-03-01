@@ -9,24 +9,24 @@ import java.util.List;
 
 class OrderTest {
 
-    Order order = new Order(List.of("a"));
-
-    @Test
-    void constructor() {
-        assertEquals(order.getParts(), List.of("a"));
-        assertEquals(order.getBuildState(), 0);
-    }
-
-    @Test
-    void upBuildState() {
-        assert order.getBuildState()==0;
-        order.upBuildState();
-        assert order.getBuildState()==1;
-    }
-
-    @Test
-    void isCompleted() {
-        assertEquals(new Order(List.of(" ")).isCompleted(),true);
-        assertEquals(order.isCompleted(),false);
-    }
+//    Order order = new Order(List.of("a"));
+//
+//    @Test
+//    void constructor() {
+//        assertEquals(order.getParts(), List.of("a"));
+//        assertEquals(order.getBuildState(), 0);
+//    }
+//
+//    @Test
+//    void upBuildState() {
+//        assert order.getBuildState()==0;
+//        order.upBuildState();
+//        assert order.getBuildState()==1;
+//    }
+//
+//    @Test
+//    void isCompleted() {
+//        assertEquals(new Order(List.of(" ")).isCompleted(),true);
+//        assertEquals(order.isCompleted(),false);
+//    }
 }

@@ -1,12 +1,10 @@
 package swop.Users;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import swop.CarManufactoring.Car;
+import swop.CarManufactoring.CarModel;
 import swop.CarManufactoring.Order;
+import swop.Database.Database;
 import swop.UI.GarageHolderUI;
 
-import java.io.FileReader;
 import java.util.*;
 
 public class GarageHolder extends User{
@@ -15,22 +13,36 @@ public class GarageHolder extends User{
 
     public GarageHolder(String id) {
         super(id);
-        this.setOptionsMap(loadOptionsDatabase());
+        this.setOptionsMap(Database.openDatabase("carOptions.json", "component", "options"));
         // TODO: move to different location? -> everytime new Garageholder loads optionsMap. Should not be the case
         // -> create static database somehow
         this.orders = new HashSet<>();
 
         /////////// TEST ///////////
-        List<String> parts = new ArrayList<>();
-        parts.add("wheeeeel");
-        Order a = new Order(parts);
-        this.addOrder(a);
-
-        Order b = new Order(parts);
-        b.upBuildState();
-        b.upBuildState();
-        b.upBuildState();
-        this.addOrder(b);
+        List<Car> cars = new ArrayList<>();
+        Map<String, String> parts = new HashMap<>();
+        parts.put("body","sedan");
+        parts.put("color","red");
+        parts.put("engine","standard 2l 4 cilinders");
+        parts.put("gearBox","6 speed manual");
+        parts.put("seats","leather black");
+        parts.put("airco","manual");
+        parts.put("wheels","comfort");
+        try {
+            Car testCar = new Car(new CarModel(parts));
+        }
+        catch (IllegalAccessException e){
+            System.out.println("Just testing");
+        }
+//        parts.add("wheeeeel");
+//        Order a = new Order(parts);
+//        this.addOrder(a);
+//
+//        Order b = new Order(parts);
+//        b.upBuildState();
+//        b.upBuildState();
+//        b.upBuildState();
+//        this.addOrder(b);
     }
 
     /**
@@ -84,49 +96,12 @@ public class GarageHolder extends User{
         this.orders.add(order);
     }
 
-    /************************ Options Database *************************/
-
-    /**
-     * Parses the carOptions.json file and returns it as a LinkedHashMap<String, List<String>> of all available options
-     * @return LinkedHashMap<String, List<String>> || null
-     */
-    private LinkedHashMap<String, List<String>> loadOptionsDatabase() {
-        JSONParser jsonParser = new JSONParser();
-        try (FileReader data = new FileReader("carOptions.json")) {
-            return this.parseOptionsJSONArrayToMap((JSONArray) jsonParser.parse(data));
-        }
-        catch (Exception e) {e.printStackTrace();}
-        return null;
-    }
-
-    /**
-     * Parses the JSONArray obtainded from carOptions.json and returns it as a linked hashmap
-     * @param optionsList JSONArray containing the components and its available options
-     * @return LinkedHashMap<String, List<String>> of all components and its available options
-     */
-    private LinkedHashMap<String, List<String>> parseOptionsJSONArrayToMap(JSONArray optionsList) {
-        LinkedHashMap <String, List<String>> map = new LinkedHashMap<>();
-        for (JSONObject user : (Iterable<JSONObject>) optionsList) {
-            map.put((String) user.get("component"), (List<String>) user.get("options"));
-        }
-        return map;
-    }
-
-    /**
-     * Check if given optionsMap is a valid userMap
-     * @param optionsMap LinkedHashMap<String, List<String>> to check
-     * @return optionsMap != null
-     */
-    private boolean isValidOptionsMap(LinkedHashMap<String, List<String>> optionsMap) {
-        return optionsMap != null;
-    }
-
     public LinkedHashMap<String, List<String>> getOptionsMap() {
         return optionsMap;
     }
 
     public void setOptionsMap(LinkedHashMap<String, List<String>> optionsMap) {
-        if (!isValidOptionsMap(optionsMap)) {
+        if (optionsMap != null) {
             System.out.println("Fail! optionsMap not valid"); //TODO: should throw error
         }
         this.optionsMap = optionsMap;

@@ -11,8 +11,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import swop.Users.User;
-
 public class Database {
 	
 	
@@ -67,7 +65,11 @@ public class Database {
 	}
 
 	/**
-	 *parses JSON array to Linked Hash Map
+	 * Parses the JSONArray obtainded from carOptions.json and returns it as a linked hashmap
+	 * @param List JSONArray containing the components and its available options
+	 * @param keyName name of the key in the JSON
+	 * @param valueName name of the list in JSON
+	 * @return LinkedHashMap<String, List<String>> of all components and its available options
 	 */
 	private static LinkedHashMap<String, List<String>> parseJSONArrayToMap(JSONArray List, String keyName, String valueName) {
 		LinkedHashMap <String, List<String>> map = new LinkedHashMap<>();
