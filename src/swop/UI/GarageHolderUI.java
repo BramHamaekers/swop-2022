@@ -35,7 +35,7 @@ public class GarageHolderUI implements UI {
 		return inputScanner.nextLine();
 	}
 
-	public static String indicateCarModels() {
+	public static String indicateCarModel() {
 		System.out.printf("%n============ Car Models ============%n");
 		System.out.println("[0] car");
 		System.out.println("=======================================");

@@ -58,9 +58,9 @@ public class GarageHolder extends User{
         }
         if (Objects.equals(action, "n")) return;
 
-        String model = GarageHolderUI.indicateCarModels();
+        String model = GarageHolderUI.indicateCarModel();
         while (!isValidModel(model)) {
-            model = GarageHolderUI.indicateCarModels();
+            model = GarageHolderUI.indicateCarModel();
         }
 
         GarageHolderUI.displayOrderingForm(this.getOptionsMap());
