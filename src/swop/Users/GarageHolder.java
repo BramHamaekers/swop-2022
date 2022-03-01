@@ -101,9 +101,13 @@ public class GarageHolder extends User{
     }
 
     public void setOptionsMap(LinkedHashMap<String, List<String>> optionsMap) {
-        if (optionsMap != null) {
+        if (!isValidOptionsMap(optionsMap)) {
             System.out.println("Fail! optionsMap not valid"); //TODO: should throw error
         }
         this.optionsMap = optionsMap;
+    }
+
+    private boolean isValidOptionsMap(LinkedHashMap<String, List<String>> optionsMap) {
+        return optionsMap != null; //TODO: better check if optionsmap is a valid map
     }
 }
