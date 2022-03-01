@@ -20,7 +20,15 @@ public class CarModel {
             if (!optionsMap.get(comp).contains(parts.get(comp)))
                 throw new IllegalAccessException("not a valid option");
         }
-        this.parts = parts;
+        this.setParts(parts);
         System.out.println(parts);
+    }
+
+    public Map<String, String> getParts() {
+        return parts;
+    }
+
+    public void setParts(Map<String, String> parts) {
+        this.parts = parts;
     }
 }

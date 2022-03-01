@@ -1,7 +1,6 @@
 package swop.UI;
 import swop.CarManufactoring.Order;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 
@@ -17,8 +16,7 @@ public class GarageHolderUI implements UI {
 			System.out.println("No orders placed yet.");
 			return;
 		}
-		System.out.println();
-		System.out.println("============ Orders ============");
+		System.out.printf("%n============ Orders ============%n");
 		System.out.println("Pending:");
 		orders.stream()
 				.filter(o -> !o.isCompleted())
@@ -38,8 +36,7 @@ public class GarageHolderUI implements UI {
 	}
 
 	public static String indicateCarModels() {
-		System.out.println();
-		System.out.println("============ Car Models ============");
+		System.out.printf("%n============ Car Models ============%n");
 		System.out.println("[0] car");
 		System.out.println("=======================================");
 		System.out.println();
@@ -52,8 +49,7 @@ public class GarageHolderUI implements UI {
 	 * @param optionsMap list of components and its options
 	 */
 	public static void displayOrderingForm(Map<String, List<String>> optionsMap) {
-		System.out.println();
-		System.out.println("============ Ordering Form ============");
+		System.out.printf("%n============ Ordering Form ============%n");
 		optionsMap.forEach((key, value) -> {
 			System.out.print(key + ": ");
 			final int[] itemNumber = {-1};
@@ -65,17 +61,18 @@ public class GarageHolderUI implements UI {
 
 
 	public static List<Integer> fillOrderingForm(Map<String, List<String>> optionsMap) {
-		System.out.println();
+		System.out.println("Choose options:");
 		List<Integer> result = new ArrayList<>();
+
 		optionsMap.forEach((option, options) -> {
-			System.out.print(option + ": ");
-			int input = inputScanner.nextInt(); //TODO: catch nextInt Error
+			int input = -1; //init on !isValidOption
 			while (!isValidOption(input, optionsMap.get("body"))) {
 				System.out.print(option + ": ");
-				input = inputScanner.nextInt();
+				input = inputScanner.nextInt(); //TODO: catch nextInt Error
 			}
 			result.add(input);
 		});
+		inputScanner.nextLine(); // Fixes small problem with .nextInt() not clearing "\n" from its buffer
 		return result;
 	}
 

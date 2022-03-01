@@ -48,7 +48,7 @@ public class GarageHolder extends User{
     /**
      * Called when logging in as GarageHolder
      */
-    public void load() {
+    public void load() { //tODO split up in helper functions
         GarageHolderUI.init(this.getId());
         GarageHolderUI.displayOrders(this.orders);
 
