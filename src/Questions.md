@@ -1,4 +1,5 @@
-#Questions
+# Questions
+
 ## Stef
 - Do we need to catch errors -> no cascading throws or just throw
 - Use json -> persistent data or Enums
