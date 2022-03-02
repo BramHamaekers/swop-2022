@@ -10,6 +10,6 @@ public final class LoginUI implements UI{
 
 	public static String getUserID() {
 		System.out.print("Please login with userID: ");
-		return UI.inputScanner.nextLine(); // returns id
+		return inputScanner.nextLine(); // returns id
 	}
 }

@@ -9,7 +9,7 @@ public abstract class User {
         this.id = id;
     }
 
-    public void load(){}
+    public abstract void load();
 
     public String getId() {
         return id;

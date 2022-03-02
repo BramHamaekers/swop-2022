@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import swop.Database.Database;
+import swop.Database.ConvertMapType;
 import swop.UI.LoginUI;
 import swop.Users.CarMechanic;
 import swop.Users.GarageHolder;
@@ -47,45 +48,11 @@ public class AssemAssist {
 			System.out.println("Invalid user ID.");
 			id = LoginUI.getUserID();
 		}
-		this.userMap = this.createUserMap(userDatabase);
+		this.userMap = ConvertMapType.changeToUserMap(userDatabase);
 		this.activeUser = this.userMap.get(id);
 		this.activeUser.load();
 		this.activeUser = null;
 		login();	//TODO: option to exit the program
-	}
-
-	/**
-	 * Check if the given userID is a valid userID
-	 * @param userID userID to check
-	 * @return userMap.containsKey(userID);
-	 */
-	private boolean isValidUserID(String userID){
-		return this.userMap.containsKey(userID);
-	}
-
-	/************************ User Map *************************/
-
-	private Map<String, User> createUserMap(Map<String, List<String>> userDatabase) {
-		Map<String, User> userMap = new HashMap<>();
-		userDatabase.forEach((id, job) -> userMap.put(id, createUser(id, job)));
-		return userMap;
-	}
-
-	private User createUser(String id, List<String> job) {
-		for(String j : job) {
-			switch (j) {
-			case "garage holder":
-				return new GarageHolder(id);
-			case "car mechanic":
-				return new CarMechanic(id);
-			case "manager":
-				return new Manager(id);
-			default:
-				System.out.println("Given job is not a valid job");
-				return null; //TODO: should just throw an error and not return anything
-			}
-		}
-		return null;
 	}
 
 }
