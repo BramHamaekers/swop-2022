@@ -26,15 +26,27 @@ public class ManagerUI implements UI {
 		}
 		
 		public static String comfirmOrder(Order order) {
-			if(order == null) System.out.println("No orders need approval!");
-			else {
-				System.out.println("Move order: " + order.getUniqueID() + "from " + order.getBuildState() + " -> " + Integer.toString(order.getBuildState()+1));
-				System.out.println("Yes [0] | No [1]");
-				//TODO dit fatsoenlijk implementen
+			if(order == null) {
+				System.out.println("No orders need approval! (Enter 2 continue)");
+				inputScanner.nextLine();
 			}
-			return inputScanner.nextLine();
+			else {
+				System.out.println("Move order: " + order.getUniqueID() + " from " + order.getBuildState() + " -> " + Integer.toString(order.getBuildState()+1));
+					System.out.println("Yes [y] | No [n]");
+					return inputScanner.nextLine();
+				}	
+			return null;
 			
 		}
+
+		private static boolean isValidOption(int input) {
+			if(input == 0 || input == 1) return true;
+			return false;
+			
+		}
+		
+		///////////////////Checkers//////////////////
+		
 		
 	
 }

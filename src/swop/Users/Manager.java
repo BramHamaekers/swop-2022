@@ -1,5 +1,6 @@
 package swop.Users;
 
+import java.util.Objects;
 import java.util.Queue;
 
 import swop.CarManufactoring.Order;
@@ -22,13 +23,21 @@ public class Manager extends User{
 
 	private void OdersToConfirm() {
 		Queue<Order> queue = Schedular.getOrdersToApprove();
-		if(queue.size() == 0)ManagerUI.comfirmOrder(null);
+		if(queue.size() == 0) ManagerUI.comfirmOrder(null);
 		for(Order order : queue) {
-			String a = ManagerUI.comfirmOrder(order);
 			//TODO verder implementeren
 		}
+		////test////
+		String t = "t";
+		while(!isValidAction(t)) t = ManagerUI.comfirmOrder(new Order(null));
 		
 	}
+	
+	
+	
+	private boolean isValidAction(String action) {
+        return Objects.equals(action, "y") || Objects.equals(action, "n");
+    }
     
     
 }
