@@ -38,14 +38,6 @@ public class ManagerUI implements UI {
 			return null;
 			
 		}
-
-		private static boolean isValidOption(int input) {
-			if(input == 0 || input == 1) return true;
-			return false;
-			
-		}
-		
-		///////////////////Checkers//////////////////
 		
 		
 	
