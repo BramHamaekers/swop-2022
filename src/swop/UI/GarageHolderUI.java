@@ -60,9 +60,11 @@ public class GarageHolderUI implements UI {
 	}
 
 
-	public static List<Integer> fillOrderingForm(Map<String, List<String>> optionsMap) {
+	public static List<Map<String,Integer>> fillOrderingForm(Map<String, List<String>> optionsMap) {
 		System.out.println("Choose options:");
-		List<Integer> result = new ArrayList<>();
+		//multiple cars to order
+		List<Map<String,Integer>> result = new ArrayList<>();
+		Map<String,Integer> carConfig = new HashMap<>();
 
 		optionsMap.forEach((option, options) -> {
 			int input = -1; //init on !isValidOption
@@ -70,8 +72,9 @@ public class GarageHolderUI implements UI {
 				System.out.print(option + ": ");
 				input = inputScanner.nextInt(); //TODO: catch nextInt Error
 			}
-			result.add(input);
+			carConfig.put(option,input);
 		});
+		result.add(carConfig);
 		inputScanner.nextLine(); // Fixes small problem with .nextInt() not clearing "\n" from its buffer
 		return result;
 	}

@@ -66,12 +66,37 @@ public class GarageHolder extends User{
 
         GarageHolderUI.displayOrderingForm(this.getOptionsMap());
         //TODO alternate flow: cancel placing order
-        List<Integer> order = GarageHolderUI.fillOrderingForm(this.getOptionsMap());
+        List<Map<String,Integer>> order = GarageHolderUI.fillOrderingForm(this.getOptionsMap());
+        this.placeOrder(order);
 
         //TODO: update production schedule
         //TODO: present an estimated completion date
 
         this.logout();
+    }
+
+    /**
+     * function which transforms the list of cars ordered from UI to a list with the actual parts
+     * @param order order in selected options
+     */
+    private void placeOrder(List<Map<String, Integer>> order){
+        List<Car> resultingOrder = new ArrayList<>();
+
+        for(Map<String, Integer> car : order) {
+            Map<String,String> carOpts = new HashMap<>();
+            for (String comp: car.keySet()){
+                String option = this.getOptionsMap().get(comp).get(car.get(comp));
+                carOpts.put(comp,option);
+            }
+            try{
+                Car finalcar = new Car(new CarModel(carOpts));
+                resultingOrder.add(finalcar);
+            }
+            catch (IllegalAccessException e) {
+                System.out.println(e);
+            }
+        }
+            this.addOrder(new Order(resultingOrder));
     }
 
     /************************ Checkers *************************/
