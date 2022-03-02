@@ -22,10 +22,17 @@ public class ManagerUI implements UI {
 				});
 				System.out.println();
 			});
+			System.out.printf("================================%n");
 		}
 		
-		public static boolean comfirmOrder(Order order) {
-			return false;
+		public static String comfirmOrder(Order order) {
+			if(order == null) System.out.println("No orders need approval!");
+			else {
+				System.out.println("Move order: " + order.getUniqueID() + "from " + order.getBuildState() + " -> " + Integer.toString(order.getBuildState()+1));
+				System.out.println("Yes [0] | No [1]");
+				//TODO dit fatsoenlijk implementen
+			}
+			return inputScanner.nextLine();
 			
 		}
 		
