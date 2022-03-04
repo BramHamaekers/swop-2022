@@ -6,9 +6,11 @@ import java.util.UUID;
 public class Order {
 	private List<Car> cars;
 	private String userID; // ID of user that ordered this order
+	private String uniqueID;
 	
 	public Order(List<Car> cars) {
 		for(Car car: cars) car.setOrder(this);
+		uniqueID = UUID.randomUUID().toString();
 		this.cars = cars;
 
 	}
@@ -24,5 +26,9 @@ public class Order {
 			if(!car.isCompleted()) return false;
 		}
 		return true;
+	}
+	
+	public String getUniqueID() {
+		return uniqueID;
 	}
 }
