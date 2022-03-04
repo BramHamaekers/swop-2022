@@ -17,8 +17,9 @@ public class ManagerUI implements UI {
 		public static void displayOrderQueues(LinkedHashMap<String, List<Car>> queues, int[] index) {
 			System.out.printf("%n============ Queues ============%n");
 			int i = 0;
-			queues.forEach((str,list) ->{
-				System.out.println(str + ":");
+			for(var entry: queues.entrySet()){
+				System.out.println(entry.getKey() + ":");
+				List<Car> list = entry.getValue();
 				if(list.size() == 0) System.out.print("Empty");
 				else {
 					for(int j = 0; j < list.size(); j++) {
@@ -29,7 +30,8 @@ public class ManagerUI implements UI {
 					}
 				}
 				System.out.println();
-			});
+				i++;
+			}
 			System.out.printf("================================%n");
 		}
 		
