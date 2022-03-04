@@ -14,23 +14,19 @@ public class ManagerUI implements UI {
 			System.out.println("Welcome Manager: " + id);
 		}
 		
-		public static void displayOrderQueues(LinkedHashMap<String, List<Car>> queues, int[] index) {
+		public static void displayOrderQueues(LinkedHashMap<String, List<Car>> queues) {
 			System.out.printf("%n============ Queues ============%n");
-			int i = 0;
 			for(var entry: queues.entrySet()){
 				System.out.println(entry.getKey() + ":");
 				List<Car> list = entry.getValue();
 				if(list.size() == 0) System.out.print("Empty");
 				else {
 					for(int j = 0; j < list.size(); j++) {
-						if(j<index[i]) System.out.print(list.get(j).getUniqueID()+ " (Ready), ");
-						else if(j == index[i]) System.out.print("| "+list.get(j).getUniqueID()+ " (Building) | ");
-						else System.out.print(list.get(j).getUniqueID()+ " (Pending), ");
-						//TODO implementeren dat er orders ready zijn en aan het wachten, maar niks aant builden.
+						System.out.print(list.get(j).getUniqueID()+ " (status not implemented), ");
+						//TODO nog kunnen teruggeven wat de status is van een auto in een bepaalde post.
 					}
 				}
 				System.out.println();
-				i++;
 			}
 			System.out.printf("================================%n");
 		}
@@ -38,6 +34,11 @@ public class ManagerUI implements UI {
 		public static String advanceAssemblyLine() {
 			System.out.println("Do you want to advance the assembly line?");
 			System.out.println("Yes [y] | No [n]");
+			return inputScanner.nextLine();	
+		}
+		
+		public static String confirmadvance() {
+			System.out.println("Please comfirm change: Yes [y] | No [n]");
 			return inputScanner.nextLine();	
 		}
 		
