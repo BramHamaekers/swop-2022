@@ -27,14 +27,20 @@ public class Manager extends User{
 	private void advanceAssemblyLine() {
 		String t = "t";
 		while(!isValidAction(t)) t = ManagerUI.advanceAssemblyLine();
+		if(t == "n") return;
 		t = "t";
 		LinkedHashMap<String, List<Car>> newqueues = this.simulateAdvance(Schedular.returnAllQueuesAsMap());
 		ManagerUI.displayOrderQueues(newqueues);
 		System.out.println("<<<<<<Updated Queues>>>>>>");
 		while(!isValidAction(t)) t = ManagerUI.confirmadvance();
+		if(t == "n") return;
+		int time = 0;
+		while(!isValidTime(time)) time = ManagerUI.askTime();
+		//TODO update update chedular wanneer dit gaat of throw error moest een geupdated work station nog steeds bezig zijn.
 	}
 	
-	
+
+
 	private LinkedHashMap<String, List<Car>> simulateAdvance(LinkedHashMap<String, List<Car>> lists) {
 		if(lists == null) return null;
 		Car temp = null;
@@ -71,5 +77,9 @@ public class Manager extends User{
         return Objects.equals(action, "y") || Objects.equals(action, "n");
     }
     
+	private boolean isValidTime(int t) {
+		if(t > 0 && t < 60*14) return true;
+		return false;
+	}
     
 }

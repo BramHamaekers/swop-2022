@@ -41,6 +41,12 @@ public class ManagerUI implements UI {
 			System.out.println("Please comfirm change: Yes [y] | No [n]");
 			return inputScanner.nextLine();	
 		}
+
+		public static int askTime() {
+			System.out.println("How much time has passed? (in min)");
+			int t = inputScanner.nextInt();
+			return t;
+		}
 		
 		
 		//niet nodig, had opgave niet tegoei gelezen.

@@ -3,6 +3,8 @@ package swop.CarManufactoring;
 import java.util.List;
 import java.util.UUID;
 
+import swop.Database.RandomID;
+
 public class Order {
 	private List<Car> cars;
 	private String userID; // ID of user that ordered this order
@@ -10,7 +12,7 @@ public class Order {
 	
 	public Order(List<Car> cars) {
 		for(Car car: cars) car.setOrder(this);
-		uniqueID = UUID.randomUUID().toString();
+		uniqueID = RandomID.random(5);
 		this.cars = cars;
 
 	}

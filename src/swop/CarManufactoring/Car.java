@@ -2,6 +2,8 @@ package swop.CarManufactoring;
 
 import java.util.UUID;
 
+import swop.Database.RandomID;
+
 public class Car {
 	
 	private int buildState; //laten we 0 is nog niet begonnen, 1 means completed belt 1,... tot 3
@@ -11,7 +13,7 @@ public class Car {
     
     public Car(CarModel model){
         this.carModel = model;
-		uniqueID = UUID.randomUUID().toString();
+		uniqueID = RandomID.random(5);
 		buildState = 0;
     }
     

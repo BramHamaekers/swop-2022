@@ -15,6 +15,9 @@ public class Database {
 	
 	
 	
+	
+	/////////////////////////// OPENING JSON FILES //////////////////////////////
+	
 	/**
 	 * tries 2 open new database
 	 * @param name
@@ -83,5 +86,12 @@ public class Database {
 		}
 		return map;
 	}
+	
+	//////////////////////////////////////// WRITING JSON FILES ///////////////////////////////////////
+	
+	
+	
+	
+	
 }
 
