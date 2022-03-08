@@ -1,42 +1,49 @@
 package swop.CarManufactoring;
 
-import java.util.UUID;
-
+import java.util.HashSet;
+import java.util.Set;
 import swop.Database.RandomID;
 
 public class Car {
-	
-	private int buildState; //laten we 0 is nog niet begonnen, 1 means completed belt 1,... tot 3
+	public static Set<String> tasks = Set.of("Assembly car body", "Paint car", "Insert engine", "Insert gearbox",
+			"Install seats", "Install airco", "Mount wheels");
+	private Set<String> uncompletedTasks = new HashSet<>();
     private CarModel carModel;
     private String uniqueID;
-    private Order order = null;
     
     public Car(CarModel model){
         this.carModel = model;
 		uniqueID = RandomID.random(5);
-		buildState = 0;
+		//TODO als we tasks meegeven aan constructor -> check of tasks niet null is.
+		this.setUncompletedTasks(Set.copyOf(tasks));
+
     }
-    
-	public void setOrder(Order order) {
-		this.order = order;
+
+	public void completeTask(String task) {
+		if (!isValidTask(task)) {
+			System.out.println("Task is not valid"); //TODO Error
+		}
+		//TODO check if uncompletedtasks contains task??
+		uncompletedTasks.remove(task);
 	}
-    
-    public Order getOrder() {
-    	return this.getOrder();
-    }
-    
-    public void upBuildState() {
-		this.buildState += 1;
-		//TODO: check if valid buildState
+
+	private boolean isValidTask(String task) {
+		return tasks.contains(task) && task != null;
 	}
+
 	public boolean isCompleted() {
-		return buildState == 3;
+		return getUncompletedTasks() == null;
 	}
 	
 	public String getUniqueID() {
 		return uniqueID;
 	}
-	public int getBuildState() {
-		return buildState;
+
+	public Set<String> getUncompletedTasks() {
+		return uncompletedTasks;
+	}
+
+	public void setUncompletedTasks(Set<String> uncompletedTasks) {
+		this.uncompletedTasks = uncompletedTasks;
 	}
 }

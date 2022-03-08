@@ -11,7 +11,6 @@ public class Order {
 	private String uniqueID;
 	
 	public Order(List<Car> cars) {
-		for(Car car: cars) car.setOrder(this);
 		uniqueID = RandomID.random(5);
 		this.cars = cars;
 

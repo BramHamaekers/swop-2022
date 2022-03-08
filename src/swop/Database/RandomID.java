@@ -2,7 +2,7 @@ package swop.Database;
 
 import java.util.Random;
 
-public class RandomID {
+public final class RandomID {
 
 	public static String random(int i) {
 		 int leftLim = 48; 

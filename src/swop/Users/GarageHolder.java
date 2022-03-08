@@ -3,6 +3,7 @@ import swop.CarManufactoring.Car;
 import swop.CarManufactoring.CarModel;
 import swop.CarManufactoring.Order;
 import swop.Database.Database;
+import swop.Main.AssemAssist;
 import swop.UI.GarageHolderUI;
 
 import java.util.*;
@@ -17,45 +18,19 @@ public class GarageHolder extends User{
         // TODO: move to different location? -> everytime new Garageholder loads optionsMap. Should not be the case
         // -> create static database somehow
         this.orders = new HashSet<>();
-
-        /////////// TEST ///////////
-        List<Car> cars = new ArrayList<>();
-        Map<String, String> parts = new HashMap<>();
-        parts.put("body","sedan");
-        parts.put("color","red");
-        parts.put("engine","standard 2l 4 cilinders");
-        parts.put("gearBox","6 speed manual");
-        parts.put("seats","leather black");
-        parts.put("airco","manual");
-        parts.put("wheels","comfort");
-        try {
-            Car testCar = new Car(new CarModel(parts));
-        }
-        catch (IllegalAccessException e){
-            System.out.println("Just testing");
-        }
-//        parts.add("wheeeeel");
-//        Order a = new Order(parts);
-//        this.addOrder(a);
-//
-//        Order b = new Order(parts);
-//        b.upBuildState();
-//        b.upBuildState();
-//        b.upBuildState();
-//        this.addOrder(b);
     }
 
     /**
      * Called when logging in as GarageHolder
      */
     @Override
-    public void load() { //tODO split up in helper functions
+    public void load(AssemAssist assemAssist) { //tODO split up in helper functions
         GarageHolderUI.init(this.getId());
         GarageHolderUI.displayOrders(this.orders);
 
-        String action = GarageHolderUI.confirmAction();
-        while (!isValidAction(action)) {
-            action = GarageHolderUI.confirmAction();
+        String action = GarageHolderUI.indicatePlaceOrder();
+        while (!isValidYesNo(action)) {
+            action = GarageHolderUI.indicatePlaceOrder();
         }
         if (Objects.equals(action, "n")) return;
 
@@ -96,14 +71,11 @@ public class GarageHolder extends User{
                 System.out.println(e);
             }
         }
+            //TODO resultingOrder in aparte functie
             this.addOrder(new Order(resultingOrder));
     }
 
     /************************ Checkers *************************/
-
-    private boolean isValidAction(String action) {
-        return Objects.equals(action, "y") || Objects.equals(action, "n");
-    }
 
     private boolean isValidModel(String model) {
         return Objects.equals(model, "0");

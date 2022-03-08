@@ -3,11 +3,9 @@ package swop.Users;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
-import java.util.Queue;
 
 import swop.CarManufactoring.Car;
-import swop.CarManufactoring.Order;
-import swop.CarManufactoring.Schedular;
+import swop.Main.AssemAssist;
 import swop.UI.ManagerUI;
 
 public class Manager extends User{
@@ -18,25 +16,15 @@ public class Manager extends User{
     }
 
 	@Override
-	public void load() {
+	public void load(AssemAssist assemAssist) {
 		ManagerUI.init(getId());
-		ManagerUI.displayOrderQueues(Schedular.returnAllQueuesAsMap());
-		this.advanceAssemblyLine();
-	}
+		//1.
+		String indicate = ManagerUI.indicateAdvance();
+		while (!isValidYesNo(indicate)) {
+			indicate = ManagerUI.indicateAdvance();
+		}
+		if (Objects.equals(indicate, "n")) return;
 
-	private void advanceAssemblyLine() {
-		String t = "t";
-		while(!isValidAction(t)) t = ManagerUI.advanceAssemblyLine();
-		if(t == "n") return;
-		t = "t";
-		LinkedHashMap<String, List<Car>> newqueues = this.simulateAdvance(Schedular.returnAllQueuesAsMap());
-		ManagerUI.displayOrderQueues(newqueues);
-		System.out.println("<<<<<<Updated Queues>>>>>>");
-		while(!isValidAction(t)) t = ManagerUI.confirmadvance();
-		if(t == "n") return;
-		int time = 0;
-		while(!isValidTime(time)) time = ManagerUI.askTime();
-		//TODO update update chedular wanneer dit gaat of throw error moest een geupdated work station nog steeds bezig zijn.
 	}
 	
 
@@ -70,12 +58,6 @@ public class Manager extends User{
 		while(!isValidAction(t)) t = ManagerUI.comfirmOrder(new Order(null));
 		
 	}*/
-	
-	
-	
-	private boolean isValidAction(String action) {
-        return Objects.equals(action, "y") || Objects.equals(action, "n");
-    }
     
 	private boolean isValidTime(int t) {
 		if(t > 0 && t < 60*14) return true;

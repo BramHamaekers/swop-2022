@@ -29,10 +29,8 @@ public class GarageHolderUI implements UI {
 		System.out.println("=======================================");
 	}
 
-	public static String confirmAction() {
-		System.out.println();
-		System.out.printf("Do you want to place an order? %n[y] Place Order [n] Leave%n");
-		return inputScanner.nextLine();
+	public static String indicatePlaceOrder() {
+		return UI.indicateYesNo("place an order");
 	}
 
 	public static String indicateCarModel() {
