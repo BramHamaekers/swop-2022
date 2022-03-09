@@ -16,7 +16,6 @@ public class Car {
 		uniqueID = RandomID.random(5);
 		//TODO als we tasks meegeven aan constructor -> check of tasks niet null is.
 		this.setUncompletedTasks(Set.copyOf(tasks));
-
     }
 
 	public void completeTask(String task) {
