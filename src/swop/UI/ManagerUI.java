@@ -55,7 +55,7 @@ public class ManagerUI implements UI {
     //niet nodig, had opgave niet tegoei gelezen.
 		/*public static String comfirmOrder(Order order) {
 			if(order == null) {
-				System.out.println("No orders need approval! (Enter 2 continue)");
+				System.out.println("No carOrders need approval! (Enter 2 continue)");
 				inputScanner.nextLine();
 			}
 			else {

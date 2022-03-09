@@ -1,12 +1,5 @@
 package swop.Tests;
 
-import swop.CarManufactoring.Order;
-
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
 class OrderTest {
 
 //    Order order = new Order(List.of("a"));

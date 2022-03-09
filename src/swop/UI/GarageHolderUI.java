@@ -1,5 +1,5 @@
 package swop.UI;
-import swop.CarManufactoring.Order;
+import swop.CarManufactoring.CarOrder;
 
 import java.util.*;
 import java.util.List;
@@ -11,21 +11,21 @@ public class GarageHolderUI implements UI {
 		System.out.println("Welcome Garage Holder: " + id);
 	}
 
-	public static void displayOrders(Set<Order> orders) {
-		if (orders == null) {
-			System.out.println("No orders placed yet.");
+	public static void displayOrders(Set<CarOrder> carOrders) {
+		if (carOrders == null) {
+			System.out.println("No carOrders placed yet.");
 			return;
 		}
 		System.out.printf("%n============ Orders ============%n");
 		System.out.println("Pending:");
-		orders.stream()
+		carOrders.stream()
 				.filter(o -> !o.isCompleted())
-				.forEach(p -> System.out.println(p.getUniqueID()));
+				.forEach(System.out::println);
 		System.out.println();
 		System.out.println("Completed:");
-		orders.stream()
+		carOrders.stream()
 				.filter(o -> o.isCompleted())
-				.forEach(c -> System.out.println(c.getUniqueID()));
+				.forEach(System.out::println);
 		System.out.println("=======================================");
 	}
 
@@ -58,23 +58,21 @@ public class GarageHolderUI implements UI {
 	}
 
 
-	public static List<Map<String,Integer>> fillOrderingForm(Map<String, List<String>> optionsMap) {
+	public static Map<String,Integer> fillOrderingForm(Map<String, List<String>> optionsMap) {
 		System.out.println("Choose options:");
 		//multiple cars to order
-		List<Map<String,Integer>> result = new ArrayList<>();
 		Map<String,Integer> carConfig = new HashMap<>();
 
 		optionsMap.forEach((option, options) -> {
 			int input = -1; //init on !isValidOption
-			while (!isValidOption(input, optionsMap.get("body"))) {
+			while (!isValidOption(input, optionsMap.get(option))) {
 				System.out.print(option + ": ");
 				input = inputScanner.nextInt(); //TODO: catch nextInt Error
 			}
 			carConfig.put(option,input);
 		});
-		result.add(carConfig);
 		inputScanner.nextLine(); // Fixes small problem with .nextInt() not clearing "\n" from its buffer
-		return result;
+		return carConfig;
 	}
 
 	private static boolean isValidOption(int option, List<String> options) {

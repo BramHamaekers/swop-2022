@@ -1,7 +1,7 @@
 package swop.Users;
 import swop.CarManufactoring.Car;
 import swop.CarManufactoring.CarModel;
-import swop.CarManufactoring.Order;
+import swop.CarManufactoring.CarOrder;
 import swop.Database.Database;
 import swop.Main.AssemAssist;
 import swop.UI.GarageHolderUI;
@@ -10,14 +10,14 @@ import java.util.*;
 
 public class GarageHolder extends User{
     private LinkedHashMap<String, List<String>> optionsMap;
-    private Set<Order> orders;
+    private Set<CarOrder> carOrders;
 
     public GarageHolder(String id) {
         super(id);
         this.setOptionsMap(Database.openDatabase("carOptions.json", "component", "options"));
         // TODO: move to different location? -> everytime new Garageholder loads optionsMap. Should not be the case
         // -> create static database somehow
-        this.orders = new HashSet<>();
+        this.carOrders = new HashSet<>();
     }
 
     /**
@@ -26,7 +26,7 @@ public class GarageHolder extends User{
     @Override
     public void load(AssemAssist assemAssist) { //tODO split up in helper functions
         GarageHolderUI.init(this.getId());
-        GarageHolderUI.displayOrders(this.orders);
+        GarageHolderUI.displayOrders(this.carOrders);
 
         String action = GarageHolderUI.indicatePlaceOrder();
         while (!isValidYesNo(action)) {
@@ -41,8 +41,11 @@ public class GarageHolder extends User{
 
         GarageHolderUI.displayOrderingForm(this.getOptionsMap());
         //TODO alternate flow: cancel placing order
-        List<Map<String,Integer>> order = GarageHolderUI.fillOrderingForm(this.getOptionsMap());
-        this.placeOrder(order);
+        Map<String,Integer> carConfig = GarageHolderUI.fillOrderingForm(this.getOptionsMap());
+        Map<String, String> carOptions = this.mapConfigToOptions(carConfig);
+        CarModel carModel = createCarModel(carOptions);
+
+        this.placeOrder(assemAssist, carModel);
 
         //TODO: update production schedule
         //TODO: present an estimated completion date
@@ -50,29 +53,30 @@ public class GarageHolder extends User{
         this.logout();
     }
 
-    /**
-     * function which transforms the list of cars ordered from UI to a list with the actual parts
-     * @param order order in selected options
-     */
-    private void placeOrder(List<Map<String, Integer>> order){
-        List<Car> resultingOrder = new ArrayList<>();
+    private Map<String,String> mapConfigToOptions(Map<String, Integer> carConfig) {
+        Map<String,String> carOpts = new HashMap<>();
 
-        for(Map<String, Integer> car : order) {
-            Map<String,String> carOpts = new HashMap<>();
-            for (String comp: car.keySet()){
-                String option = this.getOptionsMap().get(comp).get(car.get(comp));
-                carOpts.put(comp,option);
-            }
-            try{
-                Car finalcar = new Car(new CarModel(carOpts));
-                resultingOrder.add(finalcar);
-            }
-            catch (IllegalAccessException e) {
-                System.out.println(e);
+        for (String component: carConfig.keySet()) {
+            String option = this.getOptionsMap().get(component).get(carConfig.get(component));
+            carOpts.put(component, option);
+        }
+
+        return carOpts;
+    }
+
+    private CarModel createCarModel(Map<String, String> carOptions) {
+            try {
+                return new CarModel(carOptions);
+            } catch (IllegalAccessException e) {
+                System.out.println(e); //TODO check defensive programming
+                return null;
             }
         }
-            //TODO resultingOrder in aparte functie
-            this.addOrder(new Order(resultingOrder));
+
+    private void placeOrder(AssemAssist assemAssist, CarModel carModel){
+         CarOrder carOrder = new CarOrder(carModel);
+         this.addOrder(carOrder);
+         assemAssist.addOrder(carOrder);
     }
 
     /************************ Checkers *************************/
@@ -82,16 +86,16 @@ public class GarageHolder extends User{
     }
 
     /************************ Orders *************************/
-    public Set<Order> getOrders() {
-        return orders;
+    public Set<CarOrder> getOrders() {
+        return carOrders;
     }
 
-    public void setOrders(Set<Order> orders) {
-        this.orders = orders;
+    public void setOrders(Set<CarOrder> carOrders) {
+        this.carOrders = carOrders;
     }
 
-    public void addOrder(Order order) {
-        this.orders.add(order);
+    public void addOrder(CarOrder carOrder) {
+        this.carOrders.add(carOrder);
     }
 
     public LinkedHashMap<String, List<String>> getOptionsMap() {

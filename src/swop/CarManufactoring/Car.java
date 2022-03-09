@@ -2,19 +2,15 @@ package swop.CarManufactoring;
 
 import java.util.HashSet;
 import java.util.Set;
-import swop.Database.RandomID;
 
 public class Car {
 	public static Set<String> tasks = Set.of("Assembly car body", "Paint car", "Insert engine", "Insert gearbox",
 			"Install seats", "Install airco", "Mount wheels");
 	private Set<String> uncompletedTasks = new HashSet<>();
     private CarModel carModel;
-    private String uniqueID;
     
     public Car(CarModel model){
-        this.carModel = model;
-		uniqueID = RandomID.random(5);
-		//TODO als we tasks meegeven aan constructor -> check of tasks niet null is.
+        this.setCarModel(model);
 		this.setUncompletedTasks(Set.copyOf(tasks));
     }
 
@@ -33,10 +29,6 @@ public class Car {
 	public boolean isCompleted() {
 		return getUncompletedTasks() == null;
 	}
-	
-	public String getUniqueID() {
-		return uniqueID;
-	}
 
 	public Set<String> getUncompletedTasks() {
 		return uncompletedTasks;
@@ -44,5 +36,13 @@ public class Car {
 
 	public void setUncompletedTasks(Set<String> uncompletedTasks) {
 		this.uncompletedTasks = uncompletedTasks;
+	}
+
+	public CarModel getCarModel() {
+		return carModel;
+	}
+
+	public void setCarModel(CarModel carModel) {
+		this.carModel = carModel;
 	}
 }

@@ -1,6 +1,7 @@
 package swop.Main;
 
 import swop.CarManufactoring.AssemblyLine;
+import swop.CarManufactoring.CarOrder;
 import swop.Database.Database;
 import swop.Database.ConvertMapType;
 import swop.UI.LoginUI;
@@ -45,6 +46,12 @@ public class AssemAssist {
 		User activeUser = this.userMap.get(id);
 		activeUser.load(this);
 		login();	//TODO: option to exit the program
+	}
+
+	/************************ Assembly *************************/
+
+	public void addOrder(CarOrder carOrder) { //TODO should not be public?
+		this.assemblyLine.addToAssembly(carOrder);
 	}
 
 }
