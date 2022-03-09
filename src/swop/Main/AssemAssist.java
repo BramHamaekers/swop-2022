@@ -42,7 +42,7 @@ public class AssemAssist {
 			System.out.println("Invalid user ID.");
 			id = LoginUI.getUserID();
 		}
-		this.userMap = ConvertMapType.changeToUserMap(userDatabase);
+		if(this.userMap == null) this.userMap = ConvertMapType.changeToUserMap(userDatabase);
 		User activeUser = this.userMap.get(id);
 		activeUser.load(this);
 		login();	//TODO: option to exit the program
