@@ -2,6 +2,7 @@ package swop.Main;
 
 import swop.CarManufactoring.AssemblyLine;
 import swop.CarManufactoring.CarOrder;
+import swop.Exceptions.NotAllTasksCompleteException;
 import swop.Database.Database;
 import swop.Database.ConvertMapType;
 import swop.UI.LoginUI;
@@ -54,7 +55,7 @@ public class AssemAssist {
 		this.assemblyLine.addToAssembly(carOrder);
 	}
 
-	public void advanceAssembly() { //TODO should not be public?
+	public void advanceAssembly() throws NotAllTasksCompleteException { //TODO should not be public?
 		this.assemblyLine.advanceAssemblyLine();
 	}
 

@@ -1,9 +1,8 @@
 package swop.CarManufactoring;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.NoSuchElementException;
+import swop.Exceptions.NotAllTasksCompleteException;
+
+import java.util.*;
 
 public class AssemblyLine {
 
@@ -31,16 +30,39 @@ public class AssemblyLine {
 		System.out.println(carQueue.get(0).getCarModel().getParts());
 	}
 
-	public void advanceAssemblyLine() {
-		//TODO check if assemblyLine can advance
-
+	public void advanceAssemblyLine() throws NotAllTasksCompleteException {
+		// check if possible to advance AssemblyLine
+		checkAdvance();
 		// Move all cars on assembly by 1 position
-		for (int i = this.workStations.size() - 1; i > 0; i--) {
+		for (int i = this.workStations.size() - 1; i > 0; i--)
 			this.workStations.get(i).setCar(this.workStations.get(i-1).getCar());
-		}
+
 		// Set first workstation to first element from the queue
 		try {this.workStations.getFirst().setCar(this.carQueue.removeFirst());}
 		catch (NoSuchElementException e) {this.workStations.getFirst().setCar(null);}
+	}
+
+	private void checkAdvance() throws NotAllTasksCompleteException {
+		for (WorkStation workStation: this.workStations)
+			if (!allTasksCompleted(workStation))
+				throw new NotAllTasksCompleteException("Not all tasks completed in: ", workStation.getName());
+	}
+
+	private boolean allTasksCompleted(WorkStation workStation) {
+		return workStation.getCar() == null || Collections.disjoint(workStation.getCar().getUncompletedTasks(),
+				workStation.getTasks()); //returns true if no tasks are uncompleted
+	}
+
+	// TEST FUNCTION
+	public void printAssembly() {
+		System.out.println("queue:");
+		this.carQueue.forEach(c -> System.out.print(c.getCarModel().getParts() + ", "));
+		this.workStations.forEach(w -> {
+			System.out.println(w.getName() + ":");
+			try {System.out.println(w.getCar().getCarModel().getParts());}
+			catch (Exception e){System.out.println("null");}
+
+		});
 	}
 }
 
@@ -49,7 +71,25 @@ class WorkStation {
 	private Car car;
 
 	public WorkStation(String name) {
+		if (!isValidName(name)) {
+			System.out.println("Not a valid workstation"); //TODO should throw error
+		}
 		this.name = name;
+
+	}
+
+	private boolean isValidName(String name) {
+		return (Objects.equals(name, "Car Body Post")) ||
+				(Objects.equals(name, "Drivetrain Post")) || (Objects.equals(name, "Accessories Post"));
+	}
+
+	public Set<String> getTasks() {
+		return switch (this.getName()) {
+			case "Car Body Post" -> new HashSet<>(Arrays.asList("Assembly car body", "Paint car"));
+			case "Drivetrain Post" -> new HashSet<>(Arrays.asList("Insert engine", "Insert gearbox"));
+			case "Accessories Post" -> new HashSet<>(Arrays.asList("Install seats", "Install airco", "Mount wheels"));
+			default -> null;
+		};
 	}
 
 	public String getName() {
@@ -64,3 +104,4 @@ class WorkStation {
 		this.car = car;
 	}
 }
+

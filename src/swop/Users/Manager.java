@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import swop.CarManufactoring.Car;
+import swop.Exceptions.NotAllTasksCompleteException;
 import swop.Main.AssemAssist;
 import swop.UI.ManagerUI;
 
@@ -26,7 +27,10 @@ public class Manager extends User{
 		if (Objects.equals(indicate, "n")) return;
 
 		// TEST
-		assemAssist.advanceAssembly();
+		try {assemAssist.advanceAssembly();}
+		catch (NotAllTasksCompleteException e) {
+			System.out.print(e.getMessage());
+			System.out.println(e.getWorkstation());} //TODO move to ManagerUI
 
 	}
 	
