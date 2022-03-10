@@ -3,22 +3,23 @@ package swop.CarManufactoring;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class AssemblyLine {
 
 
-	private List<Car> carQueue; // Queue of cars that still have to be assembled but are not yet on the assembly line
-	private final List<WorkStation> workStations;
+	private LinkedList<Car> carQueue; // Queue of cars that still have to be assembled but are not yet on the assembly line
+	private final LinkedList<WorkStation> workStations;
 
 
 	public AssemblyLine() {
-		this.carQueue = new ArrayList<>();
+		this.carQueue = new LinkedList<>();
 		this.workStations = createWorkStations();
 
 	}
 
-	private List<WorkStation> createWorkStations () {
-		List<WorkStation> workStations = new LinkedList<>();
+	private LinkedList<WorkStation> createWorkStations () {
+		LinkedList<WorkStation> workStations = new LinkedList<>();
 		workStations.add(new WorkStation("Car Body Post"));
 		workStations.add(new WorkStation("Drivetrain Post"));
 		workStations.add(new WorkStation("Accessories Post"));
@@ -31,9 +32,15 @@ public class AssemblyLine {
 	}
 
 	public void advanceAssemblyLine() {
-		// add first car from carQueue to first workstation
-		// advance all other workstations
-		// IMPORTANT! -> check if assemblyline can be advanced!
+		//TODO check if assemblyLine can advance
+
+		// Move all cars on assembly by 1 position
+		for (int i = this.workStations.size() - 1; i > 0; i--) {
+			this.workStations.get(i).setCar(this.workStations.get(i-1).getCar());
+		}
+		// Set first workstation to first element from the queue
+		try {this.workStations.getFirst().setCar(this.carQueue.removeFirst());}
+		catch (NoSuchElementException e) {this.workStations.getFirst().setCar(null);}
 	}
 }
 

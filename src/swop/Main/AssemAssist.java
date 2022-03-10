@@ -54,4 +54,8 @@ public class AssemAssist {
 		this.assemblyLine.addToAssembly(carOrder);
 	}
 
+	public void advanceAssembly() { //TODO should not be public?
+		this.assemblyLine.advanceAssemblyLine();
+	}
+
 }

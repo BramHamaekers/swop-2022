@@ -25,10 +25,13 @@ public class Manager extends User{
 		}
 		if (Objects.equals(indicate, "n")) return;
 
+		// TEST
+		assemAssist.advanceAssembly();
+
 	}
 	
 
-
+	// TODO remove?
 	private LinkedHashMap<String, List<Car>> simulateAdvance(LinkedHashMap<String, List<Car>> lists) {
 		if(lists == null) return null;
 		Car temp = null;
