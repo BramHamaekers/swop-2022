@@ -20,12 +20,12 @@ public class GarageHolderUI implements UI {
 		System.out.println("Pending:");
 		carOrders.stream()
 				.filter(o -> !o.isCompleted())
-				.forEach(System.out::println);
+				.forEach(p -> System.out.println(p.getCar().getCarModel().getParts()));
 		System.out.println();
 		System.out.println("Completed:");
 		carOrders.stream()
 				.filter(o -> o.isCompleted())
-				.forEach(System.out::println);
+				.forEach(c -> System.out.println(c.getCar().getCarModel().getParts()));
 		System.out.println("=======================================");
 	}
 

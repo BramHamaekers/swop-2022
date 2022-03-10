@@ -26,7 +26,7 @@ public class GarageHolder extends User{
     @Override
     public void load(AssemAssist assemAssist) { //tODO split up in helper functions
         GarageHolderUI.init(this.getId());
-        GarageHolderUI.displayOrders(this.carOrders);
+        GarageHolderUI.displayOrders(this.getOrders());
 
         String action = GarageHolderUI.indicatePlaceOrder();
         while (!isValidYesNo(action)) {
@@ -87,7 +87,7 @@ public class GarageHolder extends User{
 
     /************************ Orders *************************/
     public Set<CarOrder> getOrders() {
-        return carOrders;
+        return this.carOrders;
     }
 
     public void setOrders(Set<CarOrder> carOrders) {
