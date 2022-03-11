@@ -54,65 +54,59 @@ public class AssemblyLine {
 	}
 	
 	/////////////////////////// Functions used 2 get data for manager use case //////////////////////////////
-	
+
 	public String[] getCurrentStatus() {
 		List<String> status = new LinkedList<String>();
 		this.workStations.forEach(w -> {
-			String s;
-			s = w.getName();
+			String s = w.getName();
 			if(w.getCar() == null) s = s.concat(": EMPTY");
 			else {
-				s = s.concat(": " + w.getCar().toString()); //TODO cars msschien toch ID geven?
-				if(this.allTasksCompleted(w)) s = s.concat(" (FINISHED)");
-				else s = s.concat(" (PENDING)");
+				s = s.concat(": " + w.getCar().getCarModel().getParts()); //TODO cars msschien toch ID geven?
+				s = this.allTasksCompleted(w) ? s.concat(" (FINISHED)") : s.concat(" (PENDING)");
 			}
 			status.add(s);
 		});
-		String[] array = new String[status.size()];
-		return status.toArray(array);
+		return status.toArray(new String[status.size()]);
 	}
-	
+
 	public String[] getAdvancedStatus() { //// Kan ook met list werken, geen idee waarom ik array kies.
-		List<String> status = new LinkedList<String>();
+		List<String> status = new LinkedList<>();
 		for(int i = 0; i < workStations.size(); i++){
-			String s;
 			WorkStation w = this.workStations.get(i);
-			s = w.getName();
+			String s = w.getName();
 			if(0<i) {
 				w = this.workStations.get(i-1);
-				if(w.getCar() == null) s = s.concat(": EMPTY");
-				else s = s.concat(": " + w.getCar().toString() + " (PENDING)");
+				s = w.getCar() == null ? s.concat(": EMPTY") :
+						s.concat(": " + w.getCar().getCarModel().getParts() + " (PENDING)");
 			}
 			else {
-				if(this.carQueue.isEmpty()) s = s.concat(": EMPTY");
-				else s = s.concat(": " + carQueue.get(0).toString() + " (PENDING)");
+				s = this.carQueue.isEmpty() ? s.concat(": EMPTY") :
+						s.concat(": " + carQueue.get(0).toString() + " (PENDING)");
 			}
-			
 			status.add(s);
 		}
-		String[] array = new String[status.size()];
-		return status.toArray(array);
+		return status.toArray(new String[status.size()]);
 	}
-	
+
 	/////////////////////////////// Functions used Car Mechanic use case ////////////////////////////////
-	
-	public List<String> getWorkstations(){ 
+
+	public List<String> getWorkstations(){
 		List<String> names = new LinkedList<String>();
 		for(WorkStation station: this.workStations) {
 			names.add(station.getName());
 		}
 		return names;
 	}
-	
+
 	private WorkStation getWorkStation(String station) {
 		for(WorkStation wStation: this.workStations) {
 			if(wStation.getName() == station) return wStation;
 		}
-		
+
 		return null;
-		
+
 	}
-	
+
 	public Map<String,Set<String>> getStationAndTasks(){ //niet gebruikt op het moment
 		Map<String,Set<String>> map = new HashMap<String,Set<String>>();
 		for (WorkStation station :workStations) {
@@ -129,7 +123,7 @@ public class AssemblyLine {
 			Set<String> carTasks = car.getUncompletedTasks();
 			tasks.retainAll(carTasks);
 			return tasks;
-		}	
+		}
 	}
 	
 	public String getTaskInfo(String task) {
@@ -140,9 +134,9 @@ public class AssemblyLine {
 		String partValue = station.getCar().getCarModel().getValueOfPart(part);
 		return info.getDescription() + partValue;
 	}
-	
-/////////////////////////////////////////////////////////////////////////////////////////////////////:	
-	
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////:
+
 
 	// TEST FUNCTION
 	public void printAssembly() {
