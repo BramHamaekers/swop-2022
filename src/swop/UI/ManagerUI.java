@@ -1,9 +1,5 @@
 package swop.UI;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-
-import swop.CarManufactoring.Car;
 import swop.Exceptions.NotAllTasksCompleteException;
 
 public class ManagerUI implements UI {
@@ -40,13 +36,13 @@ public class ManagerUI implements UI {
 
 	public static void printException(NotAllTasksCompleteException e) {
 		 System.out.println(e.getMessage() + e.getWorkstation());
-		 System.out.println("Press enter 2 exit");
+		 System.out.println("Press 'Enter' to exit");
 		 inputScanner.nextLine();
 		
 	}
 
 	public static String confirmAdvance() {
-		System.out.println("Please comfirm change: Yes [y] | No [n]");
+		System.out.println("Please confirm change: Yes [y] | No [n]");
         return inputScanner.nextLine();
 	}
 
