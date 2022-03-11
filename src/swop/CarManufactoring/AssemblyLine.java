@@ -52,6 +52,45 @@ public class AssemblyLine {
 		return workStation.getCar() == null || Collections.disjoint(workStation.getCar().getUncompletedTasks(),
 				workStation.getTasks()); //returns true if no tasks are uncompleted
 	}
+	
+	public String[] getCurrentStatus() {
+		List<String> status = new LinkedList<String>();
+		this.workStations.forEach(w -> {
+			String s;
+			s = w.getName();
+			if(w.getCar() == null) s = s.concat(": EMPTY");
+			else {
+				s = s.concat(": " + w.getCar().toString()); //TODO cars msschien toch ID geven?
+				if(this.allTasksCompleted(w)) s = s.concat(" (FINISHED)");
+				else s = s.concat(" (PENDING)");
+			}
+			status.add(s);
+		});
+		String[] array = new String[status.size()];
+		return status.toArray(array);
+	}
+	
+	public String[] getAdvancedStatus() {
+		List<String> status = new LinkedList<String>();
+		for(int i = 0; i < workStations.size(); i++){
+			String s;
+			WorkStation w = this.workStations.get(i);
+			s = w.getName();
+			if(0<i) {
+				w = this.workStations.get(i-1);
+				if(w.getCar() == null) s = s.concat(": EMPTY");
+				else s = s.concat(": " + w.getCar().toString() + " (PENDING)");
+			}
+			else {
+				if(this.carQueue.isEmpty()) s = s.concat(": EMPTY");
+				else s = s.concat(": " + carQueue.get(0).toString() + " (PENDING)");
+			}
+			
+			status.add(s);
+		}
+		String[] array = new String[status.size()];
+		return status.toArray(array);
+	}
 
 	// TEST FUNCTION
 	public void printAssembly() {

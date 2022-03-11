@@ -25,50 +25,25 @@ public class Manager extends User{
 			indicate = ManagerUI.indicateAdvance();
 		}
 		if (Objects.equals(indicate, "n")) return;
-
-		// TEST
-		try {assemAssist.advanceAssembly();}
-		catch (NotAllTasksCompleteException e) {
-			System.out.print(e.getMessage());
-			System.out.println(e.getWorkstation());} //TODO move to ManagerUI
+		this.addvanceAssemblyLine(assemAssist);
 
 	}
-	
-
-	// TODO remove?
-	private LinkedHashMap<String, List<Car>> simulateAdvance(LinkedHashMap<String, List<Car>> lists) {
-		if(lists == null) return null;
-		Car temp = null;
-		LinkedHashMap<String, List<Car>> newMap = new LinkedHashMap<>();
-		for(var entry: lists.entrySet()) {
-			String t = entry.getKey();
-			List<Car> cloneList = entry.getValue();
-			if(!(temp == null)) cloneList.add(temp);
-			if(!cloneList.isEmpty() && !(cloneList.size() == 1 && cloneList.contains(temp))) {
-				temp = cloneList.remove(0);
-			}
-			else temp = null;
-			newMap.put(t, cloneList);
+	private void addvanceAssemblyLine(AssemAssist assemAssist) {
+		ManagerUI.displayAssemblyLine(assemAssist.getCurrentAssemblyStatus(), assemAssist.getAdvancedAssemblyStatus());
+		String indicate = ManagerUI.confirmAdvance();
+		while (!isValidYesNo(indicate)) {
+			ManagerUI.confirmAdvance();
 		}
-		return newMap;
-	}
-
-	//nog niet nodig, staat niet in opgave
-	/*private void OdersToConfirm() {
-		Queue<Order> queue = Schedular.getOrdersToApprove();
-		if(queue.size() == 0) ManagerUI.comfirmOrder(null);
-		for(Order order : queue) {
-			//TODO verder implementeren
-		}
-		////test////
-		String t = "t";
-		while(!isValidAction(t)) t = ManagerUI.comfirmOrder(new Order(null));
+		if (Objects.equals(indicate, "n")) return;
+		String time = ManagerUI.askTime(); //TODO check valid time
 		
-	}*/
-    
-	private boolean isValidTime(int t) {
-		if(t > 0 && t < 60*14) return true;
-		return false;
+		try {
+			assemAssist.advanceAssembly();
+			ManagerUI.exit(assemAssist.getCurrentAssemblyStatus());
+			} //TODO give time with advanceAssembly() to assemblyline.
+		catch (NotAllTasksCompleteException e) {
+			ManagerUI.printException(e);
+		}
 	}
     
 }

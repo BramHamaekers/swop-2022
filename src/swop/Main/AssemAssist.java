@@ -58,5 +58,13 @@ public class AssemAssist {
 	public void advanceAssembly() throws NotAllTasksCompleteException { //TODO should not be public?
 		this.assemblyLine.advanceAssemblyLine();
 	}
+	
+
+	public String[] getCurrentAssemblyStatus() {
+		return this.assemblyLine.getCurrentStatus();
+	}
+	public String[] getAdvancedAssemblyStatus() {
+		return this.assemblyLine.getAdvancedStatus();
+	}
 
 }
