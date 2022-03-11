@@ -53,6 +53,8 @@ public class AssemblyLine {
 				workStation.getTasks()); //returns true if no tasks are uncompleted
 	}
 	
+	/////////////////////////// Functions used 2 get data for manager use case //////////////////////////////
+	
 	public String[] getCurrentStatus() {
 		List<String> status = new LinkedList<String>();
 		this.workStations.forEach(w -> {
@@ -70,7 +72,7 @@ public class AssemblyLine {
 		return status.toArray(array);
 	}
 	
-	public String[] getAdvancedStatus() {
+	public String[] getAdvancedStatus() { //// Kan ook met list werken, geen idee waarom ik array kies.
 		List<String> status = new LinkedList<String>();
 		for(int i = 0; i < workStations.size(); i++){
 			String s;
@@ -91,6 +93,47 @@ public class AssemblyLine {
 		String[] array = new String[status.size()];
 		return status.toArray(array);
 	}
+	
+	/////////////////////////////// Functions used Car Mechanic use case ////////////////////////////////
+	
+	public List<String> getWorkstations(){ 
+		List<String> names = new LinkedList<String>();
+		for(WorkStation station: this.workStations) {
+			names.add(station.getName());
+		}
+		return names;
+	}
+	
+	private WorkStation getWorkStation(String station) {
+		for(WorkStation wStation: this.workStations) {
+			if(wStation.getName() == station) return wStation;
+		}
+		
+		return null;
+		
+	}
+	
+	public Map<String,Set<String>> getStationAndTasks(){ //niet gebruikt op het moment
+		Map<String,Set<String>> map = new HashMap<String,Set<String>>();
+		for (WorkStation station :workStations) {
+			map.put(station.getName(), station.getTasks());
+		}
+		return map;
+	}
+	public Set<String> getAvailableTasks(String station) {
+		WorkStation wStation = this.getWorkStation(station);
+		Set<String> tasks = wStation.getTasks();
+		Car car = wStation.getCar();
+		if(car == null) return new HashSet<>(Arrays.asList("No tasks need completion (no car in station)"));
+		else {
+			Set<String> carTasks = car.getUncompletedTasks();
+			tasks.retainAll(carTasks);
+			return tasks;
+		}	
+	}
+	
+/////////////////////////////////////////////////////////////////////////////////////////////////////:	
+	
 
 	// TEST FUNCTION
 	public void printAssembly() {
