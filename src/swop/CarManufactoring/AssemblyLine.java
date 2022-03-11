@@ -125,6 +125,17 @@ public class AssemblyLine {
 			return tasks;
 		}
 	}
+	
+	public String getTaskInfo(String task) {
+		if(task == null) return null;
+		TaskInfo info = TaskInfo.getTaksInfo(task);
+		if(info == null) return null;
+		String part = info.getPartOfTask();
+		WorkStation station = this.getWorkStation(info.getWorkStation());
+		if(station.getCar() == null) return null;
+		String partValue = station.getCar().getCarModel().getValueOfPart(part);
+		return info.getDescription() + partValue;
+	}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////:
 

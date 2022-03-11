@@ -1,5 +1,6 @@
 package swop.Users;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -15,17 +16,27 @@ public class CarMechanic extends User{
 	public void load(AssemAssist assemAssist) {
 		List<String> stations = assemAssist.getStations();
 		CarMechanicUI.displayAvailableStations(stations);
-		String station = CarMechanicUI.askNumber();
-		while(!isvalidstation(station, stations.size())) station = CarMechanicUI.askNumber();
-		Set<String> tasks = getAvailableTasks(assemAssist, Integer.parseInt(station), stations);
-		CarMechanicUI.displayAvailableTasks(tasks);
+		String st = CarMechanicUI.askNumber("Select station: ");
+		while(!isvalidString(st, stations.size())) st = CarMechanicUI.askNumber("Give Valid Option: ");
+		Set<String> tasks = getAvailableTasks(assemAssist, stations.get(Integer.parseInt(st))); //returns the still 2 complete tasks at the station on current car.
+		List<String> taskList = new LinkedList<String>(tasks);
+		//TODO opsplitsen in helper methods
+		CarMechanicUI.displayAvailableTasks(taskList);
+		st = CarMechanicUI.askNumber("Select task: ");
+		while(!isvalidString(st, tasks.size())) st = CarMechanicUI.askNumber("Give Valid Option: ");
+		String info = this.getTaskInfo(assemAssist, taskList.get(Integer.parseInt(st)));
+		CarMechanicUI.displayTaskInfo(info);
 	}
 
-	private Set<String> getAvailableTasks(AssemAssist assemAssist, int parseInt, List<String> stations) {
-		return assemAssist.getsAvailableTask(stations.get(parseInt));
+	private String getTaskInfo(AssemAssist assemAssist, String task) {
+		return assemAssist.getTaskInfo(task);
 	}
 
-	private boolean isvalidstation(String intg, int size) {
+	private Set<String> getAvailableTasks(AssemAssist assemAssist, String station) {
+		return assemAssist.getsAvailableTask(station);
+	}
+
+	private boolean isvalidString(String intg, int size) {
 		try{
             int number = Integer.parseInt(intg);
             if(number < size && number >= 0) return true;

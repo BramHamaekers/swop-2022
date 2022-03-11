@@ -27,6 +27,10 @@ public class CarModel {
     public Map<String, String> getParts() {
         return parts;
     }
+    
+    public String getValueOfPart(String part) {
+    	return parts.get(part);
+    }
 
     public void setParts(Map<String, String> parts) {
         this.parts = parts;
