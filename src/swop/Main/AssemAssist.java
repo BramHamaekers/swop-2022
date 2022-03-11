@@ -10,6 +10,7 @@ import swop.Users.User;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class AssemAssist {
 
@@ -65,6 +66,13 @@ public class AssemAssist {
 	}
 	public String[] getAdvancedAssemblyStatus() {
 		return this.assemblyLine.getAdvancedStatus();
+	}
+	public List<String> getStations() {
+		return this.assemblyLine.getWorkstations();
+	}
+	public Set<String> getsAvailableTask(String string) {
+		// TODO Auto-generated method stub
+		return this.assemblyLine.getAvailableTasks(string);
 	}
 
 }
