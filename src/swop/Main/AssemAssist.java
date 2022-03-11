@@ -71,8 +71,10 @@ public class AssemAssist {
 		return this.assemblyLine.getWorkstations();
 	}
 	public Set<String> getsAvailableTask(String string) {
-		// TODO Auto-generated method stub
 		return this.assemblyLine.getAvailableTasks(string);
+	}
+	public String getTaskInfo(String task) {
+		return this.assemblyLine.getTaskInfo(task);
 	}
 
 }
