@@ -35,23 +35,16 @@ public enum TaskInfo{
 	}
 	
 	public static TaskInfo getTaksInfo(String task) {
-		switch(task) {
-		case "Assembly car body":
-			return AssemblyCarBody;
-		case "Paint car":
-			return PaintCar;
-		case "Insert engine":
-			return InsersEngine;
-		case "Insert gearbox":
-			return AssemblyCarBody;
-		case "Install seats":
-			return InstallGearbox;
-		case "Install airco":
-			return InstallAirco;
-		case "Mount wheels":
-			return MountWheels;
-		default: 
-			return null;}
+		return switch (task) {
+			case "Assembly car body" -> AssemblyCarBody;
+			case "Paint car" -> PaintCar;
+			case "Insert engine" -> InsersEngine;
+			case "Insert gearbox" -> AssemblyCarBody;
+			case "Install seats" -> InstallGearbox;
+			case "Install airco" -> InstallAirco;
+			case "Mount wheels" -> MountWheels;
+			default -> null;
+		};
 	}
 
 	String getPartOfTask() {

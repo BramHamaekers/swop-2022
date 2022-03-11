@@ -1,9 +1,5 @@
 package swop.CarManufactoring;
 
-import java.util.List;
-
-import swop.Database.RandomID;
-
 public class CarOrder {
 	private Car car;
 	

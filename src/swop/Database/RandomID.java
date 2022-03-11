@@ -9,11 +9,10 @@ public final class RandomID {
 		 int rightLim = 122;
 		 Random random = new Random();
 
-		 String string = random.ints(leftLim, rightLim)
+		return random.ints(leftLim, rightLim)
 		      .limit(i)
 		      .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
 		      .toString();
-		return string;    
 	}
 
 }

@@ -10,6 +10,7 @@ import swop.Users.User;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 public class AssemAssist {
@@ -40,14 +41,17 @@ public class AssemAssist {
 		final Map <String, List<String>> userDatabase = Database.openDatabase("users.json", "id", "job");
 		LoginUI.init();
 		String id = LoginUI.getUserID();
-		while (!Database.isValidKey(userDatabase, id)) {
-			System.out.println("Invalid user ID.");
+		while (!(Objects.equals(id, "QUIT"))){
+			while (!Database.isValidKey(userDatabase, id)) {
+				System.out.println("Invalid user ID, type QUIT to exit");
+				id = LoginUI.getUserID();
+			}
+			if(this.userMap == null) this.userMap = ConvertMapType.changeToUserMap(userDatabase);
+			User activeUser = this.userMap.get(id);
+			activeUser.load(this);
+			activeUser = null;
 			id = LoginUI.getUserID();
 		}
-		if(this.userMap == null) this.userMap = ConvertMapType.changeToUserMap(userDatabase);
-		User activeUser = this.userMap.get(id);
-		activeUser.load(this);
-		login();	//TODO: option to exit the program
 	}
 
 	/************************ Assembly *************************/

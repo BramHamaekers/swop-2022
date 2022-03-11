@@ -9,7 +9,7 @@ public final class LoginUI implements UI{
 	}
 
 	public static String getUserID() {
-		System.out.print("Please login with userID: ");
+		System.out.print("Please login with userID, type QUIT to exit: ");
 		return inputScanner.nextLine(); // returns id
 	}
 }

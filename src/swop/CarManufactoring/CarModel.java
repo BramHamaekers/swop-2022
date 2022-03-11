@@ -21,7 +21,6 @@ public class CarModel {
                 throw new IllegalAccessException("not a valid option");
         }
         this.setParts(parts);
-//        System.out.println(parts);
     }
 
     public Map<String, String> getParts() {
