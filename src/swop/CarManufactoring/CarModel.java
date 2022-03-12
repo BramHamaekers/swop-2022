@@ -8,17 +8,17 @@ public class CarModel {
 
     private Map<String, String> parts= new HashMap<>();
 
-    public CarModel(Map<String, String> parts) throws IllegalAccessException {
+    public CarModel(Map<String, String> parts) {
         LinkedHashMap<String, List<String>> optionsMap = Database.openDatabase("carOptions.json", "component", "options");
         List<String> reqParts = new ArrayList<>();
         optionsMap.forEach((String component, List<String> opts) -> reqParts.add(component));
         for(String comp : parts.keySet()){
             //check if all components are present
             if (!reqParts.contains(comp))
-                throw new IllegalAccessException("not all parts selected");
+                throw new IllegalArgumentException("not all parts selected");
             //check if selected option is valid
             if (!optionsMap.get(comp).contains(parts.get(comp)))
-                throw new IllegalAccessException("not a valid option");
+                throw new IllegalArgumentException("not a valid option");
         }
         this.setParts(parts);
     }

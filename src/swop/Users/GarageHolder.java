@@ -64,12 +64,7 @@ public class GarageHolder extends User{
     }
 
     private CarModel createCarModel(Map<String, String> carOptions) {
-            try {
-                return new CarModel(carOptions);
-            } catch (IllegalAccessException e) {
-                System.out.println(e); //TODO check defensive programming
-                return null;
-            }
+            return new CarModel(carOptions);
         }
 
     private void placeOrder(AssemAssist assemAssist, CarModel carModel){
