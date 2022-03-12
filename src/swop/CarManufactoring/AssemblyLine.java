@@ -141,7 +141,7 @@ public class AssemblyLine {
 			return null;
 		}
 		WorkStation station = this.getWorkStation(info.getWorkStation());
-		String partValue = station.getPartValueOfCar(info.getPartOfTask());
+		String partValue = station.getValueOfPart(info.getPartOfTask());
 		return info.getDescription() + partValue;
 	}
 
@@ -207,7 +207,7 @@ class WorkStation {
 	public void setCar(Car car) {
 		this.car = car;
 	}
-	public String getPartValueOfCar(String part) {
+	public String getValueOfPart(String part) {
 		try {
 			return this.getCar().getValueOfPart(part);
 		} catch(Exception e) {
