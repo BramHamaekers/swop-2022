@@ -4,7 +4,7 @@ public enum TaskInfo{
 	
 	AssemblyCarBody("Assembly car body", "Mount a body on the chassis of type: ", "Car Body Post","body"), 
 	PaintCar("Paint car", "Paint the body in colour: ", "Car Body Post","color"), 
-	InsersEngine("Insert engine", "Insert engine of type: ", "Drivetrain Post","engine"), 
+	InsertEngine("Insert engine", "Insert engine of type: ", "Drivetrain Post","engine"),
 	InstallGearbox("Insert gearbox", "Insert gearbox of type: ", "Drivetrain Post","gearBox"), 
 	InstallSeats("Install seats", "Install seats of type: ", "Accessories Post","seats"),
 	InstallAirco("Install airco", "Install airco of type: ", "Accessories Post","airco"),
@@ -38,7 +38,7 @@ public enum TaskInfo{
 		return switch (task) {
 			case "Assembly car body" -> AssemblyCarBody;
 			case "Paint car" -> PaintCar;
-			case "Insert engine" -> InsersEngine;
+			case "Insert engine" -> InsertEngine;
 			case "Insert gearbox" -> InstallGearbox;
 			case "Install seats" -> InstallSeats;
 			case "Install airco" -> InstallAirco;
