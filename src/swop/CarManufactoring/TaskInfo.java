@@ -2,13 +2,13 @@ package swop.CarManufactoring;
 
 public enum TaskInfo{
 	
-	AssemblyCarBody("Assembly car body", "Mount a body on the chassis of type: ", "Car Body Post","body"), 
-	PaintCar("Paint car", "Paint the body in colour: ", "Car Body Post","color"), 
-	InsertEngine("Insert engine", "Insert engine of type: ", "Drivetrain Post","engine"),
-	InstallGearbox("Insert gearbox", "Insert gearbox of type: ", "Drivetrain Post","gearBox"), 
-	InstallSeats("Install seats", "Install seats of type: ", "Accessories Post","seats"),
-	InstallAirco("Install airco", "Install airco of type: ", "Accessories Post","airco"),
-	MountWheels("Mount wheels", "Mount wheels of type: ", "Accessories Post","wheels");
+	AssemblyCarBody("assembly car body", "Mount a body on the chassis of type: ", "Car Body Post","body"), 
+	PaintCar("paint car", "Paint the body in colour: ", "Car Body Post","color"), 
+	InsertEngine("insert engine", "Insert engine of type: ", "Drivetrain Post","engine"),
+	InstallGearbox("insert gearbox", "Insert gearbox of type: ", "Drivetrain Post","gearBox"), 
+	InstallSeats("install seats", "Install seats of type: ", "Accessories Post","seats"),
+	InstallAirco("install airco", "Install airco of type: ", "Accessories Post","airco"),
+	MountWheels("mount wheels", "Mount wheels of type: ", "Accessories Post","wheels");
 	
 	private String name;
 	private String description;
@@ -36,13 +36,13 @@ public enum TaskInfo{
 	
 	public static TaskInfo getTaksInfo(String task) {
 		return switch (task) {
-			case "Assembly car body" -> AssemblyCarBody;
-			case "Paint car" -> PaintCar;
-			case "Insert engine" -> InsertEngine;
-			case "Insert gearbox" -> InstallGearbox;
-			case "Install seats" -> InstallSeats;
-			case "Install airco" -> InstallAirco;
-			case "Mount wheels" -> MountWheels;
+			case "assembly car body" -> AssemblyCarBody;
+			case "paint car" -> PaintCar;
+			case "insert engine" -> InsertEngine;
+			case "insert gearbox" -> InstallGearbox;
+			case "install seats" -> InstallSeats;
+			case "install airco" -> InstallAirco;
+			case "mount wheels" -> MountWheels;
 			default -> null;
 		};
 	}

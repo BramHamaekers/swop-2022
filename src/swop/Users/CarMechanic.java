@@ -12,18 +12,29 @@ public class CarMechanic extends User{
         super(id);
     }
 
+    private String workStation; //temp tot betere oplossing
 	@Override
 	public void load(AssemAssist assemAssist) {
 		//returns work station selected by the user
-		String workStation = this.selectStation(assemAssist);
+		if(workStation == null) workStation = this.selectStation(assemAssist);
 		//return list of all the tasks
 		List<String> taskList = getAvailableTasks(assemAssist, workStation);
 		//returns selected task by user
 		String task = this.selectTask(taskList);
 		//Show the information for given task 2 user
-		if (task != null) this.showInfo(assemAssist, task);
+		if (task != null) {
+			this.showInfo(assemAssist, task);
+			this.completeTask(assemAssist, task);
+			this.load(assemAssist);
+		}
+		workStation = null;
 	}
 
+
+	private void completeTask(AssemAssist assemAssist, String task) {
+		assemAssist.completeTask(task);
+		
+	}
 
 	private void showInfo(AssemAssist assemAssist, String task) {
 		String info = this.getTaskInfo(assemAssist, task);
@@ -31,7 +42,7 @@ public class CarMechanic extends User{
 	}
 
 	private String selectTask(List<String> taskList) {
-		if(taskList == null) return null; //throw error?
+		if(taskList == null || taskList.isEmpty()) return null; //throw error?
 		CarMechanicUI.displayAvailableTasks(taskList);
 		String option = CarMechanicUI.askOption("Select task: ");
 		while(!isValidString(option, taskList.size())) option = CarMechanicUI.askOption("Give Valid Option: ");

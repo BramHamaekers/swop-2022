@@ -15,6 +15,20 @@ public class AssemblyLine {
 		this.carQueue = new LinkedList<>();
 		this.workStations = createWorkStations();
 
+		////////////////////// for testing car mechanic ////////////////////////////
+		Map<String, String> options = Map.of("body", "sedan", "color", "red", "engine", "standard 2l 4 cilinders",
+	            "gearBox", "6 speed manual", "seats", "leather black", "airco", "manual", "wheels", "comfort");
+	    CarModel model = new CarModel(options);
+	    CarOrder order = new CarOrder(model);
+	    this.addToAssembly(order);
+	    try {
+			this.advanceAssemblyLine();
+		} catch (NotAllTasksCompleteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    /////////////////////////////////////////////////////////////////////
+	    
 	}
 
 	private LinkedList<WorkStation> createWorkStations () {
@@ -121,11 +135,22 @@ public class AssemblyLine {
 
 	public Set<String> getAvailableTasks(String station) {
 			WorkStation workStation = this.getWorkStation(station);
-			if(workStation == null) return null;
+			if(workStation == null) {
+				System.out.print("no workStation");
+				return null;
+			}
 			return workStation.getUncompletedTasks();
 	}
 	
 	public void completeTask(String task) {
+		//upper case sensitive (task need to be lower case in order 2 work)
+		TaskInfo info = TaskInfo.getTaksInfo(task);
+		if(info == null) {
+			System.out.println("Invalid Task"); // throw error?
+			return;
+		}
+		WorkStation station = this.getWorkStation(info.getWorkStation());
+		station.completeTask(task);
 		
 	}
 	
@@ -135,6 +160,7 @@ public class AssemblyLine {
 	 * @return String with info
 	 */
 	public String getTaskInfo(String task) {
+		//upper case sensitive (task need to be lower case in order 2 work)
 		TaskInfo info = TaskInfo.getTaksInfo(task);
 		if(info == null) {
 			System.out.println("Invalid Task"); // throw error?
@@ -175,7 +201,10 @@ class WorkStation {
 
 	public Set<String> getUncompletedTasks() {
 		try {
-			return this.getCar().getUncompletedTasks();
+			Set<String> tasks = this.getTasks();
+			tasks.retainAll(this.getCar().getUncompletedTasks()); //upper case sensitive (every task is in lower case in order 2 work)
+			return tasks;
+			
 		} catch(Exception e) {
 			System.out.println("There are no available tasks (No car in station)");
 			return null;
@@ -189,9 +218,9 @@ class WorkStation {
 
 	public Set<String> getTasks() {
 		return switch (this.getName()) {
-			case "Car Body Post" -> new HashSet<>(Arrays.asList("Assembly car body", "Paint car"));
-			case "Drivetrain Post" -> new HashSet<>(Arrays.asList("Insert engine", "Insert gearbox"));
-			case "Accessories Post" -> new HashSet<>(Arrays.asList("Install seats", "Install airco", "Mount wheels"));
+			case "Car Body Post" -> new HashSet<>(Arrays.asList("assembly car body", "paint car"));
+			case "Drivetrain Post" -> new HashSet<>(Arrays.asList("insert engine", "insert gearbox"));
+			case "Accessories Post" -> new HashSet<>(Arrays.asList("install seats", "install airco", "mount wheels"));
 			default -> null;
 		};
 	}
@@ -213,6 +242,13 @@ class WorkStation {
 		} catch(Exception e) {
 			System.out.println("There is no car in this workstation");
 			return null;
+		}
+	}
+	public void completeTask(String task) {
+		try {
+			this.getCar().completeTask(task);
+		} catch(Exception e) {
+			System.out.println("There is no car in this workstation");
 		}
 	}
 }

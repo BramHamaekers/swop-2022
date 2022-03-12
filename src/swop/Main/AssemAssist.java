@@ -79,5 +79,9 @@ public class AssemAssist {
 	public String getTaskInfo(String task) {
 		return this.assemblyLine.getTaskInfo(task);
 	}
+	public void completeTask(String task) {
+		this.assemblyLine.completeTask(task);
+		
+	}
 
 }
