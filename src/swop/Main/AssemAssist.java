@@ -73,7 +73,7 @@ public class AssemAssist {
 	public List<String> getStations() {
 		return this.assemblyLine.getWorkstations();
 	}
-	public Set<String> getsAvailableTask(String string) {
+	public Set<String> getsAvailableTasks(String string) {
 		return this.assemblyLine.getAvailableTasks(string);
 	}
 	public String getTaskInfo(String task) {

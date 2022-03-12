@@ -102,7 +102,6 @@ public class AssemblyLine {
 		for(WorkStation wStation: this.workStations) {
 			if(Objects.equals(wStation.getName(), station)) return wStation;
 		}
-
 		return null;
 
 	}
@@ -114,18 +113,16 @@ public class AssemblyLine {
 		}
 		return map;
 	}
+
 	public Set<String> getAvailableTasks(String station) {
-		WorkStation wStation = this.getWorkStation(station);
-		//TODO: assert
-		assert wStation != null;
-		Set<String> tasks = wStation.getTasks();
-		Car car = wStation.getCar();
-		if(car == null) return new HashSet<>(List.of("No tasks need completion (no car in station)"));
-		else {
-			Set<String> carTasks = car.getUncompletedTasks();
-			tasks.retainAll(carTasks);
+		try {
+			WorkStation workStation = this.getWorkStation(station);
+			Set<String> tasks = workStation.getTasks();
+			tasks.retainAll(workStation.getCar().getUncompletedTasks());
 			return tasks;
 		}
+		catch (NullPointerException e) {System.out.println("Not a valid workstation");}
+		return null;
 	}
 	
 	public String getTaskInfo(String task) {
