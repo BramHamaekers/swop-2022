@@ -14,29 +14,48 @@ public class CarMechanic extends User{
 
 	@Override
 	public void load(AssemAssist assemAssist) {
-		List<String> stations = assemAssist.getStations();
-		CarMechanicUI.displayAvailableStations(stations);
-		String st = CarMechanicUI.askNumber("Select station: ");
-		while(!isvalidString(st, stations.size())) st = CarMechanicUI.askNumber("Give Valid Option: ");
-		Set<String> tasks = getAvailableTasks(assemAssist, stations.get(Integer.parseInt(st))); //returns the still 2 complete tasks at the station on current car.
-		List<String> taskList = new LinkedList<>(tasks);
-		//TODO opsplitsen in helper methods
+		List<String> workStations = assemAssist.getStations();
+		CarMechanicUI.displayAvailableStations(workStations);
+
+		String option = CarMechanicUI.askNumber("Select station: ");
+		while(!isValidString(option, workStations.size()))
+			option = CarMechanicUI.askNumber("Give Valid Option: ");
+		String workStation = workStations.get(Integer.parseInt(option));
+		List<String> taskList = getAvailableTasks(assemAssist, workStation);
+
 		CarMechanicUI.displayAvailableTasks(taskList);
-		st = CarMechanicUI.askNumber("Select task: ");
-		while(!isvalidString(st, tasks.size())) st = CarMechanicUI.askNumber("Give Valid Option: ");
-		String info = this.getTaskInfo(assemAssist, taskList.get(Integer.parseInt(st)));
+		option = CarMechanicUI.askNumber("Select task: ");
+
+		while(!isValidString(option, taskList.size())) option = CarMechanicUI.askNumber("Give Valid Option: ");
+		String info = this.getTaskInfo(assemAssist, taskList.get(Integer.parseInt(option)));
 		CarMechanicUI.displayTaskInfo(info);
+	}
+
+	/**
+	 *
+	 * @param assemAssist
+	 * @param workStation Name of the selected workStation
+	 * @return List of available tasks in the selected workstation
+	 */
+	private List<String> getAvailableTasks(AssemAssist assemAssist, String workStation) {
+		List<String> taskList = new LinkedList<>();
+		try {
+			Set<String> tasks = assemAssist.getsAvailableTasks(workStation);
+			taskList = new LinkedList<>(tasks);
+		}
+		catch (NullPointerException e) {
+			System.out.println("No Tasks to complete");
+		}
+		return taskList;
 	}
 
 	private String getTaskInfo(AssemAssist assemAssist, String task) {
 		return assemAssist.getTaskInfo(task);
 	}
 
-	private Set<String> getAvailableTasks(AssemAssist assemAssist, String station) {
-		return assemAssist.getsAvailableTask(station);
-	}
 
-	private boolean isvalidString(String intg, int size) {
+	//TODO rename/rewrite function please
+	private boolean isValidString(String intg, int size) {
 		try{
             int number = Integer.parseInt(intg);
 			return number < size && number >= 0;

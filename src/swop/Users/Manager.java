@@ -22,10 +22,10 @@ public class Manager extends User{
 			indicate = ManagerUI.indicateAdvance();
 		}
 		if (Objects.equals(indicate, "n")) return;
-		this.addvanceAssemblyLine(assemAssist);
+		this.advanceAssemblyLine(assemAssist);
 
 	}
-	private void addvanceAssemblyLine(AssemAssist assemAssist) {
+	private void advanceAssemblyLine(AssemAssist assemAssist) {
 		ManagerUI.displayAssemblyLine(assemAssist.getCurrentAssemblyStatus(), assemAssist.getAdvancedAssemblyStatus());
 		String indicate = ManagerUI.confirmAdvance();
 		while (!isValidYesNo(indicate)) {
