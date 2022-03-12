@@ -56,7 +56,7 @@ public class AssemblyLine {
 	/////////////////////////// Functions used 2 get data for manager use case //////////////////////////////
 
 	public String[] getCurrentStatus() {
-		List<String> status = new LinkedList<String>();
+		List<String> status = new LinkedList<>();
 		this.workStations.forEach(w -> {
 			String s = w.getName();
 			if(w.getCar() == null) s = s.concat(": EMPTY");
@@ -91,7 +91,7 @@ public class AssemblyLine {
 	/////////////////////////////// Functions used Car Mechanic use case ////////////////////////////////
 
 	public List<String> getWorkstations(){
-		List<String> names = new LinkedList<String>();
+		List<String> names = new LinkedList<>();
 		for(WorkStation station: this.workStations) {
 			names.add(station.getName());
 		}
@@ -100,7 +100,7 @@ public class AssemblyLine {
 
 	private WorkStation getWorkStation(String station) {
 		for(WorkStation wStation: this.workStations) {
-			if(wStation.getName() == station) return wStation;
+			if(Objects.equals(wStation.getName(), station)) return wStation;
 		}
 
 		return null;
@@ -108,7 +108,7 @@ public class AssemblyLine {
 	}
 
 	public Map<String,Set<String>> getStationAndTasks(){ //niet gebruikt op het moment
-		Map<String,Set<String>> map = new HashMap<String,Set<String>>();
+		Map<String,Set<String>> map = new HashMap<>();
 		for (WorkStation station :workStations) {
 			map.put(station.getName(), station.getTasks());
 		}
@@ -116,9 +116,11 @@ public class AssemblyLine {
 	}
 	public Set<String> getAvailableTasks(String station) {
 		WorkStation wStation = this.getWorkStation(station);
+		//TODO: assert
+		assert wStation != null;
 		Set<String> tasks = wStation.getTasks();
 		Car car = wStation.getCar();
-		if(car == null) return new HashSet<>(Arrays.asList("No tasks need completion (no car in station)"));
+		if(car == null) return new HashSet<>(List.of("No tasks need completion (no car in station)"));
 		else {
 			Set<String> carTasks = car.getUncompletedTasks();
 			tasks.retainAll(carTasks);
@@ -132,6 +134,8 @@ public class AssemblyLine {
 		if(info == null) return null;
 		String part = info.getPartOfTask();
 		WorkStation station = this.getWorkStation(info.getWorkStation());
+		//TODO: assert
+		assert station != null;
 		if(station.getCar() == null) return null;
 		String partValue = station.getCar().getCarModel().getValueOfPart(part);
 		return info.getDescription() + partValue;

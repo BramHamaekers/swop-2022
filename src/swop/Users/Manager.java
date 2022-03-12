@@ -1,10 +1,7 @@
 package swop.Users;
 
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Objects;
 
-import swop.CarManufactoring.Car;
 import swop.Exceptions.NotAllTasksCompleteException;
 import swop.Main.AssemAssist;
 import swop.UI.ManagerUI;

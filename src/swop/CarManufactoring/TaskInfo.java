@@ -39,8 +39,8 @@ public enum TaskInfo{
 			case "Assembly car body" -> AssemblyCarBody;
 			case "Paint car" -> PaintCar;
 			case "Insert engine" -> InsersEngine;
-			case "Insert gearbox" -> AssemblyCarBody;
-			case "Install seats" -> InstallGearbox;
+			case "Insert gearbox" -> InstallGearbox;
+			case "Install seats" -> InstallSeats;
 			case "Install airco" -> InstallAirco;
 			case "Mount wheels" -> MountWheels;
 			default -> null;

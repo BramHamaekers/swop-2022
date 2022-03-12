@@ -19,7 +19,7 @@ public class CarMechanic extends User{
 		String st = CarMechanicUI.askNumber("Select station: ");
 		while(!isvalidString(st, stations.size())) st = CarMechanicUI.askNumber("Give Valid Option: ");
 		Set<String> tasks = getAvailableTasks(assemAssist, stations.get(Integer.parseInt(st))); //returns the still 2 complete tasks at the station on current car.
-		List<String> taskList = new LinkedList<String>(tasks);
+		List<String> taskList = new LinkedList<>(tasks);
 		//TODO opsplitsen in helper methods
 		CarMechanicUI.displayAvailableTasks(taskList);
 		st = CarMechanicUI.askNumber("Select task: ");
@@ -39,9 +39,8 @@ public class CarMechanic extends User{
 	private boolean isvalidString(String intg, int size) {
 		try{
             int number = Integer.parseInt(intg);
-            if(number < size && number >= 0) return true;
-            return false;
-        }
+			return number < size && number >= 0;
+		}
         catch (NumberFormatException ex){
             return false;
         }

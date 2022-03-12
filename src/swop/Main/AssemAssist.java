@@ -49,7 +49,6 @@ public class AssemAssist {
 			if(this.userMap == null) this.userMap = ConvertMapType.changeToUserMap(userDatabase);
 			User activeUser = this.userMap.get(id);
 			activeUser.load(this);
-			activeUser = null;
 			id = LoginUI.getUserID();
 		}
 	}

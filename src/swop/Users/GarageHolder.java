@@ -1,5 +1,4 @@
 package swop.Users;
-import swop.CarManufactoring.Car;
 import swop.CarManufactoring.CarModel;
 import swop.CarManufactoring.CarOrder;
 import swop.Database.Database;
@@ -88,10 +87,6 @@ public class GarageHolder extends User{
     /************************ Orders *************************/
     public Set<CarOrder> getOrders() {
         return this.carOrders;
-    }
-
-    public void setOrders(Set<CarOrder> carOrders) {
-        this.carOrders = carOrders;
     }
 
     public void addOrder(CarOrder carOrder) {
