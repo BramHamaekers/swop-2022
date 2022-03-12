@@ -1,9 +1,7 @@
 package swop.CarManufactoring;
 
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class Car {
 	public static Set<String> tasks = Set.of("assembly car body", "paint car", "insert engine", "insert gearbox",
@@ -56,5 +54,12 @@ public class Car {
 
 	public void setCarModel(CarModel carModel) {
 		this.carModel = carModel;
+	}
+	public String getValueOfPart(String part) {
+		if (this.carModel == null) {
+			System.out.println("The car has no carmodel");
+			return null;
+		}
+		return this.getCarModel().getValueOfPart(part);
 	}
 }

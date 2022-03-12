@@ -28,7 +28,10 @@ public class CarModel {
     }
     
     public String getValueOfPart(String part) {
-    	return parts.get(part);
+    	try { return parts.get(part);}
+    	catch(Exception e) { 
+    		System.out.println("Invalid part");
+    		return null;}
     }
 
     public void setParts(Map<String, String> parts) {

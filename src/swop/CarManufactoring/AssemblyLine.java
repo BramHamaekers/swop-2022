@@ -90,6 +90,10 @@ public class AssemblyLine {
 
 	/////////////////////////////// Functions used Car Mechanic use case ////////////////////////////////
 
+	/**
+	 * returns list of strings with names of all workstations.
+	 * @return
+	 */
 	public List<String> getWorkstations(){
 		List<String> names = new LinkedList<>();
 		for(WorkStation station: this.workStations) {
@@ -102,39 +106,42 @@ public class AssemblyLine {
 		for(WorkStation wStation: this.workStations) {
 			if(Objects.equals(wStation.getName(), station)) return wStation;
 		}
+		System.out.println("There is no workstation with this name"); //throw error?
 		return null;
 
 	}
 
-	public Map<String,Set<String>> getStationAndTasks(){ //niet gebruikt op het moment
+	/*public Map<String,Set<String>> getStationAndTasks(){ //niet gebruikt op het moment
 		Map<String,Set<String>> map = new HashMap<>();
 		for (WorkStation station :workStations) {
 			map.put(station.getName(), station.getTasks());
 		}
 		return map;
-	}
+	}*/
 
 	public Set<String> getAvailableTasks(String station) {
-		try {
 			WorkStation workStation = this.getWorkStation(station);
-			Set<String> tasks = workStation.getTasks();
-			tasks.retainAll(workStation.getCar().getUncompletedTasks());
-			return tasks;
-		}
-		catch (NullPointerException e) {System.out.println("Not a valid workstation");}
-		return null;
+			if(workStation == null) return null;
+			return workStation.getUncompletedTasks();
 	}
 	
+	public void completeTask(String task) {
+		
+	}
+	
+	/**
+	 * Returns a string with info for completing a given task
+	 * @param task
+	 * @return String with info
+	 */
 	public String getTaskInfo(String task) {
-		if(task == null) return null;
 		TaskInfo info = TaskInfo.getTaksInfo(task);
-		if(info == null) return null;
-		String part = info.getPartOfTask();
+		if(info == null) {
+			System.out.println("Invalid Task"); // throw error?
+			return null;
+		}
 		WorkStation station = this.getWorkStation(info.getWorkStation());
-		//TODO: assert
-		assert station != null;
-		if(station.getCar() == null) return null;
-		String partValue = station.getCar().getCarModel().getValueOfPart(part);
+		String partValue = station.getPartValueOfCar(info.getPartOfTask());
 		return info.getDescription() + partValue;
 	}
 
@@ -166,6 +173,15 @@ class WorkStation {
 
 	}
 
+	public Set<String> getUncompletedTasks() {
+		try {
+			return this.getCar().getUncompletedTasks();
+		} catch(Exception e) {
+			System.out.println("There are no available tasks for this workstation");
+			return null;
+		}
+	}
+
 	private boolean isValidName(String name) {
 		return (Objects.equals(name, "Car Body Post")) ||
 				(Objects.equals(name, "Drivetrain Post")) || (Objects.equals(name, "Accessories Post"));
@@ -190,6 +206,14 @@ class WorkStation {
 
 	public void setCar(Car car) {
 		this.car = car;
+	}
+	public String getPartValueOfCar(String part) {
+		try {
+			return this.getCar().getValueOfPart(part);
+		} catch(Exception e) {
+			System.out.println("There is no car in this workstation");
+			return null;
+		}
 	}
 }
 
