@@ -177,7 +177,7 @@ class WorkStation {
 		try {
 			return this.getCar().getUncompletedTasks();
 		} catch(Exception e) {
-			System.out.println("There are no available tasks for this workstation");
+			System.out.println("There are no available tasks (No car in station)");
 			return null;
 		}
 	}
