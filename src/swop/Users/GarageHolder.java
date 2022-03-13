@@ -2,6 +2,7 @@ package swop.Users;
 import swop.CarManufactoring.CarModel;
 import swop.CarManufactoring.CarOrder;
 import swop.Database.Database;
+import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
 import swop.UI.GarageHolderUI;
 
@@ -24,29 +25,42 @@ public class GarageHolder extends User{
      */
     @Override
     public void load(AssemAssist assemAssist) { //tODO split up in helper functions
-        GarageHolderUI.init(this.getId());
-        GarageHolderUI.displayOrders(this.getOrders());
-        
-        String action = GarageHolderUI.indicatePlaceOrder();
-        if (Objects.equals(action, "n")) return;
+    	try {
+    		GarageHolderUI.init(this.getId());
+    		GarageHolderUI.displayOrders(this.getOrders());  
+    		String action;
+			action = GarageHolderUI.indicatePlaceOrder();
+			if (Objects.equals(action, "n")) return;
 
-        this.generateOrder(assemAssist);
+			if(!this.generateOrder(assemAssist)) return;
         //TODO: update production schedule
         //TODO: present an estimated completion date
+    	} catch (CancelException e) {
+			e.printMessage();
+			}
         this.logout();
     }
 
-    private void generateOrder(AssemAssist assemAssist) {
+    private boolean generateOrder(AssemAssist assemAssist) {
     	///////////////////Doen nog niets met model voorlopig/////////////////////
-    	int model = GarageHolderUI.indicateCarModel();
+    	try {
+			int model = GarageHolderUI.indicateCarModel();
         //////////////////////////////////////////
-    	GarageHolderUI.displayOrderingForm(this.getOptionsMap());
+			GarageHolderUI.displayOrderingForm(this.getOptionsMap());
         //TODO alternate flow: cancel placing order
-        Map<String,Integer> carConfig = GarageHolderUI.fillOrderingForm(this.getOptionsMap());
-        Map<String, String> carOptions = this.mapConfigToOptions(carConfig);
-        CarModel carModel = createCarModel(carOptions);
-
-        this.placeOrder(assemAssist, carModel);	
+			Map<String,Integer> carConfig = new HashMap<>();
+			for (var entry : this.getOptionsMap().entrySet()) {
+				int option = GarageHolderUI.askOption(0, entry.getValue().size(), entry.getKey());
+				carConfig.put(entry.getKey(), option);
+			}
+			Map<String, String> carOptions = this.mapConfigToOptions(carConfig);
+			CarModel carModel = createCarModel(carOptions);
+			this.placeOrder(assemAssist, carModel);	
+			return true;
+    	} catch (CancelException e) {
+    		e.printMessage();
+			return false;
+		}
 	}
 
 	private Map<String,String> mapConfigToOptions(Map<String, Integer> carConfig) {

@@ -1,5 +1,6 @@
 package swop.UI;
 import swop.CarManufactoring.CarOrder;
+import swop.Exceptions.CancelException;
 
 import java.util.*;
 import java.util.List;
@@ -29,11 +30,11 @@ public class GarageHolderUI implements UI {
 		System.out.println("=======================================");
 	}
 
-	public static String indicatePlaceOrder() {
+	public static String indicatePlaceOrder() throws CancelException {
 		return UI.indicateYesNo("place an order");
 	}
 
-	public static int indicateCarModel() {
+	public static int indicateCarModel() throws CancelException {
 		System.out.printf("%n============ Car Models ============%n");
 		System.out.println("[0] car");
 		System.out.println("=======================================");
@@ -58,17 +59,9 @@ public class GarageHolderUI implements UI {
 	}
 
 
-	public static Map<String,Integer> fillOrderingForm(Map<String, List<String>> optionsMap) {
-		System.out.println("Choose options:");
-		//This can handle 1 car for each order.	
-		Map<String,Integer> carConfig = new HashMap<>();
-
-		optionsMap.forEach((option, options) -> {
-			System.out.print(option + ": ");
-			int input = scanner.scanNextLineOfTypeInt(0, optionsMap.get(option).size());
-			carConfig.put(option,input);
-		});
-		return carConfig;
+	public static int askOption (int leftBound, int rightBound, String option) throws CancelException {
+		System.out.println("Choose " + option + ": ");
+			return scanner.scanNextLineOfTypeInt(leftBound, rightBound);
 	}
 
 }

@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
 import swop.UI.CarMechanicUI;
 
@@ -15,17 +16,22 @@ public class CarMechanic extends User{
     private String workStation; //temp tot betere oplossing
 	@Override
 	public void load(AssemAssist assemAssist) {
-		//returns work station selected by the user
-		if(workStation == null) workStation = this.selectStation(assemAssist);
-		//return list of all the tasks
-		List<String> taskList = getAvailableTasks(assemAssist, workStation);
-		//returns selected task by user
-		String task = this.selectTask(taskList);
-		//Show the information for given task 2 user
-		if (task != null) {
-			this.showInfo(assemAssist, task);
-			this.completeTask(assemAssist, task);
-			this.load(assemAssist);
+		try {
+			//returns work station selected by the user
+			if(workStation == null) workStation = this.selectStation(assemAssist);
+			//return list of all the tasks
+			List<String> taskList = getAvailableTasks(assemAssist, workStation);
+			//returns selected task by user
+			String task;
+			task = this.selectTask(taskList);
+			//Show the information for given task 2 user
+			if (task != null) {
+				this.showInfo(assemAssist, task);
+				this.completeTask(assemAssist, task);
+				this.load(assemAssist);
+			}
+		} catch (CancelException e) {
+			e.printMessage();
 		}
 		workStation = null;
 	}
@@ -41,7 +47,7 @@ public class CarMechanic extends User{
 		CarMechanicUI.displayTaskInfo(info);
 	}
 
-	private String selectTask(List<String> taskList) {
+	private String selectTask(List<String> taskList) throws CancelException {
 		if(taskList == null || taskList.isEmpty()) return null; //throw error?
 		CarMechanicUI.displayAvailableTasks(taskList);
 		int option = CarMechanicUI.askOption("Select task: ", taskList.size());
@@ -49,7 +55,7 @@ public class CarMechanic extends User{
 		
 	}
 
-	private String selectStation(AssemAssist assemAssist) {
+	private String selectStation(AssemAssist assemAssist) throws CancelException {
 		List<String> workStations = assemAssist.getStations();
 		//asks user for workstation
 		CarMechanicUI.displayAvailableStations(workStations);

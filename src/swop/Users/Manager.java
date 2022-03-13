@@ -2,6 +2,7 @@ package swop.Users;
 
 import java.util.Objects;
 
+import swop.Exceptions.CancelException;
 import swop.Exceptions.NotAllTasksCompleteException;
 import swop.Main.AssemAssist;
 import swop.UI.ManagerUI;
@@ -17,18 +18,23 @@ public class Manager extends User{
 	public void load(AssemAssist assemAssist) {
 		ManagerUI.init(getId());
 		//let's now user wants 2 advance
-		String indicate = ManagerUI.indicateAdvance();
-		if (Objects.equals(indicate, "n")) return;
+		try {
+			String indicate;
+			indicate = ManagerUI.indicateAdvance();
+			if (Objects.equals(indicate, "n")) return;
 		//advance assembly
-		this.advanceAssemblyLine(assemAssist);
+			this.advanceAssemblyLine(assemAssist);
+		} catch (CancelException e) {
+			e.printMessage();
+		}
 
 	}
-	private void advanceAssemblyLine(AssemAssist assemAssist) {
+	private void advanceAssemblyLine(AssemAssist assemAssist) throws CancelException {
 		ManagerUI.displayAssemblyLine(assemAssist.getCurrentAssemblyStatus(), assemAssist.getAdvancedAssemblyStatus());
 		//confirm advance
 		String indicate = ManagerUI.confirmAdvance();
 		if (Objects.equals(indicate, "n")) return;
-		String time = ManagerUI.askTime(); //TODO check valid time
+		int time = ManagerUI.askTime(); //TODO check valid time
 		
 		try {
 			assemAssist.advanceAssembly();

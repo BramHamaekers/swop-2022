@@ -2,6 +2,8 @@ package swop.UI;
 
 import java.util.List;
 
+import swop.Exceptions.CancelException;
+
 public class CarMechanicUI implements UI {
 	
 	// Dummy init
@@ -19,7 +21,7 @@ public class CarMechanicUI implements UI {
 			System.out.println("=======================================");
 		}
 	
-		public static int askOption(String s, int numberOfOptions) {
+		public static int askOption(String s, int numberOfOptions) throws CancelException {
 			System.out.println(s);
 			return scanner.scanNextLineOfTypeInt(0, numberOfOptions); //only place where inputscanner class is used.
 			
