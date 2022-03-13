@@ -64,18 +64,12 @@ public class GarageHolderUI implements UI {
 		Map<String,Integer> carConfig = new HashMap<>();
 
 		optionsMap.forEach((option, options) -> {
-			int input = -1; //init on !isValidOption
-			while (!isValidOption(input, optionsMap.get(option))) {
-				System.out.print(option + ": ");
-				input = inputScanner.nextInt(); //TODO: catch nextInt Error
-			}
+			System.out.print(option + ": ");
+			int input = scanner.scanNextLineOfTypeInt(0, optionsMap.get(option).size());
 			carConfig.put(option,input);
 		});
 		inputScanner.nextLine(); // Fixes small problem with .nextInt() not clearing "\n" from its buffer
 		return carConfig;
 	}
 
-	private static boolean isValidOption(int option, List<String> options) {
-		return option < options.size() && option > -1;
-	}
 }

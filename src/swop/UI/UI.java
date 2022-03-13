@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 interface UI {
 	Scanner inputScanner = new Scanner(System.in);
+	static InputScanner scanner = new InputScanner();
 
 	static String indicateYesNo(String action) {
 		System.out.println();

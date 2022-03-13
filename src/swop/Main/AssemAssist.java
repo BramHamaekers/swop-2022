@@ -37,22 +37,26 @@ public class AssemAssist {
 	 * Handles logging in to the system
 	 */
 	private void login() {
-		// Load user database
-		final Map <String, List<String>> userDatabase = Database.openDatabase("users.json", "id", "job");
 		LoginUI.init();
 		String id = LoginUI.getUserID();
 		while (!(Objects.equals(id, "QUIT"))){
-			while (!Database.isValidKey(userDatabase, id)) {
-				System.out.println("Invalid user ID, type QUIT to exit");
-				id = LoginUI.getUserID();
-			}
-			if(this.userMap == null) this.userMap = ConvertMapType.changeToUserMap(userDatabase);
-			User activeUser = this.userMap.get(id);
-			activeUser.load(this);
+			this.loadUser(id);
 			id = LoginUI.getUserID();
 		}
 	}
 
+	private void loadUser(String id) {
+		// Load user database
+		final Map <String, List<String>> userDatabase = Database.openDatabase("users.json", "id", "job");
+		while (!Database.isValidKey(userDatabase, id)) {
+			System.out.println("Invalid user ID, type QUIT to exit");
+			id = LoginUI.getUserID();
+		}
+		if(this.userMap == null) this.userMap = ConvertMapType.changeToUserMap(userDatabase);
+		User activeUser = this.userMap.get(id);
+		activeUser.load(this);
+		
+	}
 	/************************ Assembly *************************/
 
 	public void addOrder(CarOrder carOrder) { //TODO should not be public?

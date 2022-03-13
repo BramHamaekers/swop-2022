@@ -44,9 +44,8 @@ public class CarMechanic extends User{
 	private String selectTask(List<String> taskList) {
 		if(taskList == null || taskList.isEmpty()) return null; //throw error?
 		CarMechanicUI.displayAvailableTasks(taskList);
-		String option = CarMechanicUI.askOption("Select task: ");
-		while(!isValidString(option, taskList.size())) option = CarMechanicUI.askOption("Give Valid Option: ");
-		return taskList.get(Integer.parseInt(option));
+		int option = CarMechanicUI.askOption("Select task: ", taskList.size());
+		return taskList.get(option);
 		
 	}
 
@@ -54,12 +53,8 @@ public class CarMechanic extends User{
 		List<String> workStations = assemAssist.getStations();
 		//asks user for workstation
 		CarMechanicUI.displayAvailableStations(workStations);
-		String option = CarMechanicUI.askOption("Select station: ");
-		//keeps asking untill valid awnser
-		while(!isValidString(option, workStations.size()))
-			option = CarMechanicUI.askOption("Give Valid Option: ");
-		
-		return workStations.get(Integer.parseInt(option));
+		int option = CarMechanicUI.askOption("Select station: ", workStations.size());	
+		return workStations.get(option);
 	}
 
 	
@@ -73,15 +68,4 @@ public class CarMechanic extends User{
 		return assemAssist.getTaskInfo(task);
 	}
 
-
-	//TODO rename/rewrite function please
-	private boolean isValidString(String intg, int size) {
-		try{
-            int number = Integer.parseInt(intg);
-			return number < size && number >= 0;
-		}
-        catch (NumberFormatException ex){
-            return false;
-        }
-	}
 }

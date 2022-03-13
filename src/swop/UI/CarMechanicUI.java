@@ -19,9 +19,9 @@ public class CarMechanicUI implements UI {
 			System.out.println("=======================================");
 		}
 	
-		public static String askOption(String s) {
+		public static int askOption(String s, int numberOfOptions) {
 			System.out.println(s);
-			return inputScanner.nextLine();
+			return scanner.scanNextLineOfTypeInt(0, numberOfOptions); //only place where inputscanner class is used.
 			
 		}
 
