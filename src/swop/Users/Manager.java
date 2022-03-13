@@ -16,21 +16,17 @@ public class Manager extends User{
 	@Override
 	public void load(AssemAssist assemAssist) {
 		ManagerUI.init(getId());
-		//1.
+		//let's now user wants 2 advance
 		String indicate = ManagerUI.indicateAdvance();
-		while (!isValidYesNo(indicate)) {
-			indicate = ManagerUI.indicateAdvance();
-		}
 		if (Objects.equals(indicate, "n")) return;
+		//advance assembly
 		this.advanceAssemblyLine(assemAssist);
 
 	}
 	private void advanceAssemblyLine(AssemAssist assemAssist) {
 		ManagerUI.displayAssemblyLine(assemAssist.getCurrentAssemblyStatus(), assemAssist.getAdvancedAssemblyStatus());
+		//confirm advance
 		String indicate = ManagerUI.confirmAdvance();
-		while (!isValidYesNo(indicate)) {
-			ManagerUI.confirmAdvance();
-		}
 		if (Objects.equals(indicate, "n")) return;
 		String time = ManagerUI.askTime(); //TODO check valid time
 		

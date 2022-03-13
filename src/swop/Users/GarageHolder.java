@@ -26,33 +26,30 @@ public class GarageHolder extends User{
     public void load(AssemAssist assemAssist) { //tODO split up in helper functions
         GarageHolderUI.init(this.getId());
         GarageHolderUI.displayOrders(this.getOrders());
-
+        
         String action = GarageHolderUI.indicatePlaceOrder();
-        while (!isValidYesNo(action)) {
-            action = GarageHolderUI.indicatePlaceOrder();
-        }
         if (Objects.equals(action, "n")) return;
 
-        String model = GarageHolderUI.indicateCarModel();
-        while (!isValidModel(model)) {
-            model = GarageHolderUI.indicateCarModel();
-        }
+        this.generateOrder(assemAssist);
+        //TODO: update production schedule
+        //TODO: present an estimated completion date
+        this.logout();
+    }
 
-        GarageHolderUI.displayOrderingForm(this.getOptionsMap());
+    private void generateOrder(AssemAssist assemAssist) {
+    	///////////////////Doen nog niets met model voorlopig/////////////////////
+    	int model = GarageHolderUI.indicateCarModel();
+        //////////////////////////////////////////
+    	GarageHolderUI.displayOrderingForm(this.getOptionsMap());
         //TODO alternate flow: cancel placing order
         Map<String,Integer> carConfig = GarageHolderUI.fillOrderingForm(this.getOptionsMap());
         Map<String, String> carOptions = this.mapConfigToOptions(carConfig);
         CarModel carModel = createCarModel(carOptions);
 
-        this.placeOrder(assemAssist, carModel);
+        this.placeOrder(assemAssist, carModel);	
+	}
 
-        //TODO: update production schedule
-        //TODO: present an estimated completion date
-
-        this.logout();
-    }
-
-    private Map<String,String> mapConfigToOptions(Map<String, Integer> carConfig) {
+	private Map<String,String> mapConfigToOptions(Map<String, Integer> carConfig) {
         Map<String,String> carOpts = new HashMap<>();
 
         for (String component: carConfig.keySet()) {

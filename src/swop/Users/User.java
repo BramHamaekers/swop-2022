@@ -20,8 +20,4 @@ public abstract class User {
     }
 
     protected void logout() {}
-
-    protected boolean isValidYesNo(String action) {
-        return Objects.equals(action, "y") || Objects.equals(action, "n");
-    }
 }

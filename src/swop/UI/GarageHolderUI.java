@@ -20,12 +20,12 @@ public class GarageHolderUI implements UI {
 		System.out.println("Pending:");
 		carOrders.stream()
 				.filter(o -> !o.isCompleted())
-				.forEach(p -> System.out.println(p.getCar().getCarModel().getParts()));
+				.forEach(p -> System.out.println(p.getCar().getParts()));
 		System.out.println();
 		System.out.println("Completed:");
 		carOrders.stream()
 				.filter(o -> o.isCompleted())
-				.forEach(c -> System.out.println(c.getCar().getCarModel().getParts()));
+				.forEach(c -> System.out.println(c.getCar().getParts()));
 		System.out.println("=======================================");
 	}
 
@@ -33,13 +33,13 @@ public class GarageHolderUI implements UI {
 		return UI.indicateYesNo("place an order");
 	}
 
-	public static String indicateCarModel() {
+	public static int indicateCarModel() {
 		System.out.printf("%n============ Car Models ============%n");
 		System.out.println("[0] car");
 		System.out.println("=======================================");
 		System.out.println();
 		System.out.printf("Which model would you like to order?%n");
-		return inputScanner.nextLine();
+		return scanner.scanNextLineOfTypeInt(0,1); ///we kunnen ook hun de naam laten typen
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class GarageHolderUI implements UI {
 
 	public static Map<String,Integer> fillOrderingForm(Map<String, List<String>> optionsMap) {
 		System.out.println("Choose options:");
-		//multiple cars to order
+		//This can handle 1 car for each order.	
 		Map<String,Integer> carConfig = new HashMap<>();
 
 		optionsMap.forEach((option, options) -> {
@@ -68,7 +68,6 @@ public class GarageHolderUI implements UI {
 			int input = scanner.scanNextLineOfTypeInt(0, optionsMap.get(option).size());
 			carConfig.put(option,input);
 		});
-		inputScanner.nextLine(); // Fixes small problem with .nextInt() not clearing "\n" from its buffer
 		return carConfig;
 	}
 

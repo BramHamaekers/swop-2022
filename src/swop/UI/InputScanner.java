@@ -57,9 +57,16 @@ public class InputScanner {
 	 * @return valid string
 	 */
 	public String scanNextLineOfTypeString(String[] strings) {
-		//TODO Deze functie implementeren.
 		String s = this.inputScanner.nextLine();
-		return s;
+		if(strings == null) {
+			System.out.println("Invalid Array");//throw error?
+			return null;
+		}
+		for(String str : strings) {
+			if(str.equals(s)) return s;
+		}
+		System.out.print("Please give valid input:");
+		return scanNextLineOfTypeString(strings);
 		
 	}
 }

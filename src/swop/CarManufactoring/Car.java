@@ -1,6 +1,7 @@
 package swop.CarManufactoring;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class Car {
@@ -61,5 +62,12 @@ public class Car {
 			return null;
 		}
 		return this.getCarModel().getValueOfPart(part);
+	}
+	public  Map<String, String> getParts() {
+		if (this.carModel == null) {
+			System.out.println("The car has no carmodel");
+			return null;
+		}
+		return this.getCarModel().getParts();
 	}
 }
