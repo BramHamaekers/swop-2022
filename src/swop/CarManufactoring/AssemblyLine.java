@@ -12,7 +12,7 @@ public class AssemblyLine {
 
 
 	public AssemblyLine() {
-		this.carQueue = new LinkedList<>();
+		this.setCarQueue(new LinkedList<>());
 		this.workStations = createWorkStations();
 
 		////////////////////// for testing car mechanic ////////////////////////////
@@ -31,6 +31,11 @@ public class AssemblyLine {
 	    
 	}
 
+	/**
+	 * Function creates all the workstations that are part of the assemblyLine as a linked list so that they have the
+	 * right order.
+	 * @return LinkedList<WorkStation> of all the workstations of this assemblyLine
+	 */
 	private LinkedList<WorkStation> createWorkStations () {
 		LinkedList<WorkStation> workStations = new LinkedList<>();
 		workStations.add(new WorkStation("Car Body Post"));
@@ -39,9 +44,13 @@ public class AssemblyLine {
 		return workStations;
 	}
 
+	/**
+	 * Add a CarOrder to the First-Come-First-Serve carQueue
+	 * @param carOrder the carOrder to add to this.carQueue
+	 */
 	public void addToAssembly(CarOrder carOrder) {
-		this.carQueue.add(carOrder.getCar());
-		System.out.println(carQueue.get(0).getCarModel().getParts());
+		this.getCarQueue().add(carOrder.getCar());
+		System.out.println(getCarQueue().get(0).getCarModel().getParts());
 	}
 
 	public void advanceAssemblyLine() throws NotAllTasksCompleteException {
@@ -52,7 +61,7 @@ public class AssemblyLine {
 			this.workStations.get(i).setCar(this.workStations.get(i-1).getCar());
 
 		// Set first workstation to first element from the queue
-		try {this.workStations.getFirst().setCar(this.carQueue.removeFirst());}
+		try {this.workStations.getFirst().setCar(this.getCarQueue().removeFirst());}
 		catch (NoSuchElementException e) {this.workStations.getFirst().setCar(null);}
 	}
 
@@ -94,8 +103,8 @@ public class AssemblyLine {
 						s.concat(": " + w.getCar().getCarModel().getParts() + " (PENDING)");
 			}
 			else {
-				s = this.carQueue.isEmpty() ? s.concat(": EMPTY") :
-						s.concat(": " + carQueue.get(0).toString() + " (PENDING)");
+				s = this.getCarQueue().isEmpty() ? s.concat(": EMPTY") :
+						s.concat(": " + getCarQueue().get(0).toString() + " (PENDING)");
 			}
 			status.add(s);
 		}
@@ -173,17 +182,12 @@ public class AssemblyLine {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////:
 
+	public LinkedList<Car> getCarQueue() {
+		return carQueue;
+	}
 
-	// TEST FUNCTION
-	public void printAssembly() {
-		System.out.println("queue:");
-		this.carQueue.forEach(c -> System.out.print(c.getCarModel().getParts() + ", "));
-		this.workStations.forEach(w -> {
-			System.out.println(w.getName() + ":");
-			try {System.out.println(w.getCar().getCarModel().getParts());}
-			catch (Exception e){System.out.println("null");}
-
-		});
+	public void setCarQueue(LinkedList<Car> carQueue) {
+		this.carQueue = carQueue;
 	}
 }
 
