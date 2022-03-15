@@ -314,7 +314,7 @@ m2= 0..n</panel_attributes>
       <h>670</h>
     </coordinates>
     <panel_attributes>lt=-
-works at &gt;
+&lt; works at
 m1= 1
 m2=1</panel_attributes>
     <additional_attributes>60.0;10.0;500.0;10.0;500.0;650.0;10.0;650.0;10.0;570.0</additional_attributes>
