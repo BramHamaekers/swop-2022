@@ -2,6 +2,7 @@ package swop.UI;
 
 import java.util.List;
 
+import swop.CarManufactoring.Task;
 import swop.Exceptions.CancelException;
 
 public class CarMechanicUI implements UI {
@@ -27,13 +28,13 @@ public class CarMechanicUI implements UI {
 			
 		}
 
-		public static void displayAvailableTasks(List<String> taskList) {
+		public static void displayAvailableTasks(List<Task> taskList) {
 			System.out.printf("%n============ Available Tasks ============%n");
 			int number = -1;
 			if(taskList.isEmpty()) System.out.println("There are no tasks!");
-			else for(String s: taskList){
+			else for(Task s: taskList){
 				number+=1;
-				System.out.println(s + " [" + number + "] ");
+				System.out.println(s.getName() + " [" + number + "] ");
 			}
 			System.out.println("=======================================");
 			

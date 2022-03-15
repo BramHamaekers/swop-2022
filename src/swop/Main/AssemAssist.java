@@ -2,6 +2,7 @@ package swop.Main;
 
 import swop.CarManufactoring.AssemblyLine;
 import swop.CarManufactoring.CarOrder;
+import swop.CarManufactoring.Task;
 import swop.Exceptions.NotAllTasksCompleteException;
 import swop.Database.Database;
 import swop.Database.ConvertMapType;
@@ -74,18 +75,19 @@ public class AssemAssist {
 	public String[] getAdvancedAssemblyStatus() {
 		return this.assemblyLine.getAdvancedStatus();
 	}
+	
 	public List<String> getStations() {
 		return this.assemblyLine.getWorkstations();
 	}
-	public Set<String> getsAvailableTasks(String string) {
+	public Set<Task> getsAvailableTasks(String string) {
 		return this.assemblyLine.getAvailableTasks(string);
 	}
-	public String getTaskInfo(String task) {
-		return this.assemblyLine.getTaskInfo(task);
-	}
-	public void completeTask(String task) {
+	public void completeTask(Task task) {
 		this.assemblyLine.completeTask(task);
 		
+	}
+	public String getTaskDescription(Task task) {
+		return this.assemblyLine.getTaskDescription(task);
 	}
 
 }

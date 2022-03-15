@@ -31,7 +31,7 @@ public class GarageHolder extends User{
     		String action;
 			action = GarageHolderUI.indicatePlaceOrder();
 			if (Objects.equals(action, "n")) return;
-
+			
 			if(!this.generateOrder(assemAssist)) return;
         //TODO: update production schedule
         //TODO: present an estimated completion date
@@ -54,7 +54,7 @@ public class GarageHolder extends User{
 				carConfig.put(entry.getKey(), option);
 			}
 			Map<String, String> carOptions = this.mapConfigToOptions(carConfig);
-			CarModel carModel = createCarModel(carOptions);
+			CarModel carModel = createCarModel(model,carOptions);
 			this.placeOrder(assemAssist, carModel);	
 			return true;
     	} catch (CancelException e) {
@@ -74,8 +74,8 @@ public class GarageHolder extends User{
         return carOpts;
     }
 
-    private CarModel createCarModel(Map<String, String> carOptions) {
-            return new CarModel(carOptions);
+    private CarModel createCarModel(int model, Map<String, String> carOptions) {
+            return new CarModel(model,carOptions);
         }
 
     private void placeOrder(AssemAssist assemAssist, CarModel carModel){

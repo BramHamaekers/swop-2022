@@ -1,6 +1,7 @@
 package swop.CarManufactoring;
 
 import swop.Exceptions.NotAllTasksCompleteException;
+import swop.Parts.Part;
 
 import java.util.*;
 
@@ -18,7 +19,7 @@ public class AssemblyLine {
 		////////////////////// for testing car mechanic ////////////////////////////
 		Map<String, String> options = Map.of("body", "sedan", "color", "red", "engine", "standard 2l 4 cilinders",
 	            "gearBox", "6 speed manual", "seats", "leather black", "airco", "manual", "wheels", "comfort");
-	    CarModel model = new CarModel(options);
+	    CarModel model = new CarModel(0,options);
 	    CarOrder order = new CarOrder(model);
 	    this.addToAssembly(order);
 	    try {
@@ -127,57 +128,30 @@ public class AssemblyLine {
 
 	private WorkStation getWorkStation(String station) {
 		for(WorkStation wStation: this.workStations) {
-			if(Objects.equals(wStation.getName(), station)) return wStation;
+			if(wStation.getName().equals(station)) return wStation;
 		}
-		System.out.println("There is no workstation with this name"); //throw error?
-		return null;
+		throw new IllegalArgumentException("Not a valid workstation name"); 
+
+	}
+	
+	private WorkStation getWorkStation(Task task) {
+		for(WorkStation wStation: this.workStations) {
+			if(wStation.containsTask(task)) return wStation;
+		}
+		throw new IllegalArgumentException("No workstation preforms this task"); 
 
 	}
 
-	/*public Map<String,Set<String>> getStationAndTasks(){ //niet gebruikt op het moment
-		Map<String,Set<String>> map = new HashMap<>();
-		for (WorkStation station :workStations) {
-			map.put(station.getName(), station.getTasks());
-		}
-		return map;
-	}*/
 
-	public Set<String> getAvailableTasks(String station) {
+	public Set<Task> getAvailableTasks(String station) {
 			WorkStation workStation = this.getWorkStation(station);
-			if(workStation == null) {
-				System.out.print("no workStation");
-				return null;
-			}
 			return workStation.getUncompletedTasks();
 	}
 	
-	public void completeTask(String task) {
-		//upper case sensitive (task need to be lower case in order 2 work)
-		TaskInfo info = TaskInfo.getTaksInfo(task);
-		if(info == null) {
-			System.out.println("Invalid Task"); // throw error?
-			return;
-		}
-		WorkStation station = this.getWorkStation(info.getWorkStation());
+	public void completeTask(Task task) {
+		WorkStation station = this.getWorkStation(task);
 		station.completeTask(task);
 		
-	}
-	
-	/**
-	 * Returns a string with info for completing a given task
-	 * @param task
-	 * @return String with info
-	 */
-	public String getTaskInfo(String task) {
-		//upper case sensitive (task need to be lower case in order 2 work)
-		TaskInfo info = TaskInfo.getTaksInfo(task);
-		if(info == null) {
-			System.out.println("Invalid Task"); // throw error?
-			return null;
-		}
-		WorkStation station = this.getWorkStation(info.getWorkStation());
-		String partValue = station.getValueOfPart(info.getPartOfTask());
-		return info.getDescription() + partValue;
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////:
@@ -189,6 +163,17 @@ public class AssemblyLine {
 	public void setCarQueue(LinkedList<Car> carQueue) {
 		this.carQueue = carQueue;
 	}
+
+	public String getTaskDescription(Task task) {
+		WorkStation ws = this.getWorkStation(task);
+		List<Part> parts = task.getParts();
+		String value = "Empty";
+		for(Part p : parts) {
+			value = task.getDescription(p) + ws.getValueOfPart(p); //als er meerdere parts bij een task horen geef je maar een array van strings terug
+		}
+		return value;
+		
+	}
 }
 
 class WorkStation {
@@ -197,22 +182,20 @@ class WorkStation {
 
 	public WorkStation(String name) {
 		if (!isValidName(name)) {
-			System.out.println("Not a valid workstation"); //TODO should throw error
+			throw new IllegalArgumentException("Not a valid work station name"); 
 		}
 		this.name = name;
 
 	}
 
-	public Set<String> getUncompletedTasks() {
-		try {
-			Set<String> tasks = this.getTasks();
-			tasks.retainAll(this.getCar().getUncompletedTasks()); //upper case sensitive (every task is in lower case in order 2 work)
-			return tasks;
-			
-		} catch(Exception e) {
-			System.out.println("There are no available tasks (No car in station)");
-			return null;
-		}
+	public boolean containsTask(Task task) {
+		return this.getTasks().contains(task);
+	}
+
+	public Set<Task> getUncompletedTasks() {
+		Set<Task> tasks = this.getTasks();
+		tasks.retainAll(this.getCar().getUncompletedTasks()); 
+		return tasks;
 	}
 
 	private boolean isValidName(String name) {
@@ -220,11 +203,11 @@ class WorkStation {
 				(Objects.equals(name, "Drivetrain Post")) || (Objects.equals(name, "Accessories Post"));
 	}
 
-	public Set<String> getTasks() {
+	public Set<Task> getTasks() {
 		return switch (this.getName()) {
-			case "Car Body Post" -> new HashSet<>(Arrays.asList("assembly car body", "paint car"));
-			case "Drivetrain Post" -> new HashSet<>(Arrays.asList("insert engine", "insert gearbox"));
-			case "Accessories Post" -> new HashSet<>(Arrays.asList("install seats", "install airco", "mount wheels"));
+			case "Car Body Post" -> new HashSet<>(Arrays.asList(Task.AssemblyCarBody, Task.PaintCar));
+			case "Drivetrain Post" -> new HashSet<>(Arrays.asList(Task.InsertEngine, Task.InstallGearbox));
+			case "Accessories Post" -> new HashSet<>(Arrays.asList(Task.InstallSeats, Task.InstallAirco, Task.MountWheels));
 			default -> null;
 		};
 	}
@@ -240,20 +223,15 @@ class WorkStation {
 	public void setCar(Car car) {
 		this.car = car;
 	}
-	public String getValueOfPart(String part) {
-		try {
-			return this.getCar().getValueOfPart(part);
-		} catch(Exception e) {
-			System.out.println("There is no car in this workstation");
-			return null;
-		}
+	
+	public String getValueOfPart(Part part) {
+		if(car == null) throw new IllegalArgumentException("No car in station"); 
+		return this.getCar().getValueOfPart(part);
+
 	}
-	public void completeTask(String task) {
-		try {
-			this.getCar().completeTask(task);
-		} catch(Exception e) {
-			System.out.println("There is no car in this workstation");
-		}
+	public void completeTask(Task task) {
+		if(car == null) throw new IllegalArgumentException("No car in station"); 
+		this.getCar().completeTask(task);
 	}
 }
 

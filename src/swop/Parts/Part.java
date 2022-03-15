@@ -4,19 +4,21 @@ public class Part {
 
 	private String value;
 	private String[] validValues;
-	
+	private final String name;
 
 	
-	public Part(String[] validValues) {
+	public Part(String[] validValues, String name) {
 		this.validValues = validValues;
+		this.name = name;
 	}
 	
-	public Part(String value, String[] validValues) {
+	public Part(String value, String[] validValues, String name) {
+		this.validValues = validValues;
 		this.setValue(value);
-		this.validValues = validValues;
+		this.name = name;
 	}
 	
-	String getValue() {		
+	public String getValue() {		
 		return value;
 	}
 	
@@ -36,6 +38,10 @@ public class Part {
 	boolean isValidValue(String value) {
 		if (this.containsValue(value)) return true;
 		return false;
+	}
+
+	public String getName() {
+		return name;
 	}
 	
 }

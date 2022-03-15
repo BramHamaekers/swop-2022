@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import swop.CarManufactoring.Task;
 import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
 import swop.UI.CarMechanicUI;
@@ -20,9 +21,9 @@ public class CarMechanic extends User{
 			//returns work station selected by the user
 			if(workStation == null) workStation = this.selectStation(assemAssist);
 			//return list of all the tasks
-			List<String> taskList = getAvailableTasks(assemAssist, workStation);
+			List<Task> taskList = getAvailableTasks(assemAssist, workStation);
 			//returns selected task by user
-			String task;
+			Task task;
 			task = this.selectTask(taskList);
 			//Show the information for given task 2 user
 			if (task != null) {
@@ -37,17 +38,17 @@ public class CarMechanic extends User{
 	}
 
 
-	private void completeTask(AssemAssist assemAssist, String task) {
+	private void completeTask(AssemAssist assemAssist, Task task) {
 		assemAssist.completeTask(task);
 		
 	}
 
-	private void showInfo(AssemAssist assemAssist, String task) {
-		String info = this.getTaskInfo(assemAssist, task);
+	private void showInfo(AssemAssist assemAssist, Task task) {
+		String info = assemAssist.getTaskDescription(task);
 		CarMechanicUI.displayTaskInfo(info);
 	}
 
-	private String selectTask(List<String> taskList) throws CancelException {
+	private Task selectTask(List<Task> taskList) throws CancelException {
 		if(taskList == null || taskList.isEmpty()) return null; //throw error?
 		CarMechanicUI.displayAvailableTasks(taskList);
 		int option = CarMechanicUI.askOption("Select task: ", taskList.size());
@@ -64,14 +65,10 @@ public class CarMechanic extends User{
 	}
 
 	
-	private List<String> getAvailableTasks(AssemAssist assemAssist, String workStation) {
-		Set<String> tasks = assemAssist.getsAvailableTasks(workStation);
+	private List<Task> getAvailableTasks(AssemAssist assemAssist, String workStation) {
+		Set<Task> tasks = assemAssist.getsAvailableTasks(workStation);
 		if(tasks == null) return null; //Throw error?
 		return new LinkedList<>(tasks);
-	}
-
-	private String getTaskInfo(AssemAssist assemAssist, String task) {
-		return assemAssist.getTaskInfo(task);
 	}
 
 }

@@ -1,51 +1,48 @@
 package swop.CarManufactoring;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import swop.Parts.Part;
+
 public class Car {
-	public static Set<String> tasks = Set.of("assembly car body", "paint car", "insert engine", "insert gearbox",
-			"install seats", "install airco", "mount wheels");
-	private Set<String> uncompletedTasks;
+	private Set<Task> uncompletedTasks;
     private CarModel carModel;
     
     public Car(CarModel model){
 		if (model == null)
 			throw new IllegalArgumentException("carmodel is null");
-        this.setCarModel(model);
-		this.setUncompletedTasks(Set.copyOf(tasks));
+        this.setCarModel(model);  
+		this.initiateUncompletedTasks();
     }
 
-	public void completeTask(String task) {
-		task = task.toLowerCase();
-		if (!isValidTask(task)) {
-			throw new IllegalArgumentException("sets are distinct");
-		}
+	public void completeTask(Task task) {
+		if (task == null)
+			throw new IllegalArgumentException("task is null");
 		if (!uncompletedTasks.contains(task))
 			throw new IllegalArgumentException("task not in todo list");
-		uncompletedTasks.remove(task);
-	}
-
-	public boolean isValidTask(String task) {
-		return task != null && tasks.contains(task.toLowerCase());
+		for(Task t: uncompletedTasks) { //moet het met een forloop doen, want anders error door subclass bullshit.
+			if(task.getName() == t.getName()) {
+				List<Task> temp = List.copyOf(uncompletedTasks);
+				temp.remove(t); //TODO fix dit probleem, wilt niet element verweideren van set
+				uncompletedTasks = Set.copyOf(temp);
+			}
+			break;
+		}
 	}
 
 	public boolean isCompleted() {
-		return getUncompletedTasks().size() == 0;
+		return getUncompletedTasks().isEmpty();
 	}
 
-	public Set<String> getUncompletedTasks() {
+	public Set<Task> getUncompletedTasks() {
 		return uncompletedTasks;
 	}
 
-	public void setUncompletedTasks(Set<String> uncompletedTasks) {
-		for (String task : uncompletedTasks){
-			if (!isValidTask(task))
-				throw new IllegalArgumentException("sets are distinct");
-		}
-		// otherwise uncompletedtasks is immutable
-		this.uncompletedTasks = new HashSet<>(uncompletedTasks);
+	private void initiateUncompletedTasks() {
+		uncompletedTasks = Task.getAllTasks();
 	}
 
 
@@ -56,18 +53,16 @@ public class Car {
 	public void setCarModel(CarModel carModel) {
 		this.carModel = carModel;
 	}
-	public String getValueOfPart(String part) {
+	public String getValueOfPart(Part part) {
 		if (this.carModel == null) {
-			System.out.println("The car has no carmodel");
-			return null;
+			throw new IllegalArgumentException("The car has no carmodel");
 		}
 		return this.getCarModel().getValueOfPart(part);
 	}
-	public  Map<String, String> getParts() {
+	public  Map<String, String> getPartsMap() {
 		if (this.carModel == null) {
-			System.out.println("The car has no carmodel");
-			return null;
+			throw new IllegalArgumentException("The car has no carmodel");
 		}
-		return this.getCarModel().getParts();
+		return this.getCarModel().getPartsMap();
 	}
 }
