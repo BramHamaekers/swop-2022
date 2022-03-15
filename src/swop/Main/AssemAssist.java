@@ -67,6 +67,10 @@ public class AssemAssist {
 	public void advanceAssembly() throws NotAllTasksCompleteException {
 		this.assemblyLine.advanceAssemblyLine();
 	}
+
+	public void advanceAssemblyTime(int minutes) {
+		this.assemblyLine.advanceAssemblyTime(minutes);
+	}
 	
 
 	public List<String> getCurrentAssemblyStatus() {

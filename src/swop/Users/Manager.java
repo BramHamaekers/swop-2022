@@ -35,7 +35,8 @@ public class Manager extends User{
 		String indicate = ManagerUI.confirmAdvance();
 		if (Objects.equals(indicate, "n")) return;
 		int time = ManagerUI.askTime(); //TODO check valid time
-		
+		assemAssist.advanceAssemblyTime(time);
+
 		try {
 			assemAssist.advanceAssembly();
 			ManagerUI.exit(assemAssist.getCurrentAssemblyStatus());

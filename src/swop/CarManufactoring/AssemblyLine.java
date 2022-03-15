@@ -161,6 +161,10 @@ public class AssemblyLine {
 		return value;
 		
 	}
+
+	public void advanceAssemblyTime(int minutes) {
+		this.scheduler.addTime(minutes);
+	}
 }
 
 class WorkStation {
@@ -229,6 +233,7 @@ class Scheduler {
 
 	public Scheduler(AssemblyLine assemblyLine) {
 		this.assemblyLine = assemblyLine;
+		this.minutesPast = 0;
 	}
 
 	/**
@@ -255,6 +260,14 @@ class Scheduler {
 		System.out.printf("day: %s, time: %s:00%n%n", day, hour);
 		return String.format("day: %s, time: %s:00%n", day, hour);
 
+	}
+
+	/**
+	 * Add time in minutes to this.minutes
+	 * @param minutes Minutes to add to this.minutes
+	 */
+	public void addTime(int minutes) {
+		this.minutesPast += minutes;
 	}
 }
 
