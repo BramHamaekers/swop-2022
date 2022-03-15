@@ -38,9 +38,7 @@ public class AssemblyLine {
 	 */
 	public String addToAssembly(CarOrder carOrder) {
 		this.getCarQueue().add(carOrder.getCar());
-		this.scheduler.getCompletionTime();
-
-		return null;
+		return this.scheduler.getCompletionTime();
 	}
 
 	public void advanceAssemblyLine() throws NotAllTasksCompleteException {
@@ -227,58 +225,36 @@ class WorkStation {
 class Scheduler {
 
 	private final AssemblyLine assemblyLine;
-	private int overTime; // Amount of hours of overtime the day before
-	private int completedCars; // Amount of cars completed the day before
+	private int minutesPast;
 
 	public Scheduler(AssemblyLine assemblyLine) {
 		this.assemblyLine = assemblyLine;
-		this.overTime = 0;
-		this.completedCars = 0;
 	}
 
+	/**
+	 * Calculates the estimated completion time based on the CarQueue and overtime done on previous days
+	 * @return Time formatted as string
+	 */
 	public String getCompletionTime() {
-		// 0 = day 1 , hour 0 = 06:00
-		// 1 = day 1, hour 1 = 07:00
-		// 16 = day 1, hour 16 = 22:00
+		int hoursPast = (minutesPast / 60);
+		hoursPast += (minutesPast % 60 != 0) ? 1 : 0;
+
+		int overTime = 0;
 		int day = 0;
-		int hour = 3;
+		int hour = 3 + hoursPast % 16; //TODO: Assumes no overtime is made on previous days
+
 		for (int i = 0; i < this.assemblyLine.getCarQueue().size()-1; i++) {
 			hour += 1;
-			if (hour > 16 - this.overTime + 2) {
+			if (hour > 16 - overTime + 2) {
 				day += 1;
 				hour = 3;
-				this.overTime = 2;
+				overTime = 2;
 			}
 		}
-		int n = this.assemblyLine.getCarQueue().size();
-		/**
-		int day = (3 + (n-1)) / 16;
-		int hours = (3 + (n-1)) % 16;
-		if (hours == 0) {
-			day -=1;
-			hours = 16 - this.overTime;
-		}
-		if (day != 0) hours += 2;
-		 */
+		hour += 6;
+		System.out.printf("day: %s, time: %s:00%n%n", day, hour);
+		return String.format("day: %s, time: %s:00%n", day, hour);
 
-
-		System.out.printf("%n car: %s, day: %s, time: %s%n",n, day, hour);
-
-		// 0 = day 1 , hour 0 = 06:00
-		// 1 = day 1, hour 1 = 07:00
-		// 16 = day 1, hour 16 = 22:00
-		// 17 = day 2, hour 1 = 7:00
-
-		// processing car takes 3 hours
-		// fist car added to conveyor will take 3 hours
-		// second 4
-		// third 5
-		// 4 -> 6
-		// ..
-		// 14 -> 16 = 22:00
-		// 15 -> 17 = 23:00 OT
-		// 16 -> 18 = 24:00 OT
-		return null;
 	}
 }
 

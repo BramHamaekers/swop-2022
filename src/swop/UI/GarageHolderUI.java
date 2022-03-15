@@ -60,8 +60,18 @@ public class GarageHolderUI implements UI {
 
 
 	public static int askOption (int leftBound, int rightBound, String option) throws CancelException {
-		System.out.println("Choose " + option + ": ");
+		System.out.print("Choose " + option + ": ");
 			return scanner.scanNextLineOfTypeInt(leftBound, rightBound);
+	}
+
+	/**
+	 * Prints the given estimated completion time.
+	 * @param time the estimated completion time to be displayed
+	 */
+    public static void displayEstimatedTime(String time) {
+		System.out.printf("%n============ Estimated Completion Time ============%n");
+		System.out.println(time);
+		System.out.println("=======================================");
 	}
 
 }

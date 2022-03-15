@@ -54,6 +54,7 @@ public class GarageHolder extends User{
 			Map<String, String> carOptions = this.mapConfigToOptions(carConfig);
 			CarModel carModel = createCarModel(model,carOptions);
 			String time = this.placeOrder(assemAssist, carModel);
+            GarageHolderUI.displayEstimatedTime(time);
 			return true;
     	} catch (CancelException e) {
     		e.printMessage();
