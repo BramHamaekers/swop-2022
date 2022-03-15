@@ -3,6 +3,8 @@ package swop.UI;
 import swop.Exceptions.CancelException;
 import swop.Exceptions.NotAllTasksCompleteException;
 
+import java.util.List;
+
 public class ManagerUI implements UI {
 
     public static void init(String id) {
@@ -13,7 +15,7 @@ public class ManagerUI implements UI {
         return UI.indicateYesNo("advance the assembly line");
     }
 
-    public static void displayAssemblyLine(String[] assemLineCurrent, String[] assemLineAdvanced) {
+    public static void displayAssemblyLine(List<String> assemLineCurrent, List<String> assemLineAdvanced) {
         System.out.printf("%n============ Assembly Line ============%n");
         if(assemLineCurrent != null) {
         	System.out.println("----Current----");
@@ -47,7 +49,7 @@ public class ManagerUI implements UI {
         return inputScanner.nextLine();
 	}
 
-	public static void exit(String[] assemLineCurrent) {
+	public static void exit(List<String> assemLineCurrent) {
 		System.out.printf("%n============ Advanced Assembly Line ============%n");
         if(assemLineCurrent != null) {
         	for(String line: assemLineCurrent) {

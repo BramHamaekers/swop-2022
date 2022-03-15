@@ -5,6 +5,7 @@ import swop.Parts.*;
 
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public class CarModel {
 	
@@ -38,7 +39,7 @@ public class CarModel {
 	public Map<String, String> getPartsMap() {
 		Map<String, String> map = new HashMap<>();
 		for(Part part: parts) map.put(part.getName(), part.getValue());
-		return null;
+		return map;
 	}
 
 	public String getValueOfPart(Part part) {

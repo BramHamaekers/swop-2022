@@ -19,7 +19,7 @@ public class AssemblyLineTest {
 
         Map<String, String> options = Map.of("body", "sedan", "color", "red", "engine", "standard 2l 4 cilinders",
                 "gearBox", "6 speed manual", "seats", "leather black", "airco", "manual", "wheels", "comfort");
-        CarModel model = new CarModel(options);
+        CarModel model = new CarModel(0,options);
         CarOrder order = new CarOrder(model);
         assemblyLine.addToAssembly(order);
 

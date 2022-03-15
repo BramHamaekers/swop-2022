@@ -1,10 +1,6 @@
 package swop.CarManufactoring;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import swop.Parts.*;
 
@@ -57,7 +53,15 @@ public enum Task {
 	}
 
 	public static Set<Task> getAllTasks() {
-		return Set.of(InsertEngine, InstallAirco, InstallGearbox, InstallSeats, PaintCar, AssemblyCarBody, MountWheels);
+		Set<Task> tasks = new HashSet<>();
+		tasks.add(InsertEngine);
+		tasks.add(InstallAirco);
+		tasks.add(InstallGearbox);
+		tasks.add(InstallSeats);
+		tasks.add(PaintCar);
+		tasks.add(AssemblyCarBody);
+		tasks.add(MountWheels);
+		return tasks;
 	}
 
 	public String getName() {

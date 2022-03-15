@@ -1,9 +1,6 @@
 package swop.CarManufactoring;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import swop.Parts.Part;
 
@@ -13,7 +10,7 @@ public class Car {
     
     public Car(CarModel model){
 		if (model == null)
-			throw new IllegalArgumentException("carmodel is null");
+			throw new IllegalArgumentException("car model is null");
         this.setCarModel(model);  
 		this.initiateUncompletedTasks();
     }
@@ -24,12 +21,10 @@ public class Car {
 		if (!uncompletedTasks.contains(task))
 			throw new IllegalArgumentException("task not in todo list");
 		for(Task t: uncompletedTasks) { //moet het met een forloop doen, want anders error door subclass bullshit.
-			if(task.getName() == t.getName()) {
-				List<Task> temp = List.copyOf(uncompletedTasks);
-				temp.remove(t); //TODO fix dit probleem, wilt niet element verweideren van set
-				uncompletedTasks = Set.copyOf(temp);
+			if (Objects.equals(task.getName(), t.getName())) {
+				this.uncompletedTasks.remove(t);
+				break;
 			}
-			break;
 		}
 	}
 

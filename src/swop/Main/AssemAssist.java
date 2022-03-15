@@ -69,10 +69,10 @@ public class AssemAssist {
 	}
 	
 
-	public String[] getCurrentAssemblyStatus() {
+	public List<String> getCurrentAssemblyStatus() {
 		return this.assemblyLine.getCurrentStatus();
 	}
-	public String[] getAdvancedAssemblyStatus() {
+	public List<String> getAdvancedAssemblyStatus() {
 		return this.assemblyLine.getAdvancedStatus();
 	}
 	
