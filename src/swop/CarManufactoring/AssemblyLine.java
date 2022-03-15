@@ -10,7 +10,7 @@ public class AssemblyLine {
 
 	private LinkedList<Car> carQueue; // Queue of cars that still have to be assembled but are not yet on the assembly line
 	private final LinkedList<WorkStation> workStations;
-	private Scheduler scheduler;
+	private final Scheduler scheduler;
 
 
 	public AssemblyLine() {
@@ -72,7 +72,7 @@ public class AssemblyLine {
 			String s = w.getName();
 			if(w.getCar() == null) s = s.concat(": EMPTY");
 			else {
-				s = s.concat(": " + w.getCar().getCarModel().getPartsMap()); //TODO cars msschien toch ID geven?
+				s = s.concat(": " + w.getCar().getCarModel().getPartsMap());
 				s = this.allTasksCompleted(w) ? s.concat(" (FINISHED)") : s.concat(" (PENDING)");
 			}
 			status.add(s);
@@ -103,16 +103,21 @@ public class AssemblyLine {
 
 	/**
 	 * returns list of strings with names of all workstations.
-	 * @return
+	 * @return workStations
 	 */
 	public List<String> getWorkstations(){
-		List<String> names = new LinkedList<>();
+		List<String> workStations = new LinkedList<>();
 		for(WorkStation station: this.workStations) {
-			names.add(station.getName());
+			workStations.add(station.getName());
 		}
-		return names;
+		return workStations;
 	}
 
+	/**
+	 * Get workstation with the given name
+	 * @param station the name of the workstation
+	 * @return wStation || throw new IllegalArgumentException()
+	 */
 	private WorkStation getWorkStation(String station) {
 		for(WorkStation wStation: this.workStations) {
 			if(wStation.getName().equals(station)) return wStation;
@@ -120,7 +125,12 @@ public class AssemblyLine {
 		throw new IllegalArgumentException("Not a valid workstation name"); 
 
 	}
-	
+
+	/**
+	 * Get workstation that performs the given task
+	 * @param task The task of the workstation
+	 * @return wStation || throw new IllegalArgumentException()
+	 */
 	private WorkStation getWorkStation(Task task) {
 		for(WorkStation wStation: this.workStations) {
 			if(wStation.containsTask(task)) return wStation;
@@ -129,12 +139,20 @@ public class AssemblyLine {
 
 	}
 
-
-	public Set<Task> getAvailableTasks(String station) {
+	/**
+	 * Gets all uncompleted tasks of the car at the given workstation
+	 * @param station the name "string" of the given workstation
+	 * @return all tasks that are uncompleted at station
+	 */
+	public Set<Task> getUncompletedTasks(String station) {
 			WorkStation workStation = this.getWorkStation(station);
 			return workStation.getUncompletedTasks();
 	}
-	
+
+	/**
+	 * Completes the given task at the associated workstation
+	 * @param task the task to complete
+	 */
 	public void completeTask(Task task) {
 		WorkStation station = this.getWorkStation(task);
 		station.completeTask(task);
@@ -143,14 +161,26 @@ public class AssemblyLine {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////:
 
+	/**
+	 * @return this.carQueue;
+	 */
 	public LinkedList<Car> getCarQueue() {
-		return carQueue;
+		return this.carQueue;
 	}
 
+	/**
+	 * Set this.carQueue to a new LinkedList<Car>
+	 * @param carQueue the new LinkedList<Car>
+	 */
 	public void setCarQueue(LinkedList<Car> carQueue) {
 		this.carQueue = carQueue;
 	}
 
+	/**
+	 * Get the description of the given task
+	 * @param task the given task
+	 * @return The description of the given Task
+	 */
 	public String getTaskDescription(Task task) {
 		WorkStation ws = this.getWorkStation(task);
 		List<Part> parts = task.getParts();
@@ -162,6 +192,10 @@ public class AssemblyLine {
 		
 	}
 
+	/**
+	 * Add time to the minutesPast of the scheduler
+	 * @param minutes minutes to add to the minutesPast
+	 */
 	public void advanceAssemblyTime(int minutes) {
 		this.scheduler.addTime(minutes);
 	}
