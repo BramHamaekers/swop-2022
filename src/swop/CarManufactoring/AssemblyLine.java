@@ -10,26 +10,13 @@ public class AssemblyLine {
 
 	private LinkedList<Car> carQueue; // Queue of cars that still have to be assembled but are not yet on the assembly line
 	private final LinkedList<WorkStation> workStations;
+	private Scheduler scheduler;
 
 
 	public AssemblyLine() {
 		this.setCarQueue(new LinkedList<>());
 		this.workStations = createWorkStations();
-
-		////////////////////// for testing car mechanic ////////////////////////////
-		Map<String, String> options = Map.of("body", "sedan", "color", "red", "engine", "standard 2l 4 cilinders",
-	            "gearBox", "6 speed manual", "seats", "leather black", "airco", "manual", "wheels", "comfort");
-	    CarModel model = new CarModel(0,options);
-	    CarOrder order = new CarOrder(model);
-	    this.addToAssembly(order);
-	    try {
-			this.advanceAssemblyLine();
-		} catch (NotAllTasksCompleteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	    /////////////////////////////////////////////////////////////////////
-	    
+		this.scheduler = new Scheduler(this);
 	}
 
 	/**
@@ -49,9 +36,11 @@ public class AssemblyLine {
 	 * Add a CarOrder to the First-Come-First-Serve carQueue
 	 * @param carOrder the carOrder to add to this.carQueue
 	 */
-	public void addToAssembly(CarOrder carOrder) {
+	public String addToAssembly(CarOrder carOrder) {
 		this.getCarQueue().add(carOrder.getCar());
-		System.out.println(getCarQueue().get(0).getCarModel().getParts());
+		this.scheduler.getCompletionTime();
+
+		return null;
 	}
 
 	public void advanceAssemblyLine() throws NotAllTasksCompleteException {
@@ -232,6 +221,64 @@ class WorkStation {
 	public void completeTask(Task task) {
 		if(car == null) throw new IllegalArgumentException("No car in station"); 
 		this.getCar().completeTask(task);
+	}
+}
+
+class Scheduler {
+
+	private final AssemblyLine assemblyLine;
+	private int overTime; // Amount of hours of overtime the day before
+	private int completedCars; // Amount of cars completed the day before
+
+	public Scheduler(AssemblyLine assemblyLine) {
+		this.assemblyLine = assemblyLine;
+		this.overTime = 0;
+		this.completedCars = 0;
+	}
+
+	public String getCompletionTime() {
+		// 0 = day 1 , hour 0 = 06:00
+		// 1 = day 1, hour 1 = 07:00
+		// 16 = day 1, hour 16 = 22:00
+		int day = 0;
+		int hour = 3;
+		for (int i = 0; i < this.assemblyLine.getCarQueue().size()-1; i++) {
+			hour += 1;
+			if (hour > 16 - this.overTime + 2) {
+				day += 1;
+				hour = 3;
+				this.overTime = 2;
+			}
+		}
+		int n = this.assemblyLine.getCarQueue().size();
+		/**
+		int day = (3 + (n-1)) / 16;
+		int hours = (3 + (n-1)) % 16;
+		if (hours == 0) {
+			day -=1;
+			hours = 16 - this.overTime;
+		}
+		if (day != 0) hours += 2;
+		 */
+
+
+		System.out.printf("%n car: %s, day: %s, time: %s%n",n, day, hour);
+
+		// 0 = day 1 , hour 0 = 06:00
+		// 1 = day 1, hour 1 = 07:00
+		// 16 = day 1, hour 16 = 22:00
+		// 17 = day 2, hour 1 = 7:00
+
+		// processing car takes 3 hours
+		// fist car added to conveyor will take 3 hours
+		// second 4
+		// third 5
+		// 4 -> 6
+		// ..
+		// 14 -> 16 = 22:00
+		// 15 -> 17 = 23:00 OT
+		// 16 -> 18 = 24:00 OT
+		return null;
 	}
 }
 

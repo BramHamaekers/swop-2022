@@ -60,11 +60,11 @@ public class AssemAssist {
 	}
 	/************************ Assembly *************************/
 
-	public void addOrder(CarOrder carOrder) { //TODO should not be public?
-		this.assemblyLine.addToAssembly(carOrder);
+	public String addOrder(CarOrder carOrder) {
+		return this.assemblyLine.addToAssembly(carOrder);
 	}
 
-	public void advanceAssembly() throws NotAllTasksCompleteException { //TODO should not be public?
+	public void advanceAssembly() throws NotAllTasksCompleteException {
 		this.assemblyLine.advanceAssemblyLine();
 	}
 	

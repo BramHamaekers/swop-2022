@@ -14,19 +14,18 @@ public class AssemblyLineTest {
     AssemblyLine assemblyLine = new AssemblyLine();
 
     @Test
-    void addToAssembly() {
-        int size = assemblyLine.getCarQueue().size();
+    void addToAssemblyTest() {
+    }
 
-        Map<String, String> options = Map.of("body", "sedan", "color", "red", "engine", "standard 2l 4 cilinders",
-                "gearBox", "6 speed manual", "seats", "leather black", "airco", "manual", "wheels", "comfort");
-        CarModel model = new CarModel(0,options);
-        CarOrder order = new CarOrder(model);
-        assemblyLine.addToAssembly(order);
-
-
-        assertEquals(assemblyLine.getCarQueue().getLast().getCarModel().getParts().toString(),
-                "{seats=leather black, body=sedan, airco=manual, color=red, engine=standard 2l 4 cilinders, wheels=comfort, gearBox=6 speed manual}");
-        assertEquals(size + 1, assemblyLine.getCarQueue().size());
+    @Test
+    void addToAssemblyTimeTest() {
+        for (int i = 0; i < 160; i++) {
+            Map<String, String> options = Map.of("body", "sedan", "color", "red", "engine", "standard 2l 4 cilinders",
+                    "gearBox", "6 speed manual", "seats", "leather black", "airco", "manual", "wheels", "comfort");
+            CarModel model = new CarModel(0,options);
+            CarOrder order = new CarOrder(model);
+            assemblyLine.addToAssembly(order);
+        }
 
     }
 

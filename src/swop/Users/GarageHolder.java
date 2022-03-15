@@ -42,12 +42,10 @@ public class GarageHolder extends User{
     }
 
     private boolean generateOrder(AssemAssist assemAssist) {
-    	///////////////////Doen nog niets met model voorlopig/////////////////////
     	try {
 			int model = GarageHolderUI.indicateCarModel();
-        //////////////////////////////////////////
+
 			GarageHolderUI.displayOrderingForm(this.getOptionsMap());
-        //TODO alternate flow: cancel placing order
 			Map<String,Integer> carConfig = new HashMap<>();
 			for (var entry : this.getOptionsMap().entrySet()) {
 				int option = GarageHolderUI.askOption(0, entry.getValue().size(), entry.getKey());
@@ -55,7 +53,7 @@ public class GarageHolder extends User{
 			}
 			Map<String, String> carOptions = this.mapConfigToOptions(carConfig);
 			CarModel carModel = createCarModel(model,carOptions);
-			this.placeOrder(assemAssist, carModel);	
+			String time = this.placeOrder(assemAssist, carModel);
 			return true;
     	} catch (CancelException e) {
     		e.printMessage();
@@ -78,10 +76,10 @@ public class GarageHolder extends User{
             return new CarModel(model,carOptions);
         }
 
-    private void placeOrder(AssemAssist assemAssist, CarModel carModel){
+    private String placeOrder(AssemAssist assemAssist, CarModel carModel){
          CarOrder carOrder = new CarOrder(carModel);
          this.addOrder(carOrder);
-         assemAssist.addOrder(carOrder);
+         return assemAssist.addOrder(carOrder);
     }
 
     /************************ Checkers *************************/
