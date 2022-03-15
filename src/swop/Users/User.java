@@ -3,8 +3,6 @@ package swop.Users;
 
 import swop.Main.AssemAssist;
 
-import java.util.Objects;
-
 public abstract class User {
 
     private String id;
