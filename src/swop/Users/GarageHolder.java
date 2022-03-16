@@ -1,24 +1,22 @@
 package swop.Users;
 import swop.CarManufactoring.CarModel;
 import swop.CarManufactoring.CarOrder;
-import swop.Database.Database;
 import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
-import swop.Parts.Body;
 import swop.UI.GarageHolderUI;
 
 import java.util.*;
 
 public class GarageHolder extends User{
-    private LinkedHashMap<String, List<String>> optionsMap = new LinkedHashMap<String, List<String>>(){{ 
+    private final LinkedHashMap<String, List<String>> optionsMap = new LinkedHashMap<>(){{
     	//TODO dit nog aanpassen in toekomst, kga nu niet doen, te tam
-		put("Airco", Arrays.asList(new String[] {"manual", "automatic climate control"}));
-		put("Body",Arrays.asList(new String[] {"sedan", "break"}));
-		put("Color",Arrays.asList(new String[] {"red", "blue", "black", "white"}));
-		put("Engine",Arrays.asList(new String[] {"standard 2l 4 cilinders", "performance 2.5l 6 cilinders"}));
-		put("GearBox",Arrays.asList(new String[] {"6 speed manual", "5 speed automatic"}));
-		put("Seats",Arrays.asList(new String[] {"leather black", "leather white", "vinyl grey"}));
-		put("Wheels",Arrays.asList(new String[] {"comfort", "sports (low profile)"}));
+		put("Airco", Arrays.asList("manual", "automatic climate control"));
+		put("Body",Arrays.asList("sedan", "break"));
+		put("Color",Arrays.asList("red", "blue", "black", "white"));
+		put("Engine",Arrays.asList("standard 2l 4 cilinders", "performance 2.5l 6 cilinders"));
+		put("GearBox",Arrays.asList("6 speed manual", "5 speed automatic"));
+		put("Seats",Arrays.asList("leather black", "leather white", "vinyl grey"));
+		put("Wheels",Arrays.asList("comfort", "sports (low profile)"));
 	}};
     private Set<CarOrder> carOrders;
 
@@ -37,24 +35,22 @@ public class GarageHolder extends User{
     public void load(AssemAssist assemAssist) { 
     	try {
     		GarageHolderUI.init(this.getId());
-    		GarageHolderUI.displayOrders(this.getOrders());  
-    		String action;
-			action = GarageHolderUI.indicatePlaceOrder();
+    		GarageHolderUI.displayOrders(this.getOrders());
+            String action = GarageHolderUI.indicatePlaceOrder();
 			if (Objects.equals(action, "n")) return;
-			
-			if(!this.generateOrder(assemAssist)) return;
-  
-    	} catch (CancelException e) {
+
+            this.generateOrder(assemAssist);
+
+        } catch (CancelException e) {
 			e.printMessage();
 			}
     }
     
     /**
      * Will handle all the steps for generating a new valid order.
-     * @param assemAssist
-     * @return
+     * @param assemAssist input the assemassist //TODO
      */
-    private boolean generateOrder(AssemAssist assemAssist) {
+    private void generateOrder(AssemAssist assemAssist) {
     	try {
 			int model = GarageHolderUI.indicateCarModel();
 			GarageHolderUI.displayOrderingForm(this.getOptionsMap());
@@ -63,10 +59,8 @@ public class GarageHolder extends User{
 			CarModel carModel = createCarModel(model,carOptions);
 			CarOrder order = this.placeOrder(assemAssist, carModel);
             GarageHolderUI.displayEstimatedTime(order);
-			return true;
     	} catch (CancelException e) {
     		e.printMessage();
-			return false;
 		}
 	}
     
@@ -86,8 +80,8 @@ public class GarageHolder extends User{
 
     /**
      * Converts Map<String, Integer> to Map<String,String>
-     * @param carConfig
-     * @return
+     * @param carConfig given a map from part to integer selection
+     * @return map string part to selection string
      */
 	private Map<String,String> mapConfigToOptions(Map<String, Integer> carConfig) {
         Map<String,String> carOpts = new HashMap<>();
@@ -102,9 +96,9 @@ public class GarageHolder extends User{
 
 	/**
 	 * Creates new CarModel given the model/optionsMap
-	 * @param model
-	 * @param carOptions
-	 * @return
+	 * @param model given model number
+	 * @param carOptions map from part to actual selection
+	 * @return created CarModel
 	 */
     private CarModel createCarModel(int model, Map<String, String> carOptions) {
             return new CarModel(model,carOptions);
@@ -112,9 +106,9 @@ public class GarageHolder extends User{
     
     /**
      * Creates and stores a new CarOrder given a carModel
-     * @param assemAssist
-     * @param carModel
-     * @return
+     * @param assemAssist assemAssist
+     * @param carModel given carmodel
+     * @return Carorder
      */
     private CarOrder placeOrder(AssemAssist assemAssist, CarModel carModel){
          CarOrder carOrder = new CarOrder(carModel);
