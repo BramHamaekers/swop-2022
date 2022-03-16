@@ -38,7 +38,7 @@ public class AssemblyLine {
 	 */
 	public void addToAssembly(CarOrder carOrder) {
 		this.getCarQueue().add(carOrder.getCar());
-		carOrder.setComplitionTime(this.scheduler.getCompletionTime());
+		carOrder.getCar().setEstimatedCompletionTime(this.scheduler.getEstimatedCompletionTime());
 	}
 
 	public void advanceAssemblyLine(int minutes) throws NotAllTasksCompleteException {
@@ -47,8 +47,14 @@ public class AssemblyLine {
 		this.scheduler.addTime(minutes);
 		// Move all cars on assembly by 1 position
 		for (int i = this.workStations.size() - 1; i > 0; i--) {
+			WorkStation workStation = this.workStations.get(i);
+			// Check if completed
+			if (workStation.getCar() != null && workStation.getCar().isCompleted() )
+				workStation.getCar().setCompletionTime(this.scheduler.getMinutesPast());
+
 			this.workStations.get(i).setCar(this.workStations.get(i-1).getCar());
-			this.scheduler.updateCompletionTime(workStations.get(i).getCar().getOrder(), minutes);
+
+
 		}
 			
 
@@ -301,20 +307,14 @@ class Scheduler {
 		this.minutesPast = 0;
 	}
 
-	public void updateCompletionTime(CarOrder order, int minutes) {
-		String Time = order.getComplitionTime();
-		Math.abs(60 - minutes);
-		//TODO update the time of order.
-		
-	}
-
 	/**
 	 * Calculates the estimated completion time based on the CarQueue and overtime done on previous days
 	 * @return Time formatted as string
 	 */
-	public String getCompletionTime() {
-		int hoursPast = (minutesPast / 60);
-		hoursPast += (minutesPast % 60 != 0) ? 1 : 0;
+	public String getEstimatedCompletionTime() {
+
+		int hoursPast = (getMinutesPast() / 60);
+		hoursPast += (getMinutesPast() % 60 != 0) ? 1 : 0;
 
 		int overTime = 0;
 		int day = 0;
@@ -338,7 +338,11 @@ class Scheduler {
 	 * @param minutes Minutes to add to this.minutes
 	 */
 	public void addTime(int minutes) {
-		this.minutesPast += minutes;
+		this.minutesPast = this.getMinutesPast() + minutes;
+	}
+
+	public int getMinutesPast() {
+		return minutesPast;
 	}
 }
 

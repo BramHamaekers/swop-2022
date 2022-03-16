@@ -25,19 +25,22 @@ public class GarageHolderUI implements UI {
 		carOrders.stream()
 				.filter(o -> !o.isCompleted())
 				.forEach(p ->{
-					System.out.println("Order: "+ p.getID());
-					System.out.println(p.getCar().getPartsMap());	
-					System.out.println("Est. completion at: " + p.getComplitionTime());
+					System.out.print("Order: "+ p.getID());
+					System.out.println("Est. completion at: " + p.getEstimatedCompletionTime());
 				});
 		System.out.println();
 		System.out.println("Completed:");
-		System.out.println("TODO: Print most recent completed order first."); //remove this line when done.
+
+		Set<CarOrder> completedSet = new TreeSet<>();
+
+		// Add to sorted set
 		carOrders.stream()
-				.filter(o -> o.isCompleted())
-				.forEach(p ->{
-					System.out.println("Order: "+ p.getID());
-					System.out.println(p.getCar().getPartsMap());	
-					System.out.println("Completed at: " + p.getComplitionTime());
+				.filter(CarOrder::isCompleted)
+				.forEach(completedSet::add);
+
+		// Print sorted set
+		completedSet.forEach(c -> {
+					System.out.println("Order: " + c.getID());
 				});
 		System.out.println("=======================================");
 	}
@@ -85,7 +88,7 @@ public class GarageHolderUI implements UI {
 	 */
     public static void displayEstimatedTime(CarOrder order) {
 		System.out.printf("%n============ Estimated Completion Time ============%n");
-		System.out.println(order.getComplitionTime());
+		System.out.println(order.getEstimatedCompletionTime());
 		System.out.println("=======================================");
 	}
 
