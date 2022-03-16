@@ -33,7 +33,7 @@ public class CarOrder implements Comparable<CarOrder>{
 	}
 
 	@Override
-	public int compareTo(@NotNull CarOrder carOrder) {
+	public int compareTo(CarOrder carOrder) {
 		return Integer.compare(this.getCompletionTime(), carOrder.getCompletionTime());
 	}
 }
