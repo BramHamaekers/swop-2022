@@ -46,6 +46,10 @@ public class AssemAssist {
 		}
 	}
 
+	/**
+	 * Loads the User from the database (database is currently a JSON file)
+	 * @param id is the user ID
+	 */
 	private void loadUser(String id) {
 		// Load user database
 		final Map <String, List<String>> userDatabase = Database.openDatabase("users.json", "id", "job");
@@ -58,18 +62,18 @@ public class AssemAssist {
 		activeUser.load(this);
 		
 	}
-	/************************ Assembly *************************/
+	
+	
+	
+	/************************ Users can communicate with assembly line via these methods*************************/
 
-	public String addOrder(CarOrder carOrder) {
-		return this.assemblyLine.addToAssembly(carOrder);
+	
+	public void addOrder(CarOrder carOrder) {
+		this.assemblyLine.addToAssembly(carOrder);
 	}
 
-	public void advanceAssembly() throws NotAllTasksCompleteException {
+	public void advanceAssembly(int minutes) throws NotAllTasksCompleteException {
 		this.assemblyLine.advanceAssemblyLine();
-	}
-
-	public void advanceAssemblyTime(int minutes) {
-		this.assemblyLine.advanceAssemblyTime(minutes);
 	}
 	
 

@@ -10,5 +10,17 @@
 	{
 		"id": "c",
 		"job": "manager"
+	},
+	{	
+		"id": "d",
+		"job": "garage holder"
+	},
+	{
+		"id": "e",
+		"job": "car mechanic"
+	},
+	{
+		"id": "f",
+		"job": "manager"
 	}
 ]

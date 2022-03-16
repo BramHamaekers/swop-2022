@@ -15,6 +15,10 @@ public class CarMechanic extends User{
     }
 
     private String workStation; //temp tot betere oplossing
+    
+    /**
+     * Called when logging in as CarMechanic
+     */
 	@Override
 	public void load(AssemAssist assemAssist) {
 		try {
@@ -37,17 +41,27 @@ public class CarMechanic extends User{
 		workStation = null;
 	}
 
-
+	/**
+	 * Will try to complete a task
+	 */
 	private void completeTask(AssemAssist assemAssist, Task task) {
 		assemAssist.completeTask(task);
 		
 	}
-
+	
+	/**
+	 * Shows info of given task
+	 * this consists of instruction of each part + value concerning current task.
+	 */
 	private void showInfo(AssemAssist assemAssist, Task task) {
 		String info = assemAssist.getTaskDescription(task);
 		CarMechanicUI.displayTaskInfo(info);
 	}
-
+	
+	/**
+	 * Selects a task from available task list.
+	 * @throws CancelException when cancelled.
+	 */
 	private Task selectTask(List<Task> taskList) throws CancelException {
 		if(taskList == null || taskList.isEmpty()) return null; //throw error?
 		CarMechanicUI.displayAvailableTasks(taskList);
@@ -56,6 +70,10 @@ public class CarMechanic extends User{
 		
 	}
 
+	/**
+	 * Selects a station for the car mechanic to work at.
+	 * @throws CancelException when cancelled.
+	 */
 	private String selectStation(AssemAssist assemAssist) throws CancelException {
 		List<String> workStations = assemAssist.getStations();
 		//asks user for workstation
@@ -64,7 +82,9 @@ public class CarMechanic extends User{
 		return workStations.get(option);
 	}
 
-	
+	/**
+	 * returns all available task at current workstation.
+	 */
 	private List<Task> getAvailableTasks(AssemAssist assemAssist, String workStation) {
 		Set<Task> tasks = assemAssist.getsAvailableTasks(workStation);
 		if(tasks == null) return null; //Throw error?

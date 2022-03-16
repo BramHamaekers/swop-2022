@@ -10,12 +10,11 @@ public abstract class User {
     public User(String id) {
         this.id = id;
     }
-
+    
+    
     public abstract void load(AssemAssist assemAssist);
 
     public String getId() {
         return id;
     }
-
-    protected void logout() {}
 }

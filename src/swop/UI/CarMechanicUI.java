@@ -7,7 +7,7 @@ import swop.Exceptions.CancelException;
 
 public class CarMechanicUI implements UI {
 	
-	// Dummy init
+		// Dummy init
 		public static void init(String id) {
 			System.out.println("Welcome Car Mechanic: " + id);
 		}

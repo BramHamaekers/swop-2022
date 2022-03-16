@@ -12,6 +12,9 @@ public class GarageHolderUI implements UI {
 		System.out.println("Welcome Garage Holder: " + id);
 	}
 
+	/**
+	 * Displays all orders ordered by current garage holder
+	 */
 	public static void displayOrders(Set<CarOrder> carOrders) {
 		if (carOrders == null) {
 			System.out.println("No carOrders placed yet.");
@@ -21,15 +24,27 @@ public class GarageHolderUI implements UI {
 		System.out.println("Pending:");
 		carOrders.stream()
 				.filter(o -> !o.isCompleted())
-				.forEach(p -> System.out.println(p.getCar().getPartsMap()));
+				.forEach(p ->{
+					System.out.println("Order: "+ p.getID());
+					System.out.println(p.getCar().getPartsMap());	
+					System.out.println("Est. completion at: " + p.getComplitionTime());
+				});
 		System.out.println();
 		System.out.println("Completed:");
+		System.out.println("TODO: Print most recent completed order first."); //remove this line when done.
 		carOrders.stream()
 				.filter(o -> o.isCompleted())
-				.forEach(c -> System.out.println(c.getCar().getPartsMap()));
+				.forEach(p ->{
+					System.out.println("Order: "+ p.getID());
+					System.out.println(p.getCar().getPartsMap());	
+					System.out.println("Completed at: " + p.getComplitionTime());
+				});
 		System.out.println("=======================================");
 	}
-
+	
+	/**
+	 * Asks confirmation for placing order
+	 */
 	public static String indicatePlaceOrder() throws CancelException {
 		return UI.indicateYesNo("place an order");
 	}
@@ -66,11 +81,11 @@ public class GarageHolderUI implements UI {
 
 	/**
 	 * Prints the given estimated completion time.
-	 * @param time the estimated completion time to be displayed
+	 * @param order the estimated completion time to be displayed
 	 */
-    public static void displayEstimatedTime(String time) {
+    public static void displayEstimatedTime(CarOrder order) {
 		System.out.printf("%n============ Estimated Completion Time ============%n");
-		System.out.println(time);
+		System.out.println(order.getComplitionTime());
 		System.out.println("=======================================");
 	}
 

@@ -38,7 +38,7 @@ public class ManagerUI implements UI {
     }
 
 	public static void printException(NotAllTasksCompleteException e) {
-		 System.out.println(e.getMessage() + e.getWorkstation());
+		 System.out.println(e.getMessage() + e.getWorkstations());
 		 System.out.println("Press 'Enter' to exit");
 		 inputScanner.nextLine();
 		

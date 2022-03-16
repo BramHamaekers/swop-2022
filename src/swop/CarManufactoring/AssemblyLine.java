@@ -36,9 +36,9 @@ public class AssemblyLine {
 	 * Add a CarOrder to the First-Come-First-Serve carQueue
 	 * @param carOrder the carOrder to add to this.carQueue
 	 */
-	public String addToAssembly(CarOrder carOrder) {
+	public void addToAssembly(CarOrder carOrder) {
 		this.getCarQueue().add(carOrder.getCar());
-		return this.scheduler.getCompletionTime();
+		carOrder.setComplitionTime(this.scheduler.getCompletionTime());
 	}
 
 	public void advanceAssemblyLine() throws NotAllTasksCompleteException {
@@ -53,19 +53,34 @@ public class AssemblyLine {
 		catch (NoSuchElementException e) {this.workStations.getFirst().setCar(null);}
 	}
 
+	/**
+	 * Checks if it is possible to advance the assembly line
+	 * @throws NotAllTasksCompleteException
+	 */
 	private void checkAdvance() throws NotAllTasksCompleteException {
+		LinkedList<String> w = new LinkedList<>();
 		for (WorkStation workStation: this.workStations)
-			if (!allTasksCompleted(workStation))
-				throw new NotAllTasksCompleteException("Not all tasks completed in: ", workStation.getName());
+			if (!allTasksCompleted(workStation)) w.add(workStation.getName());
+		
+		if(!w.isEmpty())throw new NotAllTasksCompleteException("Not all tasks completed in: ", w);
 	}
 
+	/**
+	 * Returns boolean whether or not all tasks are completed in given work station
+	 */
 	private boolean allTasksCompleted(WorkStation workStation) {
 		return workStation.getCar() == null || Collections.disjoint(workStation.getCar().getUncompletedTasks(),
 				workStation.getTasks()); //returns true if no tasks are uncompleted
 	}
 	
 	/////////////////////////// Functions used 2 get data for manager use case //////////////////////////////
-
+	
+	
+	/**
+	 * returns for all works stations current state. 
+	 * Empty = no car, Finished = all tasks completed, Pending = tasks need 2 be completed
+	 * @return
+	 */
 	public List<String> getCurrentStatus() {
 		List<String> status = new LinkedList<>();
 		this.workStations.forEach(w -> {
@@ -80,7 +95,12 @@ public class AssemblyLine {
 		return status;
 	}
 
-	public List<String> getAdvancedStatus() { //// Kan ook met list werken, geen idee waarom ik array kies.
+	/**
+	 * returns for all works stations state if an advance would happen. 
+	 * Empty = no car, Finished = all tasks completed, Pending = tasks need 2 be completed
+	 * @return
+	 */
+	public List<String> getAdvancedStatus() { 
 		List<String> status = new LinkedList<>();
 		for(int i = 0; i < workStations.size(); i++){
 			WorkStation w = this.workStations.get(i);
@@ -159,10 +179,9 @@ public class AssemblyLine {
 		
 	}
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////:
 
 	/**
-	 * @return this.carQueue;
+	 * Returns CarQueue
 	 */
 	public LinkedList<Car> getCarQueue() {
 		return this.carQueue;
@@ -201,6 +220,8 @@ public class AssemblyLine {
 	}
 }
 
+/////////////////////////////////////////////////// WORKSTATION CLASS //////////////////////////////////////////////////
+
 class WorkStation {
 	private final String name;
 	private Car car;
@@ -218,6 +239,10 @@ class WorkStation {
 	}
 
 	public Set<Task> getUncompletedTasks() {
+		if(this.getCar() == null) {
+			System.out.println("There are no Tasks (No car in work station)");
+			return null;
+		}
 		Set<Task> tasks = this.getTasks();
 		tasks.retainAll(this.getCar().getUncompletedTasks()); 
 		return tasks;
@@ -260,6 +285,8 @@ class WorkStation {
 	}
 }
 
+/////////////////////////////////////////////////// SCHEDULAR CLASS /////////////////////////////////////////////////////
+
 class Scheduler {
 
 	private final AssemblyLine assemblyLine;
@@ -291,7 +318,6 @@ class Scheduler {
 			}
 		}
 		hour += 6;
-		System.out.printf("day: %s, time: %s:00%n%n", day, hour);
 		return String.format("day: %s, time: %s:00%n", day, hour);
 
 	}

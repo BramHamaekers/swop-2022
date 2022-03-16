@@ -20,11 +20,11 @@ public class CarModel {
 
 
 	private Part createPart(Entry<String, String> part) {
-		return switch (part.getKey()) {
+		return switch (part.getKey().toLowerCase()) {
 		case  "body" -> new Body(part.getValue());
 		case "color" -> new Color(part.getValue());
 		case "engine" -> new Engine(part.getValue());
-		case "gearBox" -> new GearBox(part.getValue());
+		case "gearbox" -> new GearBox(part.getValue());
 		case "seats" -> new Seats(part.getValue());
 		case "airco" -> new Airco(part.getValue());
 		case "wheels" -> new Wheels(part.getValue());
