@@ -1,219 +1,107 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.3.0">
-  <zoom_level>10</zoom_level>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>570</x>
-      <y>230</y>
-      <w>190</w>
-      <h>30</h>
-    </coordinates>
-    <panel_attributes>AssemAssist
-
-</panel_attributes>
-    <additional_attributes/>
-  </element>
+  <zoom_level>6</zoom_level>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>660</x>
-      <y>250</y>
-      <w>50</w>
-      <h>100</h>
+      <x>858</x>
+      <y>312</y>
+      <w>228</w>
+      <h>54</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=0..*
 </panel_attributes>
-    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>620</x>
-      <y>330</y>
-      <w>100</w>
-      <h>50</h>
-    </coordinates>
-    <panel_attributes>/User/
---
-_id: String_
-</panel_attributes>
-    <additional_attributes/>
+    <additional_attributes>10.0;70.0;10.0;10.0;360.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>440</x>
-      <y>370</y>
-      <w>230</w>
-      <h>120</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>210.0;10.0;10.0;100.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>380</x>
-      <y>470</y>
-      <w>140</w>
-      <h>50</h>
-    </coordinates>
-    <panel_attributes>GarageHolder
---
-_optionsMap: Map_</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>610</x>
-      <y>470</y>
-      <w>130</w>
+      <x>732</x>
+      <y>426</y>
+      <w>84</w>
       <h>30</h>
     </coordinates>
-    <panel_attributes>CarMechanic
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>800</x>
-      <y>470</y>
-      <w>110</w>
-      <h>30</h>
-    </coordinates>
-    <panel_attributes>Manager</panel_attributes>
-    <additional_attributes/>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>120.0;10.0;10.0;30.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>660</x>
-      <y>370</y>
-      <w>30</w>
-      <h>120</h>
+      <x>840</x>
+      <y>426</y>
+      <w>48</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+    <additional_attributes>10.0;10.0;60.0;100.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>690</x>
-      <y>370</y>
-      <w>180</w>
-      <h>120</h>
+      <x>894</x>
+      <y>426</y>
+      <w>300</w>
+      <h>78</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;160.0;100.0</additional_attributes>
+    <additional_attributes>10.0;10.0;480.0;110.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>660</x>
-      <y>160</y>
-      <w>40</w>
-      <h>90</h>
+      <x>870</x>
+      <y>276</y>
+      <w>216</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=1</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>620</x>
-      <y>140</y>
-      <w>100</w>
-      <h>30</h>
-    </coordinates>
-    <panel_attributes>AssemblyLine</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>380</x>
-      <y>590</y>
-      <w>100</w>
-      <h>30</h>
-    </coordinates>
-    <panel_attributes>CarOrder</panel_attributes>
-    <additional_attributes/>
+    <additional_attributes>10.0;10.0;340.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>420</x>
-      <y>510</y>
-      <w>50</w>
-      <h>100</h>
+      <x>342</x>
+      <y>396</y>
+      <w>120</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=0..*</panel_attributes>
-    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>120</x>
-      <y>590</y>
-      <w>210</w>
-      <h>70</h>
-    </coordinates>
-    <panel_attributes>car
---
-_tasks: Set&lt;String&gt;_
-_uncompletedTasks: Set&lt;String&gt;_</panel_attributes>
-    <additional_attributes/>
+    <additional_attributes>10.0;80.0;10.0;10.0;180.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>320</x>
-      <y>590</y>
-      <w>80</w>
-      <h>40</h>
+      <x>264</x>
+      <y>390</y>
+      <w>24</w>
+      <h>66</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=1</panel_attributes>
-    <additional_attributes>10.0;10.0;60.0;10.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>230</x>
-      <y>650</y>
-      <w>40</w>
-      <h>80</h>
+      <x>174</x>
+      <y>390</y>
+      <w>24</w>
+      <h>240</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=1</panel_attributes>
-    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;380.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>190</x>
-      <y>710</y>
-      <w>100</w>
-      <h>50</h>
-    </coordinates>
-    <panel_attributes>CarModel
---
-_parts: Map_</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>350</x>
-      <y>230</y>
-      <w>100</w>
-      <h>30</h>
+      <x>1380</x>
+      <y>306</y>
+      <w>60</w>
+      <h>18</h>
     </coordinates>
     <panel_attributes>Main</panel_attributes>
     <additional_attributes/>
@@ -221,199 +109,458 @@ _parts: Map_</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>660</x>
-      <y>80</y>
-      <w>50</w>
-      <h>80</h>
+      <x>510</x>
+      <y>144</y>
+      <w>144</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1= 1..*</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+    <additional_attributes>10.0;10.0;220.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>620</x>
-      <y>60</y>
-      <w>100</w>
-      <h>30</h>
+      <x>360</x>
+      <y>66</y>
+      <w>156</w>
+      <h>132</h>
     </coordinates>
-    <panel_attributes>WorkStation</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>440</x>
-      <y>220</y>
-      <w>150</w>
-      <h>40</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;..
-invokes &gt;</panel_attributes>
-    <additional_attributes>130.0;20.0;10.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>280</x>
-      <y>140</y>
-      <w>360</w>
-      <h>470</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-
-m1=0..*</panel_attributes>
-    <additional_attributes>10.0;450.0;10.0;10.0;340.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>210</x>
-      <y>60</y>
-      <w>430</w>
-      <h>550</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-
-m1=0..1</panel_attributes>
-    <additional_attributes>10.0;530.0;10.0;10.0;410.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>630</x>
-      <y>730</y>
-      <w>100</w>
-      <h>40</h>
-    </coordinates>
-    <panel_attributes>&lt;&lt;Interface&gt;&gt;
-UI
+    <panel_attributes>WorkStation
+--
+-name : String
+-car : Car
+--
++containsTask(task : Task) : boolean
++getUncompletedTasks(): Set&lt;Task&gt;
+-isValidName(String name): boolean
++getTasks(): Set&lt;Task&gt;
++getName(): String
++getCar(): Car
++setCar(Car car): void
++getValueOfPart(Part part): String
++completeTask(Task task): void
+
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>540</x>
-      <y>610</y>
-      <w>140</w>
-      <h>140</h>
+      <x>1254</x>
+      <y>300</y>
+      <w>138</w>
+      <h>24</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>120.0;120.0;10.0;10.0</additional_attributes>
+    <panel_attributes>lt=&lt;..
+invokes &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;210.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>670</x>
-      <y>610</y>
-      <w>30</w>
-      <h>140</h>
+      <x>270</x>
+      <y>270</y>
+      <w>384</w>
+      <h>54</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>10.0;120.0;10.0;10.0</additional_attributes>
+    <panel_attributes>lt=&lt;-
+m1=0..*</panel_attributes>
+    <additional_attributes>10.0;60.0;620.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>690</x>
-      <y>610</y>
-      <w>180</w>
-      <h>140</h>
+      <x>258</x>
+      <y>126</y>
+      <w>114</w>
+      <h>126</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>10.0;120.0;160.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>500</x>
-      <y>590</y>
-      <w>110</w>
-      <h>30</h>
-    </coordinates>
-    <panel_attributes>GarageHolderUI</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>630</x>
-      <y>590</y>
-      <w>110</w>
-      <h>30</h>
-    </coordinates>
-    <panel_attributes>CarMechanicUI</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>800</x>
-      <y>590</y>
-      <w>110</w>
-      <h>30</h>
-    </coordinates>
-    <panel_attributes>ManagerUI</panel_attributes>
-    <additional_attributes/>
+    <panel_attributes>lt=&lt;-
+m1=0..1</panel_attributes>
+    <additional_attributes>10.0;190.0;10.0;10.0;170.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>510</x>
-      <y>490</y>
-      <w>160</w>
-      <h>120</h>
+      <x>642</x>
+      <y>702</y>
+      <w>150</w>
+      <h>114</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>230.0;170.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>846</x>
+      <y>720</y>
+      <w>42</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;140.0;50.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>900</x>
+      <y>720</y>
+      <w>144</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;140.0;220.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>576</x>
+      <y>522</y>
+      <w>78</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>lt=&lt;..
 interacts with &gt;</panel_attributes>
-    <additional_attributes>40.0;100.0;40.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;130.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>670</x>
-      <y>490</y>
-      <w>130</w>
-      <h>120</h>
+      <x>876</x>
+      <y>594</y>
+      <w>78</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>lt=&lt;..
 interacts with &gt;</panel_attributes>
-    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>850</x>
-      <y>490</y>
-      <w>130</w>
-      <h>120</h>
+      <x>1224</x>
+      <y>534</y>
+      <w>78</w>
+      <h>114</h>
     </coordinates>
     <panel_attributes>lt=&lt;..
 interacts with &gt;</panel_attributes>
-    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>830</x>
-      <y>140</y>
-      <w>100</w>
-      <h>30</h>
-    </coordinates>
-    <panel_attributes>Scheduler</panel_attributes>
-    <additional_attributes/>
+    <additional_attributes>10.0;170.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>710</x>
-      <y>140</y>
-      <w>140</w>
-      <h>40</h>
+      <x>870</x>
+      <y>186</y>
+      <w>120</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>lt=&lt;-&gt;
 m1= 1
 m2= 1</panel_attributes>
-    <additional_attributes>10.0;10.0;120.0;10.0</additional_attributes>
+    <additional_attributes>10.0;10.0;180.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>96</x>
+      <y>240</y>
+      <w>180</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>Car
+--
+-uncompletedTasks: Set&lt;Task&gt;
+-carModel: CarModel
+-order: CarOrder
+--
++completeTask(Task task): void
++isCompleted(): boolean
++getUncompletedTasks(): Set&lt;Task&gt;
+-initiateUncompletedTasks(): void
++getCarModel(): CarModel
++setCarModel(CarModel carModel): void
++getValueOfPart(Part part): String
++getPartsMap(): Map&lt;String, String&gt;
++getOrder(): CarOrder
++setOrder(CarOrder order): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>264</x>
+      <y>444</y>
+      <w>150</w>
+      <h>126</h>
+    </coordinates>
+    <panel_attributes>CarOrder
+--
+-car: Car
+-completionTime: String
+-ID: String
+--
++getCar(): Car
++isCompleted(): boolean
++setComplitionTime(String time): void
++getComplitionTime(): String
++getID(): String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>450</x>
+      <y>390</y>
+      <w>288</w>
+      <h>138</h>
+    </coordinates>
+    <panel_attributes>GarageHolder
+--
+-optionsMap: LinkedHashMap&lt;String, List&lt;String&gt; &gt;
+-carOrders: Set&lt;CarOrder&gt;
+--
++load(AssemAssist assemAssist): void
+-generateOrder(AssemAssist assemAssist): void
+-getFilledOrder(): Map&lt;String, Integer&gt;
+-mapConfigToOptions(Map&lt;String, Integer&gt; carConfig): Map&lt;String, String&gt;
+-createCarModel(int model, Map&lt;String, String&gt; carOptions): CarModel
+-placeOrder(AssemAssist assemAssist, CarModel carModel): CarOrder
++getOrders(): Set&lt;CarOrder&gt;
++addOrder(CarOrder carOrder): void
++getOptionsMap(): LinkedHashMap&lt;String, List&lt;String&gt;&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1116</x>
+      <y>492</y>
+      <w>222</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>Manager
+--
+--
++load(AssemAssist assemAssist): void
+-advanceAssemblyLine(AssemAssist assemAssist): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>804</x>
+      <y>354</y>
+      <w>156</w>
+      <h>78</h>
+    </coordinates>
+    <panel_attributes>User
+--
+-id: String
+--
++User(String id): ctor
++load(AssemAssist assemAssist): void
++getId(): String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>762</x>
+      <y>486</y>
+      <w>306</w>
+      <h>114</h>
+    </coordinates>
+    <panel_attributes>CarMechanic
+--
+-workStation: String
+--
++load(AssemAssist assemAssist): void
+-completeTask(AssemAssist assemAssist, Task task): void
+-showInfo(AssemAssist assemAssist, Task task): void
+-selectTask(List&lt;Task&gt; taskList): Task
+-selectStation(AssemAssist assemAssist): String
+-getAvailableTasks(AssemAssist assemAssist, String workStation): List&lt;Task&gt;
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>756</x>
+      <y>804</y>
+      <w>204</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+UI
+--
+~inputScanner = new Scanner(System.in): Scanner
+~scanner = new InputScanner(): InputScanner
+--
+~indicateYesNo(String action): String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1032</x>
+      <y>636</y>
+      <w>366</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>ManagerUI
+--
+--
++init(String id): void
++indicateAdvance(): String
++displayAssemblyLine(List&lt;String&gt; assemLineCurrent, List&lt;String&gt; assemLineAdvanced): void
++askTime(): int
++printException(NotAllTasksCompleteException e): void
++confirmAdvance(): String
++exit(List&lt;String&gt; assemLineCurrent): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>786</x>
+      <y>642</y>
+      <w>210</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>CarMechanicUI
+--
+--
++init(String id): void
++displayAvailableStations(List&lt;String&gt; stations): void
++askOption(String s, int numberOfOptions): int
++displayAvailableTasks(List&lt;Task&gt; taskList): void
++displayTaskInfo(String info): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>492</x>
+      <y>600</y>
+      <w>264</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>GarageHolderUI
+--
+--
++init(String id): void
++displayOrders(Set&lt;CarOrder&gt; carOrders): void
++indicatePlaceOrder(): String
++indicateCarModel(): int
++displayOrderingForm(Map&lt;String, List&lt;String&gt;&gt; optionsMap): void
++askOption(int leftBound, int rightBound, String option): int
++displayEstimatedTime(CarOrder order): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1074</x>
+      <y>264</y>
+      <w>186</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>AssemAssist
+--
+-userMap: Map&lt;String, User&gt;
+-assemblyLine: AssemblyLine
+--
+-run(): void
+-login(): void
+-loadUser(String id): void
++addOrder(CarOrder carOrder): void
++advanceAssembly(int minutes): void
++getCurrentAssemblyStatus(): List&lt;String&gt;
++getAdvancedAssemblyStatus(): List&lt;String&gt;
++getStations(): List&lt;String&gt;
++getsAvailableTasks(String string): Set&lt;Task&gt;
++completeTask(Task task): void
++getTaskDescription(Task task): String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>78</x>
+      <y>618</y>
+      <w>216</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>CarModel
+--
+~parts : List&lt;Part&gt;
+--
++CarModel(int model, Map&lt;String, String&gt; parts): ctor
+-createPart(Entry&lt;String, String&gt; part): Part
++getParts(): List&lt;Part&gt;
++getPartsMap(): Map&lt;String, String&gt;
++getValueOfPart(Part part): String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>642</x>
+      <y>90</y>
+      <w>234</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>AssemblyLine
+--
+-carQueue: LinkedList&lt;Car&gt;
+-workStations: LinkedList&lt;WorkStation&gt;
+-scheduler: Scheduler
+--
+-createWorkStations(): LinkedList&lt;WorkStation&gt;
++addToAssembly(CarOrder carOrder): void
++advanceAssemblyLine(int minutes): void
+-checkAdvance(): void
+-allTasksCompleted(WorkStation workStation): boolean
++getCurrentStatus(): List&lt;String&gt;
++getAdvancedStatus(): List&lt;String&gt;
++getWorkstations(): List&lt;String&gt;
+-getWorkStation(String station): WorkStation
+-getWorkStation(Task task): WorkStation
++getUncompletedTasks(String station): Set&lt;Task&gt;
++completeTask(Task task): void
++getCarQueue(): LinkedList&lt;Car&gt;
++setCarQueue(LinkedList&lt;Car&gt; carQueue): void
++getTaskDescription(Task task): String
++advanceAssemblyTime(int minutes): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>978</x>
+      <y>162</y>
+      <w>234</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>Scheduler
+--
+-assemblyLine: AssemblyLine
+-minutesPast: int
+--
++updateCompletionTime(CarOrder order, int minutes): void
++getCompletionTime(): String
++addTime(int minutes): void</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>
