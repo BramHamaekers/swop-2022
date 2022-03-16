@@ -41,12 +41,16 @@ public class AssemblyLine {
 		carOrder.setComplitionTime(this.scheduler.getCompletionTime());
 	}
 
-	public void advanceAssemblyLine() throws NotAllTasksCompleteException {
+	public void advanceAssemblyLine(int minutes) throws NotAllTasksCompleteException {
 		// check if possible to advance AssemblyLine
 		checkAdvance();
+		this.scheduler.addTime(minutes);
 		// Move all cars on assembly by 1 position
-		for (int i = this.workStations.size() - 1; i > 0; i--)
+		for (int i = this.workStations.size() - 1; i > 0; i--) {
 			this.workStations.get(i).setCar(this.workStations.get(i-1).getCar());
+			this.scheduler.updateCompletionTime(workStations.get(i).getCar().getOrder(), minutes);
+		}
+			
 
 		// Set first workstation to first element from the queue
 		try {this.workStations.getFirst().setCar(this.getCarQueue().removeFirst());}
@@ -295,6 +299,13 @@ class Scheduler {
 	public Scheduler(AssemblyLine assemblyLine) {
 		this.assemblyLine = assemblyLine;
 		this.minutesPast = 0;
+	}
+
+	public void updateCompletionTime(CarOrder order, int minutes) {
+		String Time = order.getComplitionTime();
+		Math.abs(60 - minutes);
+		//TODO update the time of order.
+		
 	}
 
 	/**

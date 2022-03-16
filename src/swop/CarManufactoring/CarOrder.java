@@ -8,7 +8,7 @@ public class CarOrder {
 	private String ID;
 	
 	public CarOrder(CarModel carModel) {
-		this.car = new Car(carModel);
+		this.car = new Car(carModel,this);
 		this.ID = RandomID.random(7);
 
 	}

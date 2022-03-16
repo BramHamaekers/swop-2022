@@ -7,10 +7,10 @@ import swop.Parts.Part;
 public class Car {
 	private Set<Task> uncompletedTasks;
     private CarModel carModel;
+    private CarOrder order;
     
-    public Car(CarModel model){
-		if (model == null)
-			throw new IllegalArgumentException("car model is null");
+    public Car(CarModel model, CarOrder order){
+		this.setOrder(order);
         this.setCarModel(model);  
 		this.initiateUncompletedTasks();
     }
@@ -46,6 +46,8 @@ public class Car {
 	}
 
 	public void setCarModel(CarModel carModel) {
+		if (carModel == null)
+			throw new IllegalArgumentException("car model is null");
 		this.carModel = carModel;
 	}
 	public String getValueOfPart(Part part) {
@@ -59,5 +61,15 @@ public class Car {
 			throw new IllegalArgumentException("The car has no carmodel");
 		}
 		return this.getCarModel().getPartsMap();
+	}
+
+	public CarOrder getOrder() {
+		return order;
+	}
+
+	public void setOrder(CarOrder order) {
+		if (order == null)
+			throw new IllegalArgumentException("Order is null");
+		this.order = order;
 	}
 }

@@ -73,7 +73,7 @@ public class AssemAssist {
 	}
 
 	public void advanceAssembly(int minutes) throws NotAllTasksCompleteException {
-		this.assemblyLine.advanceAssemblyLine();
+		this.assemblyLine.advanceAssemblyLine(minutes);
 	}
 	
 
