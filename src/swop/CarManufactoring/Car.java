@@ -7,10 +7,10 @@ import swop.Parts.Part;
 public class Car {
 	private Set<Task> uncompletedTasks;
     private CarModel carModel;
-    private CarOrder order;
+	private String estimatedCompletionTime;
+	private int completionTime;
     
-    public Car(CarModel model, CarOrder order){
-		this.setOrder(order);
+    public Car(CarModel model){
         this.setCarModel(model);  
 		this.initiateUncompletedTasks();
     }
@@ -20,7 +20,7 @@ public class Car {
 			throw new IllegalArgumentException("task is null");
 		if (!uncompletedTasks.contains(task))
 			throw new IllegalArgumentException("task not in todo list");
-		for(Task t: uncompletedTasks) { //moet het met een forloop doen, want anders error door subclass bullshit.
+		for(Task t: uncompletedTasks) {
 			if (Objects.equals(task.getName(), t.getName())) {
 				this.uncompletedTasks.remove(t);
 				break;
@@ -63,13 +63,21 @@ public class Car {
 		return this.getCarModel().getPartsMap();
 	}
 
-	public CarOrder getOrder() {
-		return order;
+	public void setEstimatedCompletionTime(String time) {
+		this.estimatedCompletionTime = time;
+
 	}
 
-	public void setOrder(CarOrder order) {
-		if (order == null)
-			throw new IllegalArgumentException("Order is null");
-		this.order = order;
+
+	public String getEstimatedCompletionTime() {
+		return this.estimatedCompletionTime;
+	}
+
+	public int getCompletionTime() {
+		return this.completionTime;
+	}
+
+	public void setCompletionTime(int time) {
+		this.completionTime = time;
 	}
 }

@@ -57,7 +57,7 @@ public class ManagerUI implements UI {
         	}
         }
         System.out.printf("================================%n");
-        System.out.println("Press enter 2 exit");
+        System.out.println("Press 'Enter' to exit");
 		inputScanner.nextLine();
 	}
     
