@@ -1,6 +1,5 @@
 package swop.CarManufactoring;
 
-import org.jetbrains.annotations.NotNull;
 import swop.Database.RandomID;
 
 public class CarOrder implements Comparable<CarOrder>{
