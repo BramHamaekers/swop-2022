@@ -41,7 +41,7 @@ public class InputScanner {
 		String s;
 		if (inputScanner.hasNextLine()) s = this.inputScanner.nextLine();
 		else s = this.inputScanner.next();
-		if (s.equals("cancel")) throw new CancelException();
+		if (s.equals("CANCEL")) throw new CancelException();
 		try {
 			int number = Integer.parseInt(s);
 			while (number < leftborder || number >= rightBorder) {
@@ -65,7 +65,7 @@ public class InputScanner {
 		String s;
 		if (inputScanner.hasNextLine()) s = this.inputScanner.nextLine();
 		else s = this.inputScanner.next();
-		if (s.equals("cancel")) throw new CancelException();
+		if (s.equals("CANCEL")) throw new CancelException();
 		return s;
 	}
 	/**
@@ -78,7 +78,7 @@ public class InputScanner {
 		String s;
 		if (inputScanner.hasNextLine()) s = this.inputScanner.nextLine();
 		else s = this.inputScanner.next();
-		if (s.equals("cancel")) throw new CancelException();
+		if (s.equals("CANCEL")) throw new CancelException();
 		if(strings == null) {
 			System.out.println("Invalid Array");//throw error?
 			return null;
