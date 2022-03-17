@@ -8,7 +8,7 @@ import java.util.List;
 public class ManagerUI implements UI {
 
     public static void init(String id) {
-        System.out.println("Welcome Manager: " + id);
+        System.out.println("Welcome Manager: " + id + " (You can cancel any action by typing: CANCEL)");
     }
 
     public static String indicateAdvance() throws CancelException {

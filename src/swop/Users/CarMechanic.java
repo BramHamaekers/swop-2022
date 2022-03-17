@@ -8,37 +8,41 @@ import swop.CarManufactoring.Task;
 import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
 import swop.UI.CarMechanicUI;
+import swop.UI.GarageHolderUI;
 
 public class CarMechanic extends User{
     public CarMechanic(String id) {
         super(id);
     }
-
-    private String workStation; //temp tot betere oplossing
     
     /**
      * Called when logging in as CarMechanic
      */
 	@Override
 	public void load(AssemAssist assemAssist) {
+		CarMechanicUI.init(this.getId());
 		try {
 			//returns work station selected by the user
-			if(workStation == null) workStation = this.selectStation(assemAssist);
-			//return list of all the tasks
-			List<Task> taskList = getAvailableTasks(assemAssist, workStation);
-			//returns selected task by user
-			Task task;
-			task = this.selectTask(taskList);
-			//Show the information for given task 2 user
-			if (task != null) {
-				this.showInfo(assemAssist, task);
-				this.completeTask(assemAssist, task);
-				this.load(assemAssist);
-			}
+			String workStation = this.selectStation(assemAssist);
+			
+			this.performTasks(workStation, assemAssist);
+
 		} catch (CancelException e) {
 			e.printMessage();
 		}
-		workStation = null;
+	}
+	
+	private void performTasks(String workStation, AssemAssist assemAssist) throws CancelException {
+		List<Task> taskList = getAvailableTasks(assemAssist, workStation);
+		//returns selected task by user
+		Task task = this.selectTask(taskList);
+		//return list of all the tasks
+		if (task != null) {
+			//Show the information for given task 2 user
+			this.showInfo(assemAssist, task);
+			this.completeTask(assemAssist, task);
+			this.performTasks(workStation,assemAssist);
+		}
 	}
 
 	/**
@@ -52,8 +56,9 @@ public class CarMechanic extends User{
 	/**
 	 * Shows info of given task
 	 * this consists of instruction of each part + value concerning current task.
+	 * @throws CancelException 
 	 */
-	private void showInfo(AssemAssist assemAssist, Task task) {
+	private void showInfo(AssemAssist assemAssist, Task task) throws CancelException {
 		String info = assemAssist.getTaskDescription(task);
 		CarMechanicUI.displayTaskInfo(info);
 	}

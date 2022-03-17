@@ -9,7 +9,7 @@ public class GarageHolderUI implements UI {
 
 	// Dummy init
 	public static void init(String id) {
-		System.out.println("Welcome Garage Holder: " + id);
+		System.out.println("Welcome Garage Holder: " + id + " (You can cancel any action by typing: CANCEL)");
 	}
 
 	/**

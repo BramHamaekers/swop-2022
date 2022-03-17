@@ -24,6 +24,7 @@ public class GarageHolder extends User{
         super(id);
         this.carOrders = new HashSet<>();
         
+        
         //optionMap genereren adhv JSON (Laat het er maar bijstaan verlopig)
         //this.setOptionsMap(Database.openDatabase("carOptions.json", "component", "options"));
     }

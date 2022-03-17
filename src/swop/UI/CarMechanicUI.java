@@ -9,7 +9,7 @@ public class CarMechanicUI implements UI {
 	
 		// Dummy init
 		public static void init(String id) {
-			System.out.println("Welcome Car Mechanic: " + id);
+			System.out.println("Welcome Car Mechanic: " + id + " (You can cancel any action by typing: CANCEL)");
 		}
 		
 		public static void displayAvailableStations(List<String> stations){
@@ -40,15 +40,12 @@ public class CarMechanicUI implements UI {
 			
 		}
 
-		public static void displayTaskInfo(String info) {
+		public static void displayTaskInfo(String info) throws CancelException {
 			System.out.println("-----------Info For Task----------");
 			System.out.println(info);
 			System.out.println("----------------------------------");
 			System.out.println("Press enter when you are finished");
-			try {
-				scanner.scanNextLineOfTypeString();
-			} catch (CancelException e) {
-				return;
-			}
+			scanner.scanNextLineOfTypeString();
+
 		}
 }
