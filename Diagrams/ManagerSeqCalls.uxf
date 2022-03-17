@@ -290,4 +290,15 @@ return</panel_attributes>
 </panel_attributes>
     <additional_attributes>10.0;80.0;110.0;80.0;110.0;10.0;10.0;10.0</additional_attributes>
   </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>533</x>
+      <y>65</y>
+      <w>559</w>
+      <h>39</h>
+    </coordinates>
+    <panel_attributes>*Sequence diagram for the manager use case with methods*</panel_attributes>
+    <additional_attributes/>
+  </element>
 </diagram>

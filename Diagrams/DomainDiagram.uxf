@@ -160,11 +160,9 @@ m2= 0..1</panel_attributes>
       <x>590</x>
       <y>740</y>
       <w>100</w>
-      <h>50</h>
+      <h>30</h>
     </coordinates>
-    <panel_attributes>Car Order
---
-Delivery Time</panel_attributes>
+    <panel_attributes>Car Order</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -184,30 +182,28 @@ m2= 1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>150</x>
-      <y>790</y>
-      <w>210</w>
-      <h>70</h>
+      <x>210</x>
+      <y>810</y>
+      <w>80</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>Car
---
-_tasks: Set&lt;String&gt;_
-uncompletedTasks: Set&lt;String&gt;</panel_attributes>
+</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>350</x>
+      <x>280</x>
       <y>810</y>
-      <w>100</w>
+      <w>170</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>lt=-
 has &gt;
 m1= 1
 m2= 1</panel_attributes>
-    <additional_attributes>80.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>150.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -297,13 +293,13 @@ m2= 1
       <x>230</x>
       <y>300</y>
       <w>540</w>
-      <h>510</h>
+      <h>530</h>
     </coordinates>
     <panel_attributes>lt=-
 is built on &gt;
 m1= 1
 m2= 0..n</panel_attributes>
-    <additional_attributes>520.0;20.0;10.0;20.0;10.0;490.0</additional_attributes>
+    <additional_attributes>520.0;20.0;10.0;20.0;10.0;510.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -362,15 +358,26 @@ m2= 1</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>520</x>
-      <y>780</y>
+      <y>760</y>
       <w>150</w>
-      <h>80</h>
+      <h>100</h>
     </coordinates>
     <panel_attributes>lt=-
 instatiates &gt;
 
 m1=1
 m2=1</panel_attributes>
-    <additional_attributes>10.0;50.0;120.0;50.0;120.0;10.0</additional_attributes>
+    <additional_attributes>10.0;70.0;120.0;70.0;120.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>460</x>
+      <y>170</y>
+      <w>210</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>*Domain diagram*</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>

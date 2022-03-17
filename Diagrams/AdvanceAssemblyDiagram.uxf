@@ -334,4 +334,15 @@ UI
 +addTime(int minutes): void</panel_attributes>
     <additional_attributes/>
   </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>900</x>
+      <y>27</y>
+      <w>333</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>*Class diagram for the manager use case*</panel_attributes>
+    <additional_attributes/>
+  </element>
 </diagram>

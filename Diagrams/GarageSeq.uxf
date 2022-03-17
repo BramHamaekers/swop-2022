@@ -381,4 +381,15 @@ bg=yellow</panel_attributes>
     <panel_attributes>type=termination</panel_attributes>
     <additional_attributes/>
   </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>530</x>
+      <y>100</y>
+      <w>370</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>*Sequence diagram for the garageholder use case*</panel_attributes>
+    <additional_attributes/>
+  </element>
 </diagram>
