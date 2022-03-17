@@ -1,6 +1,6 @@
 package swop.Tests.UseCaseTests;
 
-import org.jetbrains.annotations.NotNull;
+
 import org.junit.jupiter.api.Test;
 import swop.Main.AssemAssist;
 import swop.UI.LoginUI;
@@ -48,16 +48,16 @@ public class OrderNewCarTest {
 
         completeOrderingForm(output); // 6. User completes the ordering form
 
-        // assert garageHolder.getOrders().size() == 1; // The system stores the new order and updates the production schedule.
+        assert garageHolder.getOrders().size() == 1; // The system stores the new order and updates the production schedule.
 
         presentEstimatedCompletionDate(output); // 8. The system presents an estimated completion date for the new order.
     }
 
-    @NotNull
+
     private ListIterator<String> setupUITest() {
         String inputString = "a\r\ny\r\n0\r\n1\r\n1\r\n1\r\n1\r\n1\r\n1\r\n1\r\nQUIT";
         this.assem = new AssemAssist();
-        // this.garageHolder = (GarageHolder) this.assem.getUserMap().get("a"); TODO
+        this.garageHolder = (GarageHolder) this.assem.getUserMap().get("a"); 
 
         this.input = new ByteArrayInputStream(inputString.getBytes());
         System.setIn(input);

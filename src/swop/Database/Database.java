@@ -11,6 +11,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import swop.Users.User;
+
 public class Database {
 	
 	
@@ -58,12 +60,12 @@ public class Database {
 	
 	/**
 	 * Controls if a key is a valid key in the map.
-	 * @param userDatabase
+	 * @param map
 	 * @param ID
 	 * @return
 	 */
-	public static boolean isValidKey(Map<String, List<String>> userDatabase, String key) {
-		if (userDatabase != null) return userDatabase.containsKey(key);
+	public static boolean isValidKey(Map<String, User> map, String key) {
+		if (map != null) return map.containsKey(key);
 		return false;
 	}
 

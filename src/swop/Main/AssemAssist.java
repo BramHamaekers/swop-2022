@@ -26,8 +26,13 @@ public class AssemAssist {
 
 	public AssemAssist() {
 		this.assemblyLine = new AssemblyLine();
+		this.loadUserMap();
     }
-    /**
+    private void loadUserMap() {
+    	final Map <String, List<String>> userDatabase = Database.openDatabase("users.json", "id", "job");
+    	if(this.getUserMap() == null) this.setUserMap(ConvertMapType.changeToUserMap(userDatabase));
+	}
+	/**
      * Starts the program
      */
 	public void run() {
@@ -53,13 +58,11 @@ public class AssemAssist {
 	 */
 	private void loadUser(String id) {
 		// Load user database
-		final Map <String, List<String>> userDatabase = Database.openDatabase("users.json", "id", "job");
-		while (!Database.isValidKey(userDatabase, id) && !(Objects.equals(id, "QUIT"))) {
+		while (!Database.isValidKey(this.getUserMap(), id) && !(Objects.equals(id, "QUIT"))) {
 			System.out.println("Invalid user ID, type QUIT to exit");
 			id = LoginUI.getUserID();
 		}
 		if(id.equals("QUIT")) return;
-		if(this.getUserMap() == null) this.setUserMap(ConvertMapType.changeToUserMap(userDatabase));
 		activeUser = this.getUserMap().get(id);
 		activeUser.load(this);
 		login();
