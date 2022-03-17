@@ -67,7 +67,6 @@ public class CarMechanic extends User{
 		CarMechanicUI.displayAvailableTasks(taskList);
 		int option = CarMechanicUI.askOption("Select task: ", taskList.size());
 		return taskList.get(option);
-		
 	}
 
 	/**
