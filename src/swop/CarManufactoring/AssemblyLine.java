@@ -132,10 +132,19 @@ public class AssemblyLine {
 	/////////////////////////////// Functions used Car Mechanic use case ////////////////////////////////
 
 	/**
+	 * returns list with all workstations
+	 * @return this.workStations
+	 */
+	public List<WorkStation> getWorkStations() {
+		return this.workStations;
+	}
+
+
+	/**
 	 * returns list of strings with names of all workstations.
 	 * @return workStations
 	 */
-	public List<String> getWorkstations(){
+	public List<String> getWorkstationNames(){
 		List<String> workStations = new LinkedList<>();
 		for(WorkStation station: this.workStations) {
 			workStations.add(station.getName());
@@ -265,9 +274,9 @@ class WorkStation {
 
 	public Set<Task> getTasks() {
 		return switch (this.getName()) {
-			case "Car Body Post" -> new HashSet<>(Arrays.asList(Task.AssemblyCarBody, Task.PaintCar));
-			case "Drivetrain Post" -> new HashSet<>(Arrays.asList(Task.InsertEngine, Task.InstallGearbox));
-			case "Accessories Post" -> new HashSet<>(Arrays.asList(Task.InstallSeats, Task.InstallAirco, Task.MountWheels));
+			case "Car Body Post" -> new LinkedHashSet<>(Arrays.asList(Task.AssemblyCarBody, Task.PaintCar));
+			case "Drivetrain Post" -> new LinkedHashSet<>(Arrays.asList(Task.InsertEngine, Task.InstallGearbox));
+			case "Accessories Post" -> new LinkedHashSet<>(Arrays.asList(Task.InstallSeats, Task.InstallAirco, Task.MountWheels));
 			default -> null;
 		};
 	}

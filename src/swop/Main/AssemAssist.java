@@ -115,7 +115,7 @@ public class AssemAssist {
 	}
 	
 	public List<String> getStations() {
-		return this.getAssemblyLine().getWorkstations();
+		return this.getAssemblyLine().getWorkstationNames();
 	}
 	
 	public Set<Task> getsAvailableTasks(String string) {
