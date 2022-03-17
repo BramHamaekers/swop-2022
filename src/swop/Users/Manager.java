@@ -22,8 +22,7 @@ public class Manager extends User{
 		ManagerUI.init(getId());
 		//let's know user wants 2 advance
 		try {
-			String indicate;
-			indicate = ManagerUI.indicateAdvance();
+			String indicate = ManagerUI.indicateAdvance();
 			if (Objects.equals(indicate, "n")) return;
 		//advance assembly
 			this.advanceAssemblyLine(assemAssist);
