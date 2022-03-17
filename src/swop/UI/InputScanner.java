@@ -5,15 +5,20 @@ import java.util.Scanner;
 import swop.Exceptions.CancelException;
 
 public class InputScanner {
-	Scanner inputScanner = new Scanner(System.in);
+	Scanner inputScanner;
 	
+	public InputScanner(Scanner inputscanner) {
+		this.inputScanner = inputscanner;
+	}
 	/**
 	 * Will scan next line for an integer, keeps asking for input when given string does not meet requirements.
 	 * @return valid string as int
 	 * @throws CancelException 
 	 */
 	public int scanNextLineOfTypeInt() throws CancelException {
-		String s = this.inputScanner.nextLine();
+		String s;
+		if (inputScanner.hasNextLine()) s = this.inputScanner.nextLine();
+		else s = this.inputScanner.next();
 		if (s.equals("cancel")) throw new CancelException();
 		try {		
 			int number = Integer.parseInt(s);
@@ -33,7 +38,9 @@ public class InputScanner {
 	 * @throws CancelException 
 	 */
 	public int scanNextLineOfTypeInt(int leftborder, int rightBorder) throws CancelException {
-		String s = this.inputScanner.nextLine();
+		String s;
+		if (inputScanner.hasNextLine()) s = this.inputScanner.nextLine();
+		else s = this.inputScanner.next();
 		if (s.equals("cancel")) throw new CancelException();
 		try {
 			int number = Integer.parseInt(s);
@@ -55,7 +62,9 @@ public class InputScanner {
 	 * @throws CancelException 
 	 */
 	public String scanNextLineOfTypeString() throws CancelException {
-		String s = this.inputScanner.nextLine();
+		String s;
+		if (inputScanner.hasNextLine()) s = this.inputScanner.nextLine();
+		else s = this.inputScanner.next();
 		if (s.equals("cancel")) throw new CancelException();
 		return s;
 	}
@@ -66,7 +75,9 @@ public class InputScanner {
 	 * @throws CancelException 
 	 */
 	public String scanNextLineOfTypeString(String[] strings) throws CancelException {
-		String s = this.inputScanner.nextLine();
+		String s;
+		if (inputScanner.hasNextLine()) s = this.inputScanner.nextLine();
+		else s = this.inputScanner.next();
 		if (s.equals("cancel")) throw new CancelException();
 		if(strings == null) {
 			System.out.println("Invalid Array");//throw error?
@@ -78,5 +89,8 @@ public class InputScanner {
 		System.out.print("Please give valid input:");
 		return scanNextLineOfTypeString(strings);
 		
+	}
+	public void updateScanner() {	
+		this.inputScanner = new Scanner(System.in);
 	}
 }

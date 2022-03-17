@@ -5,8 +5,7 @@ import java.util.Scanner;
 import swop.Exceptions.CancelException;
 
 interface UI {
-	Scanner inputScanner = new Scanner(System.in);
-	static InputScanner scanner = new InputScanner();
+	static InputScanner scanner = new InputScanner(new Scanner(System.in));
 
 	static String indicateYesNo(String action) throws CancelException {
 		System.out.println();

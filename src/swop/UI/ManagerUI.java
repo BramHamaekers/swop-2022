@@ -40,13 +40,18 @@ public class ManagerUI implements UI {
 	public static void printException(NotAllTasksCompleteException e) {
 		 System.out.println(e.getMessage() + e.getWorkstations());
 		 System.out.println("Press 'Enter' to exit");
-		 inputScanner.nextLine();
+		 try {
+			scanner.scanNextLineOfTypeString();
+		} catch (CancelException e1) {
+			return;
+		}
 		
 	}
 
-	public static String confirmAdvance() {
+	public static String confirmAdvance() throws CancelException {
 		System.out.println("Please confirm change: Yes [y] | No [n]");
-        return inputScanner.nextLine();
+		return scanner.scanNextLineOfTypeString();
+
 	}
 
 	public static void exit(List<String> assemLineCurrent) {
@@ -58,7 +63,11 @@ public class ManagerUI implements UI {
         }
         System.out.printf("================================%n");
         System.out.println("Press 'Enter' to exit");
-		inputScanner.nextLine();
+		 try {
+			scanner.scanNextLineOfTypeString();
+		} catch (CancelException e1) {
+			return;
+		}
 	}
     
 

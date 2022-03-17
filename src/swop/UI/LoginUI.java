@@ -1,5 +1,6 @@
 package swop.UI;
 
+import swop.Exceptions.CancelException;
 
 public final class LoginUI implements UI{
 
@@ -10,6 +11,10 @@ public final class LoginUI implements UI{
 
 	public static String getUserID() {
 		System.out.print("Please login with userID, type QUIT to exit: ");
-		return inputScanner.nextLine(); // returns id
+		try {
+			return scanner.scanNextLineOfTypeString();
+		} catch (CancelException e) {
+			return "";
+		} 
 	}
 }

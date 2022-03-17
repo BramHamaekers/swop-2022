@@ -14,8 +14,8 @@ public class NotAllTasksCompleteException extends Exception {
     	String all = "";
     	for(String w : this.workstations) {
     		all += w;
-    		all += " ,";
+    		all += ", ";
     	}
-        return all.substring(0, all.length() - 1);
+        return all.substring(0, all.length() - 2);
     }
 }

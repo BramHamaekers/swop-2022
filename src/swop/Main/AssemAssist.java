@@ -3,10 +3,14 @@ package swop.Main;
 import swop.CarManufactoring.AssemblyLine;
 import swop.CarManufactoring.CarOrder;
 import swop.CarManufactoring.Task;
+import swop.Exceptions.IlligalUserException;
 import swop.Exceptions.NotAllTasksCompleteException;
 import swop.Database.Database;
 import swop.Database.ConvertMapType;
 import swop.UI.LoginUI;
+import swop.Users.CarMechanic;
+import swop.Users.GarageHolder;
+import swop.Users.Manager;
 import swop.Users.User;
 
 import java.util.List;
@@ -18,6 +22,7 @@ public class AssemAssist {
 
 	private Map <String, User> userMap;
 	private AssemblyLine assemblyLine;
+	User activeUser;
 
 	public AssemAssist() {
 		this.assemblyLine = new AssemblyLine();
@@ -26,7 +31,7 @@ public class AssemAssist {
     /**
      * Starts the program
      */
-	private void run() {
+	public void run() {
 
 		this.login();
 		
@@ -40,10 +45,7 @@ public class AssemAssist {
 	private void login() {
 		LoginUI.init();
 		String id = LoginUI.getUserID();
-		while (!(Objects.equals(id, "QUIT"))){
-			this.loadUser(id);
-			id = LoginUI.getUserID();
-		}
+		this.loadUser(id);		
 	}
 
 	/**
@@ -53,13 +55,15 @@ public class AssemAssist {
 	private void loadUser(String id) {
 		// Load user database
 		final Map <String, List<String>> userDatabase = Database.openDatabase("users.json", "id", "job");
-		while (!Database.isValidKey(userDatabase, id)) {
+		while (!Database.isValidKey(userDatabase, id) && !(Objects.equals(id, "QUIT"))) {
 			System.out.println("Invalid user ID, type QUIT to exit");
 			id = LoginUI.getUserID();
 		}
+		if(id.equals("QUIT")) return;
 		if(this.userMap == null) this.userMap = ConvertMapType.changeToUserMap(userDatabase);
-		User activeUser = this.userMap.get(id);
+		activeUser = this.userMap.get(id);
 		activeUser.load(this);
+		login();
 		
 	}
 	
@@ -67,33 +71,55 @@ public class AssemAssist {
 	
 	/************************ Users can communicate with assembly line via these methods*************************/
 
+	private boolean isValidUser(String name) {
+		if(this.activeUser == null) return false;
+		
+		return switch(name) {
+		case "manager" -> this.activeUser instanceof Manager;
+		case "garage holder" -> this.activeUser instanceof GarageHolder;
+		case "car mechanic" -> this.activeUser instanceof CarMechanic;
+		default -> false;
+		};
+	}
+	
+	/***********Methods used by garage holder************/
 	
 	public void addOrder(CarOrder carOrder) {
-		this.assemblyLine.addToAssembly(carOrder);
-	}
-
-	public void advanceAssembly(int minutes) throws NotAllTasksCompleteException {
-		this.assemblyLine.advanceAssemblyLine(minutes);
+		if(isValidUser("garage holder"))this.assemblyLine.addToAssembly(carOrder);
+		else throw new IlligalUserException("addOrder()");
 	}
 	
+	/***********Methods used by manager************/
+	
+	public void advanceAssembly(int minutes) throws NotAllTasksCompleteException {
+		if(isValidUser("manager"))this.assemblyLine.advanceAssemblyLine(minutes);
+		else throw new IlligalUserException("advanceAssembly()");
+	}	
 
 	public List<String> getCurrentAssemblyStatus() {
 		return this.assemblyLine.getCurrentStatus();
 	}
+	
 	public List<String> getAdvancedAssemblyStatus() {
 		return this.assemblyLine.getAdvancedStatus();
+	}
+	
+	/***********Methods used by car mechanic************/
+	
+	public void completeTask(Task task) {
+		if(isValidUser("car mechanic"))this.assemblyLine.completeTask(task);
+		else throw new IlligalUserException("completeTask()");
+		
 	}
 	
 	public List<String> getStations() {
 		return this.assemblyLine.getWorkstations();
 	}
+	
 	public Set<Task> getsAvailableTasks(String string) {
 		return this.assemblyLine.getUncompletedTasks(string);
 	}
-	public void completeTask(Task task) {
-		this.assemblyLine.completeTask(task);
-		
-	}
+	
 	public String getTaskDescription(Task task) {
 		return this.assemblyLine.getTaskDescription(task);
 	}

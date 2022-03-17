@@ -45,6 +45,10 @@ public class CarMechanicUI implements UI {
 			System.out.println(info);
 			System.out.println("----------------------------------");
 			System.out.println("Press enter when you are finished");
-			inputScanner.nextLine();
+			try {
+				scanner.scanNextLineOfTypeString();
+			} catch (CancelException e) {
+				return;
+			}
 		}
 }
