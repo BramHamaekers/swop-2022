@@ -8,7 +8,7 @@ import swop.Exceptions.IlligalUserException;
 import swop.Main.AssemAssist;
 import swop.UI.LoginUI;
 
-public class IlligalAccesPublicMethodsAssemAssistTest {
+public class IllegalAccessPublicMethodsAssemAssistTest {
 	AssemAssist assem;
 	InputStream input;
 
@@ -16,8 +16,8 @@ public class IlligalAccesPublicMethodsAssemAssistTest {
 	
 	@Test
 	void testPublicMethodsThatWillChangeChangeStateAssembly() {
-		//test acces when assemAssist has no activeUser at the moment (Should be impossible normally): Should throw IlligalUserException
-		instaQuit();
+		//test access when assemAssist has no activeUser at the moment (Should be impossible normally): Should throw IlligalUserException
+		instantQuit();
 		assertThrows(IlligalUserException.class, 
 				() -> assem.addOrder(null));
 		//test activeUser = car mechanic but wants to add an order: Should throw IlligalUserException
@@ -36,7 +36,7 @@ public class IlligalAccesPublicMethodsAssemAssistTest {
 
 
 
-	void instaQuit() {
+	void instantQuit() {
 		String s = "QUIT";
 		s+=System.lineSeparator();
 		input = new ByteArrayInputStream(s.getBytes());
