@@ -13,10 +13,7 @@ import swop.Users.GarageHolder;
 import swop.Users.Manager;
 import swop.Users.User;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class AssemAssist {
 
@@ -29,7 +26,13 @@ public class AssemAssist {
 		this.loadUserMap();
     }
     private void loadUserMap() {
-    	final Map <String, List<String>> userDatabase = Database.openDatabase("users.json", "id", "job");
+//    	final Map <String, List<String>> userDatabase = Database.openDatabase("users.json", "id", "job");
+//		System.out.println(userDatabase);
+		final Map <String, List<String>> userDatabase = new HashMap<>() {{
+			put("a", List.of("garage holder"));
+			put("b", List.of("car mechanic"));
+			put("c", List.of("manager"));
+		}};
     	if(this.getUserMap() == null) this.setUserMap(ConvertMapType.changeToUserMap(userDatabase));
 	}
 	/**
