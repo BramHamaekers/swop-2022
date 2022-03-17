@@ -21,7 +21,7 @@ import java.util.Set;
 public class AssemAssist {
 
 	private Map <String, User> userMap;
-	private AssemblyLine assemblyLine;
+	private final AssemblyLine assemblyLine;
 	User activeUser;
 
 	public AssemAssist() {
@@ -87,43 +87,43 @@ public class AssemAssist {
 	/***********Methods used by garage holder************/
 	
 	public void addOrder(CarOrder carOrder) {
-		if(isValidUser("garage holder"))this.assemblyLine.addToAssembly(carOrder);
+		if(isValidUser("garage holder")) this.getAssemblyLine().addToAssembly(carOrder);
 		else throw new IlligalUserException("addOrder()");
 	}
 	
 	/***********Methods used by manager************/
 	
 	public void advanceAssembly(int minutes) throws NotAllTasksCompleteException {
-		if(isValidUser("manager"))this.assemblyLine.advanceAssemblyLine(minutes);
+		if(isValidUser("manager")) this.getAssemblyLine().advanceAssemblyLine(minutes);
 		else throw new IlligalUserException("advanceAssembly()");
 	}	
 
 	public List<String> getCurrentAssemblyStatus() {
-		return this.assemblyLine.getCurrentStatus();
+		return this.getAssemblyLine().getCurrentStatus();
 	}
 	
 	public List<String> getAdvancedAssemblyStatus() {
-		return this.assemblyLine.getAdvancedStatus();
+		return this.getAssemblyLine().getAdvancedStatus();
 	}
 	
 	/***********Methods used by car mechanic************/
 	
 	public void completeTask(Task task) {
-		if(isValidUser("car mechanic"))this.assemblyLine.completeTask(task);
+		if(isValidUser("car mechanic")) this.getAssemblyLine().completeTask(task);
 		else throw new IlligalUserException("completeTask()");
 		
 	}
 	
 	public List<String> getStations() {
-		return this.assemblyLine.getWorkstations();
+		return this.getAssemblyLine().getWorkstations();
 	}
 	
 	public Set<Task> getsAvailableTasks(String string) {
-		return this.assemblyLine.getUncompletedTasks(string);
+		return this.getAssemblyLine().getUncompletedTasks(string);
 	}
 	
 	public String getTaskDescription(Task task) {
-		return this.assemblyLine.getTaskDescription(task);
+		return this.getAssemblyLine().getTaskDescription(task);
 	}
 
 	public Map<String, User> getUserMap() {
@@ -132,5 +132,9 @@ public class AssemAssist {
 
 	public void setUserMap(Map<String, User> userMap) {
 		this.userMap = userMap;
+	}
+
+	public AssemblyLine getAssemblyLine() {
+		return assemblyLine;
 	}
 }
