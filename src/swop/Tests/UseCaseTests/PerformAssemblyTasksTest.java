@@ -165,7 +165,7 @@ public class PerformAssemblyTasksTest {
         ListIterator<String> output = Arrays.asList(outContent.toString().split("\r\n"))
                 .listIterator();
 
-        for (int i = 0; i < 60; i++) {
+        for (int i = 0; i < 61; i++) {
             output.next();
         }
         return output;
