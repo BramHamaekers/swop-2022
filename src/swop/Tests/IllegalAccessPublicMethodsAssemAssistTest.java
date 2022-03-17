@@ -24,7 +24,7 @@ public class IllegalAccessPublicMethodsAssemAssistTest {
 		loadCarMechanic();
 		assertThrows(IlligalUserException.class, 
 				() -> assem.addOrder(null));
-		//test activeUser = car mechanic but wants to advance assambly: Should throw IlligalUserException
+		//test activeUser = garage holder but wants to advance assambly: Should throw IlligalUserException
 		loadGarageHolder();
 		assertThrows(IlligalUserException.class, 
 				() -> assem.advanceAssembly(0));
@@ -48,7 +48,7 @@ public class IllegalAccessPublicMethodsAssemAssistTest {
 	}
 
 	private void loadGarageHolder() {
-		String s = "";
+		String s = "a";
 		 s += "a";
 		 s+=System.lineSeparator();
 		 s+="n";

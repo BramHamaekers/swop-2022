@@ -26,7 +26,6 @@ public class AssemAssist {
 
 	public AssemAssist() {
 		this.assemblyLine = new AssemblyLine();
-    	this.run();
     }
     /**
      * Starts the program
@@ -60,8 +59,8 @@ public class AssemAssist {
 			id = LoginUI.getUserID();
 		}
 		if(id.equals("QUIT")) return;
-		if(this.userMap == null) this.userMap = ConvertMapType.changeToUserMap(userDatabase);
-		activeUser = this.userMap.get(id);
+		if(this.getUserMap() == null) this.setUserMap(ConvertMapType.changeToUserMap(userDatabase));
+		activeUser = this.getUserMap().get(id);
 		activeUser.load(this);
 		login();
 		
@@ -124,4 +123,11 @@ public class AssemAssist {
 		return this.assemblyLine.getTaskDescription(task);
 	}
 
+	public Map<String, User> getUserMap() {
+		return userMap;
+	}
+
+	public void setUserMap(Map<String, User> userMap) {
+		this.userMap = userMap;
+	}
 }

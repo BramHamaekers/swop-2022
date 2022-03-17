@@ -42,6 +42,7 @@ public class GarageHolderUI implements UI {
 		completedSet.forEach(c -> {
 					System.out.println("Order: " + c.getID());
 				});
+		System.out.println();
 		System.out.println("=======================================");
 	}
 	

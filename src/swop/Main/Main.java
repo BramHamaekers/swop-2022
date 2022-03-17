@@ -3,6 +3,7 @@ package swop.Main;
 public class Main {
 
     public static void main(String[] args) {
-	AssemAssist AssemAssist = new AssemAssist();
+	AssemAssist assemAssist = new AssemAssist();
+    assemAssist.run();
     }
 }
