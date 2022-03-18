@@ -8,7 +8,6 @@ import swop.CarManufactoring.Task;
 import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
 import swop.UI.CarMechanicUI;
-import swop.UI.GarageHolderUI;
 
 public class CarMechanic extends User{
     public CarMechanic(String id) {
