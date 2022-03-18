@@ -16,21 +16,21 @@ public class IllegalUsePublicMethodsAssemAssistTest {
 	
 	@Test
 	void IllegalUsePublicMethods() {
-		//test access when assemAssist has no activeUser at the moment (Should be impossible normally): Should throw IlligalUserException
+		//test access when assemAssist has no activeUser at the moment (Should be impossible normally): Should throw IllegalArgumentException
 		instantQuit();
-		assertThrows(IllegalUserException.class,
+		assertThrows(IllegalArgumentException.class,
 				() -> assem.addOrder(null));
-		//test activeUser = car mechanic but wants to add an order: Should throw IlligalUserException
+		//test activeUser = car mechanic but wants to add an order: Should throw IllegalArgumentException
 		loadCarMechanic();
-		assertThrows(IllegalUserException.class,
+		assertThrows(IllegalArgumentException.class,
 				() -> assem.addOrder(null));
-		//test activeUser = garage holder but wants to advance assambly: Should throw IlligalUserException
+		//test activeUser = garage holder but wants to advance assambly: Should throw IllegalUserException
 		loadGarageHolder();
 		assertThrows(IllegalUserException.class,
 				() -> assem.advanceAssembly(0));
-		//test activeUser = manager but wants to complete a task: Should throw IlligalUserException
+		//test activeUser = manager but wants to complete a task: Should throw IllegalArgumentException
 		loadManager();
-		assertThrows(IllegalUserException.class,
+		assertThrows(IllegalArgumentException.class,
 				() -> assem.completeTask(null));
 	}
 
