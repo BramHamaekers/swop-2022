@@ -8,14 +8,14 @@ import swop.Exceptions.IlligalUserException;
 import swop.Main.AssemAssist;
 import swop.UI.LoginUI;
 
-public class IllegalAccessPublicMethodsAssemAssistTest {
+public class IllegalUsePublicMethodsAssemAssistTest {
 	AssemAssist assem;
 	InputStream input;
 
 
 	
 	@Test
-	void testPublicMethodsThatWillChangeChangeStateAssembly() {
+	void IllegalUsePublicMethods() {
 		//test access when assemAssist has no activeUser at the moment (Should be impossible normally): Should throw IlligalUserException
 		instantQuit();
 		assertThrows(IlligalUserException.class, 
