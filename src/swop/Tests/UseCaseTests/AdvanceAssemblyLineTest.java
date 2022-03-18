@@ -39,12 +39,12 @@ public class AdvanceAssemblyLineTest {
                  "c\r\ny\r\ny\r\n45\r\n\r\nQUIT"//advance assemblyLine (Should be OK since all tasks are completed)
          ); // Setup
     	 skipOutputLines(output,52);
-    	 checkAdvanceCarInWorkStation(output,0);
+    	 checkAdvanceCarInWorkStation(output,0); //checks car in given workStation
     	 skipOutputLines(output,48);
     	 checkAdvanceCarInWorkStation(output,1);
     	 skipOutputLines(output,48);
     	 checkAdvanceCarInWorkStation(output,2);
-    	 checkCarIsCompleted();
+    	 checkCarIsCompleted(); //checks if the car has been fully assembled
     	
     }
     
@@ -58,7 +58,7 @@ public class AdvanceAssemblyLineTest {
     	 skipOutputLines(output,52);
     	 checkAdvanceCarInWorkStation(output,0);
     	 skipOutputLines(output,44);
-    	 showNotAllTasksCompletedMessage(output);
+    	 showNotAllTasksCompletedMessage(output); //checks if user get's message that not all tasks are completed
     	 
     }
 
