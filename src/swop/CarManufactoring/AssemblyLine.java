@@ -98,7 +98,11 @@ public class AssemblyLine {
 	/**
 	 * returns for all works stations current state. 
 	 * Empty = no car, Finished = all tasks completed, Pending = tasks need 2 be completed
+<<<<<<< HEAD
 	 * @return a list completion statuses
+=======
+	 * @return list of states from each work station
+>>>>>>> 9f1d4ba7a56514a7e6d3e10769f6a115c7a2c896
 	 */
 	public List<String> getCurrentStatus() {
 		List<String> status = new LinkedList<>();
@@ -117,7 +121,11 @@ public class AssemblyLine {
 	/**
 	 * returns for all works stations state if an advance would happen. 
 	 * Empty = no car, Finished = all tasks completed, Pending = tasks need 2 be completed
+<<<<<<< HEAD
 	 * @return a list completion statuses if the assembly line is to advance
+=======
+	 * @return list of states from each work station if an advance would take place
+>>>>>>> 9f1d4ba7a56514a7e6d3e10769f6a115c7a2c896
 	 */
 	public List<String> getAdvancedStatus() { 
 		List<String> status = new LinkedList<>();
