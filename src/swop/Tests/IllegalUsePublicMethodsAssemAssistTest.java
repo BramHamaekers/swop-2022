@@ -4,12 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import org.junit.jupiter.api.Test;
-import swop.Exceptions.IlligalUserException;
+import swop.Exceptions.IllegalUserException;
 import swop.Main.AssemAssist;
 import swop.UI.LoginUI;
 
 public class IllegalUsePublicMethodsAssemAssistTest {
-	AssemAssist assem;
+	AssemAssist assem = new AssemAssist();
 	InputStream input;
 
 
@@ -18,19 +18,19 @@ public class IllegalUsePublicMethodsAssemAssistTest {
 	void IllegalUsePublicMethods() {
 		//test access when assemAssist has no activeUser at the moment (Should be impossible normally): Should throw IlligalUserException
 		instantQuit();
-		assertThrows(IlligalUserException.class, 
+		assertThrows(IllegalUserException.class,
 				() -> assem.addOrder(null));
 		//test activeUser = car mechanic but wants to add an order: Should throw IlligalUserException
 		loadCarMechanic();
-		assertThrows(IlligalUserException.class, 
+		assertThrows(IllegalUserException.class,
 				() -> assem.addOrder(null));
 		//test activeUser = garage holder but wants to advance assambly: Should throw IlligalUserException
 		loadGarageHolder();
-		assertThrows(IlligalUserException.class, 
+		assertThrows(IllegalUserException.class,
 				() -> assem.advanceAssembly(0));
 		//test activeUser = manager but wants to complete a task: Should throw IlligalUserException
 		loadManager();
-		assertThrows(IlligalUserException.class, 
+		assertThrows(IllegalUserException.class,
 				() -> assem.completeTask(null));
 	}
 
@@ -42,8 +42,7 @@ public class IllegalUsePublicMethodsAssemAssistTest {
 		input = new ByteArrayInputStream(s.getBytes());
 		System.setIn(input);
 		//scanner can't update system.in on its own... moet ge update telkens ge een nieuw argument meegeeft via system.in.
-		LoginUI.scanner.updateScanner(); 
-		assem = new AssemAssist();
+		LoginUI.scanner.updateScanner();
 		//reset
 	}
 
@@ -59,7 +58,6 @@ public class IllegalUsePublicMethodsAssemAssistTest {
 		//scanner can't update system.in on its own... moet ge update telkens ge een nieuw argument meegeeft via system.in.
 		LoginUI.scanner.updateScanner(); 
 		assem.run();
-		
 	}
 	
 	private void loadCarMechanic() {
@@ -74,7 +72,6 @@ public class IllegalUsePublicMethodsAssemAssistTest {
 		//scanner can't update system.in on its own... moet ge update telkens ge een nieuw argument meegeeft via system.in.
 		LoginUI.scanner.updateScanner(); 
 		assem.run();
-		
 	}
 	
 	 void loadManager() {			

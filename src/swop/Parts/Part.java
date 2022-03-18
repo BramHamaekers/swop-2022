@@ -21,27 +21,26 @@ public class Part {
 	public String getValue() {		
 		return value;
 	}
-	
-	boolean containsValue(String value) {
+
+	/**
+	 * Helper method to check if string is in list of valid strings
+	 * @param value given a string
+	 * @return whether the parameter value is in validvalues
+	 */
+	private boolean containsValue(String value) {
 		for(String v: validValues) if (v.equals(value)) return true;
 		return false;
 	}
-	
+
 	public void setValue(String value) {
-		if(this.isValidValue(value)) this.value = value;
+		if(this.containsValue(value)) this.value = value;
 		else System.out.println("invalid value");
 	}
 	public String[] getValidValues() {
 		return this.validValues;
 	}
-	
-	boolean isValidValue(String value) {
-		if (this.containsValue(value)) return true;
-		return false;
-	}
 
 	public String getName() {
 		return name;
 	}
-	
 }

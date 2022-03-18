@@ -37,10 +37,16 @@ public class AssemblyLine {
 	 * @param carOrder the carOrder to add to this.carQueue
 	 */
 	public void addToAssembly(CarOrder carOrder) {
+		if (carOrder== null) throw new IllegalArgumentException("carOrder is null");
 		this.getCarQueue().add(carOrder.getCar());
 		carOrder.getCar().setEstimatedCompletionTime(this.scheduler.getEstimatedCompletionTime());
 	}
 
+	/**
+	 * advance the assembly line if a manager orders and all tasks are done
+	 * @param minutes minutes past since start of the task
+	 * @throws NotAllTasksCompleteException thrown when there are still tasks to do
+	 */
 	public void advanceAssemblyLine(int minutes) throws NotAllTasksCompleteException {
 		// check if possible to advance AssemblyLine
 		checkAdvance();
@@ -65,7 +71,7 @@ public class AssemblyLine {
 
 	/**
 	 * Checks if it is possible to advance the assembly line
-	 * @throws NotAllTasksCompleteException
+	 * @throws NotAllTasksCompleteException thrown if there are still tasks to do
 	 */
 	private void checkAdvance() throws NotAllTasksCompleteException {
 		LinkedList<String> w = new LinkedList<>();
@@ -77,8 +83,11 @@ public class AssemblyLine {
 
 	/**
 	 * Returns boolean whether or not all tasks are completed in given work station
+	 * @param workStation a specified workstation
+	 * @return whether all tasks are completed at given workstation
 	 */
 	private boolean allTasksCompleted(WorkStation workStation) {
+		if (workStation== null) throw new IllegalArgumentException("workStation is null");
 		return workStation.getCar() == null || Collections.disjoint(workStation.getCar().getUncompletedTasks(),
 				workStation.getTasks()); //returns true if no tasks are uncompleted
 	}
@@ -89,7 +98,7 @@ public class AssemblyLine {
 	/**
 	 * returns for all works stations current state. 
 	 * Empty = no car, Finished = all tasks completed, Pending = tasks need 2 be completed
-	 * @return
+	 * @return a list completion statuses
 	 */
 	public List<String> getCurrentStatus() {
 		List<String> status = new LinkedList<>();
@@ -108,7 +117,7 @@ public class AssemblyLine {
 	/**
 	 * returns for all works stations state if an advance would happen. 
 	 * Empty = no car, Finished = all tasks completed, Pending = tasks need 2 be completed
-	 * @return
+	 * @return a list completion statuses if the assembly line is to advance
 	 */
 	public List<String> getAdvancedStatus() { 
 		List<String> status = new LinkedList<>();
@@ -155,9 +164,10 @@ public class AssemblyLine {
 	/**
 	 * Get workstation with the given name
 	 * @param station the name of the workstation
-	 * @return wStation || throw new IllegalArgumentException()
+	 * @return the station out of possible stations
 	 */
 	private WorkStation getWorkStation(String station) {
+		if (station== null) throw new IllegalArgumentException("station is null");
 		for(WorkStation wStation: this.workStations) {
 			if(wStation.getName().equals(station)) return wStation;
 		}
@@ -168,9 +178,10 @@ public class AssemblyLine {
 	/**
 	 * Get workstation that performs the given task
 	 * @param task The task of the workstation
-	 * @return wStation || throw new IllegalArgumentException()
+	 * @return workstation that performs the given task
 	 */
 	private WorkStation getWorkStation(Task task) {
+		if (task == null) throw new IllegalArgumentException("task is null");
 		for(WorkStation wStation: this.workStations) {
 			if(wStation.containsTask(task)) return wStation;
 		}
@@ -184,8 +195,9 @@ public class AssemblyLine {
 	 * @return all tasks that are uncompleted at station
 	 */
 	public Set<Task> getUncompletedTasks(String station) {
-			WorkStation workStation = this.getWorkStation(station);
-			return workStation.getUncompletedTasks();
+		if (station== null) throw new IllegalArgumentException("station is null");
+		WorkStation workStation = this.getWorkStation(station);
+		return workStation.getUncompletedTasks();
 	}
 
 	/**
@@ -193,6 +205,7 @@ public class AssemblyLine {
 	 * @param task the task to complete
 	 */
 	public void completeTask(Task task) {
+		if (task == null) throw new IllegalArgumentException("task is null");
 		WorkStation station = this.getWorkStation(task);
 		station.completeTask(task);
 		
@@ -220,6 +233,7 @@ public class AssemblyLine {
 	 * @return The description of the given Task
 	 */
 	public String getTaskDescription(Task task) {
+		if (task == null) throw new IllegalArgumentException("task is null");
 		WorkStation ws = this.getWorkStation(task);
 		List<Part> parts = task.getParts();
 		String value = "Empty";
@@ -254,6 +268,7 @@ class WorkStation {
 	}
 
 	public boolean containsTask(Task task) {
+		if (task == null) throw new IllegalArgumentException("task is null");
 		return this.getTasks().contains(task);
 	}
 
@@ -294,12 +309,14 @@ class WorkStation {
 	}
 	
 	public String getValueOfPart(Part part) {
-		if(car == null) throw new IllegalArgumentException("No car in station"); 
+		if(car == null) throw new IllegalArgumentException("No car in station");
+		if (part == null) throw new IllegalArgumentException("part is null");
 		return this.getCar().getValueOfPart(part);
 
 	}
 	public void completeTask(Task task) {
-		if(car == null) throw new IllegalArgumentException("No car in station"); 
+		if(car == null) throw new IllegalArgumentException("No car in station");
+		if (task == null) throw new IllegalArgumentException("task is null");
 		this.getCar().completeTask(task);
 	}
 }

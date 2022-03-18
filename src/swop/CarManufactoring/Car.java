@@ -15,6 +15,10 @@ public class Car {
 		this.initiateUncompletedTasks();
     }
 
+	/**
+	 * Complete a remaining task for assembly
+	 * @param task given a completed task
+	 */
 	public void completeTask(Task task) {
 		if (task == null)
 			throw new IllegalArgumentException("task is null");
@@ -50,6 +54,7 @@ public class Car {
 			throw new IllegalArgumentException("car model is null");
 		this.carModel = carModel;
 	}
+
 	public String getValueOfPart(Part part) {
 		if (this.carModel == null) {
 			throw new IllegalArgumentException("The car has no carmodel");

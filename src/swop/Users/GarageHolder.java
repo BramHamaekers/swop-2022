@@ -9,7 +9,6 @@ import java.util.*;
 
 public class GarageHolder extends User{
     private final LinkedHashMap<String, List<String>> optionsMap = new LinkedHashMap<>(){{
-    	//TODO dit nog aanpassen in toekomst, kga nu niet doen, te tam
 		put("Airco", Arrays.asList("manual", "automatic climate control"));
 		put("Body",Arrays.asList("sedan", "break"));
 		put("Color",Arrays.asList("red", "blue", "black", "white"));
@@ -23,18 +22,16 @@ public class GarageHolder extends User{
     public GarageHolder(String id) {
         super(id);
         this.carOrders = new HashSet<>();
-        
-        
-        //optionMap genereren adhv JSON (Laat het er maar bijstaan verlopig)
-        //this.setOptionsMap(Database.openDatabase("carOptions.json", "component", "options"));
     }
 
     /**
      * Called when logging in as GarageHolder
+     * @param assemAssist given the main program
      */
     @Override
-    public void load(AssemAssist assemAssist) { 
-    	try {
+    public void load(AssemAssist assemAssist) {
+        if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
+        try {
     		GarageHolderUI.init(this.getId());
     		GarageHolderUI.displayOrders(this.getOrders());
             String action = GarageHolderUI.indicatePlaceOrder();
@@ -49,10 +46,11 @@ public class GarageHolder extends User{
     
     /**
      * Will handle all the steps for generating a new valid order.
-     * @param assemAssist input the assemassist //TODO
+     * @param assemAssist assemAssist given the main program
      */
     private void generateOrder(AssemAssist assemAssist) {
-    	try {
+        if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
+        try {
 			int model = GarageHolderUI.indicateCarModel();
 			GarageHolderUI.displayOrderingForm(this.getOptionsMap());
 			Map<String,Integer> carConfig = getFilledOrder();
@@ -67,8 +65,8 @@ public class GarageHolder extends User{
     
     /**
      * Will return a map with options of car chosen by user.
-     * @return carConfig
-     * @throws CancelException when user wants 2 cancel his order
+     * @return carConfig as a map from part to integer
+     * @throws CancelException CancelException when "CANCEL" is the input
      */
     private Map<String,Integer> getFilledOrder() throws CancelException{
     	Map<String,Integer> carConfig = new HashMap<>();
@@ -85,6 +83,7 @@ public class GarageHolder extends User{
      * @return map string part to selection string
      */
 	private Map<String,String> mapConfigToOptions(Map<String, Integer> carConfig) {
+        if (carConfig == null) throw new IllegalArgumentException("carConfig is null");
         Map<String,String> carOpts = new HashMap<>();
 
         for (String component: carConfig.keySet()) {
@@ -98,24 +97,27 @@ public class GarageHolder extends User{
 	/**
 	 * Creates new CarModel given the model/optionsMap
 	 * @param model given model number
-	 * @param carOptions map from part to actual selection
+	 * @param carOptions map from part to actual selection as a string
 	 * @return created CarModel
 	 */
     private CarModel createCarModel(int model, Map<String, String> carOptions) {
+            if (carOptions == null) throw new IllegalArgumentException("carOptions is null");
             return new CarModel(model,carOptions);
         }
     
     /**
      * Creates and stores a new CarOrder given a carModel
-     * @param assemAssist assemAssist
+     * @param assemAssist given the main program
      * @param carModel given carmodel
-     * @return Carorder
+     * @return completed carorder
      */
     private CarOrder placeOrder(AssemAssist assemAssist, CarModel carModel){
-         CarOrder carOrder = new CarOrder(carModel);
-         this.addOrder(carOrder);
-         assemAssist.addOrder(carOrder);
-         return carOrder;
+        if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
+        if (carModel == null) throw new IllegalArgumentException("carModel is null");
+        CarOrder carOrder = new CarOrder(carModel);
+        this.addOrder(carOrder);
+        assemAssist.addOrder(carOrder);
+        return carOrder;
     }
 
     

@@ -16,6 +16,7 @@ public class Manager extends User{
 
     /**
      * Called when logging in as Manager
+	 * @param assemAssist assemAssist given the main program
      */
 	@Override
 	public void load(AssemAssist assemAssist) {
@@ -34,9 +35,11 @@ public class Manager extends User{
 	
 	/**
 	 * Class handling everything advancement of assembly line
-	 * @throws CancelException
+	 * @param assemAssist given the main program
+	 * @throws CancelException CancelException when "CANCEL" is the input
 	 */
 	private void advanceAssemblyLine(AssemAssist assemAssist) throws CancelException {
+		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
 		ManagerUI.displayAssemblyLine(assemAssist.getCurrentAssemblyStatus(), assemAssist.getAdvancedAssemblyStatus());
 		//confirm advance
 		String indicate = ManagerUI.confirmAdvance();
