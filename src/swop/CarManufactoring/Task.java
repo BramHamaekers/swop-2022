@@ -52,6 +52,10 @@ public enum Task {
 		return p;
 	}
 
+	/**
+	 * Return Set<Task> of all the tasks 
+	 * @return A set of tasks
+	 */
 	public static Set<Task> getAllTasks() {
 		Set<Task> tasks = new HashSet<>();
 		tasks.add(InsertEngine);
@@ -67,6 +71,11 @@ public enum Task {
 	public String getName() {
 		return this.name;
 	}
+	/**
+	 * Returns instructions for a given part
+	 * @param part
+	 * @return
+	 */
 	public String getDescription(Part part) {
 		return this.partsMap.get(part);
 	}

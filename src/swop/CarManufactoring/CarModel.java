@@ -9,12 +9,16 @@ public class CarModel {
 	
 	List<Part> parts = new LinkedList<>();
 	
-	
-	  public CarModel(int model, Map<String, String> parts) {
+	/**
+	 * create a new car model given the parts and model choice.
+	 * @param model the model of car
+	 * @param parts the selected parts
+	 */
+	 public CarModel(int model, Map<String, String> parts) {
 	        for(var part : parts.entrySet()) {
 	        	this.parts.add(this.createPart(part));
 	        }
-	    }
+	 }
 
 	/**
 	 * create a new part from a given description of a part
@@ -39,6 +43,10 @@ public class CarModel {
 		return this.parts;
 	}
 	
+	/**
+	 * Returns Map<String, String> (part.name => part.value)
+	 * @return
+	 */
 	public Map<String, String> getPartsMap() {
 		Map<String, String> map = new HashMap<>();
 		for(Part part: parts) map.put(part.getName(), part.getValue());

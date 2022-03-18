@@ -6,6 +6,10 @@ public class CarOrder implements Comparable<CarOrder>{
 	private final Car car;
 	private final String ID;
 	
+	/**
+	 * Creates a new order based on given carModel
+	 * @param carModel
+	 */
 	public CarOrder(CarModel carModel) {
 		this.car = new Car(carModel);
 		this.ID = RandomID.random(7);
@@ -15,6 +19,10 @@ public class CarOrder implements Comparable<CarOrder>{
 		return car;
 	}
 
+	/**
+	 * Returns boolean based on completion of cars
+	 * @return true if all the cars of the order are completed
+	 */
 	public boolean isCompleted() {
 		return car.isCompleted();
 	}
@@ -23,6 +31,10 @@ public class CarOrder implements Comparable<CarOrder>{
 		return this.ID;
 	}
 
+	/**
+	 * Est. value of completion for this car.
+	 * @return est. value
+	 */
 	public String getEstimatedCompletionTime() {
 		return this.getCar().getEstimatedCompletionTime();
 	}

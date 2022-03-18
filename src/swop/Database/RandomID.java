@@ -4,6 +4,11 @@ import java.util.Random;
 
 public final class RandomID {
 
+	/**
+	 * A half working method for generating random sequence off symbols
+	 * @param lenght of the generated string
+	 * @return String of random symbols
+	 */
 	public static String random(int size) {
 		 int leftLim1 = 48; 
 		 int rightLim1 = 57;

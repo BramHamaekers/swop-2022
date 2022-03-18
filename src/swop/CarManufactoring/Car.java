@@ -32,6 +32,10 @@ public class Car {
 		}
 	}
 
+	/**
+	 * Checks if all tasks are completed
+	 * @return true if Set<Task> uncompletedTasks is empty
+	 */
 	public boolean isCompleted() {
 		return getUncompletedTasks().isEmpty();
 	}
@@ -44,7 +48,10 @@ public class Car {
 		uncompletedTasks = Task.getAllTasks();
 	}
 
-
+	/**
+	 * Returns the car model of this car
+	 * @return carModel
+	 */
 	public CarModel getCarModel() {
 		return carModel;
 	}
@@ -55,6 +62,11 @@ public class Car {
 		this.carModel = carModel;
 	}
 
+	/**
+	 * Returns the value of given part based on the model of this car.
+	 * @param part
+	 * @return value part
+	 */
 	public String getValueOfPart(Part part) {
 		if (this.carModel == null) {
 			throw new IllegalArgumentException("The car has no carmodel");
