@@ -27,7 +27,7 @@ public class AdvanceAssemblyLineTest {
     GarageHolder garageHolder;
     
     @Test
-    void CompleteFullCar() {    	
+    void CompleteFullCarTest() {    	
     	 ListIterator<String> output = setupUITest(
                  "a\r\ny\r\n0\r\n1\r\n1\r\n1\r\n1\r\n1\r\n1\r\n1\r\n" + // place order
                  "c\r\ny\r\ny\r\n45\r\n\r\n" + // advance assemblyLine
@@ -48,7 +48,24 @@ public class AdvanceAssemblyLineTest {
     	
     }
     
+    @Test
+    void AdvanceAssemblyLineAlternateFlowTest() {
+    	 ListIterator<String> output = setupUITest(
+                 "a\r\ny\r\n0\r\n1\r\n1\r\n1\r\n1\r\n1\r\n1\r\n1\r\n" + // place order
+                 "c\r\ny\r\ny\r\n45\r\n\r\n" + // advance assemblyLine
+                 "b\r\n0\r\n0\r\n\r\nCANCEL\r\n" + // Perform only 1 Task and cancels
+                 "c\r\ny\r\ny\r\n45\r\n\r\nQUIT"); //try advance but will fail since not all tasks were completed in Car Body Post
+    	 skipOutputLines(output,52);
+    	 checkAdvanceCarInWorkStation(output,0);
+    	 skipOutputLines(output,44);
+    	 showNotAllTasksCompletedMessage(output);
+    	 
+    }
 
+	private void showNotAllTasksCompletedMessage(ListIterator<String> output) {
+		 assertEquals("Not all tasks completed in: Car Body Post", output.next());
+		
+	}
 
 	private void checkCarIsCompleted() {
 		Set<CarOrder> orders = garageHolder.getOrders(); //should contain 1 car
@@ -94,7 +111,6 @@ public class AdvanceAssemblyLineTest {
         this.assem = new AssemAssist();
         this.carMechanic = (CarMechanic) this.assem.getUserMap().get("b");
         this.garageHolder = (GarageHolder) this.assem.getUserMap().get("a");
-
         this.input = new ByteArrayInputStream(inputString.getBytes());
         System.setIn(input);
         LoginUI.scanner.updateScanner();
