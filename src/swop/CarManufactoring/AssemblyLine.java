@@ -40,7 +40,12 @@ public class AssemblyLine {
 		this.getCarQueue().add(carOrder.getCar());
 		carOrder.getCar().setEstimatedCompletionTime(this.scheduler.getEstimatedCompletionTime());
 	}
-
+	
+	/**
+	 * Will try to advance the assembly line
+	 * @param minutes the total amount of time spend after last advance in minutes
+	 * @throws NotAllTasksCompleteException if tasks are not finished in one of the workstations
+	 */
 	public void advanceAssemblyLine(int minutes) throws NotAllTasksCompleteException {
 		// check if possible to advance AssemblyLine
 		checkAdvance();
@@ -89,7 +94,7 @@ public class AssemblyLine {
 	/**
 	 * returns for all works stations current state. 
 	 * Empty = no car, Finished = all tasks completed, Pending = tasks need 2 be completed
-	 * @return
+	 * @return list of states from each work station
 	 */
 	public List<String> getCurrentStatus() {
 		List<String> status = new LinkedList<>();
@@ -108,7 +113,7 @@ public class AssemblyLine {
 	/**
 	 * returns for all works stations state if an advance would happen. 
 	 * Empty = no car, Finished = all tasks completed, Pending = tasks need 2 be completed
-	 * @return
+	 * @return list of states from each work station if an advance would take place
 	 */
 	public List<String> getAdvancedStatus() { 
 		List<String> status = new LinkedList<>();
