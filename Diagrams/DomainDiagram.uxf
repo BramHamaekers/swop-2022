@@ -324,7 +324,7 @@ m2=1</panel_attributes>
       <h>350</h>
     </coordinates>
     <panel_attributes>lt=-
-advances &gt;
+&lt; advances
 m1= 1
 m2= 0..n</panel_attributes>
     <additional_attributes>10.0;10.0;250.0;10.0;250.0;320.0;150.0;320.0</additional_attributes>
