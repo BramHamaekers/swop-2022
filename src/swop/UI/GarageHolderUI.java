@@ -26,7 +26,7 @@ public class GarageHolderUI implements UI {
 				.filter(o -> !o.isCompleted())
 				.forEach(p ->{
 					System.out.print("Order: "+ p.getID());
-					System.out.println("Est. completion at: " + p.getEstimatedCompletionTime());
+					System.out.println(", Est. completion at: " + p.getEstimatedCompletionTime());
 				});
 		System.out.println();
 		System.out.println("Completed:");

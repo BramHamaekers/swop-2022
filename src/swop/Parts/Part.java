@@ -33,8 +33,8 @@ public class Part {
 	}
 
 	public void setValue(String value) {
-		if(this.containsValue(value)) this.value = value;
-		else System.out.println("invalid value");
+		if(!this.containsValue(value)) throw new IllegalArgumentException("invalid value for part");
+		this.value = value;
 	}
 	public String[] getValidValues() {
 		return this.validValues;

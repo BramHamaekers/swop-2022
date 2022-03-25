@@ -17,36 +17,22 @@ import java.util.*;
 
 public class AssemAssist {
 
-	private Map <String, User> userMap;
 	private final AssemblyLine assemblyLine;
 	User activeUser;
+	final Map <String, User> userDatabase = new HashMap<>() {{
+		put("a", new GarageHolder("a"));
+		put("b", new CarMechanic("b"));
+		put("c", new Manager("c"));
+	}};
 
 	public AssemAssist() {
 		this.assemblyLine = new AssemblyLine();
-		this.loadUserMap();
     }
-
-	/**
-	 * load userId's and their functions
-	 */
-    private void loadUserMap() {
-//    	final Map <String, List<String>> userDatabase = Database.openDatabase("users.json", "id", "job");
-//		System.out.println(userDatabase);
-		// hardcoded because json doesnt work in a jar file
-		final Map <String, List<String>> userDatabase = new HashMap<>() {{
-			put("a", List.of("garage holder"));
-			put("b", List.of("car mechanic"));
-			put("c", List.of("manager"));
-		}};
-    	if(this.getUserMap() == null) this.setUserMap(ConvertMapType.changeToUserMap(userDatabase));
-	}
 	/**
      * Starts the program
      */
 	public void run() {
-
-		this.login();
-		
+		this.login();		
 	}
 
 	/************************ Login *************************/
@@ -66,19 +52,29 @@ public class AssemAssist {
 	 */
 	private void loadUser(String id) {
 		// Load user database
-		while (!Database.isValidKey(this.getUserMap(), id) && !(Objects.equals(id, "QUIT"))) {
+		while (!this.userDatabase.containsKey(id) && !(Objects.equals(id, "QUIT"))) {
 			System.out.println("Invalid user ID, type QUIT to exit");
 			id = LoginUI.getUserID();
 		}
 		if(id.equals("QUIT")) return;
-		activeUser = this.getUserMap().get(id);
+		activeUser = this.userDatabase.get(id);
 		activeUser.load(this);
-		login();
-		
+		login();	
 	}
 	
+	//at the moment public cause it's used for the tests
+	public AssemblyLine getAssemblyLine() {
+		return assemblyLine;
+	}
 	
-	
+	/**
+	 * Gives you a copy of the user data base in the form of Map <String, User>
+	 * @return userDatabase
+	 */
+	public Map <String, User> getUserMap(){
+		return Map.copyOf(userDatabase);
+		
+	}
 	/************************ Users can communicate with assembly line via these methods*************************/
 
 	/**
@@ -153,17 +149,5 @@ public class AssemAssist {
 	
 	public String getTaskDescription(Task task) {
 		return this.getAssemblyLine().getTaskDescription(task);
-	}
-
-	public Map<String, User> getUserMap() {
-		return userMap;
-	}
-
-	public void setUserMap(Map<String, User> userMap) {
-		this.userMap = userMap;
-	}
-
-	public AssemblyLine getAssemblyLine() {
-		return assemblyLine;
 	}
 }

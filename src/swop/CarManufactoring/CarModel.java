@@ -15,10 +15,29 @@ public class CarModel {
 	 * @param parts the selected parts
 	 */
 	 public CarModel(int model, Map<String, String> parts) {
+		 if (parts.size() != 7) throw new IllegalArgumentException("The car model does not have the right amount of parts");
 	        for(var part : parts.entrySet()) {
 	        	this.parts.add(this.createPart(part));
 	        }
+	     if(!containAllPartsOfModel())throw new IllegalArgumentException("Invalid parts");
 	 }
+	
+	 /**
+	  * Will check if the generated list of parts contains all the parts.
+	  * @return true if all parts are valid
+	  */
+	 private boolean containAllPartsOfModel() {
+		final List<Part> partsToCheck =  new LinkedList<>(Arrays.asList(new Body(), new Color(), new Engine(), new GearBox(),new Seats(), new Airco(), new Wheels()));
+		 for(Part part : parts) {
+			 for(Part check : partsToCheck) {
+				 if(part.getClass() == check.getClass()) {
+					 partsToCheck.remove(check);
+					 break;
+				 }
+			 }
+		 }
+		 return partsToCheck.isEmpty();
+	}
 
 	/**
 	 * create a new part from a given description of a part

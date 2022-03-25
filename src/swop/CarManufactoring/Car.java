@@ -41,7 +41,7 @@ public class Car {
 	}
 
 	public Set<Task> getUncompletedTasks() {
-		return uncompletedTasks;
+		return Set.copyOf(uncompletedTasks);
 	}
 
 	private void initiateUncompletedTasks() {
