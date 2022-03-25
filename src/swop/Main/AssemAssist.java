@@ -5,8 +5,6 @@ import swop.CarManufactoring.CarOrder;
 import swop.CarManufactoring.Task;
 import swop.Exceptions.IllegalUserException;
 import swop.Exceptions.NotAllTasksCompleteException;
-import swop.Database.Database;
-import swop.Database.ConvertMapType;
 import swop.UI.LoginUI;
 import swop.Users.CarMechanic;
 import swop.Users.GarageHolder;
@@ -61,10 +59,13 @@ public class AssemAssist {
 		activeUser.load(this);
 		login();	
 	}
-	
-	//at the moment public cause it's used for the tests
+
+	/**
+	 * Returns the assemblyLine associated with the system
+	 * @return this.assemblyLine
+	 */
 	public AssemblyLine getAssemblyLine() {
-		return assemblyLine;
+		return this.assemblyLine;
 	}
 	
 	/**
@@ -101,7 +102,7 @@ public class AssemAssist {
 	 * @param carOrder the specified order
 	 */
 	public void addOrder(CarOrder carOrder) {
-		if (carOrder == null) throw new IllegalArgumentException("carorder is null");
+		if (carOrder == null) throw new IllegalArgumentException("car order is null");
 		if(isValidUser("garage holder")) this.getAssemblyLine().addToAssembly(carOrder);
 		else throw new IllegalUserException("addOrder()");
 	}
