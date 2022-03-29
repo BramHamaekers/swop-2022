@@ -83,14 +83,14 @@ public class OrderNewCarTest {
 
     private void storeOrder() {
         assert garageHolder.getOrders().size() == 1;
-        assert assem.getAssemblyLine().getCarQueue().size() == 1;
+        assert assem.getController().getCarQueue().size() == 1;
         garageHolder.getOrders().forEach(
-                x -> assertEquals(x.getCar(), assem.getAssemblyLine().getCarQueue().getFirst()));
+                x -> assertEquals(x.getCar(), assem.getController().getCarQueue().get(0)));
     }
 
     private void storeOrderNoOrderPlaced() {
         assert garageHolder.getOrders().size() == 0;
-        assert assem.getAssemblyLine().getCarQueue().size() == 0;
+        assert assem.getController().getCarQueue().size() == 0;
     }
 
 

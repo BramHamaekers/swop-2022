@@ -65,8 +65,13 @@ public class AssemAssist {
 	 * Returns the assemblyLine associated with the system
 	 * @return this.assemblyLine
 	 */
-	public AssemblyLine getAssemblyLine() {
+	private AssemblyLine getAssemblyLine() {
 		return this.controller.getAssembly();
+	}
+	
+	//for order new car test
+	public CarManufactoringController getController() {
+		return this.controller;
 	}
 	
 	/**
@@ -105,7 +110,7 @@ public class AssemAssist {
 	 */
 	public void addOrder(CarOrder carOrder) {
 		if (carOrder == null) throw new IllegalArgumentException("car order is null");
-		if(isValidUser("garage holder")) this.controller.addToCarQueue(carOrder.getCar());
+		if(isValidUser("garage holder")) this.controller.addOrderToQueue(carOrder);
 		else throw new IllegalUserException("addOrder()");
 	}
 	
@@ -125,9 +130,9 @@ public class AssemAssist {
 		return this.getAssemblyLine().getCurrentStatus();
 	}
 	
-	/*public List<String> getAdvancedAssemblyStatus() {
-		return this.getAssemblyLine().getAdvancedStatus();
-	}*/
+	public List<String> getAdvancedAssemblyStatus() {
+		return this.controller.getAdvancedStatus();
+	}
 	
 	/***********Methods used by car mechanic************/
 

@@ -25,6 +25,8 @@ public class AssemblyLine {
 		if (car == null) throw new IllegalArgumentException("Couldn't advance since car is null");
 		// check if possible to advance AssemblyLine
 		checkAdvance();
+		Car carcompleted = this.workStations.getFirst().getCar();
+		if(!(carcompleted == null))carcompleted.setCompletionTime(carcompleted.getCompletionTime()+minutes);
 		// Move all cars on assembly by 1 position
 		for (int i = this.workStations.size() - 1; i > 0; i--) {
 			this.workStations.get(i).setCar(this.workStations.get(i-1).getCar());
@@ -93,8 +95,8 @@ public class AssemblyLine {
 	 * Empty = no car, Finished = all tasks completed, Pending = tasks need 2 be completed
 	 * @return list of states from each work station if an advance would take place
 	 */
-	/*
-	public List<String> getAdvancedStatus() { 
+
+	public List<String> getAdvancedStatus(Car car) { 
 		List<String> status = new LinkedList<>();
 		for(int i = 0; i < workStations.size(); i++){
 			WorkStation w = this.workStations.get(i);
@@ -105,14 +107,14 @@ public class AssemblyLine {
 						s.concat(": " + w.getCar().getCarModel().getPartsMap() + " (PENDING)");
 			}
 			else {
-				s = this.getCarQueue().isEmpty() ? s.concat(": EMPTY") :
-						s.concat(": " + getCarQueue().get(0).getCarModel().getPartsMap() + " (PENDING)");
+				s = (car == null) ? s.concat(": EMPTY") :
+						s.concat(": " + car.getCarModel().getPartsMap() + " (PENDING)");
 			}
 			status.add(s);
 		}
 		return status;
 	}
-	*/
+
 
 	/////////////////////////////// Functions used Car Mechanic use case ////////////////////////////////
 
@@ -202,6 +204,11 @@ public class AssemblyLine {
 		}
 		return value;
 		
+	}
+
+
+	public boolean isEmptyAssemblyLine() {
+		return this.getWorkStations().stream().allMatch(s -> s.getCar() == null);
 	}
 }
 

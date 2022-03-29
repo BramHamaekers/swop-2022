@@ -1,6 +1,7 @@
 package swop.CarManufactoring;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import swop.Exceptions.NotAllTasksCompleteException;
@@ -49,51 +50,44 @@ public class CarManufactoringController {
 		return carQueue.size();
 	}
 
+	public List<Car> getCarQueue() {
+		return List.copyOf(this.carQueue);
+	}
 	public AssemblyLine getAssembly() {
 		return this.assemblyLine;
 	}
 	
 	public void advanceAssembly(int minutes) throws NotAllTasksCompleteException {
-		if(!carQueue.isEmpty()) {
-			this.assemblyLine.advance(carQueue.get(0), minutes);
+		if(!carQueue.isEmpty() && canFinishNewCar()) {
+			this.assemblyLine.advance(carQueue.removeFirst(), minutes);
+			this.updateScheduleTime(minutes);
 		}
-		this.updateScheduleTime(minutes);
+		if (!canFinishNewCar() && this.assemblyLine.isEmptyAssemblyLine()) {
+			this.scheduler.advanceDay();
+		}
 		
+	}
+
+	private boolean canFinishNewCar() {
+		return this.scheduler.canAddCarToAssemblyLine();
 	}
 
 	private void updateScheduleTime(int minutes) {
 		this.scheduler.addTime(minutes);
 		
 	}
-	
-	/*schedular stuff
-	workStation.getCar().setCompletionTime(this.scheduler.getMinutes());
-	advanceAssemblyTime(minutes);
-	
 
-	private void advanceNextFromQueue() {
-		// Set first workstation to first element from the queue
-		try {
-			if (!canFinishNewCar()) {
-				this.workStations.getFirst().setCar(null);
-				return;
-			}
-			Car car = this.getCarQueue().removeFirst();
-			this.workStations.getFirst().setCar(car);}
-		catch (NoSuchElementException e) {this.workStations.getFirst().setCar(null);}
+	public List<String> getAdvancedStatus() {
+		return this.assemblyLine.getAdvancedStatus(this.carQueue.getFirst());
 	}
 
-
-	private boolean canFinishNewCar() {
-		return this.scheduler.canAddCarToAssemblyLine();
+	public void addOrderToQueue(CarOrder carOrder) {
+		Car car = carOrder.getCar();
+		if(car == null) throw new IllegalArgumentException("car is null");
+		car.setEstimatedCompletionTime(scheduler.getEstimatedCompletionTime());
+		this.carQueue.add(car);
+		
+		
 	}
-	
-		advanceNextFromQueue();
-		// check if the assemblyLine is done for the day
-		if (!canFinishNewCar() && isEmptyAssemblyLine()) {
-			this.scheduler.advanceDay();
-		}
-	
-	*/
 	
 }
