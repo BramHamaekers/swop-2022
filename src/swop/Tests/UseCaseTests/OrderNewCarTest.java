@@ -117,7 +117,7 @@ public class OrderNewCarTest {
 
     private void presentEstimatedCompletionDate(ListIterator<String> output) {
         assertEquals("============ Estimated Completion Time ============", output.next());
-        assertEquals("day: 0, time: 9:00", output.next());
+        assertEquals("day: 0, time: 09:00", output.next());
         assertEquals("", output.next());
         assertEquals("=======================================", output.next());
     }
