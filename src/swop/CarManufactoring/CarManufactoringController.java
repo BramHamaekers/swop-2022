@@ -63,7 +63,6 @@ public class CarManufactoringController {
 
 	private void updateScheduleTime(int minutes) {
 		this.scheduler.addTime(minutes);
-		this.assemblyLine.updateCarCompletionTime();
 		
 	}
 	
