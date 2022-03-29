@@ -8,7 +8,7 @@ import java.util.*;
 public class AssemblyLine {
 
 
-	 // Queue of cars that still have to be assembled but are not yet on the assembly line
+	// Queue of cars that still have to be assembled but are not yet on the assembly line
 	private final LinkedList<WorkStation> workStations;
 
 	public AssemblyLine(LinkedList<WorkStation> workStations) {

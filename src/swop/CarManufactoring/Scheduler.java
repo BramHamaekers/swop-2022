@@ -2,14 +2,14 @@ package swop.CarManufactoring;
 
 public class Scheduler {
 
-    private final CarManufactoringController controller;
+    private final CarManufacturingController controller;
     private int minutes;
     private int day;
     private int workingDayMinutes;
 
-    public Scheduler(CarManufactoringController carManufactoringController) {
+    public Scheduler(CarManufacturingController carManufacturingController) {
 
-        this.controller = carManufactoringController;
+        this.controller = carManufacturingController;
         this.minutes = 0;
         this.workingDayMinutes = 960; // 06:00 -> 22:00
     }
@@ -32,7 +32,7 @@ public class Scheduler {
           }
 
           // Assumses FCFS as scheduling algorithm
-          for (int i = 0; i < this.controller.getCarQueuesize() - 1; i++) {
+          for (int i = 0; i < this.controller.getCarQueueSize() - 1; i++) {
               minutes += 60;
           }
 
@@ -83,7 +83,7 @@ public class Scheduler {
     }
 
     /**
-     * advances this.day by 1 and calculates the length of next day
+     * advances day by 1 and calculates the length of next day
      */
     public void advanceDay() {
         this.day += 1;  // Go to next day
@@ -94,7 +94,7 @@ public class Scheduler {
 
     /**
      * Check if there is enough time today to add a new car to the assemblyLine
-     * @return
+     * @return this.minutes <= this.workingDayMinutes - 180
      */
     public boolean canAddCarToAssemblyLine() {
         //System.out.println("day: "  + this.day);

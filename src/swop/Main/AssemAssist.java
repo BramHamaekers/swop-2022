@@ -1,7 +1,7 @@
 package swop.Main;
 
 import swop.CarManufactoring.AssemblyLine;
-import swop.CarManufactoring.CarManufactoringController;
+import swop.CarManufactoring.CarManufacturingController;
 import swop.CarManufactoring.CarOrder;
 import swop.CarManufactoring.Task;
 import swop.Exceptions.IllegalUserException;
@@ -16,8 +16,8 @@ import java.util.*;
 
 public class AssemAssist {
 
-	private final CarManufactoringController controller;
-	User activeUser;
+	private final CarManufacturingController controller;
+	private User activeUser;
 	final Map <String, User> userDatabase = new HashMap<>() {{
 		put("a", new GarageHolder("a"));
 		put("b", new CarMechanic("b"));
@@ -25,7 +25,7 @@ public class AssemAssist {
 	}};
 
 	public AssemAssist() {
-		this.controller = new CarManufactoringController();
+		this.controller = new CarManufacturingController();
     }
 	/**
      * Starts the program
@@ -70,7 +70,7 @@ public class AssemAssist {
 	}
 	
 	//for order new car test
-	public CarManufactoringController getController() {
+	public CarManufacturingController getController() {
 		return this.controller;
 	}
 	

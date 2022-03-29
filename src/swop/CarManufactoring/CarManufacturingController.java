@@ -2,18 +2,17 @@ package swop.CarManufactoring;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import swop.Exceptions.NotAllTasksCompleteException;
 
-public class CarManufactoringController {
-	private LinkedList<Car> carQueue; //msschien static maken, dan hoeft de schedular this niet meer bij te houden
-	private AssemblyLine assemblyLine;
+public class CarManufacturingController {
+	private final LinkedList<Car> carQueue; //msschien static maken, dan hoeft de schedular this niet meer bij te houden
+	private final AssemblyLine assemblyLine;
 	private final Scheduler scheduler;
 	
 	
 	
-	public CarManufactoringController() {
+	public CarManufacturingController() {
 		this.carQueue = new LinkedList<>();
 		this.assemblyLine = new AssemblyLine(createWorkStations());
 		this.scheduler = new Scheduler(this);
@@ -33,20 +32,10 @@ public class CarManufactoringController {
 	}
 	
 	/**
-	 * ads a new car to waiting car queue
-	 * @param car
-	 */
-	public void addToCarQueue(Car car) {
-		if(car == null) throw new IllegalArgumentException("car is null");
-		this.carQueue.add(car);
-		
-	}
-	
-	/**
 	 * Returns how many cars are still waiting
 	 * @return carQueue.size()
 	 */
-	public int getCarQueuesize() {
+	public int getCarQueueSize() {
 		return carQueue.size();
 	}
 
@@ -91,7 +80,7 @@ public class CarManufactoringController {
 	}
 
 	/**
-	 * updates the schedular.
+	 * updates the scheduler.
 	 * @param minutes
 	 */
 	private void updateScheduleTime(int minutes) {
@@ -99,7 +88,8 @@ public class CarManufactoringController {
 		
 	}
 
-	//this method is to fix bug for current calculation of AdvancedStatus of assembliline
+	//this method is to fix bug for current calculation of AdvancedStatus of assembly line
+	//TODO ??
 	public List<String> getAdvancedStatus() {
 		if(this.carQueue.isEmpty()) return this.assemblyLine.getAdvancedStatus(null);
 		return this.assemblyLine.getAdvancedStatus(this.carQueue.getFirst());
