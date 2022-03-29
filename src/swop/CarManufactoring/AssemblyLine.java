@@ -50,23 +50,55 @@ public class AssemblyLine {
 	public void advanceAssemblyLine(int minutes) throws NotAllTasksCompleteException {
 		// check if possible to advance AssemblyLine
 		checkAdvance();
-		this.scheduler.addTime(minutes);
+		advanceAssemblyTime(minutes);
 		// Move all cars on assembly by 1 position
 		for (int i = this.workStations.size() - 1; i > 0; i--) {
 			WorkStation workStation = this.workStations.get(i);
 			// Check if completed
 			if (workStation.getCar() != null && workStation.getCar().isCompleted() )
-				workStation.getCar().setCompletionTime(this.scheduler.getMinutesPast());
+				workStation.getCar().setCompletionTime(this.scheduler.getMinutes());
 
 			this.workStations.get(i).setCar(this.workStations.get(i-1).getCar());
 
 
 		}
-			
+		advanceNextFromQueue();
+		// check if the assemblyLine is done for the day
+		if (!canFinishNewCar() && isEmptyAssemblyLine()) {
+			this.scheduler.advanceDay();
+		}
 
+	}
+
+	/**
+	 * Checks if the assembly Line is empty -> Check if all workstations of assembly line are null
+	 * @return True: all workstations are empty | False: not all workstations are empty
+	 */
+	private boolean isEmptyAssemblyLine() {
+		return this.getWorkStations().stream().allMatch(s -> s.getCar() == null);
+	}
+
+	/**
+	 * Places the next car in the carQueue on the assembly line
+	 */
+	private void advanceNextFromQueue() {
 		// Set first workstation to first element from the queue
-		try {this.workStations.getFirst().setCar(this.getCarQueue().removeFirst());}
+		try {
+			if (!canFinishNewCar()) {
+				this.workStations.getFirst().setCar(null);
+				return;
+			}
+			Car car = this.getCarQueue().removeFirst();
+			this.workStations.getFirst().setCar(car);}
 		catch (NoSuchElementException e) {this.workStations.getFirst().setCar(null);}
+	}
+
+	/**
+	 * Checks if a new car could be finished if it was added to the assemblyLine
+	 * @return
+	 */
+	private boolean canFinishNewCar() {
+		return this.scheduler.canAddCarToAssemblyLine();
 	}
 
 	/**
@@ -322,53 +354,4 @@ class WorkStation {
 }
 
 /////////////////////////////////////////////////// SCHEDULAR CLASS /////////////////////////////////////////////////////
-
-class Scheduler {
-
-	private final AssemblyLine assemblyLine;
-	private int minutesPast;
-
-	public Scheduler(AssemblyLine assemblyLine) {
-		this.assemblyLine = assemblyLine;
-		this.minutesPast = 0;
-	}
-
-	/**
-	 * Calculates the estimated completion time based on the CarQueue and overtime done on previous days
-	 * @return Time formatted as string
-	 */
-	public String getEstimatedCompletionTime() {
-
-		int hoursPast = (getMinutesPast() / 60);
-		hoursPast += (getMinutesPast() % 60 != 0) ? 1 : 0;
-
-		int overTime = 0;
-		int day = 0;
-		int hour = 3 + hoursPast % 16; //TODO: Assumes no overtime is made on previous days
-
-		for (int i = 0; i < this.assemblyLine.getCarQueue().size()-1; i++) {
-			hour += 1;
-			if (hour > 16 - overTime + 2) {
-				day += 1;
-				hour = 3;
-				overTime = 2;
-			}
-		}
-		hour += 6;
-		return String.format("day: %s, time: %s:00%n", day, hour);
-
-	}
-
-	/**
-	 * Add time in minutes to this.minutes
-	 * @param minutes Minutes to add to this.minutes
-	 */
-	public void addTime(int minutes) {
-		this.minutesPast = this.getMinutesPast() + minutes;
-	}
-
-	public int getMinutesPast() {
-		return minutesPast;
-	}
-}
 
