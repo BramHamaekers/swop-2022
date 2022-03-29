@@ -21,16 +21,17 @@ public class AssemblyLine {
 	 * @param minutes minutes past since start of the task
 	 * @throws NotAllTasksCompleteException thrown when there are still tasks to do
 	 */
-	public void advance(Car car, int minutes) throws NotAllTasksCompleteException {
-		if (car == null) throw new IllegalArgumentException("Couldn't advance since car is null");
+	public void advance(Car car, int minutes) throws NotAllTasksCompleteException{
 		// check if possible to advance AssemblyLine
 		checkAdvance();
-		Car carcompleted = this.workStations.getFirst().getCar();
+		Car carcompleted = this.workStations.getLast().getCar();
+		//updating completion time of finished car
 		if(!(carcompleted == null))carcompleted.setCompletionTime(carcompleted.getCompletionTime()+minutes);
 		// Move all cars on assembly by 1 position
 		for (int i = this.workStations.size() - 1; i > 0; i--) {
 			this.workStations.get(i).setCar(this.workStations.get(i-1).getCar());
 		}
+		this.workStations.getFirst().setCar(car);
 
 	}
 
@@ -206,7 +207,10 @@ public class AssemblyLine {
 		
 	}
 
-
+	/**
+	 * Checks if the assembly Line is empty -> Check if all workstations of assembly line are null
+	 * @return True: all workstations are empty | False: not all workstations are empty
+	 */
 	public boolean isEmptyAssemblyLine() {
 		return this.getWorkStations().stream().allMatch(s -> s.getCar() == null);
 	}

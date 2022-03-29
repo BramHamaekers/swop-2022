@@ -50,6 +50,10 @@ public class CarManufactoringController {
 		return carQueue.size();
 	}
 
+	/**
+	 * returns copy of carqueue
+	 * @return List.copyOf(this.carQueue)
+	 */
 	public List<Car> getCarQueue() {
 		return List.copyOf(this.carQueue);
 	}
@@ -57,30 +61,54 @@ public class CarManufactoringController {
 		return this.assemblyLine;
 	}
 	
+	/**
+	 * will try to advance the assemblyline + update the schedular
+	 * @param minutes that have passed
+	 * @throws NotAllTasksCompleteException
+	 */
 	public void advanceAssembly(int minutes) throws NotAllTasksCompleteException {
-		if(!carQueue.isEmpty() && canFinishNewCar()) {
-			this.assemblyLine.advance(carQueue.removeFirst(), minutes);
-			this.updateScheduleTime(minutes);
+		//there is time to finish another car + there are cars on the queue
+		if(canFinishNewCar() && !this.carQueue.isEmpty()) {
+			this.assemblyLine.advance(carQueue.removeFirst(), minutes); 
 		}
+		//else just advance
+		else this.assemblyLine.advance(null, minutes);
+		//update schedular time
+		this.updateScheduleTime(minutes);
+		//if all work is done for today, skip to next day
 		if (!canFinishNewCar() && this.assemblyLine.isEmptyAssemblyLine()) {
 			this.scheduler.advanceDay();
 		}
 		
 	}
 
+	/**
+	 * Checks if a new car could be finished if it was added to the assemblyLine
+	 * @return
+	 */
 	private boolean canFinishNewCar() {
 		return this.scheduler.canAddCarToAssemblyLine();
 	}
 
+	/**
+	 * updates the schedular.
+	 * @param minutes
+	 */
 	private void updateScheduleTime(int minutes) {
 		this.scheduler.addTime(minutes);
 		
 	}
 
+	//this method is to fix bug for current calculation of AdvancedStatus of assembliline
 	public List<String> getAdvancedStatus() {
+		if(this.carQueue.isEmpty()) return this.assemblyLine.getAdvancedStatus(null);
 		return this.assemblyLine.getAdvancedStatus(this.carQueue.getFirst());
 	}
 
+	/**
+	 * add the cars of a specific order 2 the queue
+	 * @param carOrder
+	 */
 	public void addOrderToQueue(CarOrder carOrder) {
 		Car car = carOrder.getCar();
 		if(car == null) throw new IllegalArgumentException("car is null");
