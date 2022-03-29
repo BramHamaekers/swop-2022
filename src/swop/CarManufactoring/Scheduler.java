@@ -2,14 +2,14 @@ package swop.CarManufactoring;
 
 public class Scheduler {
 
-    private final AssemblyLine assemblyLine;
+    private final CarManufactoringController controller;
     private int minutes;
     private int day;
     private int workingDayMinutes;
 
-    public Scheduler(AssemblyLine assemblyLine) {
+    public Scheduler(CarManufactoringController carManufactoringController) {
 
-        this.assemblyLine = assemblyLine;
+        this.controller = carManufactoringController;
         this.minutes = 0;
         this.workingDayMinutes = 960; // 06:00 -> 22:00
     }
@@ -30,7 +30,7 @@ public class Scheduler {
         int day = 0;
         int hour = 3 + hoursPast % 16; //TODO: Assumes no overtime is made on previous days
 
-        for (int i = 0; i < this.assemblyLine.getCarQueue().size() - 1; i++) { // should look at cars that are ahead of it not just
+        for (int i = 0; i < this.controller.getCarQueuesize() - 1; i++) { // should look at cars that are ahead of it not just
             // in the carqueue
             hour += 1;
             if (hour > 16 - overTime + 2) {
