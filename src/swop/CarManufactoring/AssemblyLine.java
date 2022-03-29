@@ -108,9 +108,16 @@ public class AssemblyLine {
 	private void checkAdvance() throws NotAllTasksCompleteException {
 		LinkedList<String> w = new LinkedList<>();
 		for (WorkStation workStation: this.workStations)
-			if (!allTasksCompleted(workStation)) w.add(workStation.getName());
+			if (!stationTasksCompleted(workStation)) w.add(workStation.getName());
 		
 		if(!w.isEmpty())throw new NotAllTasksCompleteException("Not all tasks completed in: ", w);
+	}
+
+	/**
+	 * Check if all tasks on all workstations of the assembly line are completed
+	 */
+	public boolean allTasksCompleted() {
+		return this.workStations.stream().allMatch(this::stationTasksCompleted);
 	}
 
 	/**
@@ -118,7 +125,7 @@ public class AssemblyLine {
 	 * @param workStation a specified workstation
 	 * @return whether all tasks are completed at given workstation
 	 */
-	private boolean allTasksCompleted(WorkStation workStation) {
+	private boolean stationTasksCompleted(WorkStation workStation) {
 		if (workStation== null) throw new IllegalArgumentException("workStation is null");
 		return workStation.getCar() == null || Collections.disjoint(workStation.getCar().getUncompletedTasks(),
 				workStation.getTasks()); //returns true if no tasks are uncompleted
@@ -139,7 +146,7 @@ public class AssemblyLine {
 			if(w.getCar() == null) s = s.concat(": EMPTY");
 			else {
 				s = s.concat(": " + w.getCar().getCarModel().getPartsMap());
-				s = this.allTasksCompleted(w) ? s.concat(" (FINISHED)") : s.concat(" (PENDING)");
+				s = this.stationTasksCompleted(w) ? s.concat(" (FINISHED)") : s.concat(" (PENDING)");
 			}
 			status.add(s);
 		});

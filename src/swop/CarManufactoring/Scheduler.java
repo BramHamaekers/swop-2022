@@ -22,26 +22,43 @@ public class Scheduler {
      * @return Time formatted as string
      */
     public String getEstimatedCompletionTime() {
+        int day = this.day;
+        int minutes = this.minutes;
+        int workingDayMinutes = this.workingDayMinutes;
 
-        int hoursPast = (getMinutes() / 60);
-        hoursPast += (getMinutes() % 60 != 0) ? 1 : 0;
-
-        int overTime = 0;
-        int day = 0;
-        int hour = 3 + hoursPast % 16; //TODO: Assumes no overtime is made on previous days
-
-        for (int i = 0; i < this.assemblyLine.getCarQueue().size() - 1; i++) { // should look at cars that are ahead of it not just
-            // in the carqueue
-            hour += 1;
-            if (hour > 16 - overTime + 2) {
-                day += 1;
-                hour = 3;
-                overTime = 2;
-            }
+        // not all tasks on assembly line are completed
+        if (!this.assemblyLine.allTasksCompleted()) {
+            minutes += 60;
         }
-        hour += 6;
-        return String.format("day: %s, time: %s:00%n", day, hour);
 
+        // Assumses FCFS as scheduling algorithm
+        for (int i = 0; i < this.assemblyLine.getCarQueue().size() - 1; i++) {
+            minutes += 60;
+        }
+
+        // estimate 3 hours for completion of car
+        //TODO: should actually check how many tasks are left and how long those take
+        minutes += 180;
+
+        // assume no overtime should be made: assignment -> scheduler should minimize overtime
+        // scheduling a car to make overtime to complete should not be allowed
+        while (minutes > workingDayMinutes) {
+            day += 1;
+            minutes -= workingDayMinutes;
+            workingDayMinutes = 960;
+        }
+
+        if (day != this.day) {
+            if (minutes < 180) {minutes = 180;} // First car of the new day
+            else {minutes = (int) (Math.ceil( (float) minutes/60) * 60);} // Other cars
+
+        }
+        // Convert to format
+        int hours = minutes / 60;
+        hours += 6;
+        minutes = minutes % 60;
+
+        return String.format("day: %s, time: %02d:%02d%n", day, hours, minutes);
     }
 
     /**
@@ -80,10 +97,10 @@ public class Scheduler {
      * @return
      */
     public boolean canAddCarToAssemblyLine() {
-        System.out.println("day: "  + this.day);
-        System.out.println("minutes : " + this.minutes);
-        System.out.println("workingDayMinutes : " + this.workingDayMinutes);
-        //TODO: assumes all cars take 3 hours to complete
+        //System.out.println("day: "  + this.day);
+        //System.out.println("minutes : " + this.minutes);
+        //System.out.println("workingDayMinutes : " + this.workingDayMinutes);
+        //TODO: assumes all cars take 3 hours to complete -> should work with part times
         return this.minutes <= this.workingDayMinutes - 180;
     }
 }
