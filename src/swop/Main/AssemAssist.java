@@ -142,12 +142,12 @@ public class AssemAssist {
 	 */
 	public void completeTask(Task task) {
 		if (task == null) throw new IllegalArgumentException("task is null");
-		if(isValidUser("car mechanic")) this.getAssemblyLine().completeTask(task);
+		if(isValidUser("car mechanic")) task.completeTask();
 		else throw new IllegalUserException("completeTask()");
 		
 	}
 	
-	public List<String> getStations() {
+	public List<String> getStationsNames() {
 		return this.getAssemblyLine().getWorkstationNames();
 	}
 	
@@ -156,6 +156,6 @@ public class AssemAssist {
 	}
 	
 	public String getTaskDescription(Task task) {
-		return this.getAssemblyLine().getTaskDescription(task);
+		return task.getTaskDescription();
 	}
 }

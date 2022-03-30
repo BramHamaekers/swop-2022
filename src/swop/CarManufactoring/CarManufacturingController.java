@@ -51,7 +51,7 @@ public class CarManufacturingController {
 	}
 	
 	/**
-	 * will try to advance the assemblyline + update the schedular
+	 * will try to advance the assemblyline + update the scheduler
 	 * @param minutes that have passed
 	 * @throws NotAllTasksCompleteException
 	 */
