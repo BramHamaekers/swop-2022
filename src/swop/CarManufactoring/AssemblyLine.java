@@ -7,39 +7,10 @@ import java.util.*;
 
 public class AssemblyLine {
 
-
-	private LinkedList<Car> carQueue; // Queue of cars that still have to be assembled but are not yet on the assembly line
 	private final LinkedList<WorkStation> workStations;
-	private final Scheduler scheduler;
 
-
-	public AssemblyLine() {
-		this.setCarQueue(new LinkedList<>());
-		this.workStations = createWorkStations();
-		this.scheduler = new Scheduler(this);
-	}
-
-	/**
-	 * Function creates all the workstations that are part of the assemblyLine as a linked list so that they have the
-	 * right order.
-	 * @return LinkedList<WorkStation> of all the workstations of this assemblyLine
-	 */
-	private LinkedList<WorkStation> createWorkStations () {
-		LinkedList<WorkStation> workStations = new LinkedList<>();
-		workStations.add(new WorkStation("Car Body Post"));
-		workStations.add(new WorkStation("Drivetrain Post"));
-		workStations.add(new WorkStation("Accessories Post"));
-		return workStations;
-	}
-
-	/**
-	 * Add a CarOrder to the First-Come-First-Serve carQueue
-	 * @param carOrder the carOrder to add to this.carQueue
-	 */
-	public void addToAssembly(CarOrder carOrder) {
-		if (carOrder== null) throw new IllegalArgumentException("carOrder is null");
-		this.getCarQueue().add(carOrder.getCar());
-		carOrder.getCar().setEstimatedCompletionTime(this.scheduler.getEstimatedCompletionTime());
+	public AssemblyLine(LinkedList<WorkStation> workStations) {
+		this.workStations = workStations;
 	}
 
 	/**
@@ -47,58 +18,18 @@ public class AssemblyLine {
 	 * @param minutes minutes past since start of the task
 	 * @throws NotAllTasksCompleteException thrown when there are still tasks to do
 	 */
-	public void advanceAssemblyLine(int minutes) throws NotAllTasksCompleteException {
+	public void advance(Car car, int minutes) throws NotAllTasksCompleteException{
 		// check if possible to advance AssemblyLine
 		checkAdvance();
-		advanceAssemblyTime(minutes);
+		Car carcompleted = this.workStations.getLast().getCar();
+		//updating completion time of finished car
+		if(!(carcompleted == null))carcompleted.setCompletionTime(carcompleted.getCompletionTime()+minutes);
 		// Move all cars on assembly by 1 position
 		for (int i = this.workStations.size() - 1; i > 0; i--) {
-			WorkStation workStation = this.workStations.get(i);
-			// Check if completed
-			if (workStation.getCar() != null && workStation.getCar().isCompleted() )
-				workStation.getCar().setCompletionTime(this.scheduler.getMinutes());
-
 			this.workStations.get(i).setCar(this.workStations.get(i-1).getCar());
-
-
 		}
-		advanceNextFromQueue();
-		// check if the assemblyLine is done for the day
-		if (!canFinishNewCar() && isEmptyAssemblyLine()) {
-			this.scheduler.advanceDay();
-		}
+		this.workStations.getFirst().setCar(car);
 
-	}
-
-	/**
-	 * Checks if the assembly Line is empty -> Check if all workstations of assembly line are null
-	 * @return True: all workstations are empty | False: not all workstations are empty
-	 */
-	private boolean isEmptyAssemblyLine() {
-		return this.getWorkStations().stream().allMatch(s -> s.getCar() == null);
-	}
-
-	/**
-	 * Places the next car in the carQueue on the assembly line
-	 */
-	private void advanceNextFromQueue() {
-		// Set first workstation to first element from the queue
-		try {
-			if (!canFinishNewCar()) {
-				this.workStations.getFirst().setCar(null);
-				return;
-			}
-			Car car = this.getCarQueue().removeFirst();
-			this.workStations.getFirst().setCar(car);}
-		catch (NoSuchElementException e) {this.workStations.getFirst().setCar(null);}
-	}
-
-	/**
-	 * Checks if a new car could be finished if it was added to the assemblyLine
-	 * @return
-	 */
-	private boolean canFinishNewCar() {
-		return this.scheduler.canAddCarToAssemblyLine();
 	}
 
 	/**
@@ -108,31 +39,21 @@ public class AssemblyLine {
 	private void checkAdvance() throws NotAllTasksCompleteException {
 		LinkedList<String> w = new LinkedList<>();
 		for (WorkStation workStation: this.workStations)
-			if (!stationTasksCompleted(workStation)) w.add(workStation.getName());
+			if (!workStation.stationTasksCompleted()) w.add(workStation.getName());
 		
 		if(!w.isEmpty())throw new NotAllTasksCompleteException("Not all tasks completed in: ", w);
 	}
-
+	
 	/**
 	 * Check if all tasks on all workstations of the assembly line are completed
 	 */
-	public boolean allTasksCompleted() {
-		return this.workStations.stream().allMatch(this::stationTasksCompleted);
-	}
 
-	/**
-	 * Returns boolean whether or not all tasks are completed in given work station
-	 * @param workStation a specified workstation
-	 * @return whether all tasks are completed at given workstation
-	 */
-	private boolean stationTasksCompleted(WorkStation workStation) {
-		if (workStation== null) throw new IllegalArgumentException("workStation is null");
-		return workStation.getCar() == null || Collections.disjoint(workStation.getCar().getUncompletedTasks(),
-				workStation.getTasks()); //returns true if no tasks are uncompleted
+	public boolean allTasksCompleted() {
+		return this.workStations.stream().allMatch(e -> e.stationTasksCompleted());
+
 	}
 	
 	/////////////////////////// Functions used 2 get data for manager use case //////////////////////////////
-	
 	
 	/**
 	 * returns for all works stations current state. 
@@ -146,19 +67,20 @@ public class AssemblyLine {
 			if(w.getCar() == null) s = s.concat(": EMPTY");
 			else {
 				s = s.concat(": " + w.getCar().getCarModel().getPartsMap());
-				s = this.stationTasksCompleted(w) ? s.concat(" (FINISHED)") : s.concat(" (PENDING)");
+				s = w.stationTasksCompleted() ? s.concat(" (FINISHED)") : s.concat(" (PENDING)");
 			}
 			status.add(s);
 		});
 		return status;
 	}
-
+	
 	/**
 	 * returns for all works stations state if an advance would happen. 
 	 * Empty = no car, Finished = all tasks completed, Pending = tasks need 2 be completed
 	 * @return list of states from each work station if an advance would take place
 	 */
-	public List<String> getAdvancedStatus() { 
+
+	public List<String> getAdvancedStatus(Car car) { 
 		List<String> status = new LinkedList<>();
 		for(int i = 0; i < workStations.size(); i++){
 			WorkStation w = this.workStations.get(i);
@@ -169,14 +91,14 @@ public class AssemblyLine {
 						s.concat(": " + w.getCar().getCarModel().getPartsMap() + " (PENDING)");
 			}
 			else {
-				s = this.getCarQueue().isEmpty() ? s.concat(": EMPTY") :
-						s.concat(": " + getCarQueue().get(0).getCarModel().getPartsMap() + " (PENDING)");
+				s = (car == null) ? s.concat(": EMPTY") :
+						s.concat(": " + car.getCarModel().getPartsMap() + " (PENDING)");
 			}
 			status.add(s);
 		}
 		return status;
 	}
-
+	
 	/////////////////////////////// Functions used Car Mechanic use case ////////////////////////////////
 
 	/**
@@ -184,9 +106,8 @@ public class AssemblyLine {
 	 * @return this.workStations
 	 */
 	public List<WorkStation> getWorkStations() {
-		return this.workStations;
+		return List.copyOf(this.workStations);
 	}
-
 
 	/**
 	 * returns list of strings with names of all workstations.
@@ -201,164 +122,24 @@ public class AssemblyLine {
 	}
 
 	/**
-	 * Get workstation with the given name
-	 * @param station the name of the workstation
-	 * @return the station out of possible stations
-	 */
-	private WorkStation getWorkStation(String station) {
-		if (station== null) throw new IllegalArgumentException("station is null");
-		for(WorkStation wStation: this.workStations) {
-			if(wStation.getName().equals(station)) return wStation;
-		}
-		throw new IllegalArgumentException("Not a valid workstation name"); 
-
-	}
-
-	/**
-	 * Get workstation that performs the given task
-	 * @param task The task of the workstation
-	 * @return workstation that performs the given task
-	 */
-	private WorkStation getWorkStation(Task task) {
-		if (task == null) throw new IllegalArgumentException("task is null");
-		for(WorkStation wStation: this.workStations) {
-			if(wStation.containsTask(task)) return wStation;
-		}
-		throw new IllegalArgumentException("No workstation preforms this task"); 
-
-	}
-
-	/**
 	 * Gets all uncompleted tasks of the car at the given workstation
 	 * @param station the name "string" of the given workstation
 	 * @return all tasks that are uncompleted at station
 	 */
 	public Set<Task> getUncompletedTasks(String station) {
 		if (station== null) throw new IllegalArgumentException("station is null");
-		WorkStation workStation = this.getWorkStation(station);
-		return workStation.getUncompletedTasks();
-	}
-
-	/**
-	 * Completes the given task at the associated workstation
-	 * @param task the task to complete
-	 */
-	public void completeTask(Task task) {
-		if (task == null) throw new IllegalArgumentException("task is null");
-		WorkStation station = this.getWorkStation(task);
-		station.completeTask(task);
-		
-	}
-
-
-	/**
-	 * Returns CarQueue
-	 */
-	public LinkedList<Car> getCarQueue() {
-		return this.carQueue;
-	}
-
-	/**
-	 * Set this.carQueue to a new LinkedList<Car>
-	 * @param carQueue the new LinkedList<Car>
-	 */
-	public void setCarQueue(LinkedList<Car> carQueue) {
-		this.carQueue = carQueue;
-	}
-
-	/**
-	 * Get the description of the given task
-	 * @param task the given task
-	 * @return The description of the given Task
-	 */
-	public String getTaskDescription(Task task) {
-		if (task == null) throw new IllegalArgumentException("task is null");
-		WorkStation ws = this.getWorkStation(task);
-		List<Part> parts = task.getParts();
-		String value = "Empty";
-		for(Part p : parts) {
-			value = task.getDescription(p) + ws.getValueOfPart(p); //als er meerdere parts bij een task horen geef je maar een array van strings terug
+		for(WorkStation wStation: this.workStations) {
+			if(wStation.getName().equals(station)) return wStation.getUncompletedTasks();
 		}
-		return value;
-		
+		throw new IllegalArgumentException("Not a valid workstation name"); 
 	}
 
 	/**
-	 * Add time to the minutesPast of the scheduler
-	 * @param minutes minutes to add to the minutesPast
+	 * Checks if the assembly Line is empty -> Check if all workstations of assembly line are null
+	 * @return True: all workstations are empty | False: not all workstations are empty
 	 */
-	public void advanceAssemblyTime(int minutes) {
-		this.scheduler.addTime(minutes);
+	public boolean isEmptyAssemblyLine() {
+		return this.getWorkStations().stream().allMatch(s -> s.getCar() == null);
 	}
 }
-
-/////////////////////////////////////////////////// WORKSTATION CLASS //////////////////////////////////////////////////
-
-class WorkStation {
-	private final String name;
-	private Car car;
-
-	public WorkStation(String name) {
-		if (!isValidName(name)) {
-			throw new IllegalArgumentException("Not a valid work station name"); 
-		}
-		this.name = name;
-
-	}
-
-	public boolean containsTask(Task task) {
-		if (task == null) throw new IllegalArgumentException("task is null");
-		return this.getTasks().contains(task);
-	}
-
-	public Set<Task> getUncompletedTasks() {
-		if(this.getCar() == null) {
-			System.out.println("There are no Tasks (No car in work station)");
-			return null;
-		}
-		Set<Task> tasks = this.getTasks();
-		tasks.retainAll(this.getCar().getUncompletedTasks()); 
-		return tasks;
-	}
-
-	private boolean isValidName(String name) {
-		return (Objects.equals(name, "Car Body Post")) ||
-				(Objects.equals(name, "Drivetrain Post")) || (Objects.equals(name, "Accessories Post"));
-	}
-
-	public Set<Task> getTasks() {
-		return switch (this.getName()) {
-			case "Car Body Post" -> new LinkedHashSet<>(Arrays.asList(Task.AssemblyCarBody, Task.PaintCar));
-			case "Drivetrain Post" -> new LinkedHashSet<>(Arrays.asList(Task.InsertEngine, Task.InstallGearbox));
-			case "Accessories Post" -> new LinkedHashSet<>(Arrays.asList(Task.InstallSeats, Task.InstallAirco, Task.MountWheels));
-			default -> null;
-		};
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public Car getCar() {
-		return car;
-	}
-
-	public void setCar(Car car) {
-		this.car = car;
-	}
-	
-	public String getValueOfPart(Part part) {
-		if(car == null) throw new IllegalArgumentException("No car in station");
-		if (part == null) throw new IllegalArgumentException("part is null");
-		return this.getCar().getValueOfPart(part);
-
-	}
-	public void completeTask(Task task) {
-		if(car == null) throw new IllegalArgumentException("No car in station");
-		if (task == null) throw new IllegalArgumentException("task is null");
-		this.getCar().completeTask(task);
-	}
-}
-
-/////////////////////////////////////////////////// SCHEDULAR CLASS /////////////////////////////////////////////////////
 

@@ -2,14 +2,14 @@ package swop.CarManufactoring;
 
 public class Scheduler {
 
-    private final AssemblyLine assemblyLine;
+    private final CarManufacturingController controller;
     private int minutes;
     private int day;
     private int workingDayMinutes;
 
-    public Scheduler(AssemblyLine assemblyLine) {
+    public Scheduler(CarManufacturingController carManufacturingController) {
 
-        this.assemblyLine = assemblyLine;
+        this.controller = carManufacturingController;
         this.minutes = 0;
         this.workingDayMinutes = 960; // 06:00 -> 22:00
     }
@@ -22,43 +22,43 @@ public class Scheduler {
      * @return Time formatted as string
      */
     public String getEstimatedCompletionTime() {
-        int day = this.day;
-        int minutes = this.minutes;
-        int workingDayMinutes = this.workingDayMinutes;
+    	  int day = this.day;
+          int minutes = this.minutes;
+          int workingDayMinutes = this.workingDayMinutes;
 
-        // not all tasks on assembly line are completed
-        if (!this.assemblyLine.allTasksCompleted()) {
-            minutes += 60;
-        }
+          // not all tasks on assembly line are completed
+          if (!this.controller.getAssembly().allTasksCompleted()) {
+              minutes += 60;
+          }
 
-        // Assumses FCFS as scheduling algorithm
-        for (int i = 0; i < this.assemblyLine.getCarQueue().size() - 1; i++) {
-            minutes += 60;
-        }
+          // Assumses FCFS as scheduling algorithm
+          for (int i = 0; i < this.controller.getCarQueueSize() - 1; i++) {
+              minutes += 60;
+          }
 
-        // estimate 3 hours for completion of car
-        //TODO: should actually check how many tasks are left and how long those take
-        minutes += 180;
+          // estimate 3 hours for completion of car
+          //TODO: should actually check how many tasks are left and how long those take
+          minutes += 180;
 
-        // assume no overtime should be made: assignment -> scheduler should minimize overtime
-        // scheduling a car to make overtime to complete should not be allowed
-        while (minutes > workingDayMinutes) {
-            day += 1;
-            minutes -= workingDayMinutes;
-            workingDayMinutes = 960;
-        }
+          // assume no overtime should be made: assignment -> scheduler should minimize overtime
+          // scheduling a car to make overtime to complete should not be allowed
+          while (minutes > workingDayMinutes) {
+              day += 1;
+              minutes -= workingDayMinutes;
+              workingDayMinutes = 960;
+          }
 
-        if (day != this.day) {
-            if (minutes < 180) {minutes = 180;} // First car of the new day
-            else {minutes = (int) (Math.ceil( (float) minutes/60) * 60);} // Other cars
+          if (day != this.day) {
+              if (minutes < 180) {minutes = 180;} // First car of the new day
+              else {minutes = (int) (Math.ceil( (float) minutes/60) * 60);} // Other cars
 
-        }
-        // Convert to format
-        int hours = minutes / 60;
-        hours += 6;
-        minutes = minutes % 60;
+          }
+          // Convert to format
+          int hours = minutes / 60;
+          hours += 6;
+          minutes = minutes % 60;
 
-        return String.format("day: %s, time: %02d:%02d%n", day, hours, minutes);
+          return String.format("day: %s, time: %02d:%02d%n", day, hours, minutes);
     }
 
     /**
@@ -83,7 +83,7 @@ public class Scheduler {
     }
 
     /**
-     * advances this.day by 1 and calculates the length of next day
+     * advances day by 1 and calculates the length of next day
      */
     public void advanceDay() {
         this.day += 1;  // Go to next day
@@ -94,7 +94,7 @@ public class Scheduler {
 
     /**
      * Check if there is enough time today to add a new car to the assemblyLine
-     * @return
+     * @return this.minutes <= this.workingDayMinutes - 180
      */
     public boolean canAddCarToAssemblyLine() {
         //System.out.println("day: "  + this.day);

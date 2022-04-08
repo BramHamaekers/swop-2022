@@ -1,6 +1,7 @@
 package swop.Main;
 
 import swop.CarManufactoring.AssemblyLine;
+import swop.CarManufactoring.CarManufacturingController;
 import swop.CarManufactoring.CarOrder;
 import swop.CarManufactoring.Task;
 import swop.Exceptions.IllegalUserException;
@@ -15,8 +16,8 @@ import java.util.*;
 
 public class AssemAssist {
 
-	private final AssemblyLine assemblyLine;
-	User activeUser;
+	private final CarManufacturingController controller;
+	private User activeUser;
 	final Map <String, User> userDatabase = new HashMap<>() {{
 		put("a", new GarageHolder("a"));
 		put("b", new CarMechanic("b"));
@@ -24,7 +25,7 @@ public class AssemAssist {
 	}};
 
 	public AssemAssist() {
-		this.assemblyLine = new AssemblyLine();
+		this.controller = new CarManufacturingController();
     }
 	/**
      * Starts the program
@@ -64,8 +65,13 @@ public class AssemAssist {
 	 * Returns the assemblyLine associated with the system
 	 * @return this.assemblyLine
 	 */
-	public AssemblyLine getAssemblyLine() {
-		return this.assemblyLine;
+	private AssemblyLine getAssemblyLine() {
+		return this.controller.getAssembly();
+	}
+	
+	//for order new car test
+	public CarManufacturingController getController() {
+		return this.controller;
 	}
 	
 	/**
@@ -76,8 +82,7 @@ public class AssemAssist {
 		return Map.copyOf(userDatabase);
 		
 	}
-	/************************ Users can communicate with assembly line via these methods*************************/
-
+	
 	/**
 	 * Check if function is valid
 	 * @param name name of function
@@ -95,6 +100,8 @@ public class AssemAssist {
 		};
 	}
 	
+	/************************ Users can communicate with assembly line via these methods*************************/
+	
 	/***********Methods used by garage holder************/
 
 	/**
@@ -103,7 +110,7 @@ public class AssemAssist {
 	 */
 	public void addOrder(CarOrder carOrder) {
 		if (carOrder == null) throw new IllegalArgumentException("car order is null");
-		if(isValidUser("garage holder")) this.getAssemblyLine().addToAssembly(carOrder);
+		if(isValidUser("garage holder")) this.controller.addOrderToQueue(carOrder);
 		else throw new IllegalUserException("addOrder()");
 	}
 	
@@ -111,11 +118,11 @@ public class AssemAssist {
 
 	/**
 	 * advance the assembly line
-	 * @param minutes minutes past since task started
+	 * @param minutes past since task started
 	 * @throws NotAllTasksCompleteException thrown if there are still tasks not done
 	 */
 	public void advanceAssembly(int minutes) throws NotAllTasksCompleteException {
-		if(isValidUser("manager")) this.getAssemblyLine().advanceAssemblyLine(minutes);
+		if(isValidUser("manager")) this.controller.advanceAssembly(minutes);
 		else throw new IllegalUserException("advanceAssembly()");
 	}	
 
@@ -124,7 +131,7 @@ public class AssemAssist {
 	}
 	
 	public List<String> getAdvancedAssemblyStatus() {
-		return this.getAssemblyLine().getAdvancedStatus();
+		return this.controller.getAdvancedStatus();
 	}
 	
 	/***********Methods used by car mechanic************/
@@ -135,12 +142,12 @@ public class AssemAssist {
 	 */
 	public void completeTask(Task task) {
 		if (task == null) throw new IllegalArgumentException("task is null");
-		if(isValidUser("car mechanic")) this.getAssemblyLine().completeTask(task);
+		if(isValidUser("car mechanic")) task.completeTask();
 		else throw new IllegalUserException("completeTask()");
 		
 	}
 	
-	public List<String> getStations() {
+	public List<String> getStationsNames() {
 		return this.getAssemblyLine().getWorkstationNames();
 	}
 	
@@ -149,6 +156,6 @@ public class AssemAssist {
 	}
 	
 	public String getTaskDescription(Task task) {
-		return this.getAssemblyLine().getTaskDescription(task);
+		return task.getTaskDescription();
 	}
 }

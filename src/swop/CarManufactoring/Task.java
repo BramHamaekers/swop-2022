@@ -31,19 +31,25 @@ public enum Task {
 	
 	private Map<Part,String> partsMap;
 	private final String name;
+	private WorkStation w;
+	
 	
 	Task(Map<Part,String> map, String name) {
 		this.partsMap = map;
 		this.name = name;
 	}
 	
-	public boolean isCompleted() {
-		return this.partsMap.isEmpty();
+	/**
+	 * Will complete the task of the car from the workstation this task is assigned to
+	 */
+	public void completeTask() {
+		this.getWorkStation().completeTask(this);
 	}
 	
-	public void completeTask() {
-		this.partsMap.clear();
-	}
+	/**
+	 * Returns a list of parts that are part of this task
+	 * @return List<Part>
+	 */
 	public List<Part> getParts() {
 		List<Part> p = new LinkedList<Part>();
 		for(Part part : partsMap.keySet()) {
@@ -51,7 +57,38 @@ public enum Task {
 		}
 		return p;
 	}
+	
+	/**
+	 * Sets the workstation this task is part of
+	 */
+	public void setWorkStation(WorkStation w) {
+		this.w = w;
+	}
 
+	/**
+	 * Returns the workstation this task is assigned to.
+	 * @return workstation || throws IllegalArgumentException if there is no workstation
+	 */
+	public WorkStation getWorkStation() {
+		if(w == null) throw new IllegalArgumentException("This task has no Workstation");
+		return w;
+	}
+	
+	
+	/**
+	 * Get the description of the given task
+	 * @param the given task
+	 * @return The description of the given Task consisting of the different parts
+	 */
+	public String getTaskDescription() {
+		String value = "Empty";
+		for(Part p : this.getParts()) {
+			value = this.getDescription(p) + this.getWorkStation().getValueOfPart(p); //als er meerdere parts bij een task horen geef je maar een array van strings terug
+		}
+		return value;
+		
+	}
+	
 	/**
 	 * Return Set<Task> of all the tasks 
 	 * @return A set of tasks
