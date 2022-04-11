@@ -108,17 +108,17 @@ class CarTest {
     }
 
     @Test
-    void getCompletionTime() throws NotAllTasksCompleteException {
+    void getDeliveryTime() throws NotAllTasksCompleteException {
         carM.addOrderToQueue(carOrder);
         this.finishCar();
-        assertEquals(car.getCompletionTime(),240);
+        assertEquals(car.getDeliveryTime(),240);
     }
 
     @Test
     void setCompletionTime() {
-        assertEquals(car.getCompletionTime(),0);
-        car.setCompletionTime(50);
-        assertEquals(car.getCompletionTime(), 50);
+        assertEquals(car.getDeliveryTime(),0);
+        car.setDeliveryTime(50);
+        assertEquals(car.getDeliveryTime(), 50);
     }
 
     void finishCar() throws NotAllTasksCompleteException {

@@ -30,11 +30,11 @@ public class AssemblyLine {
 			Car previous = this.workStations.get(i-1).getCar();
 			this.workStations.get(i).setCar(previous);
 			if (previous!= null)
-				previous.setCompletionTime(previous.getCompletionTime()+minutes);
+				previous.setDeliveryTime(previous.getDeliveryTime()+minutes);
 		}
 		this.workStations.getFirst().setCar(car);
 		if (car != null)
-			car.setCompletionTime(minutes);
+			car.setDeliveryTime(minutes);
 
 	}
 
