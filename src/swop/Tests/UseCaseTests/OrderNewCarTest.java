@@ -34,7 +34,7 @@ public class OrderNewCarTest {
 
     @Test
     void garageHolderUITest() {
-        ListIterator<String> output = setupUITest("a\r\ny\r\n0\r\n1\r\n1\r\n1\r\n1\r\n1\r\n1\r\n1\r\nQUIT"); // Setup
+        ListIterator<String> output = setupUITest(String.format("a%ny%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT")); // Setup
 
         presentOverview(output); // 1. The system presents an overview of the orders placed by the user
 
@@ -55,7 +55,7 @@ public class OrderNewCarTest {
 
     @Test
     void garageHolderUITestAlternateFlow1() {
-        ListIterator<String> output = setupUITest("a\r\nn\r\nQUIT"); // Setup
+        ListIterator<String> output = setupUITest(String.format("a%nn%nQUIT")); // Setup
 
         presentOverview(output); // 1. The system presents an overview of the orders placed by the user
 
@@ -64,7 +64,7 @@ public class OrderNewCarTest {
 
     @Test
     void garageHolderUITestAlternateFlow2() {
-        ListIterator<String> output = setupUITest("a\r\ny\r\n0\r\nCANCEL\r\nQUIT"); // Setup
+        ListIterator<String> output = setupUITest(String.format("a%ny%n0%nCANCEL%nQUIT")); // Setup
 
         presentOverview(output); // 1. The system presents an overview of the orders placed by the user
 
@@ -106,7 +106,7 @@ public class OrderNewCarTest {
         System.setOut(new PrintStream(outContent));
         assem.run();
 
-        ListIterator<String> output = Arrays.asList(outContent.toString().split("\r\n"))
+        ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
                 .listIterator();
 
         for (int i = 0; i < 3; i++) {

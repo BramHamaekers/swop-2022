@@ -29,10 +29,10 @@ public class PerformAssemblyTasksTest {
     @Test
     void CarMechanicUITest() {
 
-        ListIterator<String> output = setupUITest(
-                "a\r\ny\r\n0\r\n1\r\n1\r\n1\r\n1\r\n1\r\n1\r\n1\r\n" + // place order
-                "c\r\ny\r\ny\r\n45\r\n\r\n" + // advance assemblyLine
-                "b\r\n0\r\n1\r\n\r\n0\r\n\r\nQUIT" // Perform assembly Tasks
+        ListIterator<String> output = setupUITest(String.format(
+                "a%ny%n0%n1%n1%n1%n1%n1%n1%n1%n" + // place order
+                "c%ny%ny%n45%n%n" + // advance assemblyLine
+                "b%n0%n1%n%n0%n%nQUIT") // Perform assembly Tasks
         ); // Setup
 
         askWorkPost(output); // 1. ask user for work post
@@ -56,10 +56,10 @@ public class PerformAssemblyTasksTest {
     @Test
     void CarMechanicUITestUITestAlternateFlow1() {
 
-        ListIterator<String> output = setupUITest(
-                "a\r\ny\r\n0\r\n1\r\n1\r\n1\r\n1\r\n1\r\n1\r\n1\r\n" + // place order
-                        "c\r\ny\r\ny\r\n45\r\n\r\n" + // advance assemblyLine
-                        "b\r\n0\r\n1\r\n\r\nCANCEL\r\nQUIT" // Perform assembly Tasks
+        ListIterator<String> output = setupUITest(String.format(
+                "a%ny%n0%n1%n1%n1%n1%n1%n1%n1%n" + // place order
+                        "c%ny%ny%n45%n%n" + // advance assemblyLine
+                        "b%n0%n1%n%nCANCEL%nQUIT") // Perform assembly Tasks
         ); // Setup
 
         askWorkPost(output); // 1. ask user for work post
@@ -162,7 +162,7 @@ public class PerformAssemblyTasksTest {
         System.setOut(new PrintStream(outContent));
         assem.run();
 
-        ListIterator<String> output = Arrays.asList(outContent.toString().split("\r\n"))
+        ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
                 .listIterator();
 
         for (int i = 0; i < 61; i++) {

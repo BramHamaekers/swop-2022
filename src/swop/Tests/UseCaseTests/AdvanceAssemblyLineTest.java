@@ -27,16 +27,16 @@ public class AdvanceAssemblyLineTest {
     GarageHolder garageHolder;
     
     @Test
-    void CompleteFullCarTest() {    	
-    	 ListIterator<String> output = setupUITest(
-                 "a\r\ny\r\n0\r\n1\r\n1\r\n1\r\n1\r\n1\r\n1\r\n1\r\n" + // place order
-                 "c\r\ny\r\ny\r\n45\r\n\r\n" + // advance assemblyLine
-                 "b\r\n0\r\n0\r\n\r\n0\r\n\r\n"+ // Perform assembly Tasks (Car enters first workstation + complete all tasks)
-                 "c\r\ny\r\ny\r\n45\r\n\r\n"+ //advance assemblyLine (Should be OK since all tasks are completed)
-                 "b\r\n1\r\n0\r\n\r\n0\r\n\r\n"+ // Perform assembly Tasks (Car enters second workstation + complete all tasks)
-                 "c\r\ny\r\ny\r\n45\r\n\r\n" +//advance assemblyLine (Should be OK since all tasks are completed)
-                 "b\r\n2\r\n0\r\n\r\n0\r\n\r\n0\r\n\r\n"+ // Perform assembly Tasks (Car enters third workstation + complete all tasks)
-                 "c\r\ny\r\ny\r\n45\r\n\r\nQUIT"//advance assemblyLine (Should be OK since all tasks are completed)
+    void CompleteFullCarTest() {
+    	 ListIterator<String> output = setupUITest(String.format(
+				 "a%ny%n0%n1%n1%n1%n1%n1%n1%n1%n" + // place order
+                 "c%ny%ny%n45%n%n" + // advance assemblyLine
+                 "b%n0%n0%n%n0%n%n"+ // Perform assembly Tasks (Car enters first workstation + complete all tasks)
+                 "c%ny%ny%n45%n%n"+ //advance assemblyLine (Should be OK since all tasks are completed)
+                 "b%n1%n0%n%n0%n%n"+ // Perform assembly Tasks (Car enters second workstation + complete all tasks)
+                 "c%ny%ny%n45%n%n" +//advance assemblyLine (Should be OK since all tasks are completed)
+                 "b%n2%n0%n%n0%n%n0%n%n"+ // Perform assembly Tasks (Car enters third workstation + complete all tasks)
+                 "c%ny%ny%n45%n%nQUIT")//advance assemblyLine (Should be OK since all tasks are completed)
          ); // Setup
     	 skipOutputLines(output,52);
     	 checkAdvanceCarInWorkStation(output,0); //checks car in given workStation
@@ -50,11 +50,11 @@ public class AdvanceAssemblyLineTest {
     
     @Test
     void AdvanceAssemblyLineAlternateFlowTest() {
-    	 ListIterator<String> output = setupUITest(
-                 "a\r\ny\r\n0\r\n1\r\n1\r\n1\r\n1\r\n1\r\n1\r\n1\r\n" + // place order
-                 "c\r\ny\r\ny\r\n45\r\n\r\n" + // advance assemblyLine
-                 "b\r\n0\r\n0\r\n\r\nCANCEL\r\n" + // Perform only 1 Task and cancels
-                 "c\r\ny\r\ny\r\n45\r\n\r\nQUIT"); //try advance but will fail since not all tasks were completed in Car Body Post
+    	 ListIterator<String> output = setupUITest(String.format(
+                 "a%ny%n0%n1%n1%n1%n1%n1%n1%n1%n" + // place order
+                 "c%ny%ny%n45%n%n" + // advance assemblyLine
+                 "b%n0%n0%n%nCANCEL%n" + // Perform only 1 Task and cancels
+                 "c%ny%ny%n45%n%nQUIT")); //try advance but will fail since not all tasks were completed in Car Body Post
     	 skipOutputLines(output,52);
     	 checkAdvanceCarInWorkStation(output,0);
     	 skipOutputLines(output,44);
@@ -119,8 +119,9 @@ public class AdvanceAssemblyLineTest {
         System.setOut(new PrintStream(outContent));
         assem.run();
 
-        ListIterator<String> output = Arrays.asList(outContent.toString().split("\r\n"))
+        ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
                 .listIterator();
+		System.out.println(output);
         return output;
     }
 	
