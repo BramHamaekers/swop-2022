@@ -6,39 +6,68 @@ public class Scheduler {
     private int minutes;
     private int day;
     private int workingDayMinutes;
+    private int timePerWorkstation = 60; // TODO: Map for all models
+    private String schedulingAlgorithm;
 
     public Scheduler(CarManufacturingController carManufacturingController) {
 
         this.controller = carManufacturingController;
         this.minutes = 0;
         this.workingDayMinutes = 960; // 06:00 -> 22:00
+        setSchedulingAlgorithm("FIFO");
     }
-
-
 
     /**
      * Calculates the estimated completion time based on the CarQueue and overtime done on previous days
      *
      * @return Time formatted as string
      */
-    public String getEstimatedCompletionTime() {
+    public String getEstimatedCompletionTime(Car car) {
     	  int day = this.day;
           int minutes = this.minutes;
           int workingDayMinutes = this.workingDayMinutes;
 
-          // not all tasks on assembly line are completed
-          if (!this.controller.getAssembly().allTasksCompleted()) {
-              minutes += 60;
-          }
+          System.out.println(day);
+          System.out.println(minutes);
 
-          // Assumses FCFS as scheduling algorithm
-          for (int i = 0; i < this.controller.getCarQueueSize() - 1; i++) {
-              minutes += 60;
-          }
 
-          // estimate 3 hours for completion of car
-          //TODO: should actually check how many tasks are left and how long those take
-          minutes += 180;
+
+        // 70 + 70
+
+        // QUEUE   ->     w1      w2      w3
+        // 60,50,70       [60]      70      50 -> 0
+        //60, 50            70      [60]    70 ->
+        // 60              50       70      [60]
+        //
+
+        // 60,50,70       [60]      null      null -> 0
+
+
+        // if car in queue:
+        // decide with scheduling algorithm how many cars will be before it
+        // Add time per workstation for every car before it
+        if (this.controller.getCarQueue().contains(car)) {
+            // TODO: Make use of iterator based on scheduling algorithm
+            // TODO timePerWorkstation based on wich car it is
+            minutes += this.controller.getCarQueue().indexOf(car) * timePerWorkstation;
+            minutes += 3 * timePerWorkstation;
+
+        }
+
+        // else if on workstation:
+        // check on which workstation
+        // TODO max of orders on assembly + future orders of assembly based on scheduling algorithm
+        if (this.controller.getAssembly().getWorkStations().get(0).getCar() == car) {
+            minutes += 3 * timePerWorkstation;
+        }
+        if (this.controller.getAssembly().getWorkStations().get(1).getCar() == car) {
+            minutes += 2 * timePerWorkstation;
+        }
+        if (this.controller.getAssembly().getWorkStations().get(2).getCar() == car) {
+            minutes += timePerWorkstation;
+        }
+
+
 
           // assume no overtime should be made: assignment -> scheduler should minimize overtime
           // scheduling a car to make overtime to complete should not be allowed
@@ -94,13 +123,49 @@ public class Scheduler {
 
     /**
      * Check if there is enough time today to add a new car to the assemblyLine
-     * @return this.minutes <= this.workingDayMinutes - 180
+     * @return this.minutes <= this.workingDayMinutes - 3 * this.timePerWorkstation
      */
     public boolean canAddCarToAssemblyLine() {
-        //System.out.println("day: "  + this.day);
-        //System.out.println("minutes : " + this.minutes);
-        //System.out.println("workingDayMinutes : " + this.workingDayMinutes);
         //TODO: assumes all cars take 3 hours to complete -> should work with part times
-        return this.minutes <= this.workingDayMinutes - 180;
+        return this.minutes <= this.workingDayMinutes - 3 * this.timePerWorkstation;
+    }
+
+    /**
+     * Returns the current schedulingAlgorithm
+     * @return this.schedulingAlgorithm
+     */
+    private String getSchedulingAlgorithm() {
+        return schedulingAlgorithm;
+    }
+
+    /**
+     * set the currenct schedulingAlgorithm to the new given algorithms
+     * @param schedulingAlgorithm
+     */
+    public void setSchedulingAlgorithm(String schedulingAlgorithm) {
+        if (!isValidSchedulingAlgorithm(schedulingAlgorithm)) {
+            throw new IllegalArgumentException();
+        }
+        this.schedulingAlgorithm = schedulingAlgorithm;
+    }
+
+    /**
+     * Checks if the given schedulingAlgorithm is a valid algorithm
+     * @param schedulingAlgorithm
+     * @return True if schedulingAlgorithm == "FIFO" || "BATCH"
+     */
+    private boolean isValidSchedulingAlgorithm(String schedulingAlgorithm) {
+        return schedulingAlgorithm.equals("FIFO") || schedulingAlgorithm.equals("BATCH");
+    }
+
+    /**
+     * Returns the car that is scheduled to be the next car on the assemblyLine
+     * @return this.carQueue.removeFirst()
+     */
+    public Car getNextScheduledCar() {
+        if (this.getSchedulingAlgorithm().equals("FIFO")) {
+            return this.controller.getCarQueue().get(0);
+        }
+        else throw new IllegalStateException();
     }
 }

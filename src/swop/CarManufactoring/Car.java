@@ -7,8 +7,8 @@ import swop.Parts.Part;
 public class Car {
 	private Set<Task> uncompletedTasks;
     private CarModel carModel;
-	private String estimatedCompletionTime;
-	private int completionTime;
+	private String estimatedCompletionTime; // TODO Dynamic
+	private int deliveryTime; // TODO
     
     public Car(CarModel model){
         this.setCarModel(model);  
@@ -80,21 +80,19 @@ public class Car {
 		return this.getCarModel().getPartsMap();
 	}
 
-	public void setEstimatedCompletionTime(String time) {
+	public void setEstimatedCompletionTime(String time) { // TODO Remove
 		this.estimatedCompletionTime = time;
-
 	}
-
 
 	public String getEstimatedCompletionTime() {
 		return this.estimatedCompletionTime;
 	}
 
-	public int getCompletionTime() {
-		return this.completionTime;
+	public int getDeliveryTime() {
+		return this.deliveryTime;
 	}
 
-	public void setCompletionTime(int time) {
-		this.completionTime = time;
+	public void setDeliveryTime(int time) {
+		this.deliveryTime = time;
 	}
 }

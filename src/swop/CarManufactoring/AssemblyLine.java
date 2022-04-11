@@ -1,7 +1,6 @@
 package swop.CarManufactoring;
 
 import swop.Exceptions.NotAllTasksCompleteException;
-import swop.Parts.Part;
 
 import java.util.*;
 
@@ -21,9 +20,11 @@ public class AssemblyLine {
 	public void advance(Car car, int minutes) throws NotAllTasksCompleteException{
 		// check if possible to advance AssemblyLine
 		checkAdvance();
-		Car carcompleted = this.workStations.getLast().getCar();
+		Car completedCar = this.workStations.getLast().getCar();
 		//updating completion time of finished car
-		if(!(carcompleted == null))carcompleted.setCompletionTime(carcompleted.getCompletionTime()+minutes);
+		//TODO add methed to schedular to get current time?
+		//TODO this way of setting completion time is wrong
+		if(!(completedCar == null)) completedCar.setDeliveryTime(completedCar.getDeliveryTime()+minutes);
 		// Move all cars on assembly by 1 position
 		for (int i = this.workStations.size() - 1; i > 0; i--) {
 			this.workStations.get(i).setCar(this.workStations.get(i-1).getCar());

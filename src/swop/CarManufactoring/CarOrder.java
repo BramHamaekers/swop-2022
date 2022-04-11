@@ -40,7 +40,7 @@ public class CarOrder implements Comparable<CarOrder>{
 	}
 
 	public int getCompletionTime() {
-		return this.getCar().getCompletionTime();
+		return this.getCar().getDeliveryTime();
 	}
 
 	@Override
