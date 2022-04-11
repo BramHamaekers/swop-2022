@@ -77,7 +77,6 @@ public enum Task {
 	
 	/**
 	 * Get the description of the given task
-	 * @param the given task
 	 * @return The description of the given Task consisting of the different parts
 	 */
 	public String getTaskDescription() {

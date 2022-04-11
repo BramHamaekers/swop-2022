@@ -6,7 +6,7 @@ import java.util.List;
 import swop.Exceptions.NotAllTasksCompleteException;
 
 public class CarManufacturingController {
-	private final LinkedList<Car> carQueue; //msschien static maken, dan hoeft de schedular this niet meer bij te houden
+	private final LinkedList<Car> carQueue; //misschien static maken, dan hoeft de schedular this niet meer bij te houden
 	private final AssemblyLine assemblyLine;
 	private final Scheduler scheduler;
 	

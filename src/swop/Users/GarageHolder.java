@@ -56,6 +56,7 @@ public class GarageHolder extends User{
 			Map<String,Integer> carConfig = getFilledOrder();
 			Map<String, String> carOptions = this.mapConfigToOptions(carConfig);
 			CarModel carModel = createCarModel(model,carOptions);
+//            System.out.println(carOptions);
 			CarOrder order = this.placeOrder(assemAssist, carModel);
             GarageHolderUI.displayEstimatedTime(order);
     	} catch (CancelException e) {

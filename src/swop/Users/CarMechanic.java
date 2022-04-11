@@ -70,7 +70,7 @@ public class CarMechanic extends User{
 	 * 	this consists of instruction of each part + value concerning current task.
 	 * @param assemAssist given the main program
 	 * @param task task from the tasklist
-	 * @throws CancelException CancelException when "CANCEL" is the input
+	 * @throws CancelException when "CANCEL" is the input
 	 */
 	private void showInfo(AssemAssist assemAssist, Task task) throws CancelException {
 		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");

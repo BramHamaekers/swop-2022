@@ -26,9 +26,14 @@ public class AssemblyLine {
 		if(!(carcompleted == null))carcompleted.setCompletionTime(carcompleted.getCompletionTime()+minutes);
 		// Move all cars on assembly by 1 position
 		for (int i = this.workStations.size() - 1; i > 0; i--) {
-			this.workStations.get(i).setCar(this.workStations.get(i-1).getCar());
+			Car previous = this.workStations.get(i-1).getCar();
+			this.workStations.get(i).setCar(previous);
+			if (previous!= null)
+				previous.setCompletionTime(previous.getCompletionTime()+minutes);
 		}
 		this.workStations.getFirst().setCar(car);
+		if (car != null)
+			car.setCompletionTime(minutes);
 
 	}
 
@@ -77,6 +82,7 @@ public class AssemblyLine {
 	/**
 	 * returns for all works stations state if an advance would happen. 
 	 * Empty = no car, Finished = all tasks completed, Pending = tasks need 2 be completed
+	 * @param car a given
 	 * @return list of states from each work station if an advance would take place
 	 */
 
