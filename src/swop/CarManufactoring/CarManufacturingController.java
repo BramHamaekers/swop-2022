@@ -44,7 +44,10 @@ public class CarManufacturingController {
 	public void advanceAssembly(int minutes) throws NotAllTasksCompleteException {
 		//there is time to finish another car + there are cars on the queue
 		if(canFinishNewCar() && !this.getCarQueue().isEmpty()) {
+			this.getScheduler().updateIterator();
+			//TODO create a different .getNextScheduledCar method so i don't need to update the iterator before and after
 			Car nextCar = this.getScheduler().getNextScheduledCar();
+			this.getScheduler().updateIterator();
 			this.assemblyLine.advance(nextCar, minutes);
 			this.carQueue.remove(nextCar);
 		}

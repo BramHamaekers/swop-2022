@@ -56,6 +56,11 @@ public class Car {
 		return carModel;
 	}
 
+	//TODO this is a placeholder function untill the different models are implemented
+	public String getCarModelName() {
+		return "c";
+	}
+	
 	public void setCarModel(CarModel carModel) {
 		if (carModel == null)
 			throw new IllegalArgumentException("car model is null");
