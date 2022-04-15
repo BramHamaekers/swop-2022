@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import swop.CarManufactoring.Task;
+import swop.CarManufactoring.WorkStation;
 import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
 import swop.UI.CarMechanicUI;
@@ -101,8 +102,9 @@ public class CarMechanic extends User{
 	private String selectStation(AssemAssist assemAssist) throws CancelException {
 		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
 		List<String> workStationsNames = assemAssist.getStationsNames();
+		List<WorkStation> workStations = assemAssist.getStations();
 		//asks user for workstation
-		CarMechanicUI.displayAvailableStations(workStationsNames);
+		CarMechanicUI.displayAvailableStations(workStations);
 		int option = CarMechanicUI.askOption("Select station: ", workStationsNames.size());	
 		return workStationsNames.get(option);
 	}

@@ -1,9 +1,6 @@
 package swop.Main;
 
-import swop.CarManufactoring.AssemblyLine;
-import swop.CarManufactoring.CarManufacturingController;
-import swop.CarManufactoring.CarOrder;
-import swop.CarManufactoring.Task;
+import swop.CarManufactoring.*;
 import swop.Exceptions.IllegalUserException;
 import swop.Exceptions.NotAllTasksCompleteException;
 import swop.UI.LoginUI;
@@ -149,6 +146,10 @@ public class AssemAssist {
 	
 	public List<String> getStationsNames() {
 		return this.getAssemblyLine().getWorkstationNames();
+	}
+
+	public List<WorkStation> getStations() {
+		return this.getAssemblyLine().getWorkStations();
 	}
 	
 	public Set<Task> getsAvailableTasks(String string) {
