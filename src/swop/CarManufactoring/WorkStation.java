@@ -6,7 +6,8 @@ import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import swop.Parts.Part;
+import swop.Car.Car;
+import swop.Parts.CarOptionCategory;
 
 public class WorkStation {
 	private final String name;
@@ -86,13 +87,13 @@ public class WorkStation {
 	
 	/**
 	 * Tries to get value of a part
-	 * @param part 
+	 * @param carOptionCategory
 	 * @throws IllegalArgumentException if car == null || part == null
 	 */
-	public String getValueOfPart(Part part) {
+	public String getValueOfPart(CarOptionCategory carOptionCategory) {
 		if(car == null) throw new IllegalArgumentException("No car in station");
-		if (part == null) throw new IllegalArgumentException("part is null");
-		return this.getCar().getValueOfPart(part);
+		if (carOptionCategory == null) throw new IllegalArgumentException("part is null");
+		return this.getCar().getValueOfPart(carOptionCategory);
 
 	}
 	

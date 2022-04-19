@@ -1,5 +1,7 @@
 package swop.CarManufactoring;
 
+import swop.Car.Car;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;

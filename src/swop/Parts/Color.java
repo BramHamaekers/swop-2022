@@ -1,6 +1,6 @@
 package swop.Parts;
 
-public class Color extends Part{
+public class Color extends CarOptionCategory {
 	
 	public Color() {
 		super( new String[] {"red", "blue", "black", "white"}, "Color");

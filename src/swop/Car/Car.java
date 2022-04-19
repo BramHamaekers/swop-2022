@@ -1,8 +1,9 @@
-package swop.CarManufactoring;
+package swop.Car;
 
 import java.util.*;
 
-import swop.Parts.Part;
+import swop.CarManufactoring.Task;
+import swop.Parts.CarOptionCategory;
 
 public class Car {
 	private Set<Task> uncompletedTasks;
@@ -69,20 +70,20 @@ public class Car {
 
 	/**
 	 * Returns the value of given part based on the model of this car.
-	 * @param part
+	 * @param carOptionCategory
 	 * @return value part
 	 */
-	public String getValueOfPart(Part part) {
+	public String getValueOfPart(CarOptionCategory carOptionCategory) {
 		if (this.carModel == null) {
 			throw new IllegalArgumentException("The car has no carmodel");
 		}
-		return this.getCarModel().getValueOfPart(part);
+		return this.getCarModel().getCarModelSpecification().getValueOfPart(carOptionCategory);
 	}
 	public  Map<String, String> getPartsMap() {
 		if (this.carModel == null) {
 			throw new IllegalArgumentException("The car has no carmodel");
 		}
-		return this.getCarModel().getPartsMap();
+		return this.getCarModel().getCarModelSpecification().getPartsMap();
 	}
 
 	public void setEstimatedCompletionTime(String time) { // TODO Remove

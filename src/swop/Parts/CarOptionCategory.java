@@ -1,18 +1,18 @@
 package swop.Parts;
 
-public class Part {
+public class CarOptionCategory {
 
 	private String value;
 	private String[] validValues;
 	private final String name;
 
 	
-	public Part(String[] validValues, String name) {
+	public CarOptionCategory(String[] validValues, String name) {
 		this.validValues = validValues;
 		this.name = name;
 	}
 	
-	public Part(String value, String[] validValues, String name) {
+	public CarOptionCategory(String value, String[] validValues, String name) {
 		this.validValues = validValues;
 		this.setValue(value);
 		this.name = name;

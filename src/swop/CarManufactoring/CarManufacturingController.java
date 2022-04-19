@@ -1,10 +1,11 @@
 package swop.CarManufactoring;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import swop.Car.Car;
+import swop.Car.CarOrder;
 import swop.Exceptions.NotAllTasksCompleteException;
 
 public class CarManufacturingController {

@@ -121,7 +121,7 @@ m1= 1..*</panel_attributes>
 +getName(): String
 +getCar(): Car
 +setCar(Car car): void
-+getValueOfPart(Part part): String
++getValueOfPart(Part carOptionCategory): String
 +completeTask(Task task): void
 
 </panel_attributes>
@@ -220,7 +220,7 @@ m2= 1</panel_attributes>
 -initiateUncompletedTasks(): void
 +getCarModel(): CarModel
 +setCarModel(CarModel carModel): void
-+getValueOfPart(Part part): String
++getValueOfPart(Part carOptionCategory): String
 +getPartsMap(): Map&lt;String, String&gt;
 +getOrder(): CarOrder
 +setOrder(CarOrder order): void
@@ -367,10 +367,10 @@ UI
 --
 ~parts : List&lt;Part&gt;
 --
--createPart(Entry&lt;String, String&gt; part): Part
+-createPart(Entry&lt;String, String&gt; carOptionCategory): Part
 +getParts(): List&lt;Part&gt;
 +getPartsMap(): Map&lt;String, String&gt;
-+getValueOfPart(Part part): String
++getValueOfPart(Part carOptionCategory): String
 </panel_attributes>
     <additional_attributes/>
   </element>

@@ -1,4 +1,4 @@
-package swop.CarManufactoring;
+package swop.Car;
 
 import swop.Database.RandomID;
 
@@ -10,7 +10,7 @@ public class CarOrder implements Comparable<CarOrder>{
 	
 	/**
 	 * Creates a new order based on given carModel
-	 * @param carModel
+	 * @param carModel ... TODO
 	 */
 	public CarOrder(CarModel carModel) {
 		this.car = new Car(carModel);

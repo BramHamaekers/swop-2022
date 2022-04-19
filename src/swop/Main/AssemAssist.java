@@ -1,5 +1,6 @@
 package swop.Main;
 
+import swop.Car.CarOrder;
 import swop.CarManufactoring.*;
 import swop.Exceptions.IllegalUserException;
 import swop.Exceptions.NotAllTasksCompleteException;

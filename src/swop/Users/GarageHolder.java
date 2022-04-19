@@ -1,6 +1,9 @@
 package swop.Users;
-import swop.CarManufactoring.CarModel;
-import swop.CarManufactoring.CarOrder;
+
+import swop.Car.CarModel;
+import swop.Car.CarModelSpecification;
+import swop.Car.CarOrder;
+import swop.Car.ModelA;
 import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
 import swop.UI.GarageHolderUI;
@@ -8,15 +11,6 @@ import swop.UI.GarageHolderUI;
 import java.util.*;
 
 public class GarageHolder extends User{
-    private final LinkedHashMap<String, List<String>> optionsMap = new LinkedHashMap<>(){{
-		put("Airco", Arrays.asList("manual", "automatic climate control"));
-		put("Body",Arrays.asList("sedan", "break"));
-		put("Color",Arrays.asList("red", "blue", "black", "white"));
-		put("Engine",Arrays.asList("standard 2l 4 cilinders", "performance 2.5l 6 cilinders"));
-		put("GearBox",Arrays.asList("6 speed manual", "5 speed automatic"));
-		put("Seats",Arrays.asList("leather black", "leather white", "vinyl grey"));
-		put("Wheels",Arrays.asList("comfort", "sports (low profile)"));
-	}};
     private Set<CarOrder> carOrders;
 
     public GarageHolder(String id) {
@@ -51,12 +45,13 @@ public class GarageHolder extends User{
     private void generateOrder(AssemAssist assemAssist) {
         if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
         try {
-			int model = GarageHolderUI.indicateCarModel();
-			GarageHolderUI.displayOrderingForm(this.getOptionsMap());
-			Map<String,Integer> carConfig = getFilledOrder();
-			Map<String, String> carOptions = this.mapConfigToOptions(carConfig);
-			CarModel carModel = createCarModel(model,carOptions);
-//            System.out.println(carOptions);
+            int model = GarageHolderUI.indicateCarModel();
+            CarModel carModel = createCarModel(model);
+            GarageHolderUI.displayOrderingForm(carModel.getValidOptions());
+            Map<String,Integer> carConfig = getFilledOrder(carModel.getValidOptions());
+            Map<String, String> carOptions = this.mapConfigToOptions(carConfig, carModel.getValidOptions());
+            CarModelSpecification spec = new CarModelSpecification(carOptions);
+            carModel.setCarModelSpecification(spec);
 			CarOrder order = this.placeOrder(assemAssist, carModel);
             GarageHolderUI.displayEstimatedTime(order);
     	} catch (CancelException e) {
@@ -68,10 +63,11 @@ public class GarageHolder extends User{
      * Will return a map with options of car chosen by user.
      * @return carConfig as a map from part to integer
      * @throws CancelException CancelException when "CANCEL" is the input
+     * @param validOptions
      */
-    private Map<String,Integer> getFilledOrder() throws CancelException{
+    private Map<String,Integer> getFilledOrder(Map<String, List<String>> validOptions) throws CancelException{
     	Map<String,Integer> carConfig = new HashMap<>();
-		for (var entry : this.getOptionsMap().entrySet()) {
+		for (var entry : validOptions.entrySet()) {
 			int option = GarageHolderUI.askOption(0, entry.getValue().size(), entry.getKey());
 			carConfig.put(entry.getKey(), option);
 		}
@@ -81,14 +77,15 @@ public class GarageHolder extends User{
     /**
      * Converts Map<String, Integer> to Map<String,String>
      * @param carConfig given a map from part to integer selection
+     * @param validOptions
      * @return map string part to selection string
      */
-	private Map<String,String> mapConfigToOptions(Map<String, Integer> carConfig) {
+	private Map<String,String> mapConfigToOptions(Map<String, Integer> carConfig, Map<String, List<String>> validOptions) {
         if (carConfig == null) throw new IllegalArgumentException("carConfig is null");
         Map<String,String> carOpts = new HashMap<>();
 
         for (String component: carConfig.keySet()) {
-            String option = this.getOptionsMap().get(component).get(carConfig.get(component));
+            String option = validOptions.get(component).get(carConfig.get(component));
             carOpts.put(component, option);
         }
 
@@ -97,13 +94,11 @@ public class GarageHolder extends User{
 
 	/**
 	 * Creates new CarModel given the model/optionsMap
-	 * @param model given model number
-	 * @param carOptions map from part to actual selection as a string
+//	 * @param carOptions map from part to actual selection as a string
 	 * @return created CarModel
 	 */
-    private CarModel createCarModel(int model, Map<String, String> carOptions) {
-            if (carOptions == null) throw new IllegalArgumentException("carOptions is null");
-            return new CarModel(model,carOptions);
+    private CarModel createCarModel(int choice) {
+            return new ModelA();
         }
     
     /**
@@ -131,10 +126,6 @@ public class GarageHolder extends User{
 
     public void addOrder(CarOrder carOrder) {
         this.carOrders.add(carOrder);
-    }
-
-    public LinkedHashMap<String, List<String>> getOptionsMap() {
-        return optionsMap;
     }
 
 }

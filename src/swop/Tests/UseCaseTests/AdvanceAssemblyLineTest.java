@@ -13,12 +13,11 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
-import swop.CarManufactoring.CarOrder;
+import swop.Car.CarOrder;
 import swop.Main.AssemAssist;
 import swop.UI.LoginUI;
 import swop.Users.CarMechanic;
 import swop.Users.GarageHolder;
-import swop.Users.Manager;
 
 public class AdvanceAssemblyLineTest {
     AssemAssist assem;

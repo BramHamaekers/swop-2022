@@ -1,6 +1,6 @@
 package swop.UI;
 
-import swop.CarManufactoring.CarOrder;
+import swop.Car.CarOrder;
 import swop.Exceptions.CancelException;
 
 import java.util.*;

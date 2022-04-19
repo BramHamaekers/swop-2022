@@ -1,5 +1,6 @@
 package swop.CarManufactoring;
 
+import swop.Car.Car;
 import swop.Exceptions.NotAllTasksCompleteException;
 
 import java.util.*;
@@ -14,7 +15,8 @@ public class AssemblyLine {
 
 	/**
 	 * advance the assembly line if a manager orders and all tasks are done
-	 * @param minutes minutes past since start of the task
+	 * //TODO
+//	 * @param minutes minutes past since start of the task
 	 * @throws NotAllTasksCompleteException thrown when there are still tasks to do
 	 */
 	public Car advance(Car car) throws NotAllTasksCompleteException{
@@ -72,7 +74,7 @@ public class AssemblyLine {
 			String s = w.getName();
 			if(w.getCar() == null) s = s.concat(": EMPTY");
 			else {
-				s = s.concat(": " + w.getCar().getCarModel().getPartsMap());
+				s = s.concat(": " + w.getCar().getCarModel().getCarModelSpecification().getPartsMap());
 				s = w.stationTasksCompleted() ? s.concat(" (FINISHED)") : s.concat(" (PENDING)");
 			}
 			status.add(s);
@@ -95,11 +97,11 @@ public class AssemblyLine {
 			if(0<i) {
 				w = this.workStations.get(i-1);
 				s = w.getCar() == null ? s.concat(": EMPTY") :
-						s.concat(": " + w.getCar().getCarModel().getPartsMap() + " (PENDING)");
+						s.concat(": " + w.getCar().getCarModel().getCarModelSpecification().getPartsMap() + " (PENDING)");
 			}
 			else {
 				s = (car == null) ? s.concat(": EMPTY") :
-						s.concat(": " + car.getCarModel().getPartsMap() + " (PENDING)");
+						s.concat(": " + car.getCarModel().getCarModelSpecification().getPartsMap() + " (PENDING)");
 			}
 			status.add(s);
 		}
