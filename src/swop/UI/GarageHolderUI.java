@@ -1,4 +1,5 @@
 package swop.UI;
+
 import swop.CarManufactoring.CarOrder;
 import swop.Exceptions.CancelException;
 
@@ -40,7 +41,7 @@ public class GarageHolderUI implements UI {
 
 		// Print sorted set
 		completedSet.forEach(c -> {
-					System.out.println("Order: " + c.getID());
+					System.out.println("Order: " + c.getID() + " " + c.getCompletionTime().get("day") + " " + c.getCompletionTime().get("minutes"));
 				});
 		System.out.println();
 		System.out.println("=======================================");
@@ -55,6 +56,7 @@ public class GarageHolderUI implements UI {
 
 	public static int indicateCarModel() throws CancelException {
 		System.out.printf("%n============ Car Models ============%n");
+		//TODO: fix
 		System.out.println("[0] car");
 		System.out.println("=======================================");
 		System.out.println();

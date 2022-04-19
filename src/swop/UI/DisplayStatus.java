@@ -8,6 +8,7 @@ import java.util.ListIterator;
 class DisplayStatus implements DocumentBuilder {
     int titlelength = 0;
     StringBuilder builder = new StringBuilder();
+
     void print(String text) {
         builder.append(text);
     }

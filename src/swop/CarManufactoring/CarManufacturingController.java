@@ -1,7 +1,9 @@
 package swop.CarManufactoring;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import swop.Exceptions.NotAllTasksCompleteException;
 
@@ -37,23 +39,37 @@ public class CarManufacturingController {
 	}
 	
 	/**
-	 * will try to advance the assemblyline + update the scheduler
+	 * Will try to advance the assemblyline + update the scheduler.
 	 * @param minutes that have passed
-	 * @throws NotAllTasksCompleteException
+	 * @throws NotAllTasksCompleteException if all available tasks are not completed
 	 */
 	public void advanceAssembly(int minutes) throws NotAllTasksCompleteException {
 		//there is time to finish another car + there are cars on the queue
+		Car finishedCar = null;
 		if(canFinishNewCar() && !this.getCarQueue().isEmpty()) {
 			Car nextCar = this.getScheduler().getNextScheduledCar();
-			this.assemblyLine.advance(nextCar, minutes);
+			finishedCar = this.assemblyLine.advance(nextCar);
 			this.carQueue.remove(nextCar);
 		}
 		//else just advance
-		else this.assemblyLine.advance(null, minutes);
+		else {
+			finishedCar = this.assemblyLine.advance(null);
+		}
+
+		if (finishedCar != null) {
+			setFinishedcarDeliverytime(minutes, finishedCar);
+		}
 		//update schedular time
 		this.updateScheduleTime(minutes);
 
 		// For every car in queue and workstation update the estimated completion time
+		updateEstimatedCompletionTime();
+	}
+
+	/**
+	 * For every car in the carqueue, update the estimated completiontime according to the minutes passed.
+	 */
+	private void updateEstimatedCompletionTime() {
 		this.carQueue.forEach(car -> car.setEstimatedCompletionTime(scheduler.getEstimatedCompletionTime(car)));
 		this.assemblyLine.getWorkStations().forEach(w -> {
 			if (w.getCar() != null)
@@ -62,8 +78,24 @@ public class CarManufacturingController {
 	}
 
 	/**
+	 * Set the completion time of the finished car according to scheduler
+	 * @param minutes the minutes passed in the last workstation rotation
+	 * @param finishedCar the car to be finished
+	 * @throws IllegalStateException if the car is not completed
+	 */
+	private void setFinishedcarDeliverytime(int minutes, Car finishedCar) {
+		if (!finishedCar.isCompleted()){
+			throw new IllegalStateException("Car is not completed");
+		}
+		finishedCar.setDeliveryTime(Map.of(
+				"day", scheduler.getDay(),
+				"minutes", scheduler.getMinutes()+ minutes
+		));
+	}
+
+	/**
 	 * Checks if a new car could be finished if it was added to the assemblyLine
-	 * @return
+	 * @return whether a new car can be finished in time
 	 */
 	private boolean canFinishNewCar() {
 		return this.getScheduler().canAddCarToAssemblyLine();

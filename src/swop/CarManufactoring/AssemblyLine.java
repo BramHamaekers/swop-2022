@@ -17,25 +17,25 @@ public class AssemblyLine {
 	 * @param minutes minutes past since start of the task
 	 * @throws NotAllTasksCompleteException thrown when there are still tasks to do
 	 */
-	public void advance(Car car, int minutes) throws NotAllTasksCompleteException{
+	public Car advance(Car car) throws NotAllTasksCompleteException{
 		// check if possible to advance AssemblyLine
 		checkAdvance();
 		Car completedCar = this.workStations.getLast().getCar();
 		//updating completion time of finished car
 		//TODO add methed to schedular to get current time?
 		//TODO this way of setting completion time is wrong
-		if(!(completedCar == null)) completedCar.setDeliveryTime(completedCar.getDeliveryTime()+minutes);
-		// Move all cars on assembly by 1 position
+			// Move all cars on assembly by 1 position
 		for (int i = this.workStations.size() - 1; i > 0; i--) {
 			Car previous = this.workStations.get(i-1).getCar();
 			this.workStations.get(i).setCar(previous);
-			if (previous!= null)
-				previous.setDeliveryTime(previous.getDeliveryTime()+minutes);
+//			if (previous!= null)
+//				previous.setDeliveryTime(previous.getDeliveryTime()+minutes);
 		}
 		this.workStations.getFirst().setCar(car);
-		if (car != null)
-			car.setDeliveryTime(minutes);
-
+//		if (car != null)
+//			car.setDeliveryTime(minutes);
+//		completedCar.setDeliveryTime(completedCar.getDeliveryTime()+minutes);
+		return completedCar;
 	}
 
 	/**

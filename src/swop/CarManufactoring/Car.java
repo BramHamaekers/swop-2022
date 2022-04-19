@@ -8,7 +8,7 @@ public class Car {
 	private Set<Task> uncompletedTasks;
     private CarModel carModel;
 	private String estimatedCompletionTime; // TODO Dynamic
-	private int deliveryTime; // TODO
+	private Map<String, Integer> deliveryTime; // TODO
     
     public Car(CarModel model){
         this.setCarModel(model);  
@@ -93,11 +93,11 @@ public class Car {
 		return this.estimatedCompletionTime;
 	}
 
-	public int getDeliveryTime() {
+	public Map<String, Integer> getDeliveryTime() {
 		return this.deliveryTime;
 	}
 
-	public void setDeliveryTime(int time) {
+	public void setDeliveryTime(Map<String, Integer> time) {
 		this.deliveryTime = time;
 	}
 }

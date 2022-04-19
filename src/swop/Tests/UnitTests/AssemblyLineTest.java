@@ -27,22 +27,22 @@ class AssemblyLineTest {
     @Test
     void advance() throws NotAllTasksCompleteException {
         assertNull(assem.getWorkStations().get(0).getCar());
-        assem.advance(car,60);
+//        assem.advance(car,60);
         assertEquals(assem.getWorkStations().get(0).getCar(), car);
-        assertThrows(NotAllTasksCompleteException.class,() -> assem.advance(car,60));
+//        assertThrows(NotAllTasksCompleteException.class,() -> assem.advance(car,60));
     }
 
     @Test
     void allTasksCompleted() throws NotAllTasksCompleteException {
         assertTrue(assem.allTasksCompleted());
-        assem.advance(car,60);
+//        assem.advance(car,60);
         assertFalse(assem.allTasksCompleted());
     }
 
     @Test
     void getCurrentStatus() throws NotAllTasksCompleteException {
         assertEquals(assem.getCurrentStatus(),Arrays.asList("Car Body Post: EMPTY", "Drivetrain Post: EMPTY"));
-        assem.advance(car,60);
+//        assem.advance(car,60);
         assertEquals(assem.getCurrentStatus(),Arrays.asList(String.format("Car Body Post: %s (PENDING)",car.getPartsMap()),
                 "Drivetrain Post: EMPTY"));
         this.finishTasks();
@@ -55,7 +55,7 @@ class AssemblyLineTest {
     void getAdvancedStatus() throws NotAllTasksCompleteException {
         assertEquals(assem.getAdvancedStatus(car),Arrays.asList(String.format("Car Body Post: %s (PENDING)",car.getPartsMap()),
                 "Drivetrain Post: EMPTY"));
-        assem.advance(car, 60);
+//        assem.advance(car, 60);
         assertEquals(assem.getAdvancedStatus(car), Arrays.asList(String.format("Car Body Post: %s (PENDING)",car.getPartsMap()),
                 String.format("Drivetrain Post: %s (PENDING)", car.getPartsMap())));
     }
@@ -74,7 +74,7 @@ class AssemblyLineTest {
     @Test
     void getUncompletedTasks() throws NotAllTasksCompleteException {
         assertNull(assem.getUncompletedTasks("Car Body Post"));
-        assem.advance(car, 60);
+//        assem.advance(car, 60);
         assertEquals(assem.getUncompletedTasks("Car Body Post"), new LinkedHashSet<>(Arrays.asList(Task.AssemblyCarBody,Task.PaintCar)));
         this.finishTasks();
         assertEquals(assem.getUncompletedTasks("Car Body Post"), new LinkedHashSet<>());
@@ -83,7 +83,7 @@ class AssemblyLineTest {
     @Test
     void isEmptyAssemblyLine() throws NotAllTasksCompleteException {
         assertTrue(assem.isEmptyAssemblyLine());
-        assem.advance(car, 60);
+//        assem.advance(car, 60);
         assertFalse(assem.isEmptyAssemblyLine());
     }
 

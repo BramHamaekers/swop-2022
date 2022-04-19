@@ -2,6 +2,8 @@ package swop.CarManufactoring;
 
 import swop.Database.RandomID;
 
+import java.util.Map;
+
 public class CarOrder implements Comparable<CarOrder>{
 	private final Car car;
 	private final String ID;
@@ -39,12 +41,14 @@ public class CarOrder implements Comparable<CarOrder>{
 		return this.getCar().getEstimatedCompletionTime();
 	}
 
-	public int getCompletionTime() {
+	public Map<String, Integer> getCompletionTime() {
 		return this.getCar().getDeliveryTime();
 	}
 
 	@Override
 	public int compareTo(CarOrder carOrder) {
-		return Integer.compare(this.getCompletionTime(), carOrder.getCompletionTime());
+		//TODO: fix compare
+		return -1;
+//				Integer.compare(this.getCompletionTime(), carOrder.getCompletionTime());
 	}
 }
