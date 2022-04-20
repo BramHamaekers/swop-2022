@@ -68,7 +68,7 @@ public class GarageHolder extends User{
      */
     private void fillOrderingForm(CarModel carModel) throws CancelException {
         while(true) {
-            GarageHolderUI.displayOrderingForm(carModel.getValidOptions());
+            GarageHolderUI.displayOrderingForm(carModel.getValidOptions(),carModel.getName());
             Map<String,Integer> carConfig = getFilledOrder(carModel.getValidOptions());
             Map<String, String> carOptions = this.mapConfigToOptions(carConfig, carModel.getValidOptions());
 

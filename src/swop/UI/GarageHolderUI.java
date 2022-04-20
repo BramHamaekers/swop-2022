@@ -70,21 +70,25 @@ public class GarageHolderUI implements UI {
 	 * Displays the ordering from given a list of components and its options
 	 * @param optionsMap list of components and its options
 	 */
-	public static void displayOrderingForm(Map<String, List<String>> optionsMap) {
-		System.out.printf("%n============ Ordering Form ============%n");
-		optionsMap.forEach((key, value) -> {
-			System.out.print(key + ": ");
-			final int[] itemNumber = {-1};
-			value.forEach(v -> System.out.printf("[%s] %s, ", itemNumber[0] += 1, v));
-			System.out.printf("%n");
-		});
-		System.out.println("=======================================");
+	public static void displayOrderingForm(Map<String, List<String>> optionsMap, String name) {
+//		System.out.printf("%n============ Ordering Form ============%n");
+//		optionsMap.forEach((key, value) -> {
+//			System.out.print(key + ": ");
+//			final int[] itemNumber = {-1};
+//			value.forEach(v -> System.out.printf("[%s] %s, ", itemNumber[0] += 1, v));
+//			System.out.printf("%n");
+//		});
+//		System.out.println("=======================================");
+		GarageHolderGenerator generator = new GarageHolderGenerator();
+		DisplayStatus builder = new DisplayStatus();
+		generator.generateOrderingForm(builder, optionsMap, name);
+		System.out.print(builder.getDisplay());
 	}
 
 
 	public static int askOption (int leftBound, int rightBound, String option) throws CancelException {
 		System.out.print("Choose " + option + ": ");
-			return scanner.scanNextLineOfTypeInt(leftBound, rightBound);
+		return scanner.scanNextLineOfTypeInt(leftBound, rightBound);
 	}
 
 	/**
