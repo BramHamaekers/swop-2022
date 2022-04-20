@@ -3,10 +3,7 @@ package swop.UI;
 import swop.Car.CarModel;
 import swop.CarManufactoring.WorkStation;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Set;
+import java.util.*;
 
 class DisplayStatus implements DocumentBuilder {
     int titlelength = 0;
@@ -37,8 +34,6 @@ class DisplayStatus implements DocumentBuilder {
         println(str);
         this.titlelength = str.length();
     }
-
-
 
     @Override
     public void inputInfo(String info) {
@@ -91,6 +86,21 @@ class GarageHolderGenerator{
         builder.endInfo();
         builder.addOption("Select model", carModels.size());
     }
+    void generateOrderingForm(DocumentBuilder builder, Map<String, List<String>> optionsMap, String carModel){
+        builder.appendTitle("Ordering form");
+        builder.appendSubTitle(carModel);
+        for (Map.Entry<String, List<String>> entry : optionsMap.entrySet()) {
+            builder.inputInfo(String.format("%s: %s", entry.getKey(), optionListToString(entry.getValue())));
+        }
+        builder.endInfo();
+    }
 
-
+    String optionListToString(List<String> options){
+        StringBuilder builder = new StringBuilder();
+        ListIterator<String> it = options.listIterator();
+        while (it.hasNext()) {
+            builder.append(String.format("[%d] %s ",it.nextIndex(),it.next()));
+        }
+        return builder.toString();
+    }
 }

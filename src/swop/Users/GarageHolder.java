@@ -44,7 +44,7 @@ public class GarageHolder extends User{
         try {
             int model = GarageHolderUI.indicateCarModel(CarModel.types);
             CarModel carModel = createCarModel(model);
-            GarageHolderUI.displayOrderingForm(carModel.getValidOptions());
+            GarageHolderUI.displayOrderingForm(carModel.getValidOptions(),carModel.getName());
             Map<String,Integer> carConfig = getFilledOrder(carModel.getValidOptions());
             Map<String, String> carOptions = this.mapConfigToOptions(carConfig, carModel.getValidOptions());
             CarModelSpecification spec = new CarModelSpecification(carOptions);
