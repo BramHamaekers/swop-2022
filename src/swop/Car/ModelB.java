@@ -3,9 +3,10 @@ package swop.Car;
 import java.util.List;
 import java.util.Map;
 
-public class ModelA extends CarModel{
-    private static final List<String> modelAMandatory = List.of("Body","Color", "Engine", "Gearbox", "Seats", "Wheels");
-    private static final Map<String, List<String>> modelAOptions = Map.of(
+public class ModelB extends CarModel{
+    private static final List<String> modelBMandatory = List.of("Body","Color", "Engine", "Gearbox", "Seats", "Wheels");
+    //TODO: need to rewrite
+    private static final Map<String, List<String>> modelBOptions = Map.of(
             "Body", List.of("sedan", "break"),
             "Color", List.of("red", "blue", "black", "white"),
             "Engine", List.of("standard 2l v4", "performance 2.5l v6"),
@@ -14,9 +15,9 @@ public class ModelA extends CarModel{
             "Airco", List.of("manual","automatic", "None"),
             "Wheels", List.of("winter", "comfort", "sports")
     );
-    public ModelA(){
-        this.name = "ModelA";
-        this.validOptions = modelAOptions;
-        this.mandatoryParts = modelAMandatory;
+    public ModelB(){
+        this.name = "ModelB";
+        this.validOptions = modelBOptions;
+        this.mandatoryParts = modelBMandatory;
     }
 }

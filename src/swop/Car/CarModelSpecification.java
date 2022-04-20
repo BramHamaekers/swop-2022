@@ -60,27 +60,24 @@ public class CarModelSpecification {
 //	public List<CarOptionCategory> getParts() {
 //		return this.carOptionCategories;
 //	}
-//
-//	/**
-//	 * Returns Map<String, String> (part.name => part.value)
-//	 * @return
-//	 */
-//	public Map<String, String> getPartsMap() {
+	public Map<String, String> getPartsMap() {
 //		Map<String, String> map = new HashMap<>();
 //		for(CarOptionCategory carOptionCategory : carOptionCategories) map.put(carOptionCategory.getName(), carOptionCategory.getValue());
-//		return map;
-//	}
+		return this.getAllParts();
+	}
 //
-//	/**
-//	 * get a given part value from the part
-//	 * @param carOptionCategory given part
-//	 * @return part value (String)
-//	 */
-//	public String getValueOfPart(CarOptionCategory carOptionCategory) {
-//		if(carOptionCategory == null) {
-//			 throw new IllegalArgumentException("Can't retrieve value (part = null)");
-//		}
-//		for(CarOptionCategory p : this.carOptionCategories) if(carOptionCategory.getClass() == p.getClass()) return p.getValue();
-//		throw new IllegalArgumentException("invalid part");
-//	}
+	/**
+	 * get a given part value from the part
+	 * @param selectedCategory the selected category fe. Body
+	 * @return part value (String)
+	 */
+	public String getValueOfPart(String selectedCategory) {
+		if(selectedCategory == null) {
+			 throw new IllegalArgumentException("Can't retrieve value (part = null)");
+		}
+		if (!this.chosenOptions.containsKey(selectedCategory)) {
+			throw new IllegalArgumentException("invalid category");
+		}
+		return this.chosenOptions.get(selectedCategory);
+	}
 }

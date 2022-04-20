@@ -1,9 +1,12 @@
 package swop.UI;
 
+import swop.Car.CarModel;
 import swop.CarManufactoring.WorkStation;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Set;
 
 class DisplayStatus implements DocumentBuilder {
     int titlelength = 0;
@@ -35,6 +38,8 @@ class DisplayStatus implements DocumentBuilder {
         this.titlelength = str.length();
     }
 
+
+
     @Override
     public void inputInfo(String info) {
         println(info);
@@ -56,6 +61,11 @@ class DisplayStatus implements DocumentBuilder {
             print(String.format("%s %s: ", option, numberOptions(options)));
         }
     }
+
+    @Override
+    public void appendSubTitle(String subtitle) {
+        println("---" + subtitle + "---");
+    }
 }
 
 class CarMechGenerator {
@@ -68,4 +78,19 @@ class CarMechGenerator {
         builder.endInfo();
         builder.addOption("Select station", workStations.size());
     }
+}
+class GarageHolderGenerator{
+    void generateCarModels(DocumentBuilder builder, Set<CarModel> carModels) {
+        builder.appendTitle("Car Models");
+        Iterator<CarModel> it = carModels.iterator();
+        int i = 0;
+        while (it.hasNext()) {
+            builder.inputInfo(String.format("%s [%s]", it.next().getName(), i));
+            i++;
+        }
+        builder.endInfo();
+        builder.addOption("Select model", carModels.size());
+    }
+
+
 }

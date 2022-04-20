@@ -1,5 +1,6 @@
 package swop.UI;
 
+import swop.Car.CarModel;
 import swop.Car.CarOrder;
 import swop.Exceptions.CancelException;
 
@@ -54,14 +55,12 @@ public class GarageHolderUI implements UI {
 		return UI.indicateYesNo("place an order");
 	}
 
-	public static int indicateCarModel() throws CancelException {
-		System.out.printf("%n============ Car Models ============%n");
-		//TODO: fix
-		System.out.println("[0] car");
-		System.out.println("=======================================");
-		System.out.println();
-		System.out.printf("Which model would you like to order?%n");
-		return scanner.scanNextLineOfTypeInt(0,1); ///we kunnen ook hun de naam laten typen
+	public static int indicateCarModel(Set<CarModel> carModels) throws CancelException {
+		GarageHolderGenerator generator = new GarageHolderGenerator();
+		DisplayStatus builder = new DisplayStatus();
+		generator.generateCarModels(builder, carModels);
+		System.out.println(builder.getDisplay());
+		return scanner.scanNextLineOfTypeInt(0,carModels.size());
 	}
 
 	/**

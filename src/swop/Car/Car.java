@@ -70,20 +70,20 @@ public class Car {
 
 	/**
 	 * Returns the value of given part based on the model of this car.
-	 * @param carOptionCategory
+	 * @param category todo
 	 * @return value part
 	 */
-	public String getValueOfPart(CarOptionCategory carOptionCategory) {
+	public String getValueOfPart(String category) {
 		if (this.carModel == null) {
 			throw new IllegalArgumentException("The car has no carmodel");
 		}
-		return this.getCarModel().getCarModelSpecification().getValueOfPart(carOptionCategory);
+		return this.getCarModel().getCarModelSpecification().getValueOfPart(category);
 	}
 	public  Map<String, String> getPartsMap() {
 		if (this.carModel == null) {
 			throw new IllegalArgumentException("The car has no carmodel");
 		}
-		return this.getCarModel().getCarModelSpecification().getPartsMap();
+		return this.getCarModel().getCarModelSpecification().getAllParts();
 	}
 
 	public void setEstimatedCompletionTime(String time) { // TODO Remove

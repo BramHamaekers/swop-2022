@@ -1,12 +1,13 @@
 package swop.Car;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class CarModel {
     private CarModelSpecification carmodelSpecifation = null;
+    protected String name;
     protected Map<String, List<String>> validOptions;
     protected List<String> mandatoryParts;
+    public static final Set<CarModel> types = new HashSet<>(List.of(new ModelA(), new ModelB(), new ModelC())); //todo need to find better solution
 
     public void setCarModelSpecification(CarModelSpecification selected){
         if (!this.isValidSpecification(selected)){
@@ -54,5 +55,13 @@ public abstract class CarModel {
             return specification.getPart("Airco") == null || specification.getPart("Airco").equals("manual");
         }
         return true;
+    }
+
+//    public Set<CarModel> getTypes(){
+//        return this.types;
+//    }
+
+    public String getName() {
+        return name;
     }
 }

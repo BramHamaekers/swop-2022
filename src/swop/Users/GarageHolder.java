@@ -1,9 +1,6 @@
 package swop.Users;
 
-import swop.Car.CarModel;
-import swop.Car.CarModelSpecification;
-import swop.Car.CarOrder;
-import swop.Car.ModelA;
+import swop.Car.*;
 import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
 import swop.UI.GarageHolderUI;
@@ -45,7 +42,7 @@ public class GarageHolder extends User{
     private void generateOrder(AssemAssist assemAssist) {
         if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
         try {
-            int model = GarageHolderUI.indicateCarModel();
+            int model = GarageHolderUI.indicateCarModel(CarModel.types);
             CarModel carModel = createCarModel(model);
             GarageHolderUI.displayOrderingForm(carModel.getValidOptions());
             Map<String,Integer> carConfig = getFilledOrder(carModel.getValidOptions());
@@ -98,7 +95,12 @@ public class GarageHolder extends User{
 	 * @return created CarModel
 	 */
     private CarModel createCarModel(int choice) {
-            return new ModelA();
+            return switch (choice) {
+                case 0 -> new ModelA();
+                case 1 -> new ModelB();
+                case 2 -> new ModelC();
+                default -> throw new IllegalArgumentException("Unexpected value: " + choice);
+            };
         }
     
     /**
