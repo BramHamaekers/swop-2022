@@ -5,10 +5,11 @@ import swop.Database.RandomID;
 
 import java.util.Map;
 
-public class CarOrder implements Comparable<CarOrder>{
+public class CarOrder implements Comparable<CarOrder> {
 	private final Car car;
 	private final String ID;
-	
+	private String orderTime;
+
 	/**
 	 * Creates a new order based on given carModel
 	 * @param carModel ... TODO
@@ -48,8 +49,44 @@ public class CarOrder implements Comparable<CarOrder>{
 
 	@Override
 	public int compareTo(CarOrder carOrder) {
-		//TODO: fix compare
+		//TODO: fix compare!!!!!!!!!!!!!!!!!
 		return -1;
 //				Integer.compare(this.getCompletionTime(), carOrder.getCompletionTime());
+	}
+
+	/**
+	 * Set the time of Ordering to a new time
+	 * @param timeAsString the time of ordering as string
+	 */
+	public void setOrderTime(String timeAsString) {
+		// TODO maybe do this in garageholder
+		this.orderTime = timeAsString;
+	}
+
+	/**
+	 * Returns the time that this car was ordered at
+	 * @return this.orderTime
+	 */
+	public String getOrderTime() {
+		return this.orderTime;
+	}
+
+	@Override
+	public String toString() {
+		if (!isCompleted()) {
+			return String.format("specification: %s %n" +
+					"timestamp of ordering: %s" +
+					"Estimated Completion Time: %s",
+					this.getCar().getCarModel().getCarModelSpecification().getAllParts(),
+					this.getOrderTime(),
+					this.getCar().getEstimatedCompletionTime());
+		}
+		return String.format("specification: %s%n" +
+						"timestamp of ordering: %s%n" +
+						"Completion Time: %s",
+				this.getCar().getCarModel().getCarModelSpecification().getAllParts(),
+				this.getOrderTime(),
+				this.getCompletionTime());
+
 	}
 }

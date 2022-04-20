@@ -58,7 +58,7 @@ public class CarManufacturingController {
 		}
 
 		if (finishedCar != null) {
-			setFinishedcarDeliverytime(minutes, finishedCar);
+			setFinishedCarDeliveryTime(minutes, finishedCar);
 		}
 		//update schedular time
 		this.updateScheduleTime(minutes);
@@ -84,7 +84,7 @@ public class CarManufacturingController {
 	 * @param finishedCar the car to be finished
 	 * @throws IllegalStateException if the car is not completed
 	 */
-	private void setFinishedcarDeliverytime(int minutes, Car finishedCar) {
+	private void setFinishedCarDeliveryTime(int minutes, Car finishedCar) {
 		if (!finishedCar.isCompleted()){
 			throw new IllegalStateException("Car is not completed");
 		}
@@ -130,6 +130,7 @@ public class CarManufacturingController {
 		Car car = carOrder.getCar();
 		if(car == null) throw new IllegalArgumentException("car is null");
 		this.carQueue.add(car);
+		carOrder.setOrderTime(getScheduler().getTimeAsString());
 		car.setEstimatedCompletionTime(getScheduler().getEstimatedCompletionTime(car));
 		
 		

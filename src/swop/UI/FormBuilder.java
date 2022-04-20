@@ -1,6 +1,6 @@
 package swop.UI;
 
-interface DocumentBuilder {
+public interface FormBuilder {
     void appendTitle(String title);
     void inputInfo(String info);
     void endInfo();

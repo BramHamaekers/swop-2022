@@ -4,7 +4,7 @@ import swop.CarManufactoring.WorkStation;
 
 import java.util.*;
 
-class DisplayStatus implements DocumentBuilder {
+class DisplayStatus implements FormBuilder {
     int titlelength = 0;
     StringBuilder builder = new StringBuilder();
 
@@ -62,44 +62,3 @@ class DisplayStatus implements DocumentBuilder {
     }
 }
 
-class CarMechGenerator {
-    void generateMechanic(DocumentBuilder builder, List<WorkStation> workStations) {
-        builder.appendTitle("Current Stations");
-        ListIterator<WorkStation> w = workStations.listIterator();
-        while (w.hasNext()) {
-            builder.inputInfo(String.format("%s [%s]", w.next().getName(), (w.nextIndex()-1)));
-        }
-        builder.endInfo();
-        builder.addOption("Select station", workStations.size());
-    }
-}
-class GarageHolderGenerator{
-    void generateCarModels(DocumentBuilder builder, Set<String> carModels) {
-        builder.appendTitle("Car Models");
-        Iterator<String> it = carModels.iterator();
-        int i = 0;
-        while (it.hasNext()) {
-            builder.inputInfo(String.format("%s [%s]", it.next(), i));
-            i++;
-        }
-        builder.endInfo();
-        builder.addOption("Select model", carModels.size());
-    }
-    void generateOrderingForm(DocumentBuilder builder, Map<String, List<String>> optionsMap, String carModel){
-        builder.appendTitle("Ordering form");
-        builder.appendSubTitle(carModel);
-        for (Map.Entry<String, List<String>> entry : optionsMap.entrySet()) {
-            builder.inputInfo(String.format("%s: %s", entry.getKey(), optionListToString(entry.getValue())));
-        }
-        builder.endInfo();
-    }
-
-    String optionListToString(List<String> options){
-        StringBuilder builder = new StringBuilder();
-        ListIterator<String> it = options.listIterator();
-        while (it.hasNext()) {
-            builder.append(String.format("[%d] %s ",it.nextIndex(),it.next()));
-        }
-        return builder.toString();
-    }
-}

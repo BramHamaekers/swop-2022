@@ -5,6 +5,7 @@ import java.util.List;
 import swop.CarManufactoring.Task;
 import swop.CarManufactoring.WorkStation;
 import swop.Exceptions.CancelException;
+import swop.UI.Generators.CarMechanicGenerator;
 
 public class CarMechanicUI implements UI {
 	
@@ -21,7 +22,7 @@ public class CarMechanicUI implements UI {
 //				System.out.println(s + " [" + number + "] ");
 //			}
 //			System.out.println("=======================================");
-			CarMechGenerator generator = new CarMechGenerator();
+			CarMechanicGenerator generator = new CarMechanicGenerator();
 			DisplayStatus builder = new DisplayStatus();
 			generator.generateMechanic(builder, stations);
 			System.out.print(builder.getDisplay());

@@ -138,16 +138,32 @@ public class Scheduler {
     }
     
     /**
-     * Get amount of minutes that have already past in the day
-     * @return this.day
+     * Get amount of minutes that have already passed in the day
+     * @return this.minutes
      */
     public int getMinutes() {
-        return minutes;
+        return this.minutes;
     }
 
+	/**
+	 * Get amount of days that have already passed
+	 * @return this.day
+	 */
     public int getDay() {
         return this.day;
     }
+
+	/**
+	 * Get the current time in a string format
+	 * @return string of current time
+	 */
+	public String getTimeAsString() {
+		int hours = this.getMinutes() / 60;
+		hours += 6;
+		int minutes = this.getMinutes() % 60;
+
+		return String.format("day: %s, time: %02d:%02d%n", this.getDay(), hours, minutes);
+	}
 
     /**
      * advances day by 1 and calculates the length of next day
@@ -174,12 +190,12 @@ public class Scheduler {
 
     /**
      * set the current schedulingAlgorithm to the new given algorithms
-     * @param schedulingAlgorithm
+     * @param algorithm
      */
-    public void setSchedulingAlgorithm(String algo, String[] batchOptions) {
-		if(!algo.equals("FIFO") && !algo.equals("BATCH")) throw new IllegalArgumentException("Invalid Scheduling Algoritm");
-		this.algorithm = algo;
-		if(algo.equals("BATCH")) this.batchOptions = batchOptions;
+    public void setSchedulingAlgorithm(String algorithm, String[] batchOptions) {
+		if(!algorithm.equals("FIFO") && !algorithm.equals("BATCH")) throw new IllegalArgumentException("Invalid Scheduling Algoritm");
+		this.algorithm = algorithm;
+		if(algorithm.equals("BATCH")) this.batchOptions = batchOptions;
 	}
 
     /**

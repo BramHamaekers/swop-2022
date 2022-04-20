@@ -9,7 +9,7 @@ public abstract class CarModel {
     protected String name;
     protected Map<String, List<String>> validOptions;
     protected List<String> mandatoryParts;
-    public static final Set<String> types = new HashSet<>(List.of("ModelA", "ModelB", "ModelC"));
+    public static final SortedSet<String> types = new TreeSet<>(List.of("ModelA", "ModelB", "ModelC"));
 
     public void setCarModelSpecification(CarModelSpecification selected){
         if (!this.isValidSpecification(selected)){

@@ -1,5 +1,6 @@
 package swop.Users;
 
+import org.jetbrains.annotations.NotNull;
 import swop.Car.*;
 import swop.Car.CarModel.CarModel;
 import swop.Car.CarModel.ModelA;
@@ -12,7 +13,7 @@ import swop.UI.GarageHolderUI;
 import java.util.*;
 
 public class GarageHolder extends User{
-    private Set<CarOrder> carOrders;
+    private final Set<CarOrder> carOrders;
 
     public GarageHolder(String id) {
         super(id);
@@ -29,16 +30,68 @@ public class GarageHolder extends User{
         try {
     		GarageHolderUI.init(this.getId());
     		GarageHolderUI.displayOrders(this.getOrders());
-            String action = GarageHolderUI.indicatePlaceOrder();
-			if (Objects.equals(action, "n")) return;
-
-            this.generateOrder(assemAssist);
-
+            this.selectAction(assemAssist);
         } catch (CancelException e) {
 			e.printMessage();
 			}
     }
-    
+
+    /**
+     * Function that handles selecting an action for GarageHolder
+     * @param assemAssist the central system the action is performed on
+     * @throws CancelException when the user indicates it wants to cancel
+     */
+    public void selectAction(AssemAssist assemAssist) throws CancelException {
+        List<String> actions = Arrays.asList("Place new order", "Check order details", "Exit");
+        int action = GarageHolderUI.selectAction(actions);
+
+        switch (action) {
+            case 0 -> this.generateOrder(assemAssist);
+            case 1 -> this.checkOrderDetails();
+            case 2 -> {
+                return;
+            }
+            default -> throw new IllegalArgumentException("Unexpected value: " + action);
+        };
+    }
+
+    private void checkOrderDetails() throws CancelException {
+        String orderID =  GarageHolderUI.selectOrderID();
+        while (!isValidOrderID(orderID)) {
+            GarageHolderUI.printError("Please provide a valid orderID");
+            orderID =  GarageHolderUI.selectOrderID();
+        }
+        CarOrder carOrder = getOrderFromID(orderID);
+
+        //TODO: use garaholderUI
+        System.out.println(carOrder.toString());
+
+        String answer = GarageHolderUI.indicateYesNo("Would you like to view another order?");
+        if (answer.equals("y")) checkOrderDetails();
+
+
+    }
+
+    /**
+     * Returns a carOrder from this user given its orderID
+     * @param orderID the given orderID
+     * @return the CarOrder with the orderID
+     */
+    private CarOrder getOrderFromID(String orderID) {
+        return this.getOrders().stream()
+                .filter(o -> o.getID().equalsIgnoreCase(orderID))
+                .findFirst().orElse(null);
+    }
+
+    /**
+     * Checks whether the given orderID is a valid ID
+     * @param orderID the given orderID
+     * @return whether the orderID is valid
+     */
+    private boolean isValidOrderID(String orderID) {
+        return this.getOrders().stream().anyMatch(o -> o.getID().equalsIgnoreCase(orderID));
+    }
+
     /**
      * Will handle all the steps for generating a new valid order.
      * @param assemAssist assemAssist given the main program
