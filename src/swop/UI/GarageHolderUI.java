@@ -55,7 +55,7 @@ public class GarageHolderUI implements UI {
 		return UI.indicateYesNo("place an order");
 	}
 
-	public static int indicateCarModel(Set<CarModel> carModels) throws CancelException {
+	public static int indicateCarModel(Set<String> carModels) throws CancelException {
 		GarageHolderGenerator generator = new GarageHolderGenerator();
 		DisplayStatus builder = new DisplayStatus();
 		generator.generateCarModels(builder, carModels);
