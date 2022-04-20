@@ -12,4 +12,9 @@ interface UI {
 		System.out.printf("Do you want to %s? %n[y] Yes [n] No%n", action);
 		return scanner.scanNextLineOfTypeString(new String[]{"y","n"});
 	}
+
+	static void printError(String e) {
+		System.out.println();
+		System.out.println(e);
+	}
 }

@@ -1,6 +1,5 @@
 package swop.UI;
 
-import swop.Car.CarModel;
 import swop.CarManufactoring.WorkStation;
 
 import java.util.Iterator;

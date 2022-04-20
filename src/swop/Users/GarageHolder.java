@@ -1,6 +1,10 @@
 package swop.Users;
 
 import swop.Car.*;
+import swop.Car.CarModel.CarModel;
+import swop.Car.CarModel.ModelA;
+import swop.Car.CarModel.ModelB;
+import swop.Car.CarModel.ModelC;
 import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
 import swop.UI.GarageHolderUI;
@@ -42,20 +46,43 @@ public class GarageHolder extends User{
     private void generateOrder(AssemAssist assemAssist) {
         if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
         try {
+            // Select Model
             int model = GarageHolderUI.indicateCarModel(CarModel.types);
             CarModel carModel = createCarModel(model);
-            GarageHolderUI.displayOrderingForm(carModel.getValidOptions());
-            Map<String,Integer> carConfig = getFilledOrder(carModel.getValidOptions());
-            Map<String, String> carOptions = this.mapConfigToOptions(carConfig, carModel.getValidOptions());
-            CarModelSpecification spec = new CarModelSpecification(carOptions);
-            carModel.setCarModelSpecification(spec);
+
+            // Ordering From
+            this.fillOrderingForm(carModel);
+
+            // Create & Place Order
 			CarOrder order = this.placeOrder(assemAssist, carModel);
             GarageHolderUI.displayEstimatedTime(order);
     	} catch (CancelException e) {
     		e.printMessage();
 		}
 	}
-    
+
+    /**
+     * Acces the GarageHolderUI to fill in the ordering form and create a carModel
+     * @param carModel
+     * @throws CancelException
+     */
+    private void fillOrderingForm(CarModel carModel) throws CancelException {
+        while(true) {
+            GarageHolderUI.displayOrderingForm(carModel.getValidOptions());
+            Map<String,Integer> carConfig = getFilledOrder(carModel.getValidOptions());
+            Map<String, String> carOptions = this.mapConfigToOptions(carConfig, carModel.getValidOptions());
+
+            try {
+                CarModelSpecification spec = new CarModelSpecification(carOptions);
+                carModel.setCarModelSpecification(spec);
+                break;
+            }
+            catch (IllegalArgumentException e){
+                GarageHolderUI.printError(e.getMessage());
+            }
+        }
+    }
+
     /**
      * Will return a map with options of car chosen by user.
      * @return carConfig as a map from part to integer
@@ -83,7 +110,7 @@ public class GarageHolder extends User{
 
         for (String component: carConfig.keySet()) {
             String option = validOptions.get(component).get(carConfig.get(component));
-            carOpts.put(component, option);
+            if (!option.equals("None")) carOpts.put(component, option);
         }
 
         return carOpts;

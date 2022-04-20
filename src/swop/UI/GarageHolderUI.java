@@ -1,6 +1,5 @@
 package swop.UI;
 
-import swop.Car.CarModel;
 import swop.Car.CarOrder;
 import swop.Exceptions.CancelException;
 
@@ -12,6 +11,10 @@ public class GarageHolderUI implements UI {
 	// Dummy init
 	public static void init(String id) {
 		System.out.println("Welcome Garage Holder: " + id + " (You can cancel any action by typing: CANCEL)");
+	}
+
+	public static void printError(String e) {
+		UI.printError(e);
 	}
 
 	/**

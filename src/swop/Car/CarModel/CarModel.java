@@ -1,9 +1,10 @@
-package swop.Car;
+package swop.Car.CarModel;
 
+import swop.Car.CarModelSpecification;
 import java.util.*;
 
 public abstract class CarModel {
-    private CarModelSpecification carmodelSpecifation = null;
+    private CarModelSpecification carModelSpecification = null;
     //todo check if still necessary
     protected String name;
     protected Map<String, List<String>> validOptions;
@@ -12,13 +13,13 @@ public abstract class CarModel {
 
     public void setCarModelSpecification(CarModelSpecification selected){
         if (!this.isValidSpecification(selected)){
-            throw new IllegalArgumentException("invalid car specification");
+            throw new IllegalArgumentException("invalid car specification for this model");
         }
-        this.carmodelSpecifation = selected;
+        this.carModelSpecification = selected;
     };
 
     public CarModelSpecification getCarModelSpecification() {
-        return this.carmodelSpecifation;
+        return this.carModelSpecification;
     }
 
     public Map<String, List<String>> getValidOptions(){
@@ -46,21 +47,8 @@ public abstract class CarModel {
             if (!specification.getAllParts().containsKey(part))
                 return false;
         }
-        if (specification.getPart("Body").equals("sport")){
-            if (specification.getPart("Spoiler") == null)
-                return false;
-            return specification.getPart("Eninge").contains("performance") ||
-                    specification.getPart("Eninge").contains("ultra");
-        }
-        if (specification.getPart("Engine").contains("ultra")){
-            return specification.getPart("Airco") == null || specification.getPart("Airco").equals("manual");
-        }
         return true;
     }
-
-//    public Set<CarModel> getTypes(){
-//        return this.types;
-//    }
 
     public String getName() {
         return name;

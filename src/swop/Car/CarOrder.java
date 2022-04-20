@@ -1,5 +1,6 @@
 package swop.Car;
 
+import swop.Car.CarModel.CarModel;
 import swop.Database.RandomID;
 
 import java.util.Map;

@@ -10,9 +10,58 @@ public class CarModelSpecification {
 	
 	Map<String, String> chosenOptions;
 
-	public CarModelSpecification(Map<String, String> parts){
-		// todo: check for airco etc
-		this.chosenOptions = parts;
+	public CarModelSpecification(Map<String, String> chosenOptions){
+		checkConstraints(chosenOptions);
+		this.chosenOptions = chosenOptions;
+	}
+
+	/**
+	 * Check if given chosenOptions map is valid for a CarModelSpecification
+	 * @param chosenOptions chosen options
+	 */
+	private void checkConstraints(Map<String, String> chosenOptions) {
+		if (!this.isValidBodySpoilerCombination(chosenOptions.get("Body"), chosenOptions.get("Spoiler"))) {
+			throw new IllegalArgumentException("Spoiler is mandatory when choosing a sport body");
+		}
+		if (!this.isValidBodyEngineCombination(chosenOptions.get("Body"), chosenOptions.get("Engine"))) {
+			throw new IllegalArgumentException("Engine must be performance or ultra when choosing a sport body");
+		}
+		if (!this.isValidEngineAirco(chosenOptions.get("Engine"), chosenOptions.get("Airco"))) {
+			throw new IllegalArgumentException("Airco must be manual or none if you select the ultra engine");
+		}
+	}
+
+	/**
+	 * If you select the ultra engine, you can only fit the manual airco into your car (or none)
+	 * @param engine chosen engine
+	 * @param airco chosen airco
+	 * @return whether the engine & airco combination is valid
+	 */
+	private boolean isValidEngineAirco(String engine, String airco) {
+		if (engine.contains("ultra")) return airco == null || airco.equals("manual");
+		return true;
+	}
+
+	/**
+	 * If you select a sport body, you must also select the performance or ultra engine
+	 * @param body chosen body
+	 * @param engine chosen spoiler
+	 * @return whether the body & engine combination is valid
+	 */
+	private boolean isValidBodyEngineCombination(String body, String engine) {
+		if (body.equals("sport")) return engine.contains("performance") || engine.contains("ultra");
+		return true;
+	}
+
+	/**
+	 * If you select a sport body, a spoiler is mandatory
+	 * @param body chosen body
+	 * @param spoiler chosen spoiler
+	 * @return whether the body & spoiler combination is valid
+	 */
+	private boolean isValidBodySpoilerCombination(String body, String spoiler) {
+		if (body.equals("sport")) return spoiler != null;
+		return true;
 	}
 
 	public Map<String, String> getAllParts(){
@@ -24,48 +73,11 @@ public class CarModelSpecification {
 	public String getPart(String key){
 		return this.chosenOptions.get(key);
 	}
-	
-//	/**
-//	 * create a new car model given the parts and model choice.
-//	 * @param model the model of car
-//	 * @param parts the selected parts
-//	 */
-//	 public CarModelSpecification(int model, Map<String, String> parts) {
-//		 if (parts.size() != 7) throw new IllegalArgumentException("The car model does not have the right amount of parts");
-//	        for(var part : parts.entrySet()) {
-//	        	this.carOptionCategories.add(this.createPart(part));
-//	        }
-////	     if(!containAllPartsOfModel())throw new IllegalArgumentException("Invalid parts");
-//	 }
-//
-//	/**
-//	 * create a new part from a given description of a part
-//	 * @param part Description of a part
-//	 * @return new Part
-//	 */
-//	private CarOptionCategory createPart(Entry<String, String> part) {
-//		if (part == null) throw new IllegalArgumentException("part is null");
-//		return switch (part.getKey().toLowerCase()) {
-//			case "body" -> new Body(part.getValue());
-//			case "color" -> new Color(part.getValue());
-//			case "engine" -> new Engine(part.getValue());
-//			case "gearbox" -> new GearBox(part.getValue());
-//			case "seats" -> new Seats(part.getValue());
-//			case "airco" -> new Airco(part.getValue());
-//			case "wheels" -> new Wheels(part.getValue());
-//			default ->  throw new IllegalArgumentException("invalid part");
-//		};
-//	}
-//
-//	public List<CarOptionCategory> getParts() {
-//		return this.carOptionCategories;
-//	}
+
 	public Map<String, String> getPartsMap() {
-//		Map<String, String> map = new HashMap<>();
-//		for(CarOptionCategory carOptionCategory : carOptionCategories) map.put(carOptionCategory.getName(), carOptionCategory.getValue());
 		return this.getAllParts();
 	}
-//
+
 	/**
 	 * get a given part value from the part
 	 * @param selectedCategory the selected category fe. Body

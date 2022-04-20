@@ -2,8 +2,8 @@ package swop.Car;
 
 import java.util.*;
 
+import swop.Car.CarModel.CarModel;
 import swop.CarManufactoring.Task;
-import swop.Parts.CarOptionCategory;
 
 public class Car {
 	private Set<Task> uncompletedTasks;
