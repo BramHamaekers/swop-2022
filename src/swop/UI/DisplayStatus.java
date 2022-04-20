@@ -80,12 +80,12 @@ class CarMechGenerator {
     }
 }
 class GarageHolderGenerator{
-    void generateCarModels(DocumentBuilder builder, Set<CarModel> carModels) {
+    void generateCarModels(DocumentBuilder builder, Set<String> carModels) {
         builder.appendTitle("Car Models");
-        Iterator<CarModel> it = carModels.iterator();
+        Iterator<String> it = carModels.iterator();
         int i = 0;
         while (it.hasNext()) {
-            builder.inputInfo(String.format("%s [%s]", it.next().getName(), i));
+            builder.inputInfo(String.format("%s [%s]", it.next(), i));
             i++;
         }
         builder.endInfo();

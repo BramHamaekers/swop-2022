@@ -4,10 +4,11 @@ import java.util.*;
 
 public abstract class CarModel {
     private CarModelSpecification carmodelSpecifation = null;
+    //todo check if still necessary
     protected String name;
     protected Map<String, List<String>> validOptions;
     protected List<String> mandatoryParts;
-    public static final Set<CarModel> types = new HashSet<>(List.of(new ModelA(), new ModelB(), new ModelC())); //todo need to find better solution
+    public static final Set<String> types = new HashSet<>(List.of("ModelA", "ModelB", "ModelC"));
 
     public void setCarModelSpecification(CarModelSpecification selected){
         if (!this.isValidSpecification(selected)){
