@@ -1,4 +1,4 @@
-package swop.CarManufactoring;
+package swop.CarModel;
 
 import swop.Parts.*;
 

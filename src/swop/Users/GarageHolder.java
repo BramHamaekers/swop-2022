@@ -1,6 +1,6 @@
 package swop.Users;
-import swop.CarManufactoring.CarModel;
 import swop.CarManufactoring.CarOrder;
+import swop.CarModel.CarModel;
 import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
 import swop.UI.GarageHolderUI;

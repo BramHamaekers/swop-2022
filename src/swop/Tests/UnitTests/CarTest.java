@@ -2,6 +2,7 @@ package swop.Tests.UnitTests;
 
 import org.junit.jupiter.api.Test;
 import swop.CarManufactoring.*;
+import swop.CarModel.CarModel;
 import swop.Exceptions.NotAllTasksCompleteException;
 import swop.Parts.Airco;
 

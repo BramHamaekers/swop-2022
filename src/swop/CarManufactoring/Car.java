@@ -2,6 +2,7 @@ package swop.CarManufactoring;
 
 import java.util.*;
 
+import swop.CarModel.CarModel;
 import swop.Parts.Part;
 
 public class Car {
