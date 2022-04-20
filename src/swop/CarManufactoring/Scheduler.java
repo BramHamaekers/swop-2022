@@ -95,22 +95,22 @@ public class Scheduler {
      * @return
      */
     private int calculateWaitingTime(Car car,List<Car> workstationCars) {
-    	Car before1 = workstationCars.get(0);
-    	Car before2 = workstationCars.get(1);
-    	Car before3 = workstationCars.get(2);
-   
-    	Car current = this.getNextScheduledCar();
+    	Car station1Car = workstationCars.get(0);
+    	Car station2Car = workstationCars.get(1);
+    	Car station3Car = workstationCars.get(2);
+
     	costumIterator<Car> iter = this.iterator(this.controller.getCarQueue());
+		Car current = iter.next(this.algorithm);
     	
     	int time = 0;
-    	while(before3 == null || !before3.equals(car)) {
-    		before3 = before2;
-    		before2 = before1;
-    		before1 = current;
+    	while(station3Car == null || !station3Car.equals(car)) {
+			station3Car = station2Car;
+			station2Car = station1Car;
+			station1Car = current;
     		current = iter.next(this.algorithm);
-    		time += this.getMax(Arrays.asList(before1, before2, before3));
+    		time += this.getMax(Arrays.asList(station1Car, station2Car, station3Car));
     	}
-    	
+
     	return time;
     }
     
