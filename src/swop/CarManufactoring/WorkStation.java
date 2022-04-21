@@ -24,7 +24,7 @@ public class WorkStation {
 
 	/**
 	 * checks if workstation contains this task
-	 * @param task
+	 * @param task the task to check
 	 * @return true if contains(task)
 	 */
 	public boolean containsTask(Task task) {
@@ -38,11 +38,23 @@ public class WorkStation {
 	 */
 	public Set<Task> getUncompletedTasks() {
 		if(this.getCar() == null) {
-			System.out.println("There are no Tasks (No car in work station)");
 			return null;
 		}
 		Set<Task> tasks = this.getTasks();
 		tasks.retainAll(this.getCar().getUncompletedTasks()); 
+		return tasks;
+	}
+
+	/**
+	 * Returns a set of uncompleted tasks
+	 * @return Set<Task>
+	 */
+	public Set<Task> getCompletedTasks() {
+		if(this.getCar() == null) {
+			return null;
+		}
+		Set<Task> tasks = this.getTasks();
+		tasks.removeAll(this.getCar().getUncompletedTasks());
 		return tasks;
 	}
 
@@ -87,7 +99,7 @@ public class WorkStation {
 	
 	/**
 	 * Tries to get value of a part
-	 * @param carOptionCategory
+	 * @param category
 	 * @throws IllegalArgumentException if car == null || part == null
 	 */
 	public String getValueOfPart(String category) {

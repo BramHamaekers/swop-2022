@@ -42,7 +42,7 @@ public class CarMechanic extends User{
 
 		switch (action) {
 			case 0 -> this.performAssemblyTask(assemAssist);
-			case 1 -> this.checkAssemblyLineStatus();
+			case 1 -> this.checkAssemblyLineStatus(assemAssist);
 			case 2 -> {
 				// Do Nothing
 			}
@@ -50,8 +50,18 @@ public class CarMechanic extends User{
 		}
 	}
 
-	private void checkAssemblyLineStatus() {
+	private void checkAssemblyLineStatus(AssemAssist assemAssist) {
 		System.out.println("check Assembly Line Status NOT YET IMPLEMENTED!");
+
+		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
+		List<String> workStationsNames = assemAssist.getStationsNames();
+		List<WorkStation> workStations = assemAssist.getStations();
+
+		workStations.forEach(station -> {
+			Set<Task> pendingTasks = station.getUncompletedTasks();
+			Set<Task> finishedTasks = station.getCompletedTasks();
+			CarMechanicUI.displayStationStatus(station, pendingTasks, finishedTasks);
+		});
 	}
 
 	/**
@@ -71,6 +81,10 @@ public class CarMechanic extends User{
 			this.showInfo(assemAssist, task);
 			this.completeTask(assemAssist, task);
 			this.performAssemblyTask(assemAssist);
+		}
+		else {
+			// TODO placeholder
+			System.out.println("No tasks need to be completed!");
 		}
 	}
 

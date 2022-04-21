@@ -1,6 +1,7 @@
 package swop.UI;
 
 import java.util.List;
+import java.util.Set;
 
 import swop.CarManufactoring.Task;
 import swop.CarManufactoring.WorkStation;
@@ -55,6 +56,11 @@ public class CarMechanicUI implements UI {
 			System.out.println("----------------------------------");
 			System.out.println("Press enter when you are finished");
 			scanner.scanNextLineOfTypeString();
+		}
 
+		public static void displayStationStatus(WorkStation workStation, Set<Task> pendingTasks, Set<Task> completedTask) {
+			DisplayStatus builder = new DisplayStatus();
+			carMechanicGenerator.generateWorkStationStatus(builder, workStation.getName(), pendingTasks, completedTask);
+			System.out.print(builder.getDisplay());
 		}
 }
