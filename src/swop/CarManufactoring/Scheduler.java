@@ -36,10 +36,10 @@ public class Scheduler {
     private int minutes;
     private int day;
     private int workingDayMinutes;
-    private Map<String, Integer> timePerWorkstationMap = new HashMap<String, Integer>(){{
-		put( "a",50);
-		put( "b",70);
-		put( "c",60);
+    private final Map<String, Integer> timePerWorkstationMap = new HashMap<>(){{
+		put( "ModelA",50);
+		put( "ModelB",70);
+		put( "ModelC",60);
 	}};
 	private String algorithm = "FIFO";
 	private String[] batchOptions;

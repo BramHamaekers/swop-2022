@@ -59,7 +59,7 @@ public class Car {
 
 	//TODO this is a placeholder function untill the different models are implemented
 	public String getCarModelName() {
-		return "c";
+		return this.carModel.getName();
 	}
 	
 	public void setCarModel(CarModel carModel) {
