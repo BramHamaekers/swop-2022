@@ -4,6 +4,7 @@ import swop.Car.Car;
 import swop.Exceptions.NotAllTasksCompleteException;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class AssemblyLine {
 
@@ -24,19 +25,12 @@ public class AssemblyLine {
 		checkAdvance();
 		Car completedCar = this.workStations.getLast().getCar();
 		//updating completion time of finished car
-		//TODO add methed to schedular to get current time?
-		//TODO this way of setting completion time is wrong
 			// Move all cars on assembly by 1 position
 		for (int i = this.workStations.size() - 1; i > 0; i--) {
 			Car previous = this.workStations.get(i-1).getCar();
 			this.workStations.get(i).setCar(previous);
-//			if (previous!= null)
-//				previous.setDeliveryTime(previous.getDeliveryTime()+minutes);
 		}
 		this.workStations.getFirst().setCar(car);
-//		if (car != null)
-//			car.setDeliveryTime(minutes);
-//		completedCar.setDeliveryTime(completedCar.getDeliveryTime()+minutes);
 		return completedCar;
 	}
 
@@ -60,8 +54,6 @@ public class AssemblyLine {
 		return this.workStations.stream().allMatch(e -> e.stationTasksCompleted());
 
 	}
-	
-	/////////////////////////// Functions used 2 get data for manager use case //////////////////////////////
 	
 	/**
 	 * returns for all works stations current state. 
@@ -88,7 +80,6 @@ public class AssemblyLine {
 	 * @param car a given
 	 * @return list of states from each work station if an advance would take place
 	 */
-
 	public List<String> getAdvancedStatus(Car car) { 
 		List<String> status = new LinkedList<>();
 		for(int i = 0; i < workStations.size(); i++){
@@ -107,8 +98,6 @@ public class AssemblyLine {
 		}
 		return status;
 	}
-	
-	/////////////////////////////// Functions used Car Mechanic use case ////////////////////////////////
 
 	/**
 	 * returns list with all workstations
@@ -150,5 +139,19 @@ public class AssemblyLine {
 	public boolean isEmptyAssemblyLine() {
 		return this.getWorkStations().stream().allMatch(s -> s.getCar() == null);
 	}
+
+	/**
+	 * Function returns all unFinishedCars on the assemblyLine
+	 * @return all unFinishedCars on the assemblyLine
+	 */
+	public List<Car> getUnfinishedCars() {
+		List<WorkStation> unFinishedStations = this.getWorkStations().stream()
+				.filter(w -> !w.stationTasksCompleted()).toList();
+		return unFinishedStations.stream()
+				.map(WorkStation::getCar)
+				.collect(Collectors.toList());
+	}
 }
+
+
 
