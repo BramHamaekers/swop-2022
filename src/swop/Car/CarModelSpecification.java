@@ -92,4 +92,15 @@ public class CarModelSpecification {
 		}
 		return this.chosenOptions.get(selectedCategory);
 	}
+	
+	/**
+	 * Checks if a part is chosen or not
+	 * @param part
+	 * @return
+	 */
+	public boolean isPartinChosenOptions(String part) {
+		if(part == null) throw new IllegalArgumentException("Can't retrieve value (part = null)");
+		if(this.chosenOptions.containsKey(part)) return true;
+		return false;
+	}
 }

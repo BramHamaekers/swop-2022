@@ -67,14 +67,14 @@ public class WorkStation {
 	}
 
 	/**
-	 * returns the tasks that current workstation should forfill.
+	 * returns the tasks that are part of this workstation
 	 * @return tasks of workstation
 	 */
 	public Set<Task> getTasks() {
 		return switch (this.getName()) {
 			case "Car Body Post" -> new LinkedHashSet<>(Arrays.asList(Task.AssemblyCarBody, Task.PaintCar));
 			case "Drivetrain Post" -> new LinkedHashSet<>(Arrays.asList(Task.InsertEngine, Task.InstallGearbox));
-			case "Accessories Post" -> new LinkedHashSet<>(Arrays.asList(Task.InstallSeats, Task.InstallAirco, Task.MountWheels));
+			case "Accessories Post" -> new LinkedHashSet<>(Arrays.asList(Task.InstallSeats, Task.InstallAirco, Task.MountWheels, Task.InstallSpoiler));
 			default -> throw new IllegalArgumentException("No tasks could be given: Invalid name Workstation");
 		};
 	}
@@ -95,6 +95,15 @@ public class WorkStation {
 
 	public void setCar(Car car) {
 		this.car = car;
+	}
+	
+	/**
+	 * Checks if the part is chosen off the current car in workstation. (defined in the chosenOptions)
+	 */
+	public boolean isPartOfCurrentCarInWorkStation(String part) {
+		Car car = this.getCar();
+		if(car == null) return false;
+		return car.getCarModel().getCarModelSpecification().isPartinChosenOptions(part);
 	}
 	
 	/**

@@ -157,7 +157,7 @@ public class AssemAssist {
 		return this.getAssemblyLine().getUncompletedTasks(string);
 	}
 	
-	public String getTaskDescription(Task task) {
+	public List<String> getTaskDescription(Task task) {
 		return task.getTaskDescription();
 	}
 }

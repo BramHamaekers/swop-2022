@@ -17,7 +17,7 @@ public enum Task {
 		put( "Engine", "Insert engine of type: ");
 	}},"Insert Engine"), 
 	InstallGearbox(new HashMap<>(){{
-		put( "GearBox", "Insert gearbox of type: ");
+		put( "Gearbox", "Insert gearbox of type: ");
 	}},"Install Gearbox"), 
 	InstallSeats(new HashMap<>(){{
 		put( "Seats", "Install seats of type: ");
@@ -25,6 +25,9 @@ public enum Task {
 	InstallAirco(new HashMap<>(){{
 		put( "Airco", "Install airco of type: ");
 	}},"Install Airco"), 
+	InstallSpoiler(new HashMap<>(){{
+		put( "Spoiler", "Install spoiler of type: ");
+	}},"Install Spoiler"), 
 	MountWheels(new HashMap<>(){{
 		put( "Wheels", "Mount wheels of type: ");
 	}},"Mount Wheels");
@@ -75,20 +78,40 @@ public enum Task {
 	 * Get the description of the given task
 	 * @return The description of the given Task consisting of the different parts
 	 */
-	public String getTaskDescription() {
-		String value = "Empty";
-		for(String category : this.getParts()) {
-			value = this.getDescription(category) + this.getWorkStation().getValueOfPart(category); //als er meerdere parts bij een task horen geef je maar een array van strings terug
+	public List<String> getTaskDescription() {
+		List<String> taskExplenations = new LinkedList<>();;
+		//retrieve all parts that are part of this task
+		for(String part : this.getParts()) {
+			if (this.getWorkStation().isPartOfCurrentCarInWorkStation(part)) 
+				taskExplenations.add(this.getDescription(part) + this.getWorkStation().getValueOfPart(part)); 
 		}
-		return value;
+		return taskExplenations;
 		
 	}
 	
 	/**
-	 * Return Set<Task> of all the tasks 
+	 * Return Set<Task> of all the tasks based on the chosen options
+	 * @param chosenOptions: the chosen options of a car
 	 * @return A set of tasks
 	 */
-	public static Set<Task> getAllTasks() {
+	public static Set<Task> getAllTasks(Map<String, String> chosenOptions) {
+		Set<String> chosenParts = chosenOptions.keySet();
+		Set<Task> alltasks = getAllTasks();
+		Set<Task> tasks = new HashSet<>();
+		//filter the tasks based on what parts are chosen
+		for(Task task: alltasks) {
+			List<String> parts = task.getParts();
+			parts.retainAll(chosenParts);
+			if(!parts.isEmpty()) tasks.add(task);
+		}
+		return tasks;
+	}
+	
+	/**
+	 * Return Set<Task> of all the tasks
+	 * @return A set of tasks
+	 */
+	private static Set<Task> getAllTasks() {
 		Set<Task> tasks = new HashSet<>();
 		tasks.add(InsertEngine);
 		tasks.add(InstallAirco);
@@ -97,6 +120,7 @@ public enum Task {
 		tasks.add(PaintCar);
 		tasks.add(AssemblyCarBody);
 		tasks.add(MountWheels);
+		tasks.add(InstallSpoiler);
 		return tasks;
 	}
 

@@ -50,9 +50,9 @@ public class CarMechanicUI implements UI {
 			
 		}
 
-		public static void displayTaskInfo(String info) throws CancelException {
+		public static void displayTaskInfo(List<String> info) throws CancelException {
 			System.out.println("-----------Info For Task----------");
-			System.out.println(info);
+			for(String part:info) System.out.println(part);
 			System.out.println("----------------------------------");
 			System.out.println("Press enter when you are finished");
 			scanner.scanNextLineOfTypeString();

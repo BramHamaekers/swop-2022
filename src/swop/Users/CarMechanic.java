@@ -109,7 +109,7 @@ public class CarMechanic extends User{
 	private void showInfo(AssemAssist assemAssist, Task task) throws CancelException {
 		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
 		if (task == null) throw new IllegalArgumentException("task is null");
-		String info = assemAssist.getTaskDescription(task);
+		List<String> info = assemAssist.getTaskDescription(task);
 		CarMechanicUI.displayTaskInfo(info);
 	}
 
