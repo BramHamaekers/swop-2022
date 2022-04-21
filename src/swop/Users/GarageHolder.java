@@ -1,6 +1,5 @@
 package swop.Users;
 
-import org.jetbrains.annotations.NotNull;
 import swop.Car.*;
 import swop.Car.CarModel.CarModel;
 import swop.Car.CarModel.ModelA;

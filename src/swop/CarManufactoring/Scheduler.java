@@ -1,5 +1,6 @@
 package swop.CarManufactoring;
 
+import org.jetbrains.annotations.NotNull;
 import swop.Car.Car;
 
 import java.util.Arrays;
@@ -62,16 +63,14 @@ public class Scheduler {
     	  int day = this.day;
           int minutes = this.minutes;
           int workingDayMinutes = this.workingDayMinutes;
-          List<Car> workstationCars = new LinkedList<Car>(Arrays.asList(this.controller.getAssembly().getWorkStations().get(0).getCar()
-        		  , this.controller.getAssembly().getWorkStations().get(1).getCar()
-        		  , this.controller.getAssembly().getWorkStations().get(2).getCar()));
+          List<Car> workstationCars = this.getWorkStationCars();
      
     
           minutes += this.calculateWaitingTime(car,  workstationCars);
 
           // assume no overtime should be made: assignment -> scheduler should minimize overtime
           // scheduling a car to make overtime to complete should not be allowed
-          while (minutes > workingDayMinutes) {
+          while (minutes > workingDayMinutes & !this.carOnAssembly(car)) {
               day += 1;
               minutes -= workingDayMinutes;
               workingDayMinutes = 960;
@@ -89,8 +88,17 @@ public class Scheduler {
 
           return String.format("day: %s, time: %02d:%02d%n", day, hours, minutes);
     }
-    
-    /**
+
+	/**
+	 * @param car the car to check if it is on the assemblyLine
+	 * @return True if the given car is on the assemblyLine.
+	 */
+	private boolean carOnAssembly(Car car) {
+		List<Car> workstationCars = this.getWorkStationCars();
+		return workstationCars.contains(car);
+	}
+
+	/**
      * Returns how long it will take for the car to be finished
      * @return
      */
@@ -175,12 +183,33 @@ public class Scheduler {
         this.minutes = 0; // Reset amount of minutes that have past this day
     }
 
-    //TODO this function needs to be rewritten.
-    public boolean canAddCarToAssemblyLine() {
-        return this.minutes <= this.workingDayMinutes - 3 * 60;
+	/**
+	 * Function checks if there is enough time left in a working day to complete the next car.
+	 * @return this.minutes <= this.workingDayMinutes - estTime
+	 */
+	public boolean canAddCarToAssemblyLine() {
+		Car nextCar = this.getNextScheduledCar();
+		List<Car> workstationCars = getWorkStationCars();
+		Car car1 = workstationCars.get(0);
+		Car car2 = workstationCars.get(1);
+		int estTime = this.getMax(Arrays.asList(nextCar, car1, car2))
+				+ this.getMax(Arrays.asList(nextCar, car1))
+				+ this.getMax(Arrays.asList(nextCar));
+        return this.minutes <= this.workingDayMinutes - estTime;
     }
 
-    /**
+	/**
+	 * Function gets all the cars that are currently at workstation position of the assembly line
+	 * @return list of cars at workstations
+	 */
+	private List<Car> getWorkStationCars() {
+		List<Car> workstationCars = new LinkedList<>(Arrays.asList(this.controller.getAssembly().getWorkStations().get(0).getCar()
+				, this.controller.getAssembly().getWorkStations().get(1).getCar()
+				, this.controller.getAssembly().getWorkStations().get(2).getCar()));
+		return workstationCars;
+	}
+
+	/**
      * Returns the current schedulingAlgorithm
      * @return this.schedulingAlgorithm
      */
