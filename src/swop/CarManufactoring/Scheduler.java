@@ -22,7 +22,6 @@ interface costumIterator<T> {
 	 * @param l
 	 */
 	void refreshList(List<T> l);
-	
 }
 
 public class Scheduler {
@@ -37,7 +36,7 @@ public class Scheduler {
 		put( "ModelC",60);
 	}};
 	private String algorithm = "FIFO";
-	private String[] batchOptions;
+	private Map<String,String> batchOptions;
 
     public Scheduler(CarManufacturingController carManufacturingController) {
 
@@ -229,8 +228,8 @@ public class Scheduler {
      * set the current schedulingAlgorithm to the new given algorithms
      * @param algorithm
      */
-    public void setSchedulingAlgorithm(String algorithm, String[] batchOptions) {
-		if(!algorithm.equals("FIFO") && !algorithm.equals("BATCH")) throw new IllegalArgumentException("Invalid Scheduling Algoritm");
+    public void setSchedulingAlgorithm(String algorithm, Map<String,String> batchOptions) {
+		if(!algorithm.equals("FIFO") && !algorithm.equals("BATCH")) throw new IllegalArgumentException("Invalid Scheduling Algorithm");
 		this.algorithm = algorithm;
 		if(algorithm.equals("BATCH")) this.batchOptions = batchOptions;
 	}
@@ -253,7 +252,7 @@ public class Scheduler {
 			public void refreshList(List<Car> l) {
 				list = new LinkedList<>(l);
 			}
-			
+
 			public boolean hasNext() {
 				return list.size() > 0;
 			}
@@ -263,8 +262,9 @@ public class Scheduler {
 				if(algorithm.equals("FIFO")) return list.remove(0);
 				if(algorithm.equals("BATCH"))
 					for(int i = 0; i<list.size();i++) {
-						if(list.get(i).getPartsMap().containsValue(batchOptions))
-							return list.remove(i);
+						for(Map.Entry<String,String> prioSelection : batchOptions.entrySet())
+							if(list.get(i).getPartsMap().get(prioSelection.getKey()).equals(prioSelection.getValue()))
+								return list.remove(i);
 					}
 				//if there is no more element that is comform the batch, return to fifo
 				return list.remove(0);
