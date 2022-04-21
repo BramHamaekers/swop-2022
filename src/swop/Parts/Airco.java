@@ -1,6 +1,6 @@
 package swop.Parts;
 
-public class Airco extends Part{
+public class Airco extends CarOptionCategory {
 	
 	
 	public Airco() {

@@ -1,11 +1,6 @@
-package swop.UI;
+package swop.UI.Builders;
 
-import swop.CarManufactoring.WorkStation;
-
-import java.util.List;
-import java.util.ListIterator;
-
-class DisplayStatus implements DocumentBuilder {
+public class DisplayStatus implements FormBuilder {
     int titlelength = 0;
     StringBuilder builder = new StringBuilder();
 
@@ -56,16 +51,10 @@ class DisplayStatus implements DocumentBuilder {
             print(String.format("%s %s: ", option, numberOptions(options)));
         }
     }
-}
 
-class CarMechGenerator {
-    void generateMechanic(DocumentBuilder builder, List<WorkStation> workStations) {
-        builder.appendTitle("Current Stations");
-        ListIterator<WorkStation> w = workStations.listIterator();
-        while (w.hasNext()) {
-            builder.inputInfo(String.format("%s [%s]", w.next().getName(), (w.nextIndex()-1)));
-        }
-        builder.endInfo();
-        builder.addOption("Select station", workStations.size());
+    @Override
+    public void appendSubTitle(String subtitle) {
+        println("---" + subtitle + "---");
     }
 }
+

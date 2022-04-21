@@ -2,10 +2,14 @@ package swop.UI;
 
 import swop.Exceptions.CancelException;
 import swop.Exceptions.NotAllTasksCompleteException;
+import swop.UI.Generators.GarageHolderGenerator;
+import swop.UI.Generators.ManagerGenerator;
 
 import java.util.List;
 
 public class ManagerUI implements UI {
+
+	private static final ManagerGenerator managerGenerator = new ManagerGenerator();
 
     public static void init(String id) {
         System.out.println("Welcome Manager: " + id + " (You can cancel any action by typing: CANCEL)");
@@ -14,6 +18,16 @@ public class ManagerUI implements UI {
     public static String indicateAdvance() throws CancelException {
         return UI.indicateYesNo("advance the assembly line");
     }
+
+	/**
+	 * Asks which action the user wants to take
+	 * @return int indicating the chosen action
+	 * @param actions available actions for the user
+	 * @throws CancelException when the user types 'Cancel'
+	 */
+	public static int selectAction(List<String> actions) throws CancelException {
+		return UI.selectAction(managerGenerator, actions);
+	}
 
     public static void displayAssemblyLine(List<String> assemLineCurrent, List<String> assemLineAdvanced) {
         System.out.printf("%n============ Assembly Line ============%n");
@@ -43,7 +57,7 @@ public class ManagerUI implements UI {
 		 try {
 			scanner.scanNextLineOfTypeString();
 		} catch (CancelException e1) {
-			return;
+			 e1.printMessage();
 		}
 		
 	}
@@ -66,10 +80,7 @@ public class ManagerUI implements UI {
 		 try {
 			scanner.scanNextLineOfTypeString();
 		} catch (CancelException e1) {
-			return;
+			 e1.printMessage();
 		}
 	}
-    
-
-
 }

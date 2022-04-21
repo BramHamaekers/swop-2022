@@ -1,16 +1,24 @@
 package swop.UI;
 
-import swop.CarManufactoring.CarOrder;
+import swop.Car.CarOrder;
 import swop.Exceptions.CancelException;
+import swop.UI.Builders.DisplayStatus;
+import swop.UI.Generators.GarageHolderGenerator;
 
 import java.util.*;
 import java.util.List;
 
 public class GarageHolderUI implements UI {
 
+	private static final GarageHolderGenerator garageHolderGenerator = new GarageHolderGenerator();
+
 	// Dummy init
 	public static void init(String id) {
 		System.out.println("Welcome Garage Holder: " + id + " (You can cancel any action by typing: CANCEL)");
+	}
+
+	public static void printError(String e) {
+		UI.printError(e);
 	}
 
 	/**
@@ -27,7 +35,7 @@ public class GarageHolderUI implements UI {
 				.filter(o -> !o.isCompleted())
 				.forEach(p ->{
 					System.out.print("Order: "+ p.getID());
-					System.out.println(", Est. completion at: " + p.getEstimatedCompletionTime());
+					System.out.println(" -> " + p.getEstimatedCompletionTime());
 				});
 		System.out.println();
 		System.out.println("Completed:");
@@ -46,43 +54,48 @@ public class GarageHolderUI implements UI {
 		System.out.println();
 		System.out.println("=======================================");
 	}
+
+	public static String indicateYesNo(String action) throws CancelException {
+		return UI.indicateYesNo(action);
+	}
 	
 	/**
-	 * Asks confirmation for placing order
+	 * Asks which action the user wants to take
+	 * @return int indicating the chosen action
+	 * @param actions available actions for the user
+	 * @throws CancelException when the user types 'Cancel'
 	 */
-	public static String indicatePlaceOrder() throws CancelException {
-		return UI.indicateYesNo("place an order");
+	public static int selectAction(List<String> actions) throws CancelException {
+		return UI.selectAction(garageHolderGenerator, actions);
 	}
 
-	public static int indicateCarModel() throws CancelException {
-		System.out.printf("%n============ Car Models ============%n");
-		//TODO: fix
-		System.out.println("[0] car");
-		System.out.println("=======================================");
-		System.out.println();
-		System.out.printf("Which model would you like to order?%n");
-		return scanner.scanNextLineOfTypeInt(0,1); ///we kunnen ook hun de naam laten typen
+	/**
+	 * Ask which carModel the user wants to order
+	 * @param carModels available carModels to choose from
+	 * @return int indicating the chosen carModel
+	 * @throws CancelException when the user types 'Cancel'
+	 */
+	public static int indicateCarModel(Set<String> carModels) throws CancelException {
+		DisplayStatus builder = new DisplayStatus();
+		garageHolderGenerator.generateCarModels(builder, carModels);
+		System.out.println(builder.getDisplay());
+		return scanner.scanNextLineOfTypeInt(0,carModels.size());
 	}
 
 	/**
 	 * Displays the ordering from given a list of components and its options
 	 * @param optionsMap list of components and its options
 	 */
-	public static void displayOrderingForm(Map<String, List<String>> optionsMap) {
-		System.out.printf("%n============ Ordering Form ============%n");
-		optionsMap.forEach((key, value) -> {
-			System.out.print(key + ": ");
-			final int[] itemNumber = {-1};
-			value.forEach(v -> System.out.printf("[%s] %s, ", itemNumber[0] += 1, v));
-			System.out.printf("%n");
-		});
-		System.out.println("=======================================");
+	public static void displayOrderingForm(Map<String, List<String>> optionsMap, String name) {
+		DisplayStatus builder = new DisplayStatus();
+		garageHolderGenerator.generateOrderingForm(builder, optionsMap, name);
+		System.out.print(builder.getDisplay());
 	}
 
 
 	public static int askOption (int leftBound, int rightBound, String option) throws CancelException {
 		System.out.print("Choose " + option + ": ");
-			return scanner.scanNextLineOfTypeInt(leftBound, rightBound);
+		return scanner.scanNextLineOfTypeInt(leftBound, rightBound);
 	}
 
 	/**
@@ -95,4 +108,12 @@ public class GarageHolderUI implements UI {
 		System.out.println("=======================================");
 	}
 
+	/**
+	 * Lets the user input an orderID
+	 * @return the orderID that the user gave as input
+	 */
+	public static String selectOrderID() throws CancelException {
+		System.out.print("Input an orderID: ");
+		return scanner.scanNextLineOfTypeString();
+	}
 }

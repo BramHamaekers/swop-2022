@@ -1,11 +1,8 @@
 package swop.CarManufactoring;
+import swop.Car.Car;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 interface costumIterator<T> {
 	/**
@@ -34,10 +31,10 @@ public class Scheduler {
     private int minutes;
     private int day;
     private int workingDayMinutes;
-    private Map<String, Integer> timePerWorkstationMap = new HashMap<String, Integer>(){{
-		put( "a",50);
-		put( "b",70);
-		put( "c",60);
+    private final Map<String, Integer> timePerWorkstationMap = new HashMap<>(){{
+		put( "ModelA",50);
+		put( "ModelB",70);
+		put( "ModelC",60);
 	}};
 	private String algorithm = "FIFO";
 	private String[] batchOptions;
@@ -60,23 +57,23 @@ public class Scheduler {
     	  int day = this.day;
           int minutes = this.minutes;
           int workingDayMinutes = this.workingDayMinutes;
-          List<Car> workstationCars = new LinkedList<Car>(Arrays.asList(this.controller.getAssembly().getWorkStations().get(0).getCar()
-        		  , this.controller.getAssembly().getWorkStations().get(1).getCar()
-        		  , this.controller.getAssembly().getWorkStations().get(2).getCar()));
+          List<Car> workstationCars = this.getWorkStationCars();
      
     
           minutes += this.calculateWaitingTime(car,  workstationCars);
 
           // assume no overtime should be made: assignment -> scheduler should minimize overtime
           // scheduling a car to make overtime to complete should not be allowed
-          while (minutes > workingDayMinutes) {
+          while (minutes > workingDayMinutes & !this.carOnAssembly(car)) {
               day += 1;
               minutes -= workingDayMinutes;
               workingDayMinutes = 960;
           }
 
           if (day != this.day) {
-              if (minutes < 180) {minutes = 180;} // First car of the new day
+              if (minutes < 3 * this.timePerWorkstationMap.get(car.getCarModelName())) { // First car of the new day
+				  minutes = 3 * this.timePerWorkstationMap.get(car.getCarModelName());
+			  }
               else {minutes = (int) (Math.ceil( (float) minutes/60) * 60);} // Other cars
 
           }
@@ -87,38 +84,55 @@ public class Scheduler {
 
           return String.format("day: %s, time: %02d:%02d%n", day, hours, minutes);
     }
-    
-    /**
+
+	/**
+	 * @param car the car to check if it is on the assemblyLine
+	 * @return True if the given car is on the assemblyLine.
+	 */
+	private boolean carOnAssembly(Car car) {
+		List<Car> workstationCars = this.getWorkStationCars();
+		return workstationCars.contains(car);
+	}
+
+	/**
      * Returns how long it will take for the car to be finished
-     * @return
+     * @return time
      */
     private int calculateWaitingTime(Car car,List<Car> workstationCars) {
-    	Car before1 = workstationCars.get(0);
-    	Car before2 = workstationCars.get(1);
-    	Car before3 = workstationCars.get(2);
-   
-    	Car current = this.getNextScheduledCar();
+		Car station1Car = workstationCars.get(0);
+    	Car station2Car = workstationCars.get(1);
+    	Car station3Car = workstationCars.get(2);
+
     	costumIterator<Car> iter = this.iterator(this.controller.getCarQueue());
-    	
-    	int time = 0;
-    	while(before3 == null || !before3.equals(car)) {
-    		before3 = before2;
-    		before2 = before1;
-    		before1 = current;
+		Car current = iter.next(this.algorithm);
+
+		int time = this.getMax(getUnfinishedCars());
+    	while(station3Car == null || !station3Car.equals(car)) {
+			station3Car = station2Car;
+			station2Car = station1Car;
+			station1Car = current;
     		current = iter.next(this.algorithm);
-    		time += this.getMax(Arrays.asList(before1, before2, before3));
+    		time += this.getMax(Arrays.asList(station1Car, station2Car, station3Car));
     	}
-    	
+
     	return time;
     }
-    
-    /**
+
+	/**
+	 * Function returns all unFinishedCars on the assemblyLine
+	 * @return all unFinishedCars on the assemblyLine
+	 */
+	private List<Car> getUnfinishedCars() {
+		return this.controller.getAssembly().getUnfinishedCars();
+	}
+
+	/**
      * Returns the maximum time of a list of cars, that a car spends in a workstation
      * @param cars
      * @return
      */
     private int getMax(List<Car> cars) {
-    	List<Integer> l = new LinkedList<Integer>();
+    	List<Integer> l = new LinkedList<>();
     	for(Car c: cars) {
     		if(c != null) l.add(this.timePerWorkstationMap.get(c.getCarModelName()));
     	}
@@ -136,16 +150,32 @@ public class Scheduler {
     }
     
     /**
-     * Get amount of minutes that have already past in the day
-     * @return this.day
+     * Get amount of minutes that have already passed in the day
+     * @return this.minutes
      */
     public int getMinutes() {
-        return minutes;
+        return this.minutes;
     }
 
+	/**
+	 * Get amount of days that have already passed
+	 * @return this.day
+	 */
     public int getDay() {
         return this.day;
     }
+
+	/**
+	 * Get the current time in a string format
+	 * @return string of current time
+	 */
+	public String getTimeAsString() {
+		int hours = this.getMinutes() / 60;
+		hours += 6;
+		int minutes = this.getMinutes() % 60;
+
+		return String.format("day: %s, time: %02d:%02d%n", this.getDay(), hours, minutes);
+	}
 
     /**
      * advances day by 1 and calculates the length of next day
@@ -157,12 +187,37 @@ public class Scheduler {
         this.minutes = 0; // Reset amount of minutes that have past this day
     }
 
-    //TODO this function needs to be rewritten.
-    public boolean canAddCarToAssemblyLine() {
-        return this.minutes <= this.workingDayMinutes - 3 * 60;
+	/**
+	 * Function checks if there is enough time left in a working day to complete the next car.
+	 * @param minutes the minutes that need to be added to the time before checking
+	 * @return this.minutes <= this.workingDayMinutes - estTime
+	 */
+	public boolean canAddCarToAssemblyLine(int minutes) {
+		Car nextCar = this.getNextScheduledCar();
+		List<Car> workstationCars = getWorkStationCars();
+		Car car1 = workstationCars.get(0);
+		Car car2 = workstationCars.get(1);
+		int estTime = this.getMax(Arrays.asList(nextCar, car1, car2))
+				+ this.getMax(Arrays.asList(nextCar, car1))
+				+ this.getMax(List.of(nextCar));
+        return this.minutes + minutes <= this.workingDayMinutes - estTime;
     }
 
-    /**
+	/**
+	 * Function gets all the cars that are currently at workstation position of the assembly line
+	 * @return list of cars at workstations
+	 */
+	private List<Car> getWorkStationCars() {
+		ListIterator<WorkStation> workstations = this.controller.getAssembly().getWorkStations().listIterator();
+		ArrayList<Car> workstationCars = null;
+		while (workstations.hasNext()){
+			// check if throws nullpointerexception
+			workstationCars.add(workstations.next().getCar());
+		}
+		return workstationCars;
+	}
+
+	/**
      * Returns the current schedulingAlgorithm
      * @return this.schedulingAlgorithm
      */
@@ -172,12 +227,12 @@ public class Scheduler {
 
     /**
      * set the current schedulingAlgorithm to the new given algorithms
-     * @param schedulingAlgorithm
+     * @param algorithm
      */
-    public void setSchedulingAlgorithm(String algo, String[] batchOptions) {
-		if(!algo.equals("FIFO") && !algo.equals("BATCH")) throw new IllegalArgumentException("Invalid Scheduling Algoritm");
-		this.algorithm = algo;
-		if(algo.equals("BATCH")) this.batchOptions = batchOptions;
+    public void setSchedulingAlgorithm(String algorithm, String[] batchOptions) {
+		if(!algorithm.equals("FIFO") && !algorithm.equals("BATCH")) throw new IllegalArgumentException("Invalid Scheduling Algoritm");
+		this.algorithm = algorithm;
+		if(algorithm.equals("BATCH")) this.batchOptions = batchOptions;
 	}
 
     /**
@@ -192,11 +247,11 @@ public class Scheduler {
     }
     
 	public costumIterator<Car> iterator(List<Car> l) {
-		return new costumIterator<Car>() {
-			List<Car> list = new LinkedList<Car>(l);
+		return new costumIterator<>() {
+			List<Car> list = new LinkedList<>(l);
 			
 			public void refreshList(List<Car> l) {
-				list = new LinkedList<Car>(l);
+				list = new LinkedList<>(l);
 			}
 			
 			public boolean hasNext() {
@@ -208,7 +263,7 @@ public class Scheduler {
 				if(algorithm.equals("FIFO")) return list.remove(0);
 				if(algorithm.equals("BATCH"))
 					for(int i = 0; i<list.size();i++) {
-						if(list.get(i).getPartsMap().values().contains(batchOptions))
+						if(list.get(i).getPartsMap().containsValue(batchOptions))
 							return list.remove(i);
 					}
 				//if there is no more element that is comform the batch, return to fifo

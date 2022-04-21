@@ -1,5 +1,6 @@
 package swop.Users;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -22,26 +23,54 @@ public class CarMechanic extends User{
 	@Override
 	public void load(AssemAssist assemAssist) {
 		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
-		CarMechanicUI.init(this.getId());
 		try {
-			//returns work station selected by the user
-			String workStation = this.selectStation(assemAssist);
-			
-			this.performTasks(workStation, assemAssist);
-
+			CarMechanicUI.init(this.getId());
+			this.selectAction(assemAssist);
 		} catch (CancelException e) {
 			e.printMessage();
 		}
 	}
 
 	/**
-	 * Helper function to perform a task for this mechanic
-	 * @param workStation workstation as a string from the available list of workstations
-	 * @param assemAssist given the main program
-	 * @throws CancelException CancelException when "CANCEL" is the input
+	 * Function that handles selecting an action for CarMechanic
+	 * @param assemAssist the central system the action is performed on
 	 */
-	private void performTasks(String workStation, AssemAssist assemAssist) throws CancelException {
+	@Override
+	public void selectAction(AssemAssist assemAssist) throws CancelException {
+		List<String> actions = Arrays.asList("performAssemblyTask", "checkAssemblyLineStatus", "Exit");
+		int action = CarMechanicUI.selectAction(actions);
+
+		switch (action) {
+			case 0 -> this.performAssemblyTask(assemAssist);
+			case 1 -> this.checkAssemblyLineStatus(assemAssist);
+			case 2 -> {
+				// Do Nothing
+			}
+			default -> throw new IllegalArgumentException("Unexpected value: " + action);
+		}
+	}
+
+	private void checkAssemblyLineStatus(AssemAssist assemAssist) {
+		System.out.println("check Assembly Line Status NOT YET IMPLEMENTED!");
+
 		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
+		List<String> workStationsNames = assemAssist.getStationsNames();
+		List<WorkStation> workStations = assemAssist.getStations();
+
+		workStations.forEach(station -> {
+			Set<Task> pendingTasks = station.getUncompletedTasks();
+			Set<Task> finishedTasks = station.getCompletedTasks();
+			CarMechanicUI.displayStationStatus(station, pendingTasks, finishedTasks);
+		});
+	}
+
+	/**
+	 * Helper function to perform a task for this mechanic
+	 * @param assemAssist given the main program
+	 * @throws CancelException when "CANCEL" is the input
+	 */
+	private void performAssemblyTask(AssemAssist assemAssist) throws CancelException {
+		String workStation = this.selectStation(assemAssist);
 		if (workStation == null) throw new IllegalArgumentException("workstation is invalid");
 		List<Task> taskList = getAvailableTasks(assemAssist, workStation);
 		//returns selected task by user
@@ -51,7 +80,11 @@ public class CarMechanic extends User{
 			//Show the information for given task 2 user
 			this.showInfo(assemAssist, task);
 			this.completeTask(assemAssist, task);
-			this.performTasks(workStation,assemAssist);
+			this.performAssemblyTask(assemAssist);
+		}
+		else {
+			// TODO placeholder
+			System.out.println("No tasks need to be completed!");
 		}
 	}
 

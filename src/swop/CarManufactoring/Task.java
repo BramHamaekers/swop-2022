@@ -7,34 +7,34 @@ import swop.Parts.*;
 public enum Task {
 	
 	
-	AssemblyCarBody(new HashMap<Part,String>(){{
-		put( new Body(),"Mount a body on the chassis of type: ");
+	AssemblyCarBody(new HashMap<>(){{
+		put( "Body", "Mount a body on the chassis of type: ");
 	}},"Assembly Car Body"), 
-	PaintCar(new HashMap<Part,String>(){{
-		put(new Color(),"Paint the body in colour: ");
+	PaintCar(new HashMap<>(){{
+		put("Color", "Paint the body in colour: ");
 	}},"Paint Car"),
-	InsertEngine(new HashMap<Part,String>(){{
-		put( new Engine(),"Insert engine of type: ");
+	InsertEngine(new HashMap<>(){{
+		put( "Engine", "Insert engine of type: ");
 	}},"Insert Engine"), 
-	InstallGearbox(new HashMap<Part,String>(){{
-		put( new GearBox(),"Insert gearbox of type: ");
+	InstallGearbox(new HashMap<>(){{
+		put( "GearBox", "Insert gearbox of type: ");
 	}},"Install Gearbox"), 
-	InstallSeats(new HashMap<Part,String>(){{
-		put( new Seats(),"Install seats of type: ");
+	InstallSeats(new HashMap<>(){{
+		put( "Seats", "Install seats of type: ");
 	}},"Install Seats"), 
-	InstallAirco(new HashMap<Part,String>(){{
-		put( new Airco(),"Install airco of type: ");
+	InstallAirco(new HashMap<>(){{
+		put( "Airco", "Install airco of type: ");
 	}},"Install Airco"), 
-	MountWheels(new HashMap<Part,String>(){{
-		put( new Wheels(),"Mount wheels of type: ");
+	MountWheels(new HashMap<>(){{
+		put( "Wheels", "Mount wheels of type: ");
 	}},"Mount Wheels");
 	
-	private Map<Part,String> partsMap;
+	private final Map<String,String> partsMap;
 	private final String name;
 	private WorkStation w;
 	
 	
-	Task(Map<Part,String> map, String name) {
+	Task(Map<String,String> map, String name) {
 		this.partsMap = map;
 		this.name = name;
 	}
@@ -50,12 +50,8 @@ public enum Task {
 	 * Returns a list of parts that are part of this task
 	 * @return List<Part>
 	 */
-	public List<Part> getParts() {
-		List<Part> p = new LinkedList<Part>();
-		for(Part part : partsMap.keySet()) {
-			p.add(part);
-		}
-		return p;
+	public List<String> getParts() {
+		return new ArrayList<>(partsMap.keySet());
 	}
 	
 	/**
@@ -81,8 +77,8 @@ public enum Task {
 	 */
 	public String getTaskDescription() {
 		String value = "Empty";
-		for(Part p : this.getParts()) {
-			value = this.getDescription(p) + this.getWorkStation().getValueOfPart(p); //als er meerdere parts bij een task horen geef je maar een array van strings terug
+		for(String category : this.getParts()) {
+			value = this.getDescription(category) + this.getWorkStation().getValueOfPart(category); //als er meerdere parts bij een task horen geef je maar een array van strings terug
 		}
 		return value;
 		
@@ -109,10 +105,10 @@ public enum Task {
 	}
 	/**
 	 * Returns instructions for a given part
-	 * @param part
+	 * @param carOptionCategory
 	 * @return
 	 */
-	public String getDescription(Part part) {
-		return this.partsMap.get(part);
+	public String getDescription(String category) {
+		return this.partsMap.get(category);
 	}
 }

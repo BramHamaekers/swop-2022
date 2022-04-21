@@ -1,6 +1,6 @@
 package swop.Parts;
 
-public class Body extends Part{
+public class Body extends CarOptionCategory {
 	
 	public Body() {
 		super(new String[] {"sedan", "break"}, "Body");
