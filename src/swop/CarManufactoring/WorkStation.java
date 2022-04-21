@@ -12,6 +12,7 @@ import swop.Parts.CarOptionCategory;
 public class WorkStation {
 	private final String name;
 	private Car car;
+	private int timeCarInStation = 0;
 
 	public WorkStation(String name) {
 		if (!isValidName(name)) {
@@ -94,7 +95,16 @@ public class WorkStation {
 	}
 
 	public void setCar(Car car) {
+		this.timeCarInStation = 0;
 		this.car = car;
+	}
+	
+	/**
+	 * Returns how long a car is currently in the workstation
+	 * @return
+	 */
+	public int getTimeCarInStation() {
+		return this.timeCarInStation;
 	}
 	
 	/**
@@ -121,12 +131,15 @@ public class WorkStation {
 	/**
 	 * Tries to complete a task 
 	 * @param task to complete
+	 * @param time 
 	 * @throws IllegalArgumentException if car == null || task == null
 	 */
-	public void completeTask(Task task) {
+	public int completeTask(Task task, int time) {
 		if(car == null) throw new IllegalArgumentException("No car in station");
 		if (task == null) throw new IllegalArgumentException("task is null");
 		this.getCar().completeTask(task);
+		this.timeCarInStation += time;
+		return this.timeCarInStation;
 	}
 
 	/**

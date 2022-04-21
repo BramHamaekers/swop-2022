@@ -63,4 +63,9 @@ public class CarMechanicUI implements UI {
 			carMechanicGenerator.generateWorkStationStatus(builder, workStation.getName(), pendingTasks, completedTask);
 			System.out.print(builder.getDisplay());
 		}
+		
+		public static int askTimeToCompleteTask() throws CancelException {
+	        System.out.println("How much time did it took to finish the task? (in min)");
+	        return scanner.scanNextLineOfTypeInt();
+		}
 }

@@ -1,8 +1,6 @@
 package swop.CarManufactoring;
 import swop.Car.Car;
-
 import java.util.*;
-import java.util.stream.Collectors;
 
 interface costumIterator<T> {
 	/**

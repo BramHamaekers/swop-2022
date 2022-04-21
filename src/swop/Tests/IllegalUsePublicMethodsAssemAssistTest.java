@@ -31,7 +31,7 @@ public class IllegalUsePublicMethodsAssemAssistTest {
 		//test activeUser = manager but wants to complete a task: Should throw IllegalArgumentException
 		loadManager();
 		assertThrows(IllegalArgumentException.class,
-				() -> assem.completeTask(null));
+				() -> assem.completeTask(null, 0));
 	}
 
 

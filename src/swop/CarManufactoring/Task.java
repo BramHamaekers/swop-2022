@@ -44,9 +44,10 @@ public enum Task {
 	
 	/**
 	 * Will complete the task of the car from the workstation this task is assigned to
+	 * @param time 
 	 */
-	public void completeTask() {
-		this.getWorkStation().completeTask(this);
+	public int completeTask(int time) {
+		return this.getWorkStation().completeTask(this, time);
 	}
 	
 	/**
