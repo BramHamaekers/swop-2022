@@ -1,4 +1,4 @@
-package swop.UI;
+package swop.UI.Builders;
 
 public interface FormBuilder {
     void appendTitle(String title);

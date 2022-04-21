@@ -5,33 +5,35 @@ import java.util.List;
 import swop.CarManufactoring.Task;
 import swop.CarManufactoring.WorkStation;
 import swop.Exceptions.CancelException;
+import swop.UI.Builders.DisplayStatus;
 import swop.UI.Generators.CarMechanicGenerator;
 
 public class CarMechanicUI implements UI {
-	
-		// Dummy init
+
+		private static final CarMechanicGenerator carMechanicGenerator = new CarMechanicGenerator();
+
 		public static void init(String id) {
 			System.out.println("Welcome Car Mechanic: " + id + " (You can cancel any action by typing: CANCEL)");
 		}
+
+		/**
+	 	* Asks which action the user wants to take
+	 	* @return int indicating the chosen action
+	 	* @param actions available actions for the user
+	 	* @throws CancelException when the user types 'Cancel'
+	 	*/
+		public static int selectAction(List<String> actions) throws CancelException {
+			return UI.selectAction(carMechanicGenerator, actions);
+		}
 		
 		public static void displayAvailableStations(List<WorkStation> stations){
-//			System.out.printf("%n============ Current Stations ============%n");
-//			int number = -1;
-//			for(String s: stations){
-//				number+=1;
-//				System.out.println(s + " [" + number + "] ");
-//			}
-//			System.out.println("=======================================");
-			CarMechanicGenerator generator = new CarMechanicGenerator();
 			DisplayStatus builder = new DisplayStatus();
-			generator.generateMechanic(builder, stations);
+			carMechanicGenerator.generateMechanic(builder, stations);
 			System.out.print(builder.getDisplay());
 		}
 	
 		public static int askOption(String s, int numberOfOptions) throws CancelException {
-			// TODO: implement in displayAvailable or in DisplayStatus
-//			System.out.println(s);
-			return scanner.scanNextLineOfTypeInt(0, numberOfOptions); //only place where inputscanner class is used.
+			return scanner.scanNextLineOfTypeInt(0, numberOfOptions);
 			
 		}
 

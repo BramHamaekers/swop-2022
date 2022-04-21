@@ -39,8 +39,8 @@ public class GarageHolder extends User{
     /**
      * Function that handles selecting an action for GarageHolder
      * @param assemAssist the central system the action is performed on
-     * @throws CancelException when the user indicates it wants to cancel
      */
+    @Override
     public void selectAction(AssemAssist assemAssist) throws CancelException {
         List<String> actions = Arrays.asList("Place new order", "Check order details", "Exit");
         int action = GarageHolderUI.selectAction(actions);
@@ -49,10 +49,10 @@ public class GarageHolder extends User{
             case 0 -> this.generateOrder(assemAssist);
             case 1 -> this.checkOrderDetails();
             case 2 -> {
-                return;
+                // Do Nothing
             }
             default -> throw new IllegalArgumentException("Unexpected value: " + action);
-        };
+        }
     }
 
     private void checkOrderDetails() throws CancelException {
@@ -115,9 +115,9 @@ public class GarageHolder extends User{
 	}
 
     /**
-     * Acces the GarageHolderUI to fill in the ordering form and create a carModel
-     * @param carModel
-     * @throws CancelException
+     * Access the GarageHolderUI to fill in the ordering form and create a carModelSpecification
+     * @param carModel the carModel to create a carModelSpecification for
+     * @throws CancelException when user types 'cancel'
      */
     private void fillOrderingForm(CarModel carModel) throws CancelException {
         while(true) {
@@ -138,9 +138,10 @@ public class GarageHolder extends User{
 
     /**
      * Will return a map with options of car chosen by user.
+     * @param validOptions valid options for this carConfiguration
      * @return carConfig as a map from part to integer
-     * @throws CancelException CancelException when "CANCEL" is the input
-     * @param validOptions
+     * @throws CancelException when "CANCEL" is the input
+
      */
     private Map<String,Integer> getFilledOrder(Map<String, List<String>> validOptions) throws CancelException{
     	Map<String,Integer> carConfig = new HashMap<>();
@@ -154,7 +155,7 @@ public class GarageHolder extends User{
     /**
      * Converts Map<String, Integer> to Map<String,String>
      * @param carConfig given a map from part to integer selection
-     * @param validOptions
+     * @param validOptions the valid options for the carOptions
      * @return map string part to selection string
      */
 	private Map<String,String> mapConfigToOptions(Map<String, Integer> carConfig, Map<String, List<String>> validOptions) {

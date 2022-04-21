@@ -2,6 +2,7 @@ package swop.UI;
 
 import swop.Car.CarOrder;
 import swop.Exceptions.CancelException;
+import swop.UI.Builders.DisplayStatus;
 import swop.UI.Generators.GarageHolderGenerator;
 
 import java.util.*;
@@ -65,10 +66,7 @@ public class GarageHolderUI implements UI {
 	 * @throws CancelException when the user types 'Cancel'
 	 */
 	public static int selectAction(List<String> actions) throws CancelException {
-		DisplayStatus builder = new DisplayStatus();
-		garageHolderGenerator.selectAction(builder, actions);
-		System.out.println(builder.getDisplay());
-		return scanner.scanNextLineOfTypeInt(0, actions.size());
+		return UI.selectAction(garageHolderGenerator, actions);
 	}
 
 	/**

@@ -1,10 +1,6 @@
-package swop.UI;
+package swop.UI.Builders;
 
-import swop.CarManufactoring.WorkStation;
-
-import java.util.*;
-
-class DisplayStatus implements FormBuilder {
+public class DisplayStatus implements FormBuilder {
     int titlelength = 0;
     StringBuilder builder = new StringBuilder();
 

@@ -1,7 +1,7 @@
 package swop.UI.Generators;
 
 import swop.CarManufactoring.WorkStation;
-import swop.UI.FormBuilder;
+import swop.UI.Builders.FormBuilder;
 
 import java.util.List;
 import java.util.ListIterator;

@@ -1,6 +1,6 @@
 package swop.UI.Generators;
 
-import swop.UI.FormBuilder;
+import swop.UI.Builders.FormBuilder;
 
 import java.util.*;
 
