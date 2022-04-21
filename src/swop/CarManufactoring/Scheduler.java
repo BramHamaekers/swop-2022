@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 interface costumIterator<T> {
 	/**
@@ -77,7 +78,9 @@ public class Scheduler {
           }
 
           if (day != this.day) {
-              if (minutes < 180) {minutes = 180;} // First car of the new day
+              if (minutes < 3 * this.timePerWorkstationMap.get(car.getCarModelName())) { // First car of the new day
+				  minutes = 3 * this.timePerWorkstationMap.get(car.getCarModelName());
+			  }
               else {minutes = (int) (Math.ceil( (float) minutes/60) * 60);} // Other cars
 
           }
@@ -100,17 +103,17 @@ public class Scheduler {
 
 	/**
      * Returns how long it will take for the car to be finished
-     * @return
+     * @return time
      */
     private int calculateWaitingTime(Car car,List<Car> workstationCars) {
-    	Car station1Car = workstationCars.get(0);
+		Car station1Car = workstationCars.get(0);
     	Car station2Car = workstationCars.get(1);
     	Car station3Car = workstationCars.get(2);
 
     	costumIterator<Car> iter = this.iterator(this.controller.getCarQueue());
 		Car current = iter.next(this.algorithm);
-    	
-    	int time = 0;
+
+		int time = this.getMax(getUnfinishedCars());
     	while(station3Car == null || !station3Car.equals(car)) {
 			station3Car = station2Car;
 			station2Car = station1Car;
@@ -121,8 +124,22 @@ public class Scheduler {
 
     	return time;
     }
-    
-    /**
+
+	/**
+	 * Function returns all unFinishedCars on the assemblyLine
+	 * @return all unFinishedCars on the assemblyLine
+	 */
+	private List<Car> getUnfinishedCars() {
+		List<WorkStation> unFinishedStations = this.controller.getAssembly().getWorkStations().stream()
+				.filter(w -> !w.stationTasksCompleted())
+				.collect(Collectors.toList());
+		return unFinishedStations.stream()
+				.map(w -> w.getCar())
+				.collect(Collectors.toList());
+		//TODO: Move function to assembly?
+	}
+
+	/**
      * Returns the maximum time of a list of cars, that a car spends in a workstation
      * @param cars
      * @return
@@ -185,9 +202,10 @@ public class Scheduler {
 
 	/**
 	 * Function checks if there is enough time left in a working day to complete the next car.
+	 * @param minutes the minutes that need to be added to the time before checking
 	 * @return this.minutes <= this.workingDayMinutes - estTime
 	 */
-	public boolean canAddCarToAssemblyLine() {
+	public boolean canAddCarToAssemblyLine(int minutes) {
 		Car nextCar = this.getNextScheduledCar();
 		List<Car> workstationCars = getWorkStationCars();
 		Car car1 = workstationCars.get(0);
@@ -195,7 +213,7 @@ public class Scheduler {
 		int estTime = this.getMax(Arrays.asList(nextCar, car1, car2))
 				+ this.getMax(Arrays.asList(nextCar, car1))
 				+ this.getMax(Arrays.asList(nextCar));
-        return this.minutes <= this.workingDayMinutes - estTime;
+        return this.minutes + minutes <= this.workingDayMinutes - estTime;
     }
 
 	/**

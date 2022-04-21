@@ -46,8 +46,8 @@ public class CarManufacturingController {
 	 */
 	public void advanceAssembly(int minutes) throws NotAllTasksCompleteException {
 		//there is time to finish another car + there are cars on the queue
-		Car finishedCar = null;
-		if(canFinishNewCar() && !this.getCarQueue().isEmpty()) {
+		Car finishedCar;
+		if(canFinishNewCar(minutes) && !this.getCarQueue().isEmpty()) {
 			Car nextCar = this.getScheduler().getNextScheduledCar();
 			finishedCar = this.assemblyLine.advance(nextCar);
 			this.carQueue.remove(nextCar);
@@ -96,10 +96,11 @@ public class CarManufacturingController {
 
 	/**
 	 * Checks if a new car could be finished if it was added to the assemblyLine
+	 * @param minutes the minutes that need to be added to the time before checking
 	 * @return whether a new car can be finished in time
 	 */
-	private boolean canFinishNewCar() {
-		return this.getScheduler().canAddCarToAssemblyLine();
+	private boolean canFinishNewCar(int minutes) {
+		return this.getScheduler().canAddCarToAssemblyLine(minutes);
 	}
 
 	/**
@@ -109,7 +110,7 @@ public class CarManufacturingController {
 	private void updateScheduleTime(int minutes) {
 		this.getScheduler().addTime(minutes);
 		//if all work is done for today, skip to next day
-		if (!canFinishNewCar() && this.assemblyLine.isEmptyAssemblyLine()) {
+		if (!canFinishNewCar(0) && this.assemblyLine.isEmptyAssemblyLine()) {
 			this.getScheduler().advanceDay();
 		}
 		
@@ -131,9 +132,12 @@ public class CarManufacturingController {
 		if(car == null) throw new IllegalArgumentException("car is null");
 		this.carQueue.add(car);
 		carOrder.setOrderTime(getScheduler().getTimeAsString());
+		// if it is the only order in queue and the first spot is empty -> put it on the assembly line (if possible)
+		if (this.getCarQueue().size() == 1 && canFinishNewCar(0) && this.getAssembly().getWorkStations().get(0).getCar() == null) {
+			this.getAssembly().getWorkStations().get(0).setCar(car);
+			this.carQueue.remove(car);
+		}
 		car.setEstimatedCompletionTime(getScheduler().getEstimatedCompletionTime(car));
-		
-		
 	}
 
 	/**
