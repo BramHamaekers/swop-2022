@@ -1,14 +1,8 @@
 package swop.CarManufactoring;
 
-import org.jetbrains.annotations.NotNull;
 import swop.Car.Car;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 interface costumIterator<T> {
@@ -131,10 +125,9 @@ public class Scheduler {
 	 */
 	private List<Car> getUnfinishedCars() {
 		List<WorkStation> unFinishedStations = this.controller.getAssembly().getWorkStations().stream()
-				.filter(w -> !w.stationTasksCompleted())
-				.collect(Collectors.toList());
+				.filter(w -> !w.stationTasksCompleted()).toList();
 		return unFinishedStations.stream()
-				.map(w -> w.getCar())
+				.map(WorkStation::getCar)
 				.collect(Collectors.toList());
 		//TODO: Move function to assembly?
 	}
@@ -145,7 +138,7 @@ public class Scheduler {
      * @return
      */
     private int getMax(List<Car> cars) {
-    	List<Integer> l = new LinkedList<Integer>();
+    	List<Integer> l = new LinkedList<>();
     	for(Car c: cars) {
     		if(c != null) l.add(this.timePerWorkstationMap.get(c.getCarModelName()));
     	}
@@ -212,7 +205,7 @@ public class Scheduler {
 		Car car2 = workstationCars.get(1);
 		int estTime = this.getMax(Arrays.asList(nextCar, car1, car2))
 				+ this.getMax(Arrays.asList(nextCar, car1))
-				+ this.getMax(Arrays.asList(nextCar));
+				+ this.getMax(List.of(nextCar));
         return this.minutes + minutes <= this.workingDayMinutes - estTime;
     }
 
@@ -221,9 +214,12 @@ public class Scheduler {
 	 * @return list of cars at workstations
 	 */
 	private List<Car> getWorkStationCars() {
-		List<Car> workstationCars = new LinkedList<>(Arrays.asList(this.controller.getAssembly().getWorkStations().get(0).getCar()
-				, this.controller.getAssembly().getWorkStations().get(1).getCar()
-				, this.controller.getAssembly().getWorkStations().get(2).getCar()));
+		ListIterator<WorkStation> workstations = this.controller.getAssembly().getWorkStations().listIterator();
+		ArrayList<Car> workstationCars = null;
+		while (workstations.hasNext()){
+			// check if throws nullpointerexception
+			workstationCars.add(workstations.next().getCar());
+		}
 		return workstationCars;
 	}
 
@@ -257,11 +253,11 @@ public class Scheduler {
     }
     
 	public costumIterator<Car> iterator(List<Car> l) {
-		return new costumIterator<Car>() {
-			List<Car> list = new LinkedList<Car>(l);
+		return new costumIterator<>() {
+			List<Car> list = new LinkedList<>(l);
 			
 			public void refreshList(List<Car> l) {
-				list = new LinkedList<Car>(l);
+				list = new LinkedList<>(l);
 			}
 			
 			public boolean hasNext() {
@@ -273,7 +269,7 @@ public class Scheduler {
 				if(algorithm.equals("FIFO")) return list.remove(0);
 				if(algorithm.equals("BATCH"))
 					for(int i = 0; i<list.size();i++) {
-						if(list.get(i).getPartsMap().values().contains(batchOptions))
+						if(list.get(i).getPartsMap().containsValue(batchOptions))
 							return list.remove(i);
 					}
 				//if there is no more element that is comform the batch, return to fifo
