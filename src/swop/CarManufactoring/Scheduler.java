@@ -130,13 +130,7 @@ public class Scheduler {
 	 * @return all unFinishedCars on the assemblyLine
 	 */
 	private List<Car> getUnfinishedCars() {
-		List<WorkStation> unFinishedStations = this.controller.getAssembly().getWorkStations().stream()
-				.filter(w -> !w.stationTasksCompleted())
-				.collect(Collectors.toList());
-		return unFinishedStations.stream()
-				.map(w -> w.getCar())
-				.collect(Collectors.toList());
-		//TODO: Move function to assembly?
+		return this.controller.getAssembly().getUnfinishedCars();
 	}
 
 	/**
