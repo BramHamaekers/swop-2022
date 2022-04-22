@@ -91,6 +91,6 @@ class AssemblyLineTest {
 
     void finishTasks() {
         for(Task task : assem.getWorkStations().get(0).getTasks())
-            assem.getWorkStations().get(0).completeTask(task);
+            assem.getWorkStations().get(0).completeTask(task, 0);
     }
 }

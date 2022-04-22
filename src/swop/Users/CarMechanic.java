@@ -92,11 +92,13 @@ public class CarMechanic extends User{
 	 * Helper function to complete a task in assemAssist
 	 * @param assemAssist given the main program
 	 * @param task task from the tasklist
+	 * @throws CancelException when "CANCEL" is the input
 	 */
-	private void completeTask(AssemAssist assemAssist, Task task) {
+	private void completeTask(AssemAssist assemAssist, Task task) throws CancelException {
 		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
 		if (task == null) throw new IllegalArgumentException("task is null");
-		assemAssist.completeTask(task);
+		int time = CarMechanicUI.askTimeToCompleteTask();
+		assemAssist.completeTask(task, time);
 	}
 
 	/**
@@ -109,7 +111,7 @@ public class CarMechanic extends User{
 	private void showInfo(AssemAssist assemAssist, Task task) throws CancelException {
 		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
 		if (task == null) throw new IllegalArgumentException("task is null");
-		String info = assemAssist.getTaskDescription(task);
+		List<String> info = assemAssist.getTaskDescription(task);
 		CarMechanicUI.displayTaskInfo(info);
 	}
 

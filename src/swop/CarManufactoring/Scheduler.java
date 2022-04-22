@@ -1,8 +1,6 @@
 package swop.CarManufactoring;
 import swop.Car.Car;
-
 import java.util.*;
-
 
 interface costumIterator<T> {
 	/**
@@ -126,6 +124,7 @@ public class Scheduler {
      * @return
      */
     private int getMax(List<Car> cars) {
+    	if(cars == null) return 0;
     	List<Integer> l = new LinkedList<>();
     	for(Car c: cars) {
     		if(c != null) l.add(this.timePerWorkstationMap.get(c.getCarModelName()));
@@ -192,8 +191,8 @@ public class Scheduler {
 		Car car1 = workstationCars.get(0);
 		Car car2 = workstationCars.get(1);
 		int estTime = this.getMax(Arrays.asList(nextCar, car1, car2))
-				+ this.getMax(Arrays.asList(nextCar, car1))
-				+ this.getMax(List.of(nextCar));
+				+ this.getMax(Arrays.asList(nextCar, car1));
+		if(nextCar != null) estTime += this.getMax(List.of(nextCar));
         return this.minutes + minutes <= this.workingDayMinutes - estTime;
     }
 
@@ -203,7 +202,7 @@ public class Scheduler {
 	 */
 	private List<Car> getWorkStationCars() {
 		ListIterator<WorkStation> workstations = this.controller.getAssembly().getWorkStations().listIterator();
-		ArrayList<Car> workstationCars = null;
+		ArrayList<Car> workstationCars = new ArrayList<>();
 		while (workstations.hasNext()){
 			// check if throws nullpointerexception
 			workstationCars.add(workstations.next().getCar());

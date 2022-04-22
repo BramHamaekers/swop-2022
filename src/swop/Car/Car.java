@@ -46,7 +46,7 @@ public class Car {
 	}
 
 	private void initiateUncompletedTasks() {
-		uncompletedTasks = Task.getAllTasks();
+		uncompletedTasks = Task.getAllTasks(this.getCarModel().getCarModelSpecification().getAllParts());
 	}
 
 	/**

@@ -7,16 +7,25 @@ import java.util.Map;
 import swop.Car.Car;
 import swop.Car.CarOrder;
 import swop.Exceptions.NotAllTasksCompleteException;
+import swop.Listeners.Listener;
+import swop.Main.AssemAssist;
 
 public class CarManufacturingController {
 
 	private final LinkedList<Car> carQueue;
 	private final AssemblyLine assemblyLine;
 	private final Scheduler scheduler;
+	private final Listener listener =
+			(int minutes) -> { try {
+				advanceAssembly(minutes);
+			} catch (NotAllTasksCompleteException e) {
+
+			} };
+
 	
 	
-	
-	public CarManufacturingController() {
+	public CarManufacturingController(AssemAssist assemAssist) {
+		assemAssist.addListener(this.listener);
 		this.carQueue = new LinkedList<>();
 		this.assemblyLine = new AssemblyLine(createWorkStations());
 		this.scheduler = new Scheduler(this);

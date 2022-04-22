@@ -4,18 +4,19 @@ import swop.Car.CarOrder;
 import swop.CarManufactoring.*;
 import swop.Exceptions.IllegalUserException;
 import swop.Exceptions.NotAllTasksCompleteException;
+import swop.Listeners.Listener;
 import swop.UI.LoginUI;
 import swop.Users.CarMechanic;
 import swop.Users.GarageHolder;
 import swop.Users.Manager;
 import swop.Users.User;
-
 import java.util.*;
 
 public class AssemAssist {
 
 	private final CarManufacturingController controller;
 	private User activeUser;
+	private List<Listener> listeners = new ArrayList<>();
 	final Map <String, User> userDatabase = new HashMap<>() {{
 		put("a", new GarageHolder("a"));
 		put("b", new CarMechanic("b"));
@@ -23,7 +24,7 @@ public class AssemAssist {
 	}};
 
 	public AssemAssist() {
-		this.controller = new CarManufacturingController();
+		this.controller = new CarManufacturingController(this);
     }
 	/**
      * Starts the program
@@ -32,6 +33,22 @@ public class AssemAssist {
 		this.login();		
 	}
 
+	/**
+	 * Add a new listener to the list of listeners
+	 * @param listener
+	 */
+	public void addListener(Listener listener) {
+		this.listeners.add(listener);
+	}
+	
+	/**
+	 * all listeners getting triggered and execute taskCompleted()
+	 * @param minutes
+	 */
+	public void triggerListenersTaskCompletion(int minutes) {
+		for (Listener l:this.listeners) l.taskCompleted(minutes);
+	}
+	
 	/************************ Login *************************/
 
 	/**
@@ -137,10 +154,15 @@ public class AssemAssist {
 	/**
 	 * mechanic completes a task
 	 * @param task task which is completed
+	 * @param time 
 	 */
-	public void completeTask(Task task) {
+	public void completeTask(Task task, int time) {
 		if (task == null) throw new IllegalArgumentException("task is null");
-		if(isValidUser("car mechanic")) task.completeTask();
+		int totalTaskTime = 0;
+		if(isValidUser("car mechanic")) {
+			totalTaskTime = task.completeTask(time);
+			this.triggerListenersTaskCompletion(totalTaskTime);
+			}
 		else throw new IllegalUserException("completeTask()");
 		
 	}
@@ -157,7 +179,8 @@ public class AssemAssist {
 		return this.getAssemblyLine().getUncompletedTasks(string);
 	}
 	
-	public String getTaskDescription(Task task) {
+	public List<String> getTaskDescription(Task task) {
 		return task.getTaskDescription();
 	}
 }
+
