@@ -51,14 +51,12 @@ public class CarMechanic extends User{
 	}
 
 	private void checkAssemblyLineStatus(AssemAssist assemAssist) {
-		System.out.println("check Assembly Line Status NOT YET IMPLEMENTED!");
-
 		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
-		List<String> workStationsNames = assemAssist.getStationsNames();
 		List<WorkStation> workStations = assemAssist.getStations();
 
 		workStations.forEach(station -> {
 			Set<Task> pendingTasks = station.getUncompletedTasks();
+			//TODO finishedTasks should be filtered in station.getCompletedTasks()
 			Set<Task> finishedTasks = station.getCompletedTasks();
 			CarMechanicUI.displayStationStatus(station, pendingTasks, finishedTasks);
 		});

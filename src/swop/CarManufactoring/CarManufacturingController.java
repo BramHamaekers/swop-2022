@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import swop.Car.Car;
 import swop.Car.CarOrder;
@@ -17,16 +16,13 @@ public class CarManufacturingController {
 	private final LinkedList<Car> carQueue;
 	private final AssemblyLine assemblyLine;
 	private final Scheduler scheduler;
-	private final Listener listener =
-			() -> {
-				try {
-				advanceAssembly();
-			} catch (NotAllTasksCompleteException e) {
+	private final Listener listener = () -> {
+				try {advanceAssembly();}
+				catch (NotAllTasksCompleteException ignored) {}
+				};
 
-			} };
 
-	
-	
+
 	public CarManufacturingController(AssemAssist assemAssist) {
 		assemAssist.addListener(this.listener);
 		this.carQueue = new LinkedList<>();
@@ -53,15 +49,13 @@ public class CarManufacturingController {
 	
 	/**
 	 * Will try to advance the assemblyline + update the scheduler.
-	 * @param minutes that have passed
 	 * @throws NotAllTasksCompleteException if all available tasks are not completed
 	 */
 	public void advanceAssembly() throws NotAllTasksCompleteException {
 		//there is time to finish another car + there are cars on the queue
 		List<WorkStation> workStations = this.getAssembly().getWorkStations();
 		List<Integer> test = workStations.stream()
-				.map(w -> w.getCurrentWorkingTime())
-				.collect(Collectors.toList());
+				.map(WorkStation::getCurrentWorkingTime).toList();
 		int minutes = Collections.max(test);
 		Car finishedCar;
 		if(canFinishNewCar(minutes) && !this.getCarQueue().isEmpty()) {
@@ -122,7 +116,7 @@ public class CarManufacturingController {
 
 	/**
 	 * updates the scheduler.
-	 * @param minutes
+	 * @param minutes minutes to add to the current time
 	 */
 	private void updateScheduleTime(int minutes) {
 		this.getScheduler().addTime(minutes);
@@ -133,16 +127,9 @@ public class CarManufacturingController {
 		
 	}
 
-	//this method is to fix bug for current calculation of AdvancedStatus of assembly line
-	//TODO ??
-	public List<String> getAdvancedStatus() {
-		if(this.getCarQueue().isEmpty()) return this.assemblyLine.getAdvancedStatus(null);
-		return this.assemblyLine.getAdvancedStatus(this.getScheduler().getNextScheduledCar());
-	}
-
 	/**
 	 * add the cars of a specific order 2 the queue
-	 * @param carOrder
+	 * @param carOrder order added to the Queue
 	 */
 	public void addOrderToQueue(CarOrder carOrder) {
 		Car car = carOrder.getCar();
@@ -159,18 +146,10 @@ public class CarManufacturingController {
 
 	/**
 	 * Returns the scheduler associated with this controller
-	 * @return
+	 * @return this.scheduler
 	 */
 	public Scheduler getScheduler() {
-		return scheduler;
-	}
-
-	/**
-	 * Returns how many cars are still waiting
-	 * @return carQueue.size()
-	 */
-	public int getCarQueueSize() {
-		return carQueue.size();
+		return this.scheduler;
 	}
 
 	/**

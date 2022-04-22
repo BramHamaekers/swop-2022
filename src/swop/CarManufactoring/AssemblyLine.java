@@ -4,7 +4,6 @@ import swop.Car.Car;
 import swop.Exceptions.NotAllTasksCompleteException;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class AssemblyLine {
 
@@ -15,22 +14,21 @@ public class AssemblyLine {
 	}
 
 	/**
-	 * advance the assembly line if a manager orders and all tasks are done
-	 * //TODO
-//	 * @param minutes minutes past since start of the task
+	 * advance the assembly line
+	 * @param nextCar Next car on the assemblyLine
 	 * @throws NotAllTasksCompleteException thrown when there are still tasks to do
 	 */
-	public Car advance(Car car) throws NotAllTasksCompleteException{
+	public Car advance(Car nextCar) throws NotAllTasksCompleteException{
 		// check if possible to advance AssemblyLine
 		checkAdvance();
 		Car completedCar = this.workStations.getLast().getCar();
 		//updating completion time of finished car
-			// Move all cars on assembly by 1 position
+		// Move all cars on assembly by 1 position
 		for (int i = this.workStations.size() - 1; i > 0; i--) {
 			Car previous = this.workStations.get(i-1).getCar();
 			this.workStations.get(i).setCar(previous);
 		}
-		this.workStations.getFirst().setCar(car);
+		this.workStations.getFirst().setCar(nextCar);
 		return completedCar;
 	}
 
@@ -51,52 +49,8 @@ public class AssemblyLine {
 	 */
 
 	public boolean allTasksCompleted() {
-		return this.workStations.stream().allMatch(e -> e.stationTasksCompleted());
+		return this.workStations.stream().allMatch(WorkStation::stationTasksCompleted);
 
-	}
-	
-	/**
-	 * returns for all works stations current state. 
-	 * Empty = no car, Finished = all tasks completed, Pending = tasks need 2 be completed
-	 * @return list of states from each work station
-	 */
-	public List<String> getCurrentStatus() {
-		List<String> status = new LinkedList<>();
-		this.workStations.forEach(w -> {
-			String s = w.getName();
-			if(w.getCar() == null) s = s.concat(": EMPTY");
-			else {
-				s = s.concat(": " + w.getCar().getCarModel().getCarModelSpecification().getPartsMap());
-				s = w.stationTasksCompleted() ? s.concat(" (FINISHED)") : s.concat(" (PENDING)");
-			}
-			status.add(s);
-		});
-		return status;
-	}
-	
-	/**
-	 * returns for all works stations state if an advance would happen. 
-	 * Empty = no car, Finished = all tasks completed, Pending = tasks need 2 be completed
-	 * @param car a given
-	 * @return list of states from each work station if an advance would take place
-	 */
-	public List<String> getAdvancedStatus(Car car) { 
-		List<String> status = new LinkedList<>();
-		for(int i = 0; i < workStations.size(); i++){
-			WorkStation w = this.workStations.get(i);
-			String s = w.getName();
-			if(0<i) {
-				w = this.workStations.get(i-1);
-				s = w.getCar() == null ? s.concat(": EMPTY") :
-						s.concat(": " + w.getCar().getCarModel().getCarModelSpecification().getPartsMap() + " (PENDING)");
-			}
-			else {
-				s = (car == null) ? s.concat(": EMPTY") :
-						s.concat(": " + car.getCarModel().getCarModelSpecification().getPartsMap() + " (PENDING)");
-			}
-			status.add(s);
-		}
-		return status;
 	}
 
 	/**
@@ -147,9 +101,7 @@ public class AssemblyLine {
 	public List<Car> getUnfinishedCars() {
 		List<WorkStation> unFinishedStations = this.getWorkStations().stream()
 				.filter(w -> !w.stationTasksCompleted()).toList();
-		return unFinishedStations.stream()
-				.map(WorkStation::getCar)
-				.collect(Collectors.toList());
+		return unFinishedStations.stream().map(WorkStation::getCar).toList();
 	}
 }
 

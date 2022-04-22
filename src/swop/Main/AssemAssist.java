@@ -3,7 +3,6 @@ package swop.Main;
 import swop.Car.CarOrder;
 import swop.CarManufactoring.*;
 import swop.Exceptions.IllegalUserException;
-import swop.Exceptions.NotAllTasksCompleteException;
 import swop.Listeners.Listener;
 import swop.UI.LoginUI;
 import swop.Users.CarMechanic;
@@ -16,7 +15,7 @@ public class AssemAssist {
 
 	private final CarManufacturingController controller;
 	private User activeUser;
-	private List<Listener> listeners = new ArrayList<>();
+	private final List<Listener> listeners = new ArrayList<>();
 	final Map <String, User> userDatabase = new HashMap<>() {{
 		put("a", new GarageHolder("a"));
 		put("b", new CarMechanic("b"));
@@ -35,7 +34,7 @@ public class AssemAssist {
 
 	/**
 	 * Add a new listener to the list of listeners
-	 * @param listener
+	 * @param listener the listener to add
 	 */
 	public void addListener(Listener listener) {
 		this.listeners.add(listener);
@@ -43,7 +42,6 @@ public class AssemAssist {
 	
 	/**
 	 * all listeners getting triggered and execute taskCompleted()
-	 * @param minutes
 	 */
 	public void triggerListenersTaskCompletion() {
 		for (Listener l:this.listeners) l.taskCompleted();
@@ -129,26 +127,6 @@ public class AssemAssist {
 		else throw new IllegalUserException("addOrder()");
 	}
 	
-	/***********Methods used by manager************/
-
-	/**
-	 * advance the assembly line
-	 * @param minutes past since task started
-	 * @throws NotAllTasksCompleteException thrown if there are still tasks not done
-	 */
-	public void advanceAssembly(int minutes) throws NotAllTasksCompleteException {
-		if(isValidUser("manager")) this.controller.advanceAssembly();
-		else throw new IllegalUserException("advanceAssembly()");
-	}	
-
-	public List<String> getCurrentAssemblyStatus() {
-		return this.getAssemblyLine().getCurrentStatus();
-	}
-	
-	public List<String> getAdvancedAssemblyStatus() {
-		return this.controller.getAdvancedStatus();
-	}
-	
 	/***********Methods used by car mechanic************/
 
 	/**
@@ -158,7 +136,6 @@ public class AssemAssist {
 	 */
 	public void completeTask(Task task, int time) {
 		if (task == null) throw new IllegalArgumentException("task is null");
-		int totalTaskTime = 0;
 		if(isValidUser("car mechanic")) {
 			task.completeTask(time);
 			this.triggerListenersTaskCompletion();

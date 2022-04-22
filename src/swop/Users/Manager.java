@@ -2,10 +2,8 @@ package swop.Users;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 import swop.Exceptions.CancelException;
-import swop.Exceptions.NotAllTasksCompleteException;
 import swop.Main.AssemAssist;
 import swop.UI.ManagerUI;
 
@@ -30,15 +28,6 @@ public class Manager extends User{
 		} catch (CancelException e) {
 			e.printMessage();
 		}
-
-			try { // TODO: Remove Placeholder
-				String indicate = ManagerUI.indicateAdvance();
-				if (Objects.equals(indicate, "n")) return;
-				//advance assembly
-				this.advanceAssemblyLine(assemAssist);
-			} catch (CancelException e) {
-				e.printMessage();
-			}
 		}
 
 	/**
@@ -67,27 +56,4 @@ public class Manager extends User{
 	private void checkProductionStatistics() {
 		System.out.println("checkProductionStatistics not yet implemented");
 	}
-
-	/**
-	 * Class handling everything advancement of assembly line
-	 * @param assemAssist given the main program
-	 * @throws CancelException when "CANCEL" is the input
-	 */
-	private void advanceAssemblyLine(AssemAssist assemAssist) throws CancelException {
-		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
-		ManagerUI.displayAssemblyLine(assemAssist.getCurrentAssemblyStatus(), assemAssist.getAdvancedAssemblyStatus());
-		//confirm advance
-		String indicate = ManagerUI.confirmAdvance();
-		if (Objects.equals(indicate, "n")) return;
-		int time = ManagerUI.askTime();
-
-		try {
-			assemAssist.advanceAssembly(time);
-			ManagerUI.exit(assemAssist.getCurrentAssemblyStatus());
-			} 
-		catch (NotAllTasksCompleteException e) {
-			ManagerUI.printException(e);
-		}
-	}
-    
 }

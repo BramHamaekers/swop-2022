@@ -42,27 +42,6 @@ class AssemblyLineTest {
     }
 
     @Test
-    void getCurrentStatus() throws NotAllTasksCompleteException {
-        assertEquals(assem.getCurrentStatus(),Arrays.asList("Car Body Post: EMPTY", "Drivetrain Post: EMPTY"));
-//        assem.advance(car,60);
-//        assertEquals(assem.getCurrentStatus(),Arrays.asList(String.format("Car Body Post: %s (PENDING)",car.getPartsMap()),
-//                "Drivetrain Post: EMPTY"));
-        this.finishTasks();
-//        assertEquals(assem.getCurrentStatus(), Arrays.asList(String.format("Car Body Post: %s (FINISHED)",car.getPartsMap()),
-//                "Drivetrain Post: EMPTY"));
-    }
-
-    //TODO: to be deleted as a method in iteration 2
-    @Test
-    void getAdvancedStatus() throws NotAllTasksCompleteException {
-//        assertEquals(assem.getAdvancedStatus(car),Arrays.asList(String.format("Car Body Post: %s (PENDING)",car.getPartsMap()),
-//                "Drivetrain Post: EMPTY"));
-//        assem.advance(car, 60);
-//        assertEquals(assem.getAdvancedStatus(car), Arrays.asList(String.format("Car Body Post: %s (PENDING)",car.getPartsMap()),
-//                String.format("Drivetrain Post: %s (PENDING)", car.getPartsMap())));
-    }
-
-    @Test
     void getWorkStations() {
         assertEquals(assem.getWorkStations(), list);
         assertEquals(assem.getWorkStations(), List.copyOf(list));

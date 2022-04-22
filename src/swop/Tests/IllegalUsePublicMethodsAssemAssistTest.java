@@ -26,8 +26,6 @@ public class IllegalUsePublicMethodsAssemAssistTest {
 				() -> assem.addOrder(null));
 		//test activeUser = garage holder but wants to advance assambly: Should throw IllegalUserException
 		loadGarageHolder();
-		assertThrows(IllegalUserException.class,
-				() -> assem.advanceAssembly(0));
 		//test activeUser = manager but wants to complete a task: Should throw IllegalArgumentException
 		loadManager();
 		assertThrows(IllegalArgumentException.class,
