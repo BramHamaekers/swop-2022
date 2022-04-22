@@ -22,35 +22,17 @@ public class GarageHolderUI implements UI {
 	}
 
 	/**
-	 * Displays all orders ordered by current garage holder
+	 * Displays all orders ordered, splits unfinished and finished cars
+	 * @param carOrders a set of all the carorders
 	 */
 	public static void displayOrders(Set<CarOrder> carOrders) {
 		if (carOrders == null) {
 			System.out.println("No carOrders placed yet.");
 			return;
 		}
-		System.out.printf("%n============ Orders ============%n");
-		System.out.println("Pending:");
-		carOrders.stream()
-				.filter(o -> !o.isCompleted())
-				.forEach(p ->{
-					System.out.print("Order: "+ p.getID());
-					System.out.println(" -> " + p.getEstimatedCompletionTime());
-				});
-		System.out.println();
-		System.out.println("Completed:");
-
-		Set<CarOrder> completedSet = new TreeSet<>();
-
-		// Add to sorted set
-		carOrders.stream()
-				.filter(CarOrder::isCompleted)
-				.forEach(completedSet::add);
-
-		// Print sorted set
-		completedSet.forEach(c -> System.out.println("Order: " + c.getID() + " " + c.getCompletionTime().get("day") + " " + c.getCompletionTime().get("minutes")));
-		System.out.println();
-		System.out.println("=======================================");
+		DisplayStatus builder = new DisplayStatus();
+		garageHolderGenerator.generateOrderStatus(builder, carOrders);
+		System.out.println(builder.getDisplay());
 	}
 
 	public static String indicateYesNo(String action) throws CancelException {
@@ -101,9 +83,8 @@ public class GarageHolderUI implements UI {
 	 * @param order the estimated completion time to be displayed
 	 */
     public static void displayEstimatedTime(CarOrder order) {
-		System.out.printf("%n============ Estimated Completion Time ============%n");
-		System.out.println(order.getEstimatedCompletionTime());
-		System.out.println("=======================================");
+		DisplayStatus builder = new DisplayStatus();
+		garageHolderGenerator.generateEstimatedTime(builder, order);
 	}
 
 	/**

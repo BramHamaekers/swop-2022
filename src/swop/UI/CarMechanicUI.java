@@ -29,7 +29,7 @@ public class CarMechanicUI implements UI {
 		
 		public static void displayAvailableStations(List<WorkStation> stations){
 			DisplayStatus builder = new DisplayStatus();
-			carMechanicGenerator.generateMechanic(builder, stations);
+			carMechanicGenerator.generateStationList(builder, stations);
 			System.out.print(builder.getDisplay());
 		}
 	
@@ -39,22 +39,19 @@ public class CarMechanicUI implements UI {
 		}
 
 		public static void displayAvailableTasks(List<Task> taskList) {
-			System.out.printf("%n============ Available Tasks ============%n");
-			int number = -1;
-			if(taskList.isEmpty()) System.out.println("There are no tasks!");
-			else for(Task s: taskList){
-				number+=1;
-				System.out.println(s.getName() + " [" + number + "] ");
-			}
-			System.out.println("=======================================");
-			
+			DisplayStatus builder = new DisplayStatus();
+			carMechanicGenerator.generateAvailableTasks(builder,taskList);
+			System.out.print(builder.getDisplay());
 		}
 
 		public static void displayTaskInfo(List<String> info) throws CancelException {
-			System.out.println("-----------Info For Task----------");
-			for(String part:info) System.out.println(part);
-			System.out.println("----------------------------------");
-			System.out.println("Press enter when you are finished");
+//			System.out.println("-----------Info For Task----------");
+//			for(String part:info) System.out.println(part);
+//			System.out.println("----------------------------------");
+//			System.out.println("Press enter when you are finished");
+			DisplayStatus builder = new DisplayStatus();
+			carMechanicGenerator.generateTaskInfo(builder, info);
+			System.out.println(builder.getDisplay());
 			scanner.scanNextLineOfTypeString();
 		}
 

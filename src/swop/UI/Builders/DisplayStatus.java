@@ -52,5 +52,10 @@ public class DisplayStatus implements FormBuilder {
     public void appendSubTitle(String subtitle) {
         println("---" + subtitle + "---");
     }
+
+    @Override
+    public void initialQuestion(String question) {
+        println(question+"\n");
+    }
 }
 

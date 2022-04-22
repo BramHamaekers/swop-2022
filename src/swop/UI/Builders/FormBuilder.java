@@ -6,4 +6,5 @@ public interface FormBuilder {
     void endInfo();
     void addOption(String option, int number);
     void appendSubTitle(String subtitle);
+    void initialQuestion(String question);
 }

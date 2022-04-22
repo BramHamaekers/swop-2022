@@ -1,9 +1,6 @@
 package swop.Users;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import swop.CarManufactoring.Task;
 import swop.CarManufactoring.WorkStation;
