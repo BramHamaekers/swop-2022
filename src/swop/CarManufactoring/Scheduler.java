@@ -28,7 +28,7 @@ public class Scheduler {
 		put( "ModelB",70);
 		put( "ModelC",60);
 	}};
-	private final SortedSet<String> validAlgorithms = new TreeSet<>(Set.of("BATCH", "FIFO"));
+	private final List<String> validAlgorithms = List.of("BATCH", "FIFO");
 	private String algorithm;
 	private Map<String,String> batchOptions;
 
@@ -238,10 +238,10 @@ public class Scheduler {
 	}
 
 	/**
-	 * @return copy of the validAlgorithms set
+	 * @return copy of the validAlgorithms list
 	 */
-	public Set<String> getValidAlgorithms() {
-		return Set.copyOf(this.validAlgorithms);
+	public List<String> getValidAlgorithms() {
+		return List.copyOf(this.validAlgorithms);
 	}
 
     /**

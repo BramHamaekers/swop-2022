@@ -1,10 +1,10 @@
 package swop.Users;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import swop.Car.Car;
 import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
 import swop.UI.ManagerUI;
@@ -58,8 +58,8 @@ public class Manager extends User{
 	 */
 	private void AdaptSchedulingAlgorithm(AssemAssist assemAssist) throws CancelException {
 
-		Set<String> algorithms = assemAssist.getController().getScheduler().getValidAlgorithms();
-		int option = ManagerUI.selectAction(algorithms.stream().toList(), "Which algorithm do you want to enable?");
+		List<String> algorithms = assemAssist.getController().getScheduler().getValidAlgorithms();
+		int option = ManagerUI.selectAction(algorithms, "Which algorithm do you want to enable?");
 
 		switch (option) {
 			case 0 -> this.changeAlgorithmToBatch(assemAssist);
@@ -70,20 +70,23 @@ public class Manager extends User{
 	}
 
 	private void changeAlgorithmToBatch(AssemAssist assemAssist) {
-		List<Map<String, String>> partMaps =  assemAssist.getController().getCarQueue().stream().map(c -> c.getPartsMap()).toList();
-		Map<String, String> possibleBatch = new HashMap<>();
-		//TODO improve deze nest
-		for (Map<String, String> map1:partMaps) {
-			for (Map.Entry<String, String> entry1 : map1.entrySet()) {
-				int count = 0;
-				for (Map<String, String> map2:partMaps) {
-					for (Map.Entry<String, String> entry2 : map2.entrySet()) {
-						if(entry1.getKey().equals(entry2.getKey()) && entry1.getValue().equals(entry2.getValue()))
-								count++;
-					}
-				}
-				if(count>2)
-					possibleBatch.put(entry1.getKey(), entry1.getValue());
+		// get all parts from carrqueue
+		List<Map<String, String>> partMaps =  assemAssist.getController().getCarQueue().stream().map(Car::getPartsMap).toList();
+		List<Map<String, String>> possibleBatch = new ArrayList<>();
+
+		// map all selections on top of optionCategory
+		Map<String,List<String>> chosenParts = partMaps.stream()
+				.flatMap(map -> map.entrySet().stream())
+				.collect(Collectors.groupingBy(
+						Map.Entry::getKey,
+						Collectors.mapping(Map.Entry::getValue, Collectors.toList())));
+
+		for(Map.Entry<String,List<String>> entry: chosenParts.entrySet()){
+			Set<String> parts = new HashSet<>(entry.getValue());
+			for(String part: parts) {
+				int x = Collections.frequency(entry.getValue(), part);
+				if (x>2)
+					possibleBatch.add(Map.of(entry.getKey(),part));
 			}
 		}
 		
