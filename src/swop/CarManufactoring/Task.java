@@ -90,6 +90,7 @@ public enum Task {
 		
 	}
 	
+
 	/**
 	 * Return Set<Task> of all the tasks based on the chosen options
 	 * @param chosenOptions: the chosen options of a car

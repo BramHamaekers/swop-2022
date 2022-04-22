@@ -1,9 +1,10 @@
 package swop.Users;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
-
 import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
 import swop.UI.ManagerUI;
@@ -69,7 +70,24 @@ public class Manager extends User{
 	}
 
 	private void changeAlgorithmToBatch(AssemAssist assemAssist) {
-		System.out.println("not yet implemented");
+		List<Map<String, String>> partMaps =  assemAssist.getController().getCarQueue().stream().map(c -> c.getPartsMap()).toList();
+		Map<String, String> possibleBatch = new HashMap<>();
+		//TODO improve deze nest
+		for (Map<String, String> map1:partMaps) {
+			for (Map.Entry<String, String> entry1 : map1.entrySet()) {
+				int count = 0;
+				for (Map<String, String> map2:partMaps) {
+					for (Map.Entry<String, String> entry2 : map2.entrySet()) {
+						if(entry1.getKey().equals(entry2.getKey()) && entry1.getValue().equals(entry2.getValue()))
+								count++;
+					}
+				}
+				if(count>2)
+					possibleBatch.put(entry1.getKey(), entry1.getValue());
+			}
+		}
+		
+		System.out.println(possibleBatch);
 	}
 
 	private void checkProductionStatistics() {

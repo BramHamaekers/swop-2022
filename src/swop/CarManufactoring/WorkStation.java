@@ -54,10 +54,12 @@ public class WorkStation {
 		if(this.getCar() == null) {
 			return null;
 		}
-		Set<Task> tasks = this.getTasks();
+		Set<Task> tasksOfWorkstation = this.getTasks();
+		Set<Task> alltasksOfCar = this.getCar().getAllTasks();
+		tasksOfWorkstation.retainAll(alltasksOfCar);
 		//TODO filter tasks based on car in workstation
-		tasks.removeAll(this.getCar().getUncompletedTasks());
-		return tasks;
+		tasksOfWorkstation.removeAll(this.getCar().getUncompletedTasks());
+		return tasksOfWorkstation;
 	}
 
 	/**

@@ -7,6 +7,7 @@ import swop.CarManufactoring.Task;
 
 public class Car {
 	private Set<Task> uncompletedTasks;
+	private Set<Task> allTasks;
     private CarModel carModel;
 	private String estimatedCompletionTime; // TODO Dynamic
 	private Map<String, Integer> deliveryTime; // TODO
@@ -45,10 +46,22 @@ public class Car {
 		return Set.copyOf(uncompletedTasks);
 	}
 
+	/**
+	 * Sets all tasks that need to be done
+	 */
 	private void initiateUncompletedTasks() {
-		uncompletedTasks = Task.getAllTasks(this.getCarModel().getCarModelSpecification().getAllParts());
+		this.uncompletedTasks = Task.getAllTasks(this.getCarModel().getCarModelSpecification().getAllParts());
+		this.allTasks = this.getUncompletedTasks();
 	}
 
+	/**
+	 * Returns this.allTasks
+	 * @return all tasks from the car
+	 */
+	public Set<Task> getAllTasks(){
+		return this.allTasks;
+	}
+	
 	/**
 	 * Returns the car model of this car
 	 * @return carModel
