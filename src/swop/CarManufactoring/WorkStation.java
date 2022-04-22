@@ -12,7 +12,7 @@ import swop.Parts.CarOptionCategory;
 public class WorkStation {
 	private final String name;
 	private Car car;
-	private int timeCarInStation = 0;
+	private int currentWorkingTime = 0;
 
 	public WorkStation(String name) {
 		if (!isValidName(name)) {
@@ -47,7 +47,7 @@ public class WorkStation {
 	}
 
 	/**
-	 * Returns a set of uncompleted tasks
+	 * Returns a set of completed tasks
 	 * @return Set<Task>
 	 */
 	public Set<Task> getCompletedTasks() {
@@ -55,6 +55,7 @@ public class WorkStation {
 			return null;
 		}
 		Set<Task> tasks = this.getTasks();
+		//TODO filter tasks based on car in workstation
 		tasks.removeAll(this.getCar().getUncompletedTasks());
 		return tasks;
 	}
@@ -95,7 +96,7 @@ public class WorkStation {
 	}
 
 	public void setCar(Car car) {
-		this.timeCarInStation = 0;
+		this.currentWorkingTime = 0;
 		this.car = car;
 	}
 	
@@ -103,8 +104,8 @@ public class WorkStation {
 	 * Returns how long a car is currently in the workstation
 	 * @return
 	 */
-	public int getTimeCarInStation() {
-		return this.timeCarInStation;
+	public int getCurrentWorkingTime() {
+		return this.currentWorkingTime;
 	}
 	
 	/**
@@ -134,12 +135,11 @@ public class WorkStation {
 	 * @param time 
 	 * @throws IllegalArgumentException if car == null || task == null
 	 */
-	public int completeTask(Task task, int time) {
+	public void completeTask(Task task, int time) {
 		if(car == null) throw new IllegalArgumentException("No car in station");
 		if (task == null) throw new IllegalArgumentException("task is null");
 		this.getCar().completeTask(task);
-		this.timeCarInStation += time;
-		return this.timeCarInStation;
+		this.currentWorkingTime += time;
 	}
 
 	/**

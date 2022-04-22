@@ -1,8 +1,10 @@
 package swop.CarManufactoring;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import swop.Car.Car;
 import swop.Car.CarOrder;
@@ -16,8 +18,9 @@ public class CarManufacturingController {
 	private final AssemblyLine assemblyLine;
 	private final Scheduler scheduler;
 	private final Listener listener =
-			(int minutes) -> { try {
-				advanceAssembly(minutes);
+			() -> {
+				try {
+				advanceAssembly();
 			} catch (NotAllTasksCompleteException e) {
 
 			} };
@@ -53,8 +56,13 @@ public class CarManufacturingController {
 	 * @param minutes that have passed
 	 * @throws NotAllTasksCompleteException if all available tasks are not completed
 	 */
-	public void advanceAssembly(int minutes) throws NotAllTasksCompleteException {
+	public void advanceAssembly() throws NotAllTasksCompleteException {
 		//there is time to finish another car + there are cars on the queue
+		List<WorkStation> workStations = this.getAssembly().getWorkStations();
+		List<Integer> test = workStations.stream()
+				.map(w -> w.getCurrentWorkingTime())
+				.collect(Collectors.toList());
+		int minutes = Collections.max(test);
 		Car finishedCar;
 		if(canFinishNewCar(minutes) && !this.getCarQueue().isEmpty()) {
 			Car nextCar = this.getScheduler().getNextScheduledCar();

@@ -45,8 +45,8 @@ public class AssemAssist {
 	 * all listeners getting triggered and execute taskCompleted()
 	 * @param minutes
 	 */
-	public void triggerListenersTaskCompletion(int minutes) {
-		for (Listener l:this.listeners) l.taskCompleted(minutes);
+	public void triggerListenersTaskCompletion() {
+		for (Listener l:this.listeners) l.taskCompleted();
 	}
 	
 	/************************ Login *************************/
@@ -137,7 +137,7 @@ public class AssemAssist {
 	 * @throws NotAllTasksCompleteException thrown if there are still tasks not done
 	 */
 	public void advanceAssembly(int minutes) throws NotAllTasksCompleteException {
-		if(isValidUser("manager")) this.controller.advanceAssembly(minutes);
+		if(isValidUser("manager")) this.controller.advanceAssembly();
 		else throw new IllegalUserException("advanceAssembly()");
 	}	
 
@@ -160,8 +160,8 @@ public class AssemAssist {
 		if (task == null) throw new IllegalArgumentException("task is null");
 		int totalTaskTime = 0;
 		if(isValidUser("car mechanic")) {
-			totalTaskTime = task.completeTask(time);
-			this.triggerListenersTaskCompletion(totalTaskTime);
+			task.completeTask(time);
+			this.triggerListenersTaskCompletion();
 			}
 		else throw new IllegalUserException("completeTask()");
 		
