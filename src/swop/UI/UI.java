@@ -36,9 +36,9 @@ interface UI {
 	 * @param actions available actions for the user
 	 * @throws CancelException when the user types 'Cancel'
 	 */
-	static int selectAction(UserGenerator generator, List<String> actions) throws CancelException {
+	static int selectAction(UserGenerator generator, List<String> actions, String question) throws CancelException {
 		DisplayStatus builder = new DisplayStatus();
-		generator.selectAction(builder, actions);
+		generator.selectAction(builder, actions, question);
 		System.out.println(builder.getDisplay());
 		return scanner.scanNextLineOfTypeInt(0, actions.size());
 	}

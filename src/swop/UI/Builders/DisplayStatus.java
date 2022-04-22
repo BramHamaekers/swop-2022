@@ -45,11 +45,7 @@ public class DisplayStatus implements FormBuilder {
 
     @Override
     public void addOption(String option, int options) {
-        if (options == 2) {
-            print(String.format("%s [y] Yes [n] No: ", option));
-        } else {
-            print(String.format("%s %s: ", option, numberOptions(options)));
-        }
+        print(String.format("%s %s: ", option, numberOptions(options)));
     }
 
     @Override

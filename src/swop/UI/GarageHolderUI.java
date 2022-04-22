@@ -48,9 +48,7 @@ public class GarageHolderUI implements UI {
 				.forEach(completedSet::add);
 
 		// Print sorted set
-		completedSet.forEach(c -> {
-					System.out.println("Order: " + c.getID() + " " + c.getCompletionTime().get("day") + " " + c.getCompletionTime().get("minutes"));
-				});
+		completedSet.forEach(c -> System.out.println("Order: " + c.getID() + " " + c.getCompletionTime().get("day") + " " + c.getCompletionTime().get("minutes")));
 		System.out.println();
 		System.out.println("=======================================");
 	}
@@ -65,8 +63,8 @@ public class GarageHolderUI implements UI {
 	 * @param actions available actions for the user
 	 * @throws CancelException when the user types 'Cancel'
 	 */
-	public static int selectAction(List<String> actions) throws CancelException {
-		return UI.selectAction(garageHolderGenerator, actions);
+	public static int selectAction(List<String> actions, String question) throws CancelException {
+		return UI.selectAction(garageHolderGenerator, actions, question);
 	}
 
 	/**

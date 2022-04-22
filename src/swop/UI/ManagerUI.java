@@ -19,7 +19,7 @@ public class ManagerUI implements UI {
 	 * @param actions available actions for the user
 	 * @throws CancelException when the user types 'Cancel'
 	 */
-	public static int selectAction(List<String> actions) throws CancelException {
-		return UI.selectAction(managerGenerator, actions);
+	public static int selectAction(List<String> actions, String question) throws CancelException {
+		return UI.selectAction(managerGenerator, actions, question);
 	}
 }

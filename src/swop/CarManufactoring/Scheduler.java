@@ -28,7 +28,8 @@ public class Scheduler {
 		put( "ModelB",70);
 		put( "ModelC",60);
 	}};
-	private String algorithm = "FIFO";
+	private final SortedSet<String> validAlgorithms = new TreeSet<>(Set.of("BATCH", "FIFO"));
+	private String algorithm;
 	private Map<String,String> batchOptions;
 
     public Scheduler(CarManufacturingController carManufacturingController) {
@@ -36,8 +37,7 @@ public class Scheduler {
         this.controller = carManufacturingController;
         this.minutes = 0;
         this.workingDayMinutes = 960; // 06:00 -> 22:00
-        //create new iterator
-        setSchedulingAlgorithm("FIFO", null);
+        this.setSchedulingAlgorithm("FIFO", null);
     }
 
     /**
@@ -120,8 +120,8 @@ public class Scheduler {
 
 	/**
      * Returns the maximum time of a list of cars, that a car spends in a workstation
-     * @param cars
-     * @return
+     * @param cars all the cars to check for
+     * @return the maximum time for the list of cars
      */
     private int getMax(List<Car> cars) {
     	if(cars == null) return 0;
@@ -223,9 +223,25 @@ public class Scheduler {
      * @param algorithm selected priority algorithm
      */
     public void setSchedulingAlgorithm(String algorithm, Map<String,String> batchOptions) {
-		if(!algorithm.equals("FIFO") && !algorithm.equals("BATCH")) throw new IllegalArgumentException("Invalid Scheduling Algorithm");
+		if(!this.isValidSchedulingAlgorithm(algorithm)) throw new IllegalArgumentException("Invalid Scheduling Algorithm");
 		this.algorithm = algorithm;
 		if(algorithm.equals("BATCH")) this.batchOptions = batchOptions;
+	}
+
+	/**
+	 * Check if the given algorithm is a valid algorithm
+	 * @param algorithm the given algorithm
+	 * @return True if the given algorithm is valid
+	 */
+	private boolean isValidSchedulingAlgorithm(String algorithm) {
+		return this.getValidAlgorithms().contains(algorithm);
+	}
+
+	/**
+	 * @return copy of the validAlgorithms set
+	 */
+	public Set<String> getValidAlgorithms() {
+		return Set.copyOf(this.validAlgorithms);
 	}
 
     /**
@@ -256,7 +272,7 @@ public class Scheduler {
 							if(list.get(i).getPartsMap().get(prioSelection.getKey()).equals(prioSelection.getValue()))
 								return list.remove(i);
 					}
-				//if there is no more element that is comform the batch, return to fifo
+				//if there is no more element that is conform with the batch, return to fifo
 				return list.remove(0);
 			}
 		};

@@ -2,6 +2,7 @@ package swop.Users;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
@@ -37,11 +38,11 @@ public class Manager extends User{
 	@Override
 	public void selectAction(AssemAssist assemAssist) throws CancelException {
 		List<String> actions = Arrays.asList("Check Production Statistics", "Adapt Scheduling Algorithm", "Exit");
-		int action = ManagerUI.selectAction(actions);
+		int action = ManagerUI.selectAction(actions, "What would you like to do?");
 
 		switch (action) {
 			case 0 -> this.checkProductionStatistics();
-			case 1 -> this.AdaptSchedulingAlgorithm();
+			case 1 -> this.AdaptSchedulingAlgorithm(assemAssist);
 			case 2 -> {
 				// Do Nothing
 			}
@@ -49,8 +50,26 @@ public class Manager extends User{
 		}
 	}
 
-	private void AdaptSchedulingAlgorithm() {
-		System.out.println("Adapt Scheduling Algorithm not yet implemented");
+	/**
+	 * Ask the user which algorithm it would like to use and change the scheduling algorithm
+	 * @param assemAssist the central system the action is performed on
+	 * @throws CancelException when the user types 'cancel'
+	 */
+	private void AdaptSchedulingAlgorithm(AssemAssist assemAssist) throws CancelException {
+
+		Set<String> algorithms = assemAssist.getController().getScheduler().getValidAlgorithms();
+		int option = ManagerUI.selectAction(algorithms.stream().toList(), "Which algorithm do you want to enable?");
+
+		switch (option) {
+			case 0 -> this.changeAlgorithmToBatch(assemAssist);
+			case 1 -> assemAssist.getController().getScheduler().setSchedulingAlgorithm("FIFO", null);
+			default -> throw new IllegalArgumentException("Unexpected value: " + option);
+		}
+
+	}
+
+	private void changeAlgorithmToBatch(AssemAssist assemAssist) {
+		System.out.println("not yet implemented");
 	}
 
 	private void checkProductionStatistics() {

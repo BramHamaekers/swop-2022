@@ -42,7 +42,7 @@ public class GarageHolder extends User{
     @Override
     public void selectAction(AssemAssist assemAssist) throws CancelException {
         List<String> actions = Arrays.asList("Place new order", "Check order details", "Exit");
-        int action = GarageHolderUI.selectAction(actions);
+        int action = GarageHolderUI.selectAction(actions, "What would you like to do?");
 
         switch (action) {
             case 0 -> this.generateOrder(assemAssist);

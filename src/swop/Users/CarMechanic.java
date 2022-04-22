@@ -38,7 +38,7 @@ public class CarMechanic extends User{
 	@Override
 	public void selectAction(AssemAssist assemAssist) throws CancelException {
 		List<String> actions = Arrays.asList("performAssemblyTask", "checkAssemblyLineStatus", "Exit");
-		int action = CarMechanicUI.selectAction(actions);
+		int action = CarMechanicUI.selectAction(actions, "What would you like to do?");
 
 		switch (action) {
 			case 0 -> this.performAssemblyTask(assemAssist);

@@ -7,8 +7,8 @@ import java.util.List;
 
 public class UserGenerator {
 
-    public void selectAction(FormBuilder builder, List<String> actions) {
-        builder.appendTitle("What would you like to do?");
+    public void selectAction(FormBuilder builder, List<String> actions, String question) {
+        builder.appendTitle(question);
         Iterator<String> it = actions.iterator();
         int i = 0;
         while(it.hasNext()) {
@@ -16,6 +16,6 @@ public class UserGenerator {
             i++;
         }
         builder.endInfo();
-        builder.addOption("Select action", actions.size());
+        builder.addOption("Select option", actions.size());
     }
 }
