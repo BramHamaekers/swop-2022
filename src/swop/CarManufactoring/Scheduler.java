@@ -2,26 +2,21 @@ package swop.CarManufactoring;
 import swop.Car.Car;
 
 import java.util.*;
-import java.util.stream.Collectors;
+
 
 interface costumIterator<T> {
 	/**
-	 * checks if the iterator has another element to return 
-	 * @return
+	 * iterator standard hasnext method
+	 * @return whether the iterator has another element to return
 	 */
 	boolean hasNext();
 	
 	/**
 	 * Returns next element
-	 * @return
+	 * @param algorithm the algorithm selection (for now fifo or batch)
+	 * @return next element in the list for the iterator
 	 */
 	T next(String algorithm);
-	
-	/**
-	 * Replaces the old iterated list with a new one
-	 * @param l
-	 */
-	void refreshList(List<T> l);
 }
 
 public class Scheduler {
@@ -226,7 +221,7 @@ public class Scheduler {
 
     /**
      * set the current schedulingAlgorithm to the new given algorithms
-     * @param algorithm
+     * @param algorithm selected priority algorithm
      */
     public void setSchedulingAlgorithm(String algorithm, Map<String,String> batchOptions) {
 		if(!algorithm.equals("FIFO") && !algorithm.equals("BATCH")) throw new IllegalArgumentException("Invalid Scheduling Algorithm");
@@ -247,11 +242,7 @@ public class Scheduler {
     
 	public costumIterator<Car> iterator(List<Car> l) {
 		return new costumIterator<>() {
-			List<Car> list = new LinkedList<>(l);
-			
-			public void refreshList(List<Car> l) {
-				list = new LinkedList<>(l);
-			}
+			final List<Car> list = new LinkedList<>(l);
 
 			public boolean hasNext() {
 				return list.size() > 0;
