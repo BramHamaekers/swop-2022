@@ -64,12 +64,13 @@ public class Manager extends User{
 		switch (option) {
 			case 0 -> this.changeAlgorithmToBatch(assemAssist);
 			case 1 -> assemAssist.getController().getScheduler().setSchedulingAlgorithm("FIFO", null);
+			case 2 -> {}
 			default -> throw new IllegalArgumentException("Unexpected value: " + option);
 		}
 
 	}
 
-	private void changeAlgorithmToBatch(AssemAssist assemAssist) {
+	private void changeAlgorithmToBatch(AssemAssist assemAssist) throws CancelException {
 		// get all parts from carrqueue
 		List<Map<String, String>> partMaps =  assemAssist.getController().getCarQueue().stream().map(Car::getPartsMap).toList();
 		List<Map<String, String>> possibleBatch = new ArrayList<>();
@@ -89,8 +90,13 @@ public class Manager extends User{
 					possibleBatch.add(Map.of(entry.getKey(),part));
 			}
 		}
-		
-		System.out.println(possibleBatch);
+		if (!possibleBatch.isEmpty()) {
+			Map<String, String> selection = ManagerUI.getBatchSelection(possibleBatch);
+			assemAssist.getController().getScheduler().setSchedulingAlgorithm("BATCH", selection);
+		}
+		else {
+			ManagerUI.printError("No possible batchoptions, too few cars with the same configurations give priority");
+		}
 	}
 
 	private void checkProductionStatistics() {

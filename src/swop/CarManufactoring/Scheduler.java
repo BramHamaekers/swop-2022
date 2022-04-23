@@ -28,7 +28,7 @@ public class Scheduler {
 		put( "ModelB",70);
 		put( "ModelC",60);
 	}};
-	private final List<String> validAlgorithms = List.of("BATCH", "FIFO");
+	private final List<String> validAlgorithms = List.of("BATCH", "FIFO", "Cancel selection");
 	private String algorithm;
 	private Map<String,String> batchOptions;
 

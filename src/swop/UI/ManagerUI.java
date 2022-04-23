@@ -1,9 +1,12 @@
 package swop.UI;
 
 import swop.Exceptions.CancelException;
+import swop.UI.Builders.DisplayStatus;
+import swop.UI.Builders.FormBuilder;
 import swop.UI.Generators.ManagerGenerator;
 
 import java.util.List;
+import java.util.Map;
 
 public class ManagerUI implements UI {
 
@@ -21,5 +24,18 @@ public class ManagerUI implements UI {
 	 */
 	public static int selectAction(List<String> actions, String question) throws CancelException {
 		return UI.selectAction(managerGenerator, actions, question);
+	}
+
+	public static Map<String,String> getBatchSelection(List<Map<String, String>> possibleBatch) throws CancelException {
+		DisplayStatus builder = new DisplayStatus();
+		managerGenerator.generateCarModels(builder, possibleBatch);
+		System.out.println(builder.getDisplay());
+		int selection = scanner.scanNextLineOfTypeInt(0, possibleBatch.size());
+		System.out.println("Batch changed to: " + selection);
+		return possibleBatch.get(selection);
+	}
+
+	public static void printError(String e) {
+		UI.printError(e);
 	}
 }
