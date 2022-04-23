@@ -74,6 +74,22 @@ public class Manager extends User{
 	private void changeAlgorithmToBatch(AssemAssist assemAssist) throws CancelException {
 		// get all parts from carrqueue
 		List<Map<String, String>> partMaps =  assemAssist.getController().getCarQueue().stream().map(Car::getPartsMap).toList();
+		List<Map<String, String>> possibleBatch = getBatchOptions(partMaps);
+		if (!possibleBatch.isEmpty()) {
+			Map<String, String> selection = ManagerUI.getBatchSelection(possibleBatch);
+			assemAssist.getController().getScheduler().setSchedulingAlgorithm("BATCH", selection);
+		}
+		else {
+			ManagerUI.printError("No possible batchoptions, too few cars with the same configurations give priority");
+		}
+	}
+
+	/**
+	 * Returns the possible batch options given a list of part maps
+	 * @param partMaps
+	 * @return List of batch options
+	 */
+	private List<Map<String, String>> getBatchOptions(List<Map<String, String>> partMaps) {
 		List<Map<String, String>> possibleBatch = new ArrayList<>();
 
 		// map all selections on top of optionCategory
@@ -91,19 +107,11 @@ public class Manager extends User{
 					possibleBatch.add(Map.of(entry.getKey(),part));
 			}
 		}
-		if (!possibleBatch.isEmpty()) {
-			Map<String, String> selection = ManagerUI.getBatchSelection(possibleBatch);
-			assemAssist.getController().getScheduler().setSchedulingAlgorithm("BATCH", selection);
-		}
-		else {
-			ManagerUI.printError("No possible batchoptions, too few cars with the same configurations give priority");
-		}
+		return possibleBatch;
 	}
 
-	private void checkProductionStatistics(AssemAssist assemAssist) {
-		// the average and median number of cars produced in a working day,
-		// as well as the exact numbers for the last 2 days,
-		// the average and median delay on an order, 
+	private void checkProductionStatistics(AssemAssist assemAssist) throws CancelException {
+		//TODO -> the average and median delay on an order, 
 		// together with the 2 last delays and the days they occurred. 
 		
 		List<Map<String, Integer>> finishedCarTimes = new LinkedList<Map<String, Integer>>(assemAssist.getController().getFinishedCars().stream().map(Car::getDeliveryTime).toList());
@@ -112,7 +120,48 @@ public class Manager extends User{
 			return;
 		}
 		
-		/************calculating the average and median number of cars produced in a working day************/
+		/************the average and median + the exact numbers cars for the last 2 day************/
+		List<Integer> numberOfCarsEachDay = getFinishedCarsEachDay(finishedCarTimes);	
+		//average
+		double average = numberOfCarsEachDay.stream().mapToDouble(d -> d).average().getAsDouble();
+		//median
+		double median = getMedianOfList(numberOfCarsEachDay);
+		ManagerUI.showProductionStatistics(new HashMap<String,Double>(){{
+			put( "Average cars finished", average);
+			put( "Median cars finished", median);
+			if(numberOfCarsEachDay.size() < 2) {
+				put( "Today completed cars", numberOfCarsEachDay.get(0).doubleValue());
+				put( "Yesterday completed cars", null);
+			}
+			else {
+				put( "Today completed cars", numberOfCarsEachDay.get(-1).doubleValue());
+				put( "Yesterday completed cars", numberOfCarsEachDay.get(-2).doubleValue());
+			}
+		}});
+	}
+
+	/**
+	 * Calculates the median value of a given list.
+	 * @param numberOfCarsEachDay
+	 * @return median
+	 */
+	private double getMedianOfList(List<Integer> numberOfCarsEachDay) {
+		double median = 0;
+		 if (numberOfCarsEachDay.size() % 2 == 0) {
+			 median = (numberOfCarsEachDay.get((numberOfCarsEachDay.size()/2) - 1) +
+					  numberOfCarsEachDay.get(numberOfCarsEachDay.size()/2)/2);
+		 }
+		 else
+			 median = Math.ceil(numberOfCarsEachDay.get(numberOfCarsEachDay.size()/2));
+		return median;
+	}
+	
+	/**
+	 * Returns a list of all the car finished each day: index = the day.
+	 * @param finishedCarTimes
+	 * @return List<Integer> numberOfCarsEachDay
+	 */
+	private List<Integer> getFinishedCarsEachDay(List<Map<String, Integer>> finishedCarTimes) {
 		List<Integer> numberOfCarsEachDay = new ArrayList<>();
 		
 		// calculate the cars for each day
@@ -123,34 +172,6 @@ public class Manager extends User{
 			numberOfCarsEachDay.set(day, numberOfCarsEachDay.get(day) + 1);			
 		}
 		Collections.sort(numberOfCarsEachDay);
-		
-		//average
-		double average = numberOfCarsEachDay.stream().mapToDouble(d -> d).average().getAsDouble();
-		
-		//median
-		double median = 0;
-		 if (numberOfCarsEachDay.size() % 2 == 0) {
-			 median = (numberOfCarsEachDay.get((numberOfCarsEachDay.size()/2) - 1) +
-					  numberOfCarsEachDay.get(numberOfCarsEachDay.size()/2)/2);
-		 }
-		 else
-			 median = Math.ceil(numberOfCarsEachDay.get(numberOfCarsEachDay.size()/2));
-		 
-		 //TODO use ManagerUI
-		 System.out.println();
-		 System.out.println("average: " + average + "median: " + median);
-		 
-		 /************the exact numbers for the last 2 day************/
-		 if(numberOfCarsEachDay.size() < 2) {
-			//TODO use ManagerUI
-			 System.out.println("Yesterdays completed cars: " + numberOfCarsEachDay.get(0));
-			 System.out.println("The day before completed cars: No Info");
-		 }
-		 else {
-			//TODO use ManagerUI
-			 System.out.println("Yesterdays completed cars: " + numberOfCarsEachDay.get(-1));
-			 System.out.println("The day before completed cars: " + numberOfCarsEachDay.get(-2));
-		 }
-		 
+		return numberOfCarsEachDay;
 	}
 }

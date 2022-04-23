@@ -1,11 +1,13 @@
 package swop.UI.Generators;
 
 import swop.UI.Builders.DisplayStatus;
+import swop.UI.Builders.FormBuilder;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class ManagerGenerator extends UserGenerator {
     public void generateBatchSelection(DisplayStatus builder, List<Map<String, String>> possibleBatch) {
@@ -28,5 +30,18 @@ public class ManagerGenerator extends UserGenerator {
             i++;
         }
         builder.addOption("Select option", actions.size());
+    }
+    
+    public void generateProductionStatistics(DisplayStatus builder, Map<String, Double> productionStatistics){
+        builder.appendTitle("Production Statistics");
+        builder.appendSubTitle("Cars Produced info");
+        for (Entry<String, Double> s : productionStatistics.entrySet()) {
+        	if(s.getValue() != null)
+        		builder.inputInfo(s.getKey()+ ": " + s.getValue());
+        	else
+        		builder.inputInfo(s.getKey()+ ": " + "No info");
+        }
+        builder.endInfo();
+        builder.inputInfo("Done viewing -> press enter");
     }
 }

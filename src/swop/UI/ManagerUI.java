@@ -46,4 +46,11 @@ public class ManagerUI implements UI {
 	public static int selectFlow(List<String> actions, String question) throws CancelException {
 		return UI.selectAction(managerGenerator, actions, question);
 	}
+	
+	public static void showProductionStatistics(Map<String, Double> productionStatistics) throws CancelException {
+		DisplayStatus builder = new DisplayStatus();
+		managerGenerator.generateProductionStatistics(builder, productionStatistics);
+		System.out.println(builder.getDisplay());
+		scanner.scanNextLineOfTypeString();
+	}
 }
