@@ -22,13 +22,17 @@ public class ManagerUI implements UI {
 	 * @param actions available actions for the user
 	 * @throws CancelException when the user types 'Cancel'
 	 */
-	public static int selectAction(List<String> actions, String question) throws CancelException {
-		return UI.selectAction(managerGenerator, actions, question);
+	public static int selectAction(List<String> actions, String currentAlgo) throws CancelException {
+		DisplayStatus builder = new DisplayStatus();
+		managerGenerator.generateAlgorithmSelection(builder, actions, currentAlgo);
+		System.out.println(builder.getDisplay());
+		//TODO: check if we cant move these to generator aswell
+		return scanner.scanNextLineOfTypeInt(0, actions.size());
 	}
 
 	public static Map<String,String> getBatchSelection(List<Map<String, String>> possibleBatch) throws CancelException {
 		DisplayStatus builder = new DisplayStatus();
-		managerGenerator.generateCarModels(builder, possibleBatch);
+		managerGenerator.generateBatchSelection(builder, possibleBatch);
 		System.out.println(builder.getDisplay());
 		int selection = scanner.scanNextLineOfTypeInt(0, possibleBatch.size());
 		System.out.println("Batch changed to: " + selection);
@@ -37,5 +41,9 @@ public class ManagerUI implements UI {
 
 	public static void printError(String e) {
 		UI.printError(e);
+	}
+
+	public static int selectFlow(List<String> actions, String question) throws CancelException {
+		return UI.selectAction(managerGenerator, actions, question);
 	}
 }

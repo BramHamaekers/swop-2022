@@ -39,7 +39,7 @@ public class Manager extends User{
 	@Override
 	public void selectAction(AssemAssist assemAssist) throws CancelException {
 		List<String> actions = Arrays.asList("Check Production Statistics", "Adapt Scheduling Algorithm", "Exit");
-		int action = ManagerUI.selectAction(actions, "What would you like to do?");
+		int action = ManagerUI.selectFlow(actions, "What would you like to do?");
 
 		switch (action) {
 			case 0 -> this.checkProductionStatistics();
@@ -59,7 +59,8 @@ public class Manager extends User{
 	private void AdaptSchedulingAlgorithm(AssemAssist assemAssist) throws CancelException {
 
 		List<String> algorithms = assemAssist.getController().getScheduler().getValidAlgorithms();
-		int option = ManagerUI.selectAction(algorithms, "Which algorithm do you want to enable?");
+		String active = assemAssist.getController().getScheduler().getSchedulingAlgorithm();
+		int option = ManagerUI.selectAction(algorithms, active);
 
 		switch (option) {
 			case 0 -> this.changeAlgorithmToBatch(assemAssist);

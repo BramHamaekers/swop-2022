@@ -55,7 +55,7 @@ public class DisplayStatus implements FormBuilder {
 
     @Override
     public void initialQuestion(String question) {
-        println(question+"\n");
+        println("\n" + question);
     }
 }
 

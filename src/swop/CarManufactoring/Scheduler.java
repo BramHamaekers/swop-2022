@@ -214,7 +214,7 @@ public class Scheduler {
      * Returns the current schedulingAlgorithm
      * @return this.schedulingAlgorithm
      */
-    private String getSchedulingAlgorithm() {
+	public String getSchedulingAlgorithm() {
         return this.algorithm;
     }
 
