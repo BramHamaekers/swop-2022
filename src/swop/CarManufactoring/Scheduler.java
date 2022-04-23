@@ -226,6 +226,8 @@ public class Scheduler {
 		if(!this.isValidSchedulingAlgorithm(algorithm)) throw new IllegalArgumentException("Invalid Scheduling Algorithm");
 		this.algorithm = algorithm;
 		if(algorithm.equals("BATCH")) this.batchOptions = batchOptions;
+		//update the est. completionTime from the car in the queue
+		this.controller.updateEstimatedCompletionTime();
 	}
 
 	/**
@@ -269,8 +271,9 @@ public class Scheduler {
 				if(algorithm.equals("BATCH"))
 					for(int i = 0; i<list.size();i++) {
 						for(Map.Entry<String,String> prioSelection : batchOptions.entrySet())
-							if(list.get(i).getPartsMap().get(prioSelection.getKey()).equals(prioSelection.getValue()))
-								return list.remove(i);
+							if(list.get(i).getPartsMap().get(prioSelection.getKey()) != null)
+									if(list.get(i).getPartsMap().get(prioSelection.getKey()).equals(prioSelection.getValue()))
+										return list.remove(i);
 					}
 				//if there is no more element that is conform with the batch, return to fifo
 				return list.remove(0);

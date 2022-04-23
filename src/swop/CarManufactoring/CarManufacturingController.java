@@ -81,7 +81,7 @@ public class CarManufacturingController {
 	/**
 	 * For every car in the carqueue, update the estimated completiontime according to the minutes passed.
 	 */
-	private void updateEstimatedCompletionTime() {
+	public void updateEstimatedCompletionTime() {
 		this.carQueue.forEach(car -> car.setEstimatedCompletionTime(scheduler.getEstimatedCompletionTime(car)));
 		this.assemblyLine.getWorkStations().forEach(w -> {
 			if (w.getCar() != null)
