@@ -70,12 +70,15 @@ public class Car {
 		return carModel;
 	}
 
-	//TODO this is a placeholder function untill the different models are implemented
+	/**
+	 * get name of carModel
+	 * @return this.carModel.getName()
+	 */
 	public String getCarModelName() {
 		return this.carModel.getName();
 	}
 	
-	public void setCarModel(CarModel carModel) {
+	private void setCarModel(CarModel carModel) {
 		if (carModel == null)
 			throw new IllegalArgumentException("car model is null");
 		this.carModel = carModel;
@@ -87,15 +90,9 @@ public class Car {
 	 * @return value part
 	 */
 	public String getValueOfPart(String category) {
-		if (this.carModel == null) {
-			throw new IllegalArgumentException("The car has no carmodel");
-		}
 		return this.getCarModel().getCarModelSpecification().getValueOfPart(category);
 	}
 	public  Map<String, String> getPartsMap() {
-		if (this.carModel == null) {
-			throw new IllegalArgumentException("The car has no carmodel");
-		}
 		return this.getCarModel().getCarModelSpecification().getAllParts();
 	}
 

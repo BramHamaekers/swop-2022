@@ -20,9 +20,9 @@ public class CarModelTest {
         CarModel modelC = new ModelC();
 
         // Test getName()
-        assertEquals(modelA.getName(), "ModelA");
-        assertEquals(modelB.getName(), "ModelB");
-        assertEquals(modelC.getName(), "ModelC");
+        assertEquals("ModelA", modelA.getName());
+        assertEquals( "ModelB", modelB.getName());
+        assertEquals( "ModelC", modelC.getName());
     }
 
     @Test
@@ -63,7 +63,7 @@ public class CarModelTest {
                 "Airco", List.of("manual","automatic", "None"),
                 "Wheels", List.of("winter", "comfort", "sports")
         );
-        assertEquals(modelA.getValidOptions(), modelAOptions);
+        assertEquals(modelAOptions, modelA.getValidOptions());
 
     }
 
@@ -83,7 +83,7 @@ public class CarModelTest {
         CarModelSpecification specification = new CarModelSpecification(options);
         //Test setCarModelSpecification
         modelA.setCarModelSpecification(specification);
-        assertEquals(modelA.getCarModelSpecification(), specification);
+        assertEquals(specification, modelA.getCarModelSpecification());
     }
 
     @Test

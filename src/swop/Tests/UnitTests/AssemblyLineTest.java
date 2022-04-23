@@ -1,8 +1,6 @@
 package swop.Tests.UnitTests;
 
 import org.junit.jupiter.api.Test;
-import swop.Car.Car;
-import swop.Car.CarModelSpecification;
 import swop.CarManufactoring.*;
 import swop.Exceptions.NotAllTasksCompleteException;
 

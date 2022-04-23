@@ -26,13 +26,13 @@ class CarModelSpecificationTest {
     @Test
     void getAllParts() {
         CarModelSpecification specification = new CarModelSpecification(validOptions);
-        assertEquals(specification.getAllParts(), validOptions);
+        assertEquals(validOptions, specification.getAllParts());
     }
 
     @Test
     void getValueOfPart() {
         CarModelSpecification specification = new CarModelSpecification(validOptions);
-        assertEquals(specification.getValueOfPart("Body"), "sedan");
+        assertEquals("sedan", specification.getValueOfPart("Body"));
     }
 
     @Test

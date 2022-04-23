@@ -44,7 +44,7 @@ public enum Task {
 	
 	/**
 	 * Will complete the task of the car from the workstation this task is assigned to
-	 * @param time 
+	 * @param time time it took to complete this task
 	 */
 	public void completeTask(int time) {
 		this.getWorkStation().completeTask(this, time);
@@ -80,7 +80,7 @@ public enum Task {
 	 * @return The description of the given Task consisting of the different parts
 	 */
 	public List<String> getTaskDescription() {
-		List<String> taskExplenations = new LinkedList<>();;
+		List<String> taskExplenations = new LinkedList<>();
 		//retrieve all parts that are part of this task
 		for(String part : this.getParts()) {
 			if (this.getWorkStation().isPartOfCurrentCarInWorkStation(part)) 
@@ -98,10 +98,10 @@ public enum Task {
 	 */
 	public static Set<Task> getAllTasks(Map<String, String> chosenOptions) {
 		Set<String> chosenParts = chosenOptions.keySet();
-		Set<Task> alltasks = getAllTasks();
+		Set<Task> allTasks = getAllTasks();
 		Set<Task> tasks = new HashSet<>();
 		//filter the tasks based on what parts are chosen
-		for(Task task: alltasks) {
+		for(Task task: allTasks) {
 			List<String> parts = task.getParts();
 			parts.retainAll(chosenParts);
 			if(!parts.isEmpty()) tasks.add(task);
@@ -131,8 +131,8 @@ public enum Task {
 	}
 	/**
 	 * Returns instructions for a given part
-	 * @param carOptionCategory
-	 * @return
+	 * @param category the carOptionCategory to get the description from
+	 * @return this.partsMap.get(category)
 	 */
 	public String getDescription(String category) {
 		return this.partsMap.get(category);
