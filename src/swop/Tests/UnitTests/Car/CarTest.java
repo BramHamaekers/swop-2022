@@ -1,5 +1,5 @@
 
-package swop.Tests.UnitTests;
+package swop.Tests.UnitTests.Car;
 
 import org.junit.jupiter.api.Test;
 import swop.Car.Car;
