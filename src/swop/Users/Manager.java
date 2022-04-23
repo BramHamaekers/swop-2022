@@ -42,7 +42,7 @@ public class Manager extends User{
 		int action = ManagerUI.selectFlow(actions, "What would you like to do?");
 
 		switch (action) {
-			case 0 -> this.checkProductionStatistics();
+			case 0 -> this.checkProductionStatistics(assemAssist);
 			case 1 -> this.AdaptSchedulingAlgorithm(assemAssist);
 			case 2 -> {
 				// Do Nothing
@@ -100,7 +100,57 @@ public class Manager extends User{
 		}
 	}
 
-	private void checkProductionStatistics() {
-		System.out.println("checkProductionStatistics not yet implemented");
+	private void checkProductionStatistics(AssemAssist assemAssist) {
+		// the average and median number of cars produced in a working day,
+		// as well as the exact numbers for the last 2 days,
+		// the average and median delay on an order, 
+		// together with the 2 last delays and the days they occurred. 
+		
+		List<Map<String, Integer>> finishedCarTimes = new LinkedList<Map<String, Integer>>(assemAssist.getController().getFinishedCars().stream().map(Car::getDeliveryTime).toList());
+		if(finishedCarTimes.isEmpty()) {
+			ManagerUI.printError("Not enough data to give you statistics");
+			return;
+		}
+		
+		/************calculating the average and median number of cars produced in a working day************/
+		List<Integer> numberOfCarsEachDay = new ArrayList<>();
+		
+		// calculate the cars for each day
+		while(!finishedCarTimes.isEmpty()) {
+			int day = finishedCarTimes.remove(0).get("day");
+			while((numberOfCarsEachDay.size()-1) < day)
+				numberOfCarsEachDay.add(0);
+			numberOfCarsEachDay.set(day, numberOfCarsEachDay.get(day) + 1);			
+		}
+		Collections.sort(numberOfCarsEachDay);
+		
+		//average
+		double average = numberOfCarsEachDay.stream().mapToDouble(d -> d).average().getAsDouble();
+		
+		//median
+		double median = 0;
+		 if (numberOfCarsEachDay.size() % 2 == 0) {
+			 median = (numberOfCarsEachDay.get((numberOfCarsEachDay.size()/2) - 1) +
+					  numberOfCarsEachDay.get(numberOfCarsEachDay.size()/2)/2);
+		 }
+		 else
+			 median = Math.ceil(numberOfCarsEachDay.get(numberOfCarsEachDay.size()/2));
+		 
+		 //TODO use ManagerUI
+		 System.out.println();
+		 System.out.println("average: " + average + "median: " + median);
+		 
+		 /************the exact numbers for the last 2 day************/
+		 if(numberOfCarsEachDay.size() < 2) {
+			//TODO use ManagerUI
+			 System.out.println("Yesterdays completed cars: " + numberOfCarsEachDay.get(0));
+			 System.out.println("The day before completed cars: No Info");
+		 }
+		 else {
+			//TODO use ManagerUI
+			 System.out.println("Yesterdays completed cars: " + numberOfCarsEachDay.get(-1));
+			 System.out.println("The day before completed cars: " + numberOfCarsEachDay.get(-2));
+		 }
+		 
 	}
 }

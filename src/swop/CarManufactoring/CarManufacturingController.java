@@ -14,6 +14,7 @@ import swop.Main.AssemAssist;
 public class CarManufacturingController {
 
 	private final LinkedList<Car> carQueue;
+	private final LinkedList<Car> finishedCars = new LinkedList<>();
 	private final AssemblyLine assemblyLine;
 	private final Scheduler scheduler;
 	private final Listener listener = () -> {
@@ -70,6 +71,7 @@ public class CarManufacturingController {
 
 		if (finishedCar != null) {
 			setFinishedCarDeliveryTime(minutes, finishedCar);
+			this.finishedCars.add(finishedCar);
 		}
 		//update schedular time
 		this.updateScheduleTime(minutes);
@@ -158,5 +160,9 @@ public class CarManufacturingController {
 	 */
 	public List<Car> getCarQueue() {
 		return List.copyOf(this.carQueue);
+	}
+
+	public List<Car> getFinishedCars() {
+		return new LinkedList<>(finishedCars);
 	}
 }
