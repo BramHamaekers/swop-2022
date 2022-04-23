@@ -70,14 +70,6 @@ public class CarModelSpecification {
 				.collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 	}
 
-	public String getPart(String key){
-		return this.chosenOptions.get(key);
-	}
-
-	public Map<String, String> getPartsMap() {
-		return this.getAllParts();
-	}
-
 	/**
 	 * get a given part value from the part
 	 * @param selectedCategory the selected category fe. Body
@@ -87,7 +79,7 @@ public class CarModelSpecification {
 		if(selectedCategory == null) {
 			 throw new IllegalArgumentException("Can't retrieve value (part = null)");
 		}
-		if (!this.chosenOptions.containsKey(selectedCategory)) {
+		if (!isPartInChosenOptions(selectedCategory)) {
 			throw new IllegalArgumentException("invalid category");
 		}
 		return this.chosenOptions.get(selectedCategory);
@@ -95,12 +87,11 @@ public class CarModelSpecification {
 	
 	/**
 	 * Checks if a part is chosen or not
-	 * @param part
-	 * @return
+	 * @param part the part to check
+	 * @return True if part is in this.chosenOptions
 	 */
-	public boolean isPartinChosenOptions(String part) {
+	public boolean isPartInChosenOptions(String part) {
 		if(part == null) throw new IllegalArgumentException("Can't retrieve value (part = null)");
-		if(this.chosenOptions.containsKey(part)) return true;
-		return false;
+		return this.chosenOptions.containsKey(part);
 	}
 }

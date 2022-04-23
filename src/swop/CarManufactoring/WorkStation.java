@@ -7,7 +7,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import swop.Car.Car;
-import swop.Parts.CarOptionCategory;
 
 public class WorkStation {
 	private final String name;
@@ -104,7 +103,7 @@ public class WorkStation {
 	
 	/**
 	 * Returns how long a car is currently in the workstation
-	 * @return
+	 * @return this.currentWorkingTime
 	 */
 	public int getCurrentWorkingTime() {
 		return this.currentWorkingTime;
@@ -116,12 +115,12 @@ public class WorkStation {
 	public boolean isPartOfCurrentCarInWorkStation(String part) {
 		Car car = this.getCar();
 		if(car == null) return false;
-		return car.getCarModel().getCarModelSpecification().isPartinChosenOptions(part);
+		return car.getCarModel().getCarModelSpecification().isPartInChosenOptions(part);
 	}
 	
 	/**
-	 * Tries to get value of a part
-	 * @param category
+	 * Tries to get value of a carOptionCategory
+	 * @param category the given carOptionCategory to get the value of
 	 * @throws IllegalArgumentException if car == null || part == null
 	 */
 	public String getValueOfPart(String category) {
@@ -134,7 +133,7 @@ public class WorkStation {
 	/**
 	 * Tries to complete a task 
 	 * @param task to complete
-	 * @param time 
+	 * @param time Time it took to complete the task
 	 * @throws IllegalArgumentException if car == null || task == null
 	 */
 	public void completeTask(Task task, int time) {
