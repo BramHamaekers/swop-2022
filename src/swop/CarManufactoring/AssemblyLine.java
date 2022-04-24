@@ -41,16 +41,8 @@ public class AssemblyLine {
 		for (WorkStation workStation: this.workStations)
 			if (!workStation.stationTasksCompleted()) w.add(workStation.getName());
 		
-		if(!w.isEmpty())throw new NotAllTasksCompleteException("Not all tasks completed in: ", w);
-	}
-	
-	/**
-	 * Check if all tasks on all workstations of the assembly line are completed
-	 */
-
-	public boolean allTasksCompleted() {
-		return this.workStations.stream().allMatch(WorkStation::stationTasksCompleted);
-
+		if(!w.isEmpty())
+			throw new NotAllTasksCompleteException("Not all tasks completed in: ", w);
 	}
 
 	/**
