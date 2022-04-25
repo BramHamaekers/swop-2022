@@ -134,7 +134,7 @@ public enum Task {
 	 * @param category the carOptionCategory to get the description from
 	 * @return this.partsMap.get(category)
 	 */
-	public String getDescription(String category) {
+	private String getDescription(String category) {
 		return this.partsMap.get(category);
 	}
 }
