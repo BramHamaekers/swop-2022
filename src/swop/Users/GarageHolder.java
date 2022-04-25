@@ -61,9 +61,7 @@ public class GarageHolder extends User{
             orderID =  GarageHolderUI.selectOrderID();
         }
         CarOrder carOrder = getOrderFromID(orderID);
-
-        //TODO: use garaholderUI
-        System.out.println(carOrder.toString());
+        GarageHolderUI.showOrderDetails(carOrder.toString());
 
         String answer = GarageHolderUI.indicateYesNo("Would you like to view another order?");
         if (answer.equals("y")) checkOrderDetails();
@@ -148,6 +146,7 @@ public class GarageHolder extends User{
 			int option = GarageHolderUI.askOption(0, entry.getValue().size(), entry.getKey());
 			carConfig.put(entry.getKey(), option);
 		}
+		GarageHolderUI.printEmptyLine();
 		return carConfig;
     }
 

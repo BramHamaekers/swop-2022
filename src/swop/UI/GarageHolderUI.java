@@ -69,7 +69,7 @@ public class GarageHolderUI implements UI {
 	public static void displayOrderingForm(Map<String, List<String>> optionsMap, String name) {
 		DisplayStatus builder = new DisplayStatus();
 		garageHolderGenerator.generateOrderingForm(builder, optionsMap, name);
-		System.out.print(builder.getDisplay());
+		System.out.println(builder.getDisplay());
 	}
 
 
@@ -86,6 +86,9 @@ public class GarageHolderUI implements UI {
 		DisplayStatus builder = new DisplayStatus();
 		garageHolderGenerator.generateEstimatedTime(builder, order);
 	}
+    public static void printEmptyLine() {
+    	System.out.println("");
+    }
 
 	/**
 	 * Lets the user input an orderID
@@ -94,5 +97,10 @@ public class GarageHolderUI implements UI {
 	public static String selectOrderID() throws CancelException {
 		System.out.print("Input an orderID: ");
 		return scanner.scanNextLineOfTypeString();
+	}
+
+	public static void showOrderDetails(String string) {
+		System.out.println(string);
+		
 	}
 }

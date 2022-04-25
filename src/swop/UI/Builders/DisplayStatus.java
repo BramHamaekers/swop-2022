@@ -8,8 +8,7 @@ public class DisplayStatus implements FormBuilder {
         builder.append(text);
     }
     void println(String text) {
-        print(text);
-        print("\n");
+    	print(text + String.format("%n"));
     }
 
     public String getDisplay() {
@@ -55,7 +54,7 @@ public class DisplayStatus implements FormBuilder {
 
     @Override
     public void initialQuestion(String question) {
-        println("\n" + question);
+        println(question);
     }
 }
 
