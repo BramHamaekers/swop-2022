@@ -23,16 +23,6 @@ public class WorkStation {
 	}
 
 	/**
-	 * checks if workstation contains this task
-	 * @param task the task to check
-	 * @return true if contains(task)
-	 */
-	public boolean containsTask(Task task) {
-		if (task == null) throw new IllegalArgumentException("task is null");
-		return this.getTasks().contains(task);
-	}
-
-	/**
 	 * Returns a set of uncompleted tasks
 	 * @return Set<Task>
 	 */
@@ -54,9 +44,8 @@ public class WorkStation {
 			return null;
 		}
 		Set<Task> tasksOfWorkstation = this.getTasks();
-		Set<Task> alltasksOfCar = this.getCar().getAllTasks();
-		tasksOfWorkstation.retainAll(alltasksOfCar);
-		//TODO filter tasks based on car in workstation
+		Set<Task> allTasksOfCar = this.getCar().getAllTasks();
+		tasksOfWorkstation.retainAll(allTasksOfCar);
 		tasksOfWorkstation.removeAll(this.getCar().getUncompletedTasks());
 		return tasksOfWorkstation;
 	}
