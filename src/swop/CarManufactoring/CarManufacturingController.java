@@ -55,11 +55,11 @@ public class CarManufacturingController {
 	public void advanceAssembly() throws NotAllTasksCompleteException {
 		//there is time to finish another car + there are cars on the queue
 		List<WorkStation> workStations = this.getAssembly().getWorkStations();
-		List<Integer> test = workStations.stream()
+		List<Integer> workingTimes = workStations.stream()
 				.map(WorkStation::getCurrentWorkingTime).toList();
-		int minutes = Collections.max(test);
+		int maxWorkingMinutes = Collections.max(workingTimes);
 		Car finishedCar;
-		if(canFinishNewCar(minutes) && !this.getCarQueue().isEmpty()) {
+		if(canFinishNewCar(maxWorkingMinutes) && !this.getCarQueue().isEmpty()) {
 			Car nextCar = this.getScheduler().getNextScheduledCar();
 			finishedCar = this.assemblyLine.advance(nextCar);
 			this.carQueue.remove(nextCar);
@@ -70,11 +70,11 @@ public class CarManufacturingController {
 		}
 
 		if (finishedCar != null) {
-			setFinishedCarDeliveryTime(minutes, finishedCar);
+			setFinishedCarDeliveryTime(maxWorkingMinutes, finishedCar);
 			this.finishedCars.add(finishedCar);
 		}
 		//update schedular time
-		this.updateScheduleTime(minutes);
+		this.updateScheduleTime(maxWorkingMinutes);
 
 		// For every car in queue and workstation update the estimated completion time
 		updateEstimatedCompletionTime();
@@ -98,9 +98,7 @@ public class CarManufacturingController {
 	 * @throws IllegalStateException if the car is not completed
 	 */
 	private void setFinishedCarDeliveryTime(int minutes, Car finishedCar) {
-		if (!finishedCar.isCompleted()){
-			throw new IllegalStateException("Car is not completed");
-		}
+		if (!finishedCar.isCompleted()) throw new IllegalStateException("Car is not completed");
 		finishedCar.setDeliveryTime(Map.of(
 				"day", scheduler.getDay(),
 				"minutes", scheduler.getMinutes()+ minutes

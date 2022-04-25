@@ -167,7 +167,7 @@ public class Scheduler {
 		hours += 6;
 		int minutes = this.getMinutes() % 60;
 
-		return String.format("day: %s, time: %02d:%02d%n", this.getDay(), hours, minutes);
+		return String.format("day: %s, time: %02d:%02d", this.getDay(), hours, minutes);
 	}
 
     /**
