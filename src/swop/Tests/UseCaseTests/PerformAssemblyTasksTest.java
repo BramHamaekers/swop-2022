@@ -36,7 +36,7 @@ public class PerformAssemblyTasksTest {
     void performAssemblyTasksUITest() {
 
         ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
-        output = continueUITest(String.format("b%n0%n0%n0%n0%n45%nCANCEL%nQUIT"), 7);// 
+        output = continueUITest(String.format("b%n0%n0%n0%n0%n45%nCANCEL%nQUIT"), 7);// complete 1 task and cancel
 
         askWorkPost(output); // ask user for work post
         
@@ -45,45 +45,59 @@ public class PerformAssemblyTasksTest {
         showTaskInfo(output, task); // system shows the assembly task information
 
         indicateTimePassed(output);
-        
-        output.next();
 
-        askWorkPost(output);
+        askWorkPostCanceled(output);
         
         storeChanges(); // the system stores the changes
 
     }
 
-    @Test
-    void CarMechanicUITestUITestAlternateFlow1() {
+	@Test
+    void completeAllTasksOfStationTest() {
+		ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
+		output = continueUITest(String.format("b%n0%n0%n0%n0%n45%n0%n0%n0%n45%n0%nQUIT"), 14); // complete tasks work post 1
+		
+		Task task = presentAvailableTasks(output,0); // 3. show overview of pending tasks
 
-//        ListIterator<String> output = setupUITest(String.format(
-//                "a%ny%n0%n1%n1%n1%n1%n1%n1%n1%n" + // place order
-//                        "c%ny%ny%n45%n%n" + // advance assemblyLine
-//                        "b%n0%n1%n%nCANCEL%nQUIT") // Perform assembly Tasks
-//        ); // Setup
+		skip(output, 11);
 
-//        askWorkPost(output); // 1. ask user for work post
-//
-//        selectWorkPost(output); // 2. User selects work post
-//
-//        presentTasks(output); // 3. show overview of pending tasks
-//
-//        selectTask(output); // 4. User selects task
-//
-//        showTaskInfo(output); // 5. system shows the assembly task information
-//
-//        indicateFinished(output); // 6. indicate when task is finished
-//
-//        storeChangesAfter1(); // 7. the system stores the changes
-//
-//        indicateStop(output); // 8. user indicates to stop performing tasks
+		task = presentAvailableTasks(output,0); // 3. show overview of pending tasks
+		
+	    askWorkPostCanceled(output);
+	}
+    
+    
+	@Test
+    void completeAllTasksOfCarTest() {
+		ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
+		output = continueUITest(String.format("b%n0%n0%n0%n0%n45%n0%n0%n0%n45%n" + // complete tasks work post 1
+				"1%n0%n0%n45%n1%n0%n0%n45%n"+ // complete tasks work post 2
+				"2%n0%n0%n45%n2%n0%n0%n45%n2%n0%n0%n45%n0%nQUIT"), 7); // complete tasks work post 3 
+		GarageHolder a = (GarageHolder) this.assem.getUserMap().get("a"); 
 
     }
 
 
 
-    private void storeChanges() {
+	
+	
+	
+	
+	
+	
+	
+	
+	////////////////////////////////////////////////////////
+
+    private void carIsFinished(GarageHolder a) {
+		Set<CarOrder> orders = a.getOrders();
+		assert orders.size() == 1;
+		for(CarOrder order: orders)
+			assertTrue(order.isCompleted());
+		
+	}
+
+	private void storeChanges() {
         Set<String> nameSet = new HashSet<>();
 //        for (CarOrder x : this.carMechanic.getOrders())
 //            x.getCar().getUncompletedTasks().forEach(t -> nameSet.add(t.getName()));
@@ -120,19 +134,16 @@ public class PerformAssemblyTasksTest {
         	assertEquals(iterator.next(), output.next());
 
     }
-
-    private void presentTasks(ListIterator<String> output) {
-        assertEquals("============ Available Tasks ============", output.next());
-        assertEquals("Assembly Car Body [0] ", output.next());
-        assertEquals("Paint Car [1] ", output.next());
-        assertEquals("=======================================", output.next());
-
-    }
-
-    private void selectWorkPost(ListIterator<String> output) {
-        assertEquals("Select station: ", output.next());
-        assertEquals("", output.next());
-    }
+    
+    private void askWorkPostCanceled(ListIterator<String> output) {
+    	DisplayStatus builder = new DisplayStatus();
+		carMechanicGenerator.generateStationList(builder, assem.getStations());
+    	ListIterator<String> iterator = Arrays.asList((builder.getDisplay() + "CANCELED").split(String.format("%n")))
+                .listIterator();
+		while (iterator.hasNext())
+        	assertEquals(iterator.next(), output.next());
+		
+	}
 
     private void askWorkPost(ListIterator<String> output) {
     	DisplayStatus builder = new DisplayStatus();
