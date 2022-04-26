@@ -138,7 +138,7 @@ public class AssemAssist {
 		return this.getAssemblyLine().getWorkStations();
 	}
 	
-	public Set<Task> getsAvailableTasks(String string) {
+	public List<Task> getsAvailableTasks(String string) {
 		return this.getAssemblyLine().getUncompletedTasks(string);
 	}
 	

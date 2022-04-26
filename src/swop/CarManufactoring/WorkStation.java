@@ -39,11 +39,11 @@ public class WorkStation {
 	 * Returns a set of uncompleted tasks
 	 * @return Set<Task>
 	 */
-	public Set<Task> getUncompletedTasks() {
+	public List<Task> getUncompletedTasks() {
 		if(this.getCar() == null) {
 			return null;
 		}
-		Set<Task> tasks = this.getTasks();
+		List<Task> tasks = this.getTasks();
 		tasks.retainAll(this.getCar().getUncompletedTasks()); 
 		return tasks;
 	}
@@ -52,12 +52,12 @@ public class WorkStation {
 	 * Returns a set of completed tasks
 	 * @return Set<Task>
 	 */
-	public Set<Task> getCompletedTasks() {
+	public List<Task> getCompletedTasks() {
 		if(this.getCar() == null) {
 			return null;
 		}
-		Set<Task> tasksOfWorkstation = this.getTasks();
-		Set<Task> allTasksOfCar = this.getCar().getAllTasks();
+		List<Task> tasksOfWorkstation = this.getTasks();
+		List<Task> allTasksOfCar = new LinkedList<>(this.getCar().getAllTasks());
 		tasksOfWorkstation.retainAll(allTasksOfCar);
 		tasksOfWorkstation.removeAll(this.getCar().getUncompletedTasks());
 		return tasksOfWorkstation;
@@ -75,11 +75,11 @@ public class WorkStation {
 	 * returns the tasks that are part of this workstation
 	 * @return tasks of workstation
 	 */
-	public Set<Task> getTasks() {
+	public List<Task> getTasks() {
 		return switch (this.getName()) {
-			case "Car Body Post" -> new LinkedHashSet<>(Arrays.asList(Task.AssemblyCarBody, Task.PaintCar));
-			case "Drivetrain Post" -> new LinkedHashSet<>(Arrays.asList(Task.InsertEngine, Task.InstallGearbox));
-			case "Accessories Post" -> new LinkedHashSet<>(Arrays.asList(Task.InstallSeats, Task.InstallAirco, Task.MountWheels, Task.InstallSpoiler));
+			case "Car Body Post" -> new LinkedList<>(Arrays.asList(Task.AssemblyCarBody, Task.PaintCar));
+			case "Drivetrain Post" -> new LinkedList<>(Arrays.asList(Task.InsertEngine, Task.InstallGearbox));
+			case "Accessories Post" -> new LinkedList<>(Arrays.asList(Task.InstallSeats, Task.InstallAirco, Task.MountWheels, Task.InstallSpoiler));
 			default -> throw new IllegalArgumentException("No tasks could be given: Invalid name Workstation");
 		};
 	}

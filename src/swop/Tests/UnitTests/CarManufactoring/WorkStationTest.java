@@ -9,6 +9,7 @@ import swop.CarManufactoring.Task;
 import swop.CarManufactoring.WorkStation;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -46,7 +47,7 @@ class WorkStationTest {
         Car car = new Car(modelA);
         WorkStation station = new WorkStation("Car Body Post");
         station.setCar(car);
-        assertEquals(Set.of(Task.AssemblyCarBody, Task.PaintCar), station.getUncompletedTasks());
+        assertEquals(List.of(Task.AssemblyCarBody, Task.PaintCar), station.getUncompletedTasks());
     }
 
     @Test
@@ -61,7 +62,7 @@ class WorkStationTest {
         Car car = new Car(modelA);
         WorkStation station = new WorkStation("Car Body Post");
         station.setCar(car);
-        assertEquals(new HashSet<>(), station.getCompletedTasks());
+        assertEquals(new LinkedList<>(), station.getCompletedTasks());
     }
 
     @Test
@@ -71,7 +72,7 @@ class WorkStationTest {
         WorkStation station = new WorkStation("Car Body Post");
         station.setCar(car);
         car.completeTask(Task.AssemblyCarBody);
-        assertEquals(Set.of(Task.AssemblyCarBody), station.getCompletedTasks());
+        assertEquals(List.of(Task.AssemblyCarBody), station.getCompletedTasks());
     }
 
     @Test
@@ -94,9 +95,9 @@ class WorkStationTest {
         WorkStation station2 = new WorkStation("Drivetrain Post");
         WorkStation station3 = new WorkStation("Accessories Post");
 
-        assertEquals(Set.of(Task.AssemblyCarBody, Task.PaintCar),station1.getTasks());
-        assertEquals(Set.of(Task.InsertEngine, Task.InstallGearbox),station2.getTasks());
-        assertEquals(Set.of(Task.InstallSeats, Task.InstallAirco, Task.MountWheels, Task.InstallSpoiler),station3.getTasks());
+        assertEquals(List.of(Task.AssemblyCarBody, Task.PaintCar),station1.getTasks());
+        assertEquals(List.of(Task.InsertEngine, Task.InstallGearbox),station2.getTasks());
+        assertEquals(List.of(Task.InstallSeats, Task.InstallAirco, Task.MountWheels, Task.InstallSpoiler),station3.getTasks());
     }
 
     @Test

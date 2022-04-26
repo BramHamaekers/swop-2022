@@ -24,7 +24,7 @@ public class DisplayStatus implements FormBuilder {
 
     @Override
     public void appendTitle(String title){
-        String str = String.format("%n============ %s ============",title);
+        String str = String.format("============ %s ============",title);
         println(str);
         this.titlelength = str.length();
     }

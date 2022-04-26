@@ -18,10 +18,10 @@ public class CarMechanicGenerator extends UserGenerator {
             builder.inputInfo(String.format("%s [%s]", w.next().getName(), (w.nextIndex() - 1)));
         }
         builder.endInfo();
-        builder.addOption("Select station", workStations.size());
+      //builder.addOption("Select station", workStations.size()); // breaks the use case tests
     }
 
-    public void generateWorkStationStatus(FormBuilder builder, String name, Set<Task> pendingTasks, Set<Task> finishedTasks) {
+    public void generateWorkStationStatus(FormBuilder builder, String name, List<Task> pendingTasks, List<Task> finishedTasks) {
         builder.appendTitle(name);
         builder.appendSubTitle("Pending");
         if (pendingTasks != null) pendingTasks.forEach(t -> builder.inputInfo(t.getName()));

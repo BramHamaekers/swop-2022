@@ -17,7 +17,7 @@ import swop.UI.Builders.DisplayStatus;
 import swop.UI.Generators.GarageHolderGenerator;
 import swop.Users.GarageHolder;
 
-public class CheckOrderDetailsUseCase {
+public class CheckOrderDetailsTest {
     AssemAssist assem;
     GarageHolder garageHolder;
     InputStream input;
@@ -41,7 +41,7 @@ public class CheckOrderDetailsUseCase {
 
     @Test
     void OrderDetailsInvalidIDTest() {
-    	ListIterator<String> output = setupUITest(String.format("a%n1%ninvalid%nCANCEL%nQUIT"), 13); // Setup
+    	ListIterator<String> output = setupUITest(String.format("a%n1%ninvalid%nCANCEL%nQUIT"), 12); // Setup
     	
     	askOrderID(output); // user fills an invalid order id
     	

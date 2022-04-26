@@ -51,9 +51,9 @@ public class CarMechanicUI implements UI {
 			scanner.scanNextLineOfTypeString();
 		}
 
-		public static void displayStationStatus(WorkStation workStation, Set<Task> pendingTasks, Set<Task> completedTask) {
+		public static void displayStationStatus(WorkStation workStation, List<Task> pendingTasks, List<Task> finishedTasks) {
 			DisplayStatus builder = new DisplayStatus();
-			carMechanicGenerator.generateWorkStationStatus(builder, workStation.getName(), pendingTasks, completedTask);
+			carMechanicGenerator.generateWorkStationStatus(builder, workStation.getName(), pendingTasks, finishedTasks);
 			System.out.print(builder.getDisplay());
 		}
 		

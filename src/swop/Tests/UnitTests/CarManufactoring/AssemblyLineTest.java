@@ -78,7 +78,7 @@ class AssemblyLineTest {
         modelA.setCarModelSpecification(specification);
         Car car = new Car(modelA);
         assemblyLine.getWorkStations().get(0).setCar(car);
-        assertEquals(new HashSet<>(Set.of(Task.AssemblyCarBody, Task.PaintCar)) ,assemblyLine.getUncompletedTasks("Car Body Post"));
+        assertEquals(new LinkedList<>(List.of(Task.AssemblyCarBody, Task.PaintCar)) ,assemblyLine.getUncompletedTasks("Car Body Post"));
     }
 
     @Test
@@ -87,7 +87,7 @@ class AssemblyLineTest {
         Car car = new Car(modelA);
         car.getUncompletedTasks().forEach(car::completeTask);
         assemblyLine.getWorkStations().get(2).setCar(car);
-        assertEquals(new HashSet<>() ,assemblyLine.getUncompletedTasks("Accessories Post"));
+        assertEquals(new LinkedList<>() ,assemblyLine.getUncompletedTasks("Accessories Post"));
     }
 
     @Test

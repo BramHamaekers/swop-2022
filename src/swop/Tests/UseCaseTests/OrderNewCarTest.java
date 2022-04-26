@@ -54,7 +54,7 @@ public class OrderNewCarTest {
         
         /**************** UI for garage holder order new car ****************/
         
-    	 ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 13); // Setup
+    	 ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 12); // Setup
         
         CarModel a = new ModelA();
 
@@ -85,7 +85,7 @@ public class OrderNewCarTest {
    void cancelAndInvalidOptionOrderingFormTest() {
 	   
 	   /**************** Cancel ****************/
-	   ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%nCANCEL%nQUIT"), 13); // Setup
+	   ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%nCANCEL%nQUIT"), 12); // Setup
 	   
 	   CarModel a = new ModelA();
 	   
@@ -99,7 +99,7 @@ public class OrderNewCarTest {
 	   
 	   /**************** Invalid Option ****************/
 	   
-	   output = setupUITest(String.format("a%n0%n0%n1%n5%n1%nCANCEL%nQUIT"), 13); // Setup
+	   output = setupUITest(String.format("a%n0%n0%n1%n5%n1%nCANCEL%nQUIT"), 12); // Setup
 	   
        displayAndIndicateModels(output); // The system shows a list of available car models and how 2 indicate them
 
@@ -112,7 +112,7 @@ public class OrderNewCarTest {
 
    @Test
    void orderMultipleCars(){
-	   ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 13); // order car modal a
+	   ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 12); // order car modal a
 	   
        CarModel a = new ModelA();
 

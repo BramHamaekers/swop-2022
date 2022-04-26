@@ -70,7 +70,7 @@ public class AssemblyLine {
 	 * @param station the name "string" of the given workstation
 	 * @return all tasks that are uncompleted at station
 	 */
-	public Set<Task> getUncompletedTasks(String station) {
+	public List<Task> getUncompletedTasks(String station) {
 		if (station== null) throw new IllegalArgumentException("station is null");
 		for(WorkStation wStation: this.workStations) {
 			if(wStation.getName().equals(station)) return wStation.getUncompletedTasks();

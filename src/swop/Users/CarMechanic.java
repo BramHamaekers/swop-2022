@@ -52,9 +52,9 @@ public class CarMechanic extends User{
 		List<WorkStation> workStations = assemAssist.getStations();
 
 		workStations.forEach(station -> {
-			Set<Task> pendingTasks = station.getUncompletedTasks();
+			List<Task> pendingTasks = station.getUncompletedTasks();
 			//TODO finishedTasks should be filtered in station.getCompletedTasks()
-			Set<Task> finishedTasks = station.getCompletedTasks();
+			List<Task> finishedTasks = station.getCompletedTasks();
 			CarMechanicUI.displayStationStatus(station, pendingTasks, finishedTasks);
 		});
 	}
@@ -147,9 +147,9 @@ public class CarMechanic extends User{
 	private List<Task> getAvailableTasks(AssemAssist assemAssist, String workStation) {
 		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
 		if (workStation == null) throw new IllegalArgumentException("workstation is invalid");
-		Set<Task> tasks = assemAssist.getsAvailableTasks(workStation);
+		List<Task> tasks = assemAssist.getsAvailableTasks(workStation);
 		if(tasks == null) return null; //Throw error?
-		return new LinkedList<>(tasks);
+		return tasks;
 	}
 
 }

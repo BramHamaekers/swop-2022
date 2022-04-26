@@ -36,37 +36,58 @@ public class PerformAssemblyTasksTest {
     void performAssemblyTasksUITest() {
 
         ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
+        
+        List<Task> tasks = this.assem.getStations().get(0).getUncompletedTasks();
+        
+        assert tasks.size() == 2; // no tasks are finished on workstation
+        
         output = continueUITest(String.format("b%n0%n0%n0%n0%n45%nCANCEL%nQUIT"), 7);// complete 1 task and cancel
 
         askWorkPost(output); // ask user for work post
         
-        Task task = presentAvailableTasks(output,0); // 3. show overview of pending tasks
+        presentAvailableTasks(output, tasks); // shows 2 tasks can be finished
 
-        showTaskInfo(output, task); // system shows the assembly task information
+        showTaskInfo(output, tasks.get(0)); // system shows the assembly task information
 
         indicateTimePassed(output);
 
         askWorkPostCanceled(output);
         
-        storeChanges(); // the system stores the changes
-
+        tasks = this.assem.getStations().get(0).getUncompletedTasks();
+        
+        assert tasks.size() == 1; // 1 task is finished on workstation
     }
 
 	@Test
     void completeAllTasksOfStationTest() {
 		ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
-		output = continueUITest(String.format("b%n0%n0%n0%n0%n45%n0%n0%n0%n45%n0%nQUIT"), 14); // complete tasks work post 1
 		
-		Task task = presentAvailableTasks(output,0); // 3. show overview of pending tasks
-
-		skip(output, 11);
-
-		task = presentAvailableTasks(output,0); // 3. show overview of pending tasks
+        List<Task> tasks = this.assem.getStations().get(0).getUncompletedTasks();
+        
+        assert tasks.size() == 2; // no tasks are finished on workstation
 		
-	    askWorkPostCanceled(output);
+		output = continueUITest(String.format("b%n0%n0%n0%n0%n45%nCANCEL%nQUIT"), 12); // complete task on pos 0
+		
+		presentAvailableTasks(output, tasks);
+
+		tasks = this.assem.getStations().get(0).getUncompletedTasks();
+		
+		assert tasks.size() == 1; // 1 task is finished on workstation
+		
+		output = continueUITest(String.format("b%n0%n0%n0%n0%n45%n0%nQUIT"), 12); // complete task on pos 0
+		
+		presentAvailableTasks(output, tasks);
+		
+		tasks = this.assem.getStations().get(0).getUncompletedTasks();
+		
+		assert tasks == null; //maybe return empty list?
+		
+		skip(output, 9);
+		
+		noMoreTasksMessage(output);	
+		
 	}
-    
-    
+
 	@Test
     void completeAllTasksOfCarTest() {
 		ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
@@ -74,8 +95,23 @@ public class PerformAssemblyTasksTest {
 				"1%n0%n0%n45%n1%n0%n0%n45%n"+ // complete tasks work post 2
 				"2%n0%n0%n45%n2%n0%n0%n45%n2%n0%n0%n45%n0%nQUIT"), 7); // complete tasks work post 3 
 		GarageHolder a = (GarageHolder) this.assem.getUserMap().get("a"); 
+		
+		carIsFinished(a);
 
     }
+	
+	@Test
+    void InvalidOptions() {
+		ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
+		output = continueUITest(String.format("b%ninvalid%n0%ninvalid%n0%n10%n0%n0%n45%nCANCEL%nQUIT"), 7); // complete tasks work post 1
+		invalidOptionMessage(output); //invalid 1
+		skip(output, 4);
+		invalidOptionMessage(output); //invalid 2
+		
+		List<Task> tasks = this.assem.getStations().get(0).getUncompletedTasks();
+		
+		assert tasks.size() == 1; // 1 task is finished on workstation
+	}
 
 
 
@@ -87,7 +123,19 @@ public class PerformAssemblyTasksTest {
 	
 	
 	
+
+
 	////////////////////////////////////////////////////////
+	
+	private void invalidOptionMessage(ListIterator<String> output) {
+		assertTrue(output.next().contains("Please give valid input:"));
+	}
+	
+	private void noMoreTasksMessage(ListIterator<String> output) {
+		assertEquals("No tasks need to be completed!", output.next());
+		
+		
+	}
 
     private void carIsFinished(GarageHolder a) {
 		Set<CarOrder> orders = a.getOrders();
@@ -97,24 +145,13 @@ public class PerformAssemblyTasksTest {
 		
 	}
 
-	private void storeChanges() {
-        Set<String> nameSet = new HashSet<>();
-//        for (CarOrder x : this.carMechanic.getOrders())
-//            x.getCar().getUncompletedTasks().forEach(t -> nameSet.add(t.getName()));
-//        assertFalse(nameSet.contains("Assembly Car Body"));
-//        assertFalse(nameSet.contains("Paint Car"));
-    }
-
-    private Task presentAvailableTasks(ListIterator<String> output, int i) {
-    	List<Task> taskList = new LinkedList<>(assem.getStations().get(i).getTasks());
+    private void presentAvailableTasks(ListIterator<String> output, List<Task> tasks) {
 		DisplayStatus builder = new DisplayStatus();
-		carMechanicGenerator.generateAvailableTasks(builder,taskList);
+		carMechanicGenerator.generateAvailableTasks(builder,tasks);
+		String display = builder.getDisplay();
 		ListIterator<String> iterator = Arrays.asList(builder.getDisplay().split(String.format("%n"))).listIterator();
-		iterator.next();
-		assertEquals(iterator.next(), output.next());
 		while (iterator.hasNext())
         	assertEquals(iterator.next(), output.next());
-		return taskList.get(0);
     }
 
     private void indicateTimePassed(ListIterator<String> output) {
@@ -151,7 +188,7 @@ public class PerformAssemblyTasksTest {
     	ListIterator<String> iterator = Arrays.asList(builder.getDisplay().split(String.format("%n")))
                 .listIterator();
 		while (iterator.hasNext())
-        	assertEquals(iterator.next(), output.next());
+			assertEquals(iterator.next(), output.next());
     }
     
     
