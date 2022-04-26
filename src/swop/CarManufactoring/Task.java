@@ -1,9 +1,6 @@
 package swop.CarManufactoring;
 
 import java.util.*;
-
-import swop.Parts.*;
-
 public enum Task {
 	
 	

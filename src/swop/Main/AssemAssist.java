@@ -3,7 +3,6 @@ package swop.Main;
 import swop.Car.CarOrder;
 import swop.CarManufactoring.*;
 import swop.Exceptions.IllegalUserException;
-import swop.Listeners.Listener;
 import swop.UI.LoginUI;
 import swop.Users.CarMechanic;
 import swop.Users.GarageHolder;
@@ -15,7 +14,6 @@ public class AssemAssist {
 
 	private final CarManufacturingController controller;
 	private User activeUser;
-	private final List<Listener> listeners = new ArrayList<>();
 	final Map <String, User> userDatabase = new HashMap<>() {{
 		put("a", new GarageHolder("a"));
 		put("b", new CarMechanic("b"));
@@ -23,28 +21,13 @@ public class AssemAssist {
 	}};
 
 	public AssemAssist() {
-		this.controller = new CarManufacturingController(this);
+		this.controller = new CarManufacturingController();
     }
 	/**
      * Starts the program
      */
 	public void run() {
 		this.login();		
-	}
-
-	/**
-	 * Add a new listener to the list of listeners
-	 * @param listener the listener to add
-	 */
-	public void addListener(Listener listener) {
-		this.listeners.add(listener);
-	}
-	
-	/**
-	 * all listeners getting triggered and execute taskCompleted()
-	 */
-	public void triggerListenersTaskCompletion() {
-		for (Listener l:this.listeners) l.taskCompleted();
 	}
 	
 	/************************ Login *************************/
@@ -138,7 +121,6 @@ public class AssemAssist {
 		if (task == null) throw new IllegalArgumentException("task is null");
 		if(isValidUser("car mechanic")) {
 			task.completeTask(time);
-			this.triggerListenersTaskCompletion();
 			}
 		else throw new IllegalUserException("completeTask()");
 		

@@ -1,17 +1,15 @@
 package swop.CarManufactoring;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedHashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 import swop.Car.Car;
+import swop.Listeners.Listener;
 
 public class WorkStation {
 	private final String name;
 	private Car car;
 	private int currentWorkingTime = 0;
+	private final List<Listener> listeners = new ArrayList<>();
 
 	public WorkStation(String name) {
 		if (!isValidName(name)) {
@@ -20,6 +18,21 @@ public class WorkStation {
 		this.name = name;
 		for(Task t:this.getTasks()) t.setWorkStation(this);
 
+	}
+
+	/**
+	 * Add a new listener to the list of listeners
+	 * @param listener the listener to add
+	 */
+	public void addListener(Listener listener) {
+		this.listeners.add(listener);
+	}
+
+	/**
+	 * all listeners getting triggered and execute taskCompleted()
+	 */
+	public void triggerListenersTaskCompletion() {
+		for (Listener l:this.listeners) l.taskCompleted();
 	}
 
 	/**
@@ -130,6 +143,7 @@ public class WorkStation {
 		if (task == null) throw new IllegalArgumentException("task is null");
 		this.getCar().completeTask(task);
 		this.currentWorkingTime += time;
+		this.triggerListenersTaskCompletion();
 	}
 
 	/**

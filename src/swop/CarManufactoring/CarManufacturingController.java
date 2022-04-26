@@ -24,8 +24,7 @@ public class CarManufacturingController {
 
 
 
-	public CarManufacturingController(AssemAssist assemAssist) {
-		assemAssist.addListener(this.listener);
+	public CarManufacturingController() {
 		this.carQueue = new LinkedList<>();
 		this.assemblyLine = new AssemblyLine(createWorkStations());
 		this.scheduler = new Scheduler(this);
@@ -41,6 +40,7 @@ public class CarManufacturingController {
 		workStations.add(new WorkStation("Car Body Post"));
 		workStations.add(new WorkStation("Drivetrain Post"));
 		workStations.add(new WorkStation("Accessories Post"));
+		workStations.forEach(s -> s.addListener(this.listener));
 		return workStations;
 	}
 
