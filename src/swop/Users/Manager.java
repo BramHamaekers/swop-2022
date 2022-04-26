@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import swop.Car.Car;
 import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
+import swop.Miscellaneous.TimeStamp;
 import swop.UI.ManagerUI;
 
 public class Manager extends User{
@@ -85,7 +86,7 @@ public class Manager extends User{
 
 	/**
 	 * Returns the possible batch options given a list of part maps
-	 * @param partMaps
+	 * @param partMaps map of parts
 	 * @return List of batch options
 	 */
 	private List<Map<String, String>> getBatchOptions(List<Map<String, String>> partMaps) {
@@ -113,7 +114,7 @@ public class Manager extends User{
 		//TODO -> the average and median delay on an order, 
 		// together with the 2 last delays and the days they occurred. 
 		
-		List<Map<String, Integer>> finishedCarTimes = new LinkedList<Map<String, Integer>>(assemAssist.getController().getFinishedCars().stream().map(Car::getCompletionTime).toList());
+		List<TimeStamp> finishedCarTimes = new LinkedList<>(assemAssist.getController().getFinishedCars().stream().map(Car::getCompletionTime).toList());
 		if(finishedCarTimes.isEmpty()) {
 			ManagerUI.printError("Not enough data to give you statistics");
 			return;
@@ -141,31 +142,28 @@ public class Manager extends User{
 
 	/**
 	 * Calculates the median value of a given list.
-	 * @param numberOfCarsEachDay
+	 * @param numberOfCarsEachDay amount of cars each day
 	 * @return median
 	 */
 	private double getMedianOfList(List<Integer> numberOfCarsEachDay) {
-		double median = 0;
 		 if (numberOfCarsEachDay.size() % 2 == 0) {
-			 median = (numberOfCarsEachDay.get((numberOfCarsEachDay.size()/2) - 1) +
+			 return (numberOfCarsEachDay.get((numberOfCarsEachDay.size()/2) - 1) +
 					  numberOfCarsEachDay.get(numberOfCarsEachDay.size()/2)/2);
 		 }
-		 else
-			 median = Math.ceil(numberOfCarsEachDay.get(numberOfCarsEachDay.size()/2));
-		return median;
+		 return Math.ceil(numberOfCarsEachDay.get(numberOfCarsEachDay.size()/2));
 	}
 	
 	/**
 	 * Returns a list of all the car finished each day: index = the day.
-	 * @param finishedCarTimes
+	 * @param finishedCarTimes the times at which cars are finished
 	 * @return List<Integer> numberOfCarsEachDay
 	 */
-	private List<Integer> getFinishedCarsEachDay(List<Map<String, Integer>> finishedCarTimes) {
+	private List<Integer> getFinishedCarsEachDay(List<TimeStamp> finishedCarTimes) {
 		List<Integer> numberOfCarsEachDay = new ArrayList<>();
 		
 		// calculate the cars for each day
 		while(!finishedCarTimes.isEmpty()) {
-			int day = finishedCarTimes.remove(0).get("day");
+			int day = finishedCarTimes.remove(0).getDay();
 			while((numberOfCarsEachDay.size()-1) < day)
 				numberOfCarsEachDay.add(0);
 			numberOfCarsEachDay.set(day, numberOfCarsEachDay.get(day) + 1);			

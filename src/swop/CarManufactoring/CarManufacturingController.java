@@ -7,6 +7,7 @@ import swop.Car.CarOrder;
 import swop.Exceptions.NotAllTasksCompleteException;
 import swop.Listeners.StatisticsListener;
 import swop.Listeners.TaskCompletedListener;
+import swop.Miscellaneous.TimeStamp;
 
 public class CarManufacturingController {
 
@@ -110,10 +111,7 @@ public class CarManufacturingController {
 	 */
 	private void setFinishedCarDeliveryTime(int minutes, Car finishedCar) {
 		if (!finishedCar.isCompleted()) throw new IllegalStateException("Car is not completed");
-		finishedCar.setDeliveryTime(Map.of(
-				"day", scheduler.getDay(),
-				"minutes", scheduler.getMinutes()+ minutes
-		));
+		finishedCar.setDeliveryTime(new TimeStamp(scheduler.getDay(), scheduler.getMinutes()+ minutes));
 	}
 
 	/**
@@ -146,7 +144,7 @@ public class CarManufacturingController {
 		Car car = carOrder.getCar();
 		if(car == null) throw new IllegalArgumentException("car is null");
 		this.carQueue.add(car);
-		carOrder.setOrderTime(getScheduler().getTimeAsString());
+		carOrder.setOrderTime(getScheduler().getTime());
 		// if it is the only order in queue and the first spot is empty -> put it on the assembly line (if possible)
 		if (this.getCarQueue().size() == 1 && canFinishNewCar(0) && this.getAssembly().getWorkStations().get(0).getCar() == null) {
 			this.getAssembly().getWorkStations().get(0).setCar(car);

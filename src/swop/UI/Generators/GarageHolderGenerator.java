@@ -43,7 +43,8 @@ public class GarageHolderGenerator extends UserGenerator {
 
         carOrders.stream()
             .filter(o -> !o.isCompleted())
-            .forEach(p -> builder.inputInfo(String.format("Order: %s -> %s", p.getID(), p.getEstimatedCompletionTime())));
+            .forEach(p -> builder.inputInfo(String.format("Order: %s -> %s",
+                    p.getID(), p.getEstimatedCompletionTime().toString())));
 
         builder.appendSubTitle("Completed");
         Set<CarOrder> completedSet = new TreeSet<>();
@@ -52,21 +53,15 @@ public class GarageHolderGenerator extends UserGenerator {
         carOrders.stream()
                 .filter(CarOrder::isCompleted)
                 .forEach(completedSet::add);
-        completedSet.forEach(c -> builder.inputInfo(String.format("Order: %s %s %s",
-                c.getID(), c.getCompletionTime().get("day"), c.getCompletionTime().get("minutes"))));
+        completedSet.forEach(c -> builder.inputInfo(String.format("Order: %s -> %s",
+                c.getID(), c.getCompletionTime().toString())));
         builder.endInfo();
     }
 
 
     public void generateEstimatedTime(FormBuilder builder, CarOrder order){
         builder.appendTitle("Estimated Completion Time");
-        int day = order.getEstimatedCompletionTime().get("day");
-        int minutes = order.getEstimatedCompletionTime().get("minutes");
-        // Convert to format
-        int hours = minutes / 60;
-        hours += 6;
-        minutes = minutes % 60;
-        builder.inputInfo(String.format("day: %d, time: %02d:%02d", day, hours, minutes));
+        builder.inputInfo(order.getEstimatedCompletionTime().toString());
         builder.endInfo();
     }
 }

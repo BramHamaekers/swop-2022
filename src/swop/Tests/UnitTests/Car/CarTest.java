@@ -7,6 +7,7 @@ import swop.Car.CarModel.CarModel;
 import swop.Car.CarModel.ModelA;
 import swop.Car.CarModelSpecification;
 import swop.CarManufactoring.Task;
+import swop.Miscellaneous.TimeStamp;
 
 import java.util.Map;
 import java.util.Set;
@@ -119,9 +120,9 @@ class CarTest {
         modelA.setCarModelSpecification(specification);
         Car car = new Car(modelA);
         assertNull(car.getInitialCompletionTime());
-        car.setEstimatedCompletionTime(Map.of("day", 0, "minutes", 500));
-        assertEquals(Map.of("day", 0, "minutes", 500),car.getEstimatedCompletionTime());
-        assertEquals(Map.of("day", 0, "minutes", 500),car.getInitialCompletionTime());
+        car.setEstimatedCompletionTime(new TimeStamp(0, 500));
+        assertEquals(new TimeStamp(0, 500),car.getEstimatedCompletionTime());
+        assertEquals(new TimeStamp(0, 500),car.getInitialCompletionTime());
     }
 
     @Test
@@ -129,7 +130,7 @@ class CarTest {
         modelA.setCarModelSpecification(specification);
         Car car = new Car(modelA);
         assertNull(car.getInitialCompletionTime());
-        assertThrows(IllegalArgumentException.class, () -> car.setEstimatedCompletionTime(Map.of("day", -1, "minutes", 500)));
+        assertThrows(IllegalArgumentException.class, () -> car.setEstimatedCompletionTime(new TimeStamp(-1, 500)));
         assertNull(car.getInitialCompletionTime());
         assertNull(car.getEstimatedCompletionTime());
     }
@@ -139,8 +140,8 @@ class CarTest {
         modelA.setCarModelSpecification(specification);
         Car car = new Car(modelA);
         assertNull(car.getCompletionTime());
-        car.setDeliveryTime(Map.of("day", 0, "minutes", 500));
-        assertEquals(Map.of("day", 0, "minutes", 500),car.getCompletionTime());
+        car.setDeliveryTime(new TimeStamp(0, 500));
+        assertEquals(new TimeStamp(0, 500),car.getCompletionTime());
     }
 
     @Test
@@ -148,7 +149,7 @@ class CarTest {
         modelA.setCarModelSpecification(specification);
         Car car = new Car(modelA);
         assertNull(car.getCompletionTime());
-        assertThrows(IllegalArgumentException.class, () -> car.setDeliveryTime(Map.of("day", 0, "minutes", -200)));
+        assertThrows(IllegalArgumentException.class, () -> car.setDeliveryTime(new TimeStamp(0, -200)));
         assertNull(car.getCompletionTime());
     }
 

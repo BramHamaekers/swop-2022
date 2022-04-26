@@ -2,13 +2,13 @@ package swop.Car;
 
 import swop.Car.CarModel.CarModel;
 import swop.Miscellaneous.RandomID;
+import swop.Miscellaneous.TimeStamp;
 
-import java.util.Map;
 
 public class CarOrder implements Comparable<CarOrder> {
 	private final Car car;
 	private final String ID;
-	private String orderTime;
+	private TimeStamp orderTime;
 
 	/**
 	 * Creates a new order based on given carModel
@@ -39,36 +39,33 @@ public class CarOrder implements Comparable<CarOrder> {
 	 * Est. value of completion for this car.
 	 * @return est. value
 	 */
-	public Map<String, Integer> getEstimatedCompletionTime() {
+	public TimeStamp getEstimatedCompletionTime() {
 		return this.getCar().getEstimatedCompletionTime();
 	}
 
-	public Map<String, Integer> getCompletionTime() {
+	public TimeStamp getCompletionTime() {
 		return this.getCar().getCompletionTime();
 	}
 
 	@Override
 	public int compareTo(CarOrder carOrder) {
-		int day1 = this.getCompletionTime().get("day");
-		int day2 = carOrder.getCompletionTime().get("day");
-		if (day1 != day2) return Integer.compare(day1, day2);
-		return Integer.compare(this.getCompletionTime().get("minutes"), carOrder.getCompletionTime().get("minutes"));
+		return this.getCompletionTime().compareTo(carOrder.getCompletionTime());
 	}
 
 	/**
 	 * Set the time of Ordering to a new time
-	 * @param timeAsString the time of ordering as string
+	 * @param time the time of ordering
 	 */
-	public void setOrderTime(String timeAsString) {
+	public void setOrderTime(TimeStamp time) {
 		// TODO maybe do this in garageholder
-		this.orderTime = timeAsString;
+		this.orderTime = time;
 	}
 
 	/**
 	 * Returns the time that this car was ordered at
 	 * @return this.orderTime
 	 */
-	public String getOrderTime() {
+	public TimeStamp getOrderTime() {
 		return this.orderTime;
 	}
 
