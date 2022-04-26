@@ -26,7 +26,6 @@ interface UI {
 	 * @param e the error message to print
 	 */
 	static void printError(String e) {
-		System.out.println();
 		System.out.println(e);
 	}
 

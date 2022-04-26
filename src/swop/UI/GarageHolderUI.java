@@ -95,7 +95,7 @@ public class GarageHolderUI implements UI {
 	 * @return the orderID that the user gave as input
 	 */
 	public static String selectOrderID() throws CancelException {
-		System.out.print("Input an orderID: ");
+		System.out.println("Input an orderID: ");
 		return scanner.scanNextLineOfTypeString();
 	}
 
