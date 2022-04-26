@@ -3,6 +3,7 @@ package swop.Main;
 import swop.Car.CarOrder;
 import swop.CarManufactoring.*;
 import swop.Exceptions.IllegalUserException;
+import swop.Miscellaneous.Statistics;
 import swop.UI.LoginUI;
 import swop.Users.CarMechanic;
 import swop.Users.GarageHolder;
@@ -13,6 +14,7 @@ import java.util.*;
 public class AssemAssist {
 
 	private final CarManufacturingController controller;
+	private final Statistics statistics;
 	private User activeUser;
 	final Map <String, User> userDatabase = new HashMap<>() {{
 		put("a", new GarageHolder("a"));
@@ -21,7 +23,9 @@ public class AssemAssist {
 	}};
 
 	public AssemAssist() {
+		this.statistics = new Statistics();
 		this.controller = new CarManufacturingController();
+		this.controller.addListener(statistics.statisticsListener);
     }
 	/**
      * Starts the program

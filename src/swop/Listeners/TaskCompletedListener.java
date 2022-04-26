@@ -1,5 +1,5 @@
 package swop.Listeners;
 
-public interface Listener {
+public interface TaskCompletedListener {
 	void taskCompleted();
 }
