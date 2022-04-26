@@ -1,5 +1,7 @@
 package swop.CarManufactoring;
 import swop.Car.Car;
+import swop.Miscellaneous.TimeStamp;
+
 import java.util.*;
 
 interface costumIterator<T> {
@@ -45,7 +47,7 @@ public class Scheduler {
      *
      * @return Time formatted as string
      */
-    public Map<String, Integer> getEstimatedCompletionTime(Car car) {
+    public TimeStamp getEstimatedCompletionTime(Car car) {
     	  int day = this.day;
           int minutes = this.minutes;
           int workingDayMinutes = this.workingDayMinutes;
@@ -70,7 +72,7 @@ public class Scheduler {
 
           }
 
-		  return Map.of("day", day, "minutes", minutes);
+		  return new TimeStamp(day,minutes);
     }
 
 	/**
@@ -158,12 +160,8 @@ public class Scheduler {
 	 * Get the current time in a string format
 	 * @return string of current time
 	 */
-	public String getTimeAsString() {
-		int hours = this.getMinutes() / 60;
-		hours += 6;
-		int minutes = this.getMinutes() % 60;
-
-		return String.format("day: %s, time: %02d:%02d", this.getDay(), hours, minutes);
+	public TimeStamp getTime() {
+		return new TimeStamp(this.getDay(), this.getMinutes());
 	}
 
     /**

@@ -4,14 +4,15 @@ import java.util.*;
 
 import swop.Car.CarModel.CarModel;
 import swop.CarManufactoring.Task;
+import swop.Miscellaneous.TimeStamp;
 
 public class Car {
 	private Set<Task> uncompletedTasks;
 	private Set<Task> allTasks;
     private CarModel carModel;
-	private Map<String, Integer> initialCompletionTime;
-	private Map<String, Integer> estimatedCompletionTime;
-	private Map<String, Integer> deliveryTime;
+	private TimeStamp initialCompletionTime;
+	private TimeStamp estimatedCompletionTime;
+	private TimeStamp deliveryTime;
     
     public Car(CarModel model){
         this.setCarModel(model);  
@@ -99,19 +100,9 @@ public class Car {
 	}
 
 	/**
-	 * Check is the given timestamp is valid
-	 * @param timeStamp the given timeStamp
-	 * @return True if the timestamp consists of a positive day and minutes value
-	 */
-	private boolean isValidTimeStamp(Map<String, Integer> timeStamp) {
-		return timeStamp.size() == 2 && timeStamp.containsKey("day") && timeStamp.containsKey("minutes") &&
-				timeStamp.get("day") > -1 && timeStamp.get("minutes") > -1;
-	}
-
-	/**
 	 * @return this.initialCompletionTime
 	 */
-	public Map<String, Integer> getInitialCompletionTime() {
+	public TimeStamp getInitialCompletionTime() {
 		return this.initialCompletionTime;
 	}
 
@@ -120,26 +111,20 @@ public class Car {
 	 * set the initialCompletionTime to the same timeStamp.
 	 * @param timeStamp the timeStamp to update the estimatedCompletionTime with
 	 */
-	public void setEstimatedCompletionTime(Map<String, Integer> timeStamp) {
-		if (!isValidTimeStamp(timeStamp)) {
-			throw new IllegalArgumentException("timeStamp not valid");
-		}
+	public void setEstimatedCompletionTime(TimeStamp timeStamp) {
 		if (this.initialCompletionTime == null) this.initialCompletionTime = timeStamp;
 		this.estimatedCompletionTime = timeStamp;
 	}
 
-	public Map<String, Integer> getEstimatedCompletionTime() {
+	public TimeStamp getEstimatedCompletionTime() {
 		return this.estimatedCompletionTime;
 	}
 
-	public Map<String, Integer> getDeliveryTime() {
+	public TimeStamp getCompletionTime() {
 		return this.deliveryTime;
 	}
 
-	public void setDeliveryTime(Map<String, Integer> timeStamp) {
-		if (!isValidTimeStamp(timeStamp)) {
-			throw new IllegalArgumentException("timeStamp not valid");
-		}
+	public void setDeliveryTime(TimeStamp timeStamp) {
 		this.deliveryTime = timeStamp;
 	}
 }

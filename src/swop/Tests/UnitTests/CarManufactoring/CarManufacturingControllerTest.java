@@ -9,6 +9,7 @@ import swop.Car.CarOrder;
 import swop.CarManufactoring.*;
 import swop.Exceptions.NotAllTasksCompleteException;
 import swop.Main.AssemAssist;
+import swop.Miscellaneous.TimeStamp;
 
 import java.util.*;
 
@@ -42,7 +43,7 @@ class CarManufacturingControllerTest {
         AssemAssist assemAssist = new AssemAssist();
         CarManufacturingController carManufacturingController = assemAssist.getController();
         carManufacturingController.advanceAssembly();
-        assertEquals("day: 0, time: 06:00",carManufacturingController.getScheduler().getTimeAsString());
+        assertEquals("day: 0, time: 06:00",carManufacturingController.getScheduler().getTime().toString());
     }
 
     @Test
@@ -56,7 +57,7 @@ class CarManufacturingControllerTest {
 
         carManufacturingController.addOrderToQueue(carOrder);
         assertThrows(NotAllTasksCompleteException.class, carManufacturingController::advanceAssembly);
-        assertEquals("day: 0, time: 06:00",carManufacturingController.getScheduler().getTimeAsString());
+        assertEquals("day: 0, time: 06:00",carManufacturingController.getScheduler().getTime().toString());
         assertEquals(car, carManufacturingController.getAssembly().getWorkStations().get(0).getCar());
         assertNull(carManufacturingController.getAssembly().getWorkStations().get(1).getCar());
     }
@@ -73,7 +74,7 @@ class CarManufacturingControllerTest {
         carManufacturingController.addOrderToQueue(carOrder);
         car.getAllTasks().forEach(car::completeTask);
         assertDoesNotThrow(carManufacturingController::advanceAssembly);
-        assertEquals("day: 0, time: 06:00",carManufacturingController.getScheduler().getTimeAsString());
+        assertEquals("day: 0, time: 06:00",carManufacturingController.getScheduler().getTime().toString());
         assertEquals(car, carManufacturingController.getAssembly().getWorkStations().get(1).getCar());
         assertNull(carManufacturingController.getAssembly().getWorkStations().get(0).getCar());
     }
@@ -95,7 +96,7 @@ class CarManufacturingControllerTest {
         car1.getAllTasks().forEach(car1::completeTask);
 
         assertDoesNotThrow(carManufacturingController::advanceAssembly);
-        assertEquals("day: 0, time: 06:00",carManufacturingController.getScheduler().getTimeAsString());
+        assertEquals("day: 0, time: 06:00",carManufacturingController.getScheduler().getTime().toString());
         assertEquals(car1, carManufacturingController.getAssembly().getWorkStations().get(1).getCar());
         assertEquals(car2, carManufacturingController.getAssembly().getWorkStations().get(0).getCar());
     }
@@ -118,7 +119,7 @@ class CarManufacturingControllerTest {
         carManufacturingController.getScheduler().addTime(960);
 
         assertDoesNotThrow(carManufacturingController::advanceAssembly);
-        assertEquals("day: 0, time: 22:00",carManufacturingController.getScheduler().getTimeAsString());
+        assertEquals("day: 0, time: 22:00",carManufacturingController.getScheduler().getTime().toString());
         assertEquals(car1, carManufacturingController.getAssembly().getWorkStations().get(1).getCar());
         assertNull(carManufacturingController.getAssembly().getWorkStations().get(0).getCar());
         assertEquals(List.of(car2), carManufacturingController.getCarQueue());
@@ -139,14 +140,14 @@ class CarManufacturingControllerTest {
         assertDoesNotThrow(carManufacturingController::advanceAssembly);
         assertDoesNotThrow(carManufacturingController::advanceAssembly);
 
-        assertEquals("day: 0, time: 06:00",carManufacturingController.getScheduler().getTimeAsString());
+        assertEquals("day: 0, time: 06:00",carManufacturingController.getScheduler().getTime().toString());
         assertFalse(carManufacturingController.getAssembly().getUnfinishedCars().contains(car));
         assertTrue(carManufacturingController.getFinishedCars().contains(car));
-        assertEquals(Map.of("day", 0, "minutes", 0),car.getDeliveryTime());
+        assertEquals(new TimeStamp(0, 0),car.getCompletionTime());
 
         carManufacturingController.getScheduler().addTime(961);
         assertDoesNotThrow(carManufacturingController::advanceAssembly);
-        assertEquals("day: 1, time: 06:00",carManufacturingController.getScheduler().getTimeAsString());
+        assertEquals(new TimeStamp(1,0),carManufacturingController.getScheduler().getTime());
     }
 
     /**
