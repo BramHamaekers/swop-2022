@@ -20,6 +20,7 @@ public class Car {
 	/**
 	 * Complete a remaining task for assembly
 	 * @param task given a completed task
+	 * @throws IllegalArgumentException when task is null
 	 */
 	public void completeTask(Task task) {
 		if (task == null)

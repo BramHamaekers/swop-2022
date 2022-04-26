@@ -1,7 +1,6 @@
 package swop.Tests.UnitTests.CarManufactoring;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Test.*;
 import swop.Car.Car;
 import swop.Car.CarModel.CarModel;
 import swop.Car.CarModel.ModelA;
