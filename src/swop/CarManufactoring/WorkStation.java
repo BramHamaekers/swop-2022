@@ -3,13 +3,13 @@ package swop.CarManufactoring;
 import java.util.*;
 
 import swop.Car.Car;
-import swop.Listeners.Listener;
+import swop.Listeners.TaskCompletedListener;
 
 public class WorkStation {
 	private final String name;
 	private Car car;
 	private int currentWorkingTime = 0;
-	private final List<Listener> listeners = new ArrayList<>();
+	private final List<TaskCompletedListener> listeners = new ArrayList<>();
 
 	public WorkStation(String name) {
 		if (!isValidName(name)) {
@@ -24,7 +24,7 @@ public class WorkStation {
 	 * Add a new listener to the list of listeners
 	 * @param listener the listener to add
 	 */
-	public void addListener(Listener listener) {
+	public void addListener(TaskCompletedListener listener) {
 		this.listeners.add(listener);
 	}
 
@@ -32,7 +32,7 @@ public class WorkStation {
 	 * all listeners getting triggered and execute taskCompleted()
 	 */
 	public void triggerListenersTaskCompletion() {
-		for (Listener l:this.listeners) l.taskCompleted();
+		for (TaskCompletedListener l:this.listeners) l.taskCompleted();
 	}
 
 	/**

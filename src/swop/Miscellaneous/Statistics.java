@@ -1,23 +1,43 @@
 package swop.Miscellaneous;
 
+import swop.Car.Car;
+import swop.Listeners.StatisticsListener;
+
 import java.util.*;
 
 public class Statistics {
-    private final Map<Integer, List<Integer>> delays = new HashMap<>();
+    private final Map<Integer, List<Integer>> carDelayMap = new HashMap<>();
 
     public Statistics() {}
+    public final StatisticsListener statisticsListener = this::updateDelay;
+
+    /**
+     *
+     */
+    void updateDelay(Car car) {
+        int finishDay = car.getDeliveryTime().get("day");
+        int delayedDays = finishDay - car.getInitialCompletionTime().get("day");
+        int delayedMinutes = car.getDeliveryTime().get("minutes") - car.getInitialCompletionTime().get("minutes");
+
+        int minutes = 0;
+
+        minutes += delayedDays * 3600;
+        minutes += delayedMinutes;
+
+        this.finishOrder(minutes, finishDay);
+    }
 
     /**
      * update the delays map when a car is finished
-     * @param delay the given delay in minutes
-     * @param day the given day int (0-*)
+     * @param delayedMinutes the given delay in minutes
+     * @param finishDay the given day that the car was finished on
      */
-    public void finishOrder(int delay, int day) {
-        Integer day_I = day;
-        if (this.delays.containsKey(day_I)) {
-            this.delays.get(day_I).add(delay);
+    public void finishOrder(int delayedMinutes, int finishDay) {
+        Integer day_I = finishDay;
+        if (this.carDelayMap.containsKey(day_I)) {
+            this.carDelayMap.get(day_I).add(delayedMinutes);
         } else {
-            this.delays.put(day_I, new ArrayList<>(delay));
+            this.carDelayMap.put(day_I, List.of(delayedMinutes));
         }
     }
 
@@ -27,11 +47,11 @@ public class Statistics {
      */
     public double getAvgDelay() {
         double total = 0;
-        for (List<Integer> delays : this.delays.values())
+        for (List<Integer> delays : this.carDelayMap.values())
             for (Integer delay : delays) {
                 total += delay;
             }
-        return this.delays.size() > 0 ? total / (double) this.delays.size() : 0;
+        return this.carDelayMap.size() > 0 ? total / (double) this.carDelayMap.size() : 0;
     }
 
     /**
@@ -40,7 +60,7 @@ public class Statistics {
      */
     public double getMdnDelay() {
         List<Integer> total = new ArrayList<>();
-        for (List<Integer> delays : this.delays.values())
+        for (List<Integer> delays : this.carDelayMap.values())
             total.addAll(delays);
         Collections.sort(total);
         if (total.size() > 0) {
@@ -57,10 +77,10 @@ public class Statistics {
      */
     public List<Integer> getDelayLast2(){
         List<Integer> result = new ArrayList<>();
-        int max = Collections.max(this.delays.keySet());
+        int max = Collections.max(this.carDelayMap.keySet());
         //todo: no seperation between 2 days
-        result.addAll(this.delays.get(max-1));
-        result.addAll(this.delays.get(max));
+        result.addAll(this.carDelayMap.get(max-1));
+        result.addAll(this.carDelayMap.get(max));
         return result;
     }
 
@@ -70,9 +90,9 @@ public class Statistics {
      */
     public double getAvgOrders(){
         double total = 0;
-        for(List<Integer> delays: this.delays.values())
+        for(List<Integer> delays: this.carDelayMap.values())
             total+= delays.size();
-        return this.delays.size()>0 ? total/(double) this.delays.size(): 0;
+        return this.carDelayMap.size()>0 ? total/(double) this.carDelayMap.size(): 0;
     }
 
     /**
@@ -81,7 +101,7 @@ public class Statistics {
      */
     public double getMdnOrders(){
         List<Integer> orders = new ArrayList<>();
-        for(List<Integer> delays: this.delays.values()){
+        for(List<Integer> delays: this.carDelayMap.values()){
             orders.add(delays.size());
         }
         Collections.sort(orders);
@@ -100,9 +120,9 @@ public class Statistics {
      */
     public Map<Integer, Integer> getOrdersLast2(){
         Map<Integer, Integer> result = new HashMap<>();
-        int max = Collections.max(this.delays.keySet());
-        result.put(max-1, this.delays.get(max-1).size());
-        result.put(max, this.delays.get(max).size());
+        int max = Collections.max(this.carDelayMap.keySet());
+        result.put(max-1, this.carDelayMap.get(max-1).size());
+        result.put(max, this.carDelayMap.get(max).size());
         return result;
     }
 }

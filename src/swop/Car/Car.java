@@ -98,14 +98,6 @@ public class Car {
 		return this.getCarModel().getCarModelSpecification().getAllParts();
 	}
 
-
-	public void setEstimatedCompletionTime(Map<String, Integer> timeStamp) {
-		if (!isValidTimeStamp(timeStamp)) {
-			throw new IllegalArgumentException("timeStamp not valid");
-		}
-		this.estimatedCompletionTime = timeStamp;
-	}
-
 	/**
 	 * Check is the given timestamp is valid
 	 * @param timeStamp the given timeStamp
@@ -114,6 +106,26 @@ public class Car {
 	private boolean isValidTimeStamp(Map<String, Integer> timeStamp) {
 		return timeStamp.size() == 2 && timeStamp.containsKey("day") && timeStamp.containsKey("minutes") &&
 				timeStamp.get("day") > -1 && timeStamp.get("minutes") > -1;
+	}
+
+	/**
+	 * @return this.initialCompletionTime
+	 */
+	public Map<String, Integer> getInitialCompletionTime() {
+		return this.initialCompletionTime;
+	}
+
+	/**
+	 * Set estimatedCompletionTime to new timeStamp, if there is not yet a initialCompletionTime
+	 * set the initialCompletionTime to the same timeStamp.
+	 * @param timeStamp the timeStamp to update the estimatedCompletionTime with
+	 */
+	public void setEstimatedCompletionTime(Map<String, Integer> timeStamp) {
+		if (!isValidTimeStamp(timeStamp)) {
+			throw new IllegalArgumentException("timeStamp not valid");
+		}
+		if (this.initialCompletionTime == null) this.initialCompletionTime = timeStamp;
+		this.estimatedCompletionTime = timeStamp;
 	}
 
 	public Map<String, Integer> getEstimatedCompletionTime() {

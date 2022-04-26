@@ -1,15 +1,12 @@
 package swop.CarManufactoring;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import swop.Car.Car;
 import swop.Car.CarOrder;
 import swop.Exceptions.NotAllTasksCompleteException;
-import swop.Listeners.Listener;
-import swop.Main.AssemAssist;
+import swop.Listeners.StatisticsListener;
+import swop.Listeners.TaskCompletedListener;
 
 public class CarManufacturingController {
 
@@ -17,7 +14,8 @@ public class CarManufacturingController {
 	private final LinkedList<Car> finishedCars = new LinkedList<>();
 	private final AssemblyLine assemblyLine;
 	private final Scheduler scheduler;
-	private final Listener listener = () -> {
+	private final List<StatisticsListener> statisticsListeners = new ArrayList<>();
+	private final TaskCompletedListener taskCompletedListener = () -> {
 				try {advanceAssembly();}
 				catch (NotAllTasksCompleteException ignored) {}
 				};
@@ -29,7 +27,19 @@ public class CarManufacturingController {
 		this.assemblyLine = new AssemblyLine(createWorkStations());
 		this.scheduler = new Scheduler(this);
 	}
-	
+
+	/**
+	 * Add statisticsListener to statisticsListeners
+	 * @param statisticsListener the listener to add
+	 */
+	public void addListener(StatisticsListener statisticsListener) {
+		this.statisticsListeners.add(statisticsListener);
+	}
+
+	private void updateDelay(Car car) {
+		statisticsListeners.forEach(l -> l.updateDelay(car));
+	}
+
 	/**
 	 * Function creates all the workstations that are part of the assemblyLine as a linked list so that they have the
 	 * right order.
@@ -40,7 +50,7 @@ public class CarManufacturingController {
 		workStations.add(new WorkStation("Car Body Post"));
 		workStations.add(new WorkStation("Drivetrain Post"));
 		workStations.add(new WorkStation("Accessories Post"));
-		workStations.forEach(s -> s.addListener(this.listener));
+		workStations.forEach(s -> s.addListener(this.taskCompletedListener));
 		return workStations;
 	}
 
@@ -72,6 +82,7 @@ public class CarManufacturingController {
 		if (finishedCar != null) {
 			setFinishedCarDeliveryTime(maxWorkingMinutes, finishedCar);
 			this.finishedCars.add(finishedCar);
+			this.updateDelay(finishedCar);
 		}
 		//update schedular time
 		this.updateScheduleTime(maxWorkingMinutes);

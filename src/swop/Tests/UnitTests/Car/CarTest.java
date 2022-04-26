@@ -116,20 +116,40 @@ class CarTest {
 
     @Test
     void estimatedCompletionTime() {
-        // PLACEHOLDER TEST
         modelA.setCarModelSpecification(specification);
         Car car = new Car(modelA);
-        //car.setEstimatedCompletionTime("PLACEHOLDER");
-        //assertEquals("PLACEHOLDER",car.getEstimatedCompletionTime());
+        assertNull(car.getInitialCompletionTime());
+        car.setEstimatedCompletionTime(Map.of("day", 0, "minutes", 500));
+        assertEquals(Map.of("day", 0, "minutes", 500),car.getEstimatedCompletionTime());
+        assertEquals(Map.of("day", 0, "minutes", 500),car.getInitialCompletionTime());
+    }
+
+    @Test
+    void estimatedCompletionTime_InvalidTime() {
+        modelA.setCarModelSpecification(specification);
+        Car car = new Car(modelA);
+        assertNull(car.getInitialCompletionTime());
+        assertThrows(IllegalArgumentException.class, () -> car.setEstimatedCompletionTime(Map.of("day", -1, "minutes", 500)));
+        assertNull(car.getInitialCompletionTime());
+        assertNull(car.getEstimatedCompletionTime());
     }
 
     @Test
     void deliveryTime() {
-        // PLACEHOLDER TEST
         modelA.setCarModelSpecification(specification);
         Car car = new Car(modelA);
-        //car.setDeliveryTime(Map.of("PLACEHOLDER",0));
-        //assertEquals(Map.of("PLACEHOLDER",0),car.getDeliveryTime());
+        assertNull(car.getDeliveryTime());
+        car.setDeliveryTime(Map.of("day", 0, "minutes", 500));
+        assertEquals(Map.of("day", 0, "minutes", 500),car.getDeliveryTime());
+    }
+
+    @Test
+    void deliveryTime_InvalidTime() {
+        modelA.setCarModelSpecification(specification);
+        Car car = new Car(modelA);
+        assertNull(car.getDeliveryTime());
+        assertThrows(IllegalArgumentException.class, () -> car.setDeliveryTime(Map.of("day", 0, "minutes", -200)));
+        assertNull(car.getDeliveryTime());
     }
 
 }
