@@ -131,12 +131,11 @@ public class CarMechanic extends User{
 	 */
 	private String selectStation(AssemAssist assemAssist) throws CancelException {
 		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
-		List<String> workStationsNames = assemAssist.getStationsNames();
 		List<WorkStation> workStations = assemAssist.getStations();
 		//asks user for workstation
 		CarMechanicUI.displayAvailableStations(workStations);
-		int option = CarMechanicUI.askOption("Select station: ", workStationsNames.size());	
-		return workStationsNames.get(option);
+		int option = CarMechanicUI.askOption("Select station: ", workStations.size());	
+		return workStations.get(option).getName();
 	}
 
 	/**

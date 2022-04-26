@@ -41,7 +41,7 @@ public class CheckOrderDetailsUseCase {
 
     @Test
     void OrderDetailsInvalidIDTest() {
-    	ListIterator<String> output = setupUITest(String.format("a%n1%ninvalid%nCANCEL%nQUIT"), 12); // Setup
+    	ListIterator<String> output = setupUITest(String.format("a%n1%ninvalid%nCANCEL%nQUIT"), 13); // Setup
     	
     	askOrderID(output); // user fills an invalid order id
     	

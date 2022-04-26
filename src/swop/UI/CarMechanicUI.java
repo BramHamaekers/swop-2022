@@ -45,10 +45,6 @@ public class CarMechanicUI implements UI {
 		}
 
 		public static void displayTaskInfo(List<String> info) throws CancelException {
-//			System.out.println("-----------Info For Task----------");
-//			for(String part:info) System.out.println(part);
-//			System.out.println("----------------------------------");
-//			System.out.println("Press enter when you are finished");
 			DisplayStatus builder = new DisplayStatus();
 			carMechanicGenerator.generateTaskInfo(builder, info);
 			System.out.println(builder.getDisplay());
