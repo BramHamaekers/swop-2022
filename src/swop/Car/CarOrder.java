@@ -39,7 +39,7 @@ public class CarOrder implements Comparable<CarOrder> {
 	 * Est. value of completion for this car.
 	 * @return est. value
 	 */
-	public String getEstimatedCompletionTime() {
+	public Map<String, Integer> getEstimatedCompletionTime() {
 		return this.getCar().getEstimatedCompletionTime();
 	}
 

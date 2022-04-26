@@ -126,7 +126,7 @@ public class OrderNewCarTest {
 
        storeOrder(1); // The system stores the new order.
 	   
-	   output = continueUITest(String.format("a%n0%n1%n0%n0%n0%n0%n0%n0%n0%n0%nQUIT"), 20); // order car modal b
+	   output = continueUITest(String.format("a%n0%n1%n0%n0%n0%n0%n0%n0%n0%n0%nQUIT"), 19); // order car modal b
 	   
        CarModel b = new ModelB();
 
@@ -138,7 +138,7 @@ public class OrderNewCarTest {
 
        storeOrder(2); // The system stores the new order.
 	   
-	   output = continueUITest(String.format("a%n0%n2%n0%n0%n0%n0%n0%n0%n0%n0%nQUIT"), 22); // order car modal c
+	   output = continueUITest(String.format("a%n0%n2%n0%n0%n0%n0%n0%n0%n0%n0%nQUIT"), 20); // order car modal c
 	   
        CarModel c = new ModelC();
 

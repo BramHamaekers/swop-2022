@@ -50,8 +50,8 @@ class CarOrderTest {
         CarOrder carOrder = new CarOrder(modelA);
         Car car = carOrder.getCar();
 
-        car.setEstimatedCompletionTime("PLACEHOLDER"); // CarOrder should have same est completion time as car
-        assertEquals("PLACEHOLDER",carOrder.getEstimatedCompletionTime());
+        //car.setEstimatedCompletionTime("PLACEHOLDER"); // CarOrder should have same est completion time as car
+        //assertEquals("PLACEHOLDER",carOrder.getEstimatedCompletionTime());
     }
 }
 
