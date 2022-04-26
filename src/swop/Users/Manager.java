@@ -2,7 +2,6 @@ package swop.Users;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import swop.Car.Car;
 import swop.Exceptions.CancelException;
@@ -114,7 +113,7 @@ public class Manager extends User{
 		//TODO -> the average and median delay on an order, 
 		// together with the 2 last delays and the days they occurred. 
 		
-		List<Map<String, Integer>> finishedCarTimes = new LinkedList<Map<String, Integer>>(assemAssist.getController().getFinishedCars().stream().map(Car::getDeliveryTime).toList());
+		List<Map<String, Integer>> finishedCarTimes = new LinkedList<Map<String, Integer>>(assemAssist.getController().getFinishedCars().stream().map(Car::getCompletionTime).toList());
 		if(finishedCarTimes.isEmpty()) {
 			ManagerUI.printError("Not enough data to give you statistics");
 			return;

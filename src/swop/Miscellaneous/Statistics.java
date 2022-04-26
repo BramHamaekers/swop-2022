@@ -15,9 +15,9 @@ public class Statistics {
      *
      */
     void updateDelay(Car car) {
-        int finishDay = car.getDeliveryTime().get("day");
+        int finishDay = car.getCompletionTime().get("day");
         int delayedDays = finishDay - car.getInitialCompletionTime().get("day");
-        int delayedMinutes = car.getDeliveryTime().get("minutes") - car.getInitialCompletionTime().get("minutes");
+        int delayedMinutes = car.getCompletionTime().get("minutes") - car.getInitialCompletionTime().get("minutes");
 
         int minutes = 0;
 

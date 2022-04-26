@@ -44,14 +44,15 @@ public class CarOrder implements Comparable<CarOrder> {
 	}
 
 	public Map<String, Integer> getCompletionTime() {
-		return this.getCar().getDeliveryTime();
+		return this.getCar().getCompletionTime();
 	}
 
 	@Override
 	public int compareTo(CarOrder carOrder) {
-		//TODO: fix compare!!!!!!!!!!!!!!!!!
-		return -1;
-//				Integer.compare(this.getCompletionTime(), carOrder.getCompletionTime());
+		int day1 = this.getCompletionTime().get("day");
+		int day2 = carOrder.getCompletionTime().get("day");
+		if (day1 != day2) return Integer.compare(day1, day2);
+		return Integer.compare(this.getCompletionTime().get("minutes"), carOrder.getCompletionTime().get("minutes"));
 	}
 
 	/**

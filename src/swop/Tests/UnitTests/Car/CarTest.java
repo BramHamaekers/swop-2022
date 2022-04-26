@@ -138,18 +138,18 @@ class CarTest {
     void deliveryTime() {
         modelA.setCarModelSpecification(specification);
         Car car = new Car(modelA);
-        assertNull(car.getDeliveryTime());
+        assertNull(car.getCompletionTime());
         car.setDeliveryTime(Map.of("day", 0, "minutes", 500));
-        assertEquals(Map.of("day", 0, "minutes", 500),car.getDeliveryTime());
+        assertEquals(Map.of("day", 0, "minutes", 500),car.getCompletionTime());
     }
 
     @Test
     void deliveryTime_InvalidTime() {
         modelA.setCarModelSpecification(specification);
         Car car = new Car(modelA);
-        assertNull(car.getDeliveryTime());
+        assertNull(car.getCompletionTime());
         assertThrows(IllegalArgumentException.class, () -> car.setDeliveryTime(Map.of("day", 0, "minutes", -200)));
-        assertNull(car.getDeliveryTime());
+        assertNull(car.getCompletionTime());
     }
 
 }

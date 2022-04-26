@@ -132,7 +132,7 @@ public class Car {
 		return this.estimatedCompletionTime;
 	}
 
-	public Map<String, Integer> getDeliveryTime() {
+	public Map<String, Integer> getCompletionTime() {
 		return this.deliveryTime;
 	}
 

@@ -142,7 +142,7 @@ class CarManufacturingControllerTest {
         assertEquals("day: 0, time: 06:00",carManufacturingController.getScheduler().getTimeAsString());
         assertFalse(carManufacturingController.getAssembly().getUnfinishedCars().contains(car));
         assertTrue(carManufacturingController.getFinishedCars().contains(car));
-        assertEquals(Map.of("day", 0, "minutes", 0),car.getDeliveryTime());
+        assertEquals(Map.of("day", 0, "minutes", 0),car.getCompletionTime());
 
         carManufacturingController.getScheduler().addTime(961);
         assertDoesNotThrow(carManufacturingController::advanceAssembly);
