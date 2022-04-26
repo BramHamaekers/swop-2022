@@ -12,7 +12,8 @@ public class Statistics {
     public final StatisticsListener statisticsListener = this::updateDelay;
 
     /**
-     *
+     * Updates the delay map given a Car
+     * @param car of the type Car
      */
     void updateDelay(Car car) {
         int finishDay = car.getCompletionTime().getDay();

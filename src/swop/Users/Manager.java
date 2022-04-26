@@ -38,6 +38,7 @@ public class Manager extends User{
 	 */
 	@Override
 	public void selectAction(AssemAssist assemAssist) throws CancelException {
+		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
 		List<String> actions = Arrays.asList("Check Production Statistics", "Adapt Scheduling Algorithm", "Exit");
 		int action = ManagerUI.selectFlow(actions, "What would you like to do?");
 

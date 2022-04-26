@@ -90,21 +90,21 @@ public class CheckAssemblyLineStatusTest {
     				|| !w.getUncompletedTasks().isEmpty() || !w.getCompletedTasks().isEmpty();
     	}
 	}
-    
-    private void presentAssemblyLineAllEmptyStatus(ListIterator<String> output) {
-    	DisplayStatus builder = new DisplayStatus();
-    	List<WorkStation> workstations = this.assem.getStations();
-    	for(WorkStation w:  workstations) {
-    		carMechanicGenerator.generateWorkStationStatus(builder, w.getName(), w.getUncompletedTasks(), w.getCompletedTasks());
-    		assert w.getCompletedTasks() == null;
-    		assert w.getUncompletedTasks() == null;
-    	}
+
+	private void presentAssemblyLineAllEmptyStatus(ListIterator<String> output) {
+		DisplayStatus builder = new DisplayStatus();
+		List<WorkStation> workstations = this.assem.getStations();
+		for(WorkStation w:  workstations) {
+			carMechanicGenerator.generateWorkStationStatus(builder, w.getName(), w.getUncompletedTasks(), w.getCompletedTasks());
+			assert w.getCompletedTasks() == null;
+			assert w.getUncompletedTasks() == null;
+		}
 		ListIterator<String> iterator = Arrays.asList(builder.getDisplay().split(String.format("%n"))).listIterator();
 		while (iterator.hasNext())
-        	assertEquals(iterator.next(), output.next());
-		
+			assertEquals(iterator.next(), output.next());
+
 	}
-    
+
     private void pendingInWorkstationStatus(ListIterator<String> output, int station, boolean b) {
     	DisplayStatus builder = new DisplayStatus();
     	List<WorkStation> workstations = this.assem.getStations();
@@ -124,9 +124,9 @@ public class CheckAssemblyLineStatusTest {
 		ListIterator<String> iterator = Arrays.asList(builder.getDisplay().split(String.format("%n"))).listIterator();
 		while (iterator.hasNext())
         	assertEquals(iterator.next(), output.next());
-		
+
 	}
-    
+
     private void completedInWorkstationStatus(ListIterator<String> output, int station, boolean b) {
     	DisplayStatus builder = new DisplayStatus();
     	List<WorkStation> workstations = this.assem.getStations();
