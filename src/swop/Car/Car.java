@@ -9,8 +9,9 @@ public class Car {
 	private Set<Task> uncompletedTasks;
 	private Set<Task> allTasks;
     private CarModel carModel;
-	private String estimatedCompletionTime; // TODO Dynamic
-	private Map<String, Integer> deliveryTime; // TODO
+	private Map<String, Integer> initialCompletionTime;
+	private Map<String, Integer> estimatedCompletionTime;
+	private Map<String, Integer> deliveryTime;
     
     public Car(CarModel model){
         this.setCarModel(model);  
@@ -97,11 +98,25 @@ public class Car {
 		return this.getCarModel().getCarModelSpecification().getAllParts();
 	}
 
-	public void setEstimatedCompletionTime(String time) { // TODO Remove
-		this.estimatedCompletionTime = time;
+
+	public void setEstimatedCompletionTime(Map<String, Integer> timeStamp) {
+		if (!isValidTimeStamp(timeStamp)) {
+			throw new IllegalArgumentException("timeStamp not valid");
+		}
+		this.estimatedCompletionTime = timeStamp;
 	}
 
-	public String getEstimatedCompletionTime() {
+	/**
+	 * Check is the given timestamp is valid
+	 * @param timeStamp the given timeStamp
+	 * @return True if the timestamp consists of a positive day and minutes value
+	 */
+	private boolean isValidTimeStamp(Map<String, Integer> timeStamp) {
+		return timeStamp.size() == 2 && timeStamp.containsKey("day") && timeStamp.containsKey("minutes") &&
+				timeStamp.get("day") > -1 && timeStamp.get("minutes") > -1;
+	}
+
+	public Map<String, Integer> getEstimatedCompletionTime() {
 		return this.estimatedCompletionTime;
 	}
 
@@ -109,7 +124,10 @@ public class Car {
 		return this.deliveryTime;
 	}
 
-	public void setDeliveryTime(Map<String, Integer> time) {
-		this.deliveryTime = time;
+	public void setDeliveryTime(Map<String, Integer> timeStamp) {
+		if (!isValidTimeStamp(timeStamp)) {
+			throw new IllegalArgumentException("timeStamp not valid");
+		}
+		this.deliveryTime = timeStamp;
 	}
 }

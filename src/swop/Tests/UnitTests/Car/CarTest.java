@@ -119,8 +119,8 @@ class CarTest {
         // PLACEHOLDER TEST
         modelA.setCarModelSpecification(specification);
         Car car = new Car(modelA);
-        car.setEstimatedCompletionTime("PLACEHOLDER");
-        assertEquals("PLACEHOLDER",car.getEstimatedCompletionTime());
+        //car.setEstimatedCompletionTime("PLACEHOLDER");
+        //assertEquals("PLACEHOLDER",car.getEstimatedCompletionTime());
     }
 
     @Test
@@ -128,8 +128,8 @@ class CarTest {
         // PLACEHOLDER TEST
         modelA.setCarModelSpecification(specification);
         Car car = new Car(modelA);
-        car.setDeliveryTime(Map.of("PLACEHOLDER",0));
-        assertEquals(Map.of("PLACEHOLDER",0),car.getDeliveryTime());
+        //car.setDeliveryTime(Map.of("PLACEHOLDER",0));
+        //assertEquals(Map.of("PLACEHOLDER",0),car.getDeliveryTime());
     }
 
 }

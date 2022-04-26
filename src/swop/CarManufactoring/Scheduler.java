@@ -45,7 +45,7 @@ public class Scheduler {
      *
      * @return Time formatted as string
      */
-    public String getEstimatedCompletionTime(Car car) {
+    public Map<String, Integer> getEstimatedCompletionTime(Car car) {
     	  int day = this.day;
           int minutes = this.minutes;
           int workingDayMinutes = this.workingDayMinutes;
@@ -69,12 +69,8 @@ public class Scheduler {
               else {minutes = (int) (Math.ceil( (float) minutes/60) * 60);} // Other cars
 
           }
-          // Convert to format
-          int hours = minutes / 60;
-          hours += 6;
-          minutes = minutes % 60;
 
-          return String.format("day: %s, time: %02d:%02d%n", day, hours, minutes);
+		  return Map.of("day", day, "minutes", minutes);
     }
 
 	/**
