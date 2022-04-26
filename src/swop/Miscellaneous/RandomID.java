@@ -1,4 +1,4 @@
-package swop.Database;
+package swop.Miscellaneous;
 
 import java.util.Random;
 
@@ -6,7 +6,7 @@ public final class RandomID {
 
 	/**
 	 * A half working method for generating random sequence off symbols
-	 * @param lenght of the generated string
+	 * @param size of the generated string
 	 * @return String of random symbols
 	 */
 	public static String random(int size) {

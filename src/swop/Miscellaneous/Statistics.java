@@ -1,4 +1,4 @@
-package swop.Database;
+package swop.Miscellaneous;
 
 import java.util.*;
 

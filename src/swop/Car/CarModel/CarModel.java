@@ -5,7 +5,6 @@ import java.util.*;
 
 public abstract class CarModel {
     private CarModelSpecification carModelSpecification = null;
-    //todo check if still necessary
     protected String name;
     protected Map<String, List<String>> validOptions;
     protected List<String> mandatoryParts;
@@ -16,14 +15,14 @@ public abstract class CarModel {
             throw new IllegalArgumentException("invalid car specification for this model");
         }
         this.carModelSpecification = selected;
-    };
+    }
 
     public CarModelSpecification getCarModelSpecification() {
         return this.carModelSpecification;
     }
 
-    public Map<String, List<String>> getValidOptions(){
-        return this.validOptions;
+    public SortedMap<String, List<String>> getValidOptions(){
+        return new TreeMap<>(this.validOptions);
     }
 
     /**
