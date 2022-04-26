@@ -15,9 +15,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
@@ -148,7 +145,6 @@ public class PerformAssemblyTasksTest {
     private void presentAvailableTasks(ListIterator<String> output, List<Task> tasks) {
 		DisplayStatus builder = new DisplayStatus();
 		carMechanicGenerator.generateAvailableTasks(builder,tasks);
-		String display = builder.getDisplay();
 		ListIterator<String> iterator = Arrays.asList(builder.getDisplay().split(String.format("%n"))).listIterator();
 		while (iterator.hasNext())
         	assertEquals(iterator.next(), output.next());
