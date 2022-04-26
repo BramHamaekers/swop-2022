@@ -1,6 +1,5 @@
 package swop.Car;
 
-import swop.Parts.*;
 
 import java.util.*;
 import java.util.Map.Entry;
