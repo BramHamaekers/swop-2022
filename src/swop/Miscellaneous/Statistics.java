@@ -37,7 +37,7 @@ public class Statistics {
         if (this.carDelayMap.containsKey(day_I)) {
             this.carDelayMap.get(day_I).add(delayedMinutes);
         } else {
-            this.carDelayMap.put(day_I, new ArrayList<>(delayedMinutes));
+            this.carDelayMap.put(day_I, List.of(delayedMinutes));
         }
     }
 
