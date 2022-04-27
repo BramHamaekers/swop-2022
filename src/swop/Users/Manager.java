@@ -83,7 +83,7 @@ public class Manager extends User{
 			assemAssist.getController().getScheduler().setSchedulingAlgorithm("BATCH", selection);
 		}
 		else {
-			ManagerUI.printError("No possible batchoptions, too few cars with the same configurations give priority");
+			ManagerUI.printError("No batchoptions available -> Algoritm will stay FIFO");
 		}
 	}
 
@@ -92,7 +92,7 @@ public class Manager extends User{
 	 * @param partMaps map of parts
 	 * @return List of batch options
 	 */
-	private List<Map<String, String>> getBatchOptions(List<Map<String, String>> partMaps) {
+	public List<Map<String, String>> getBatchOptions(List<Map<String, String>> partMaps) {
 		List<Map<String, String>> possibleBatch = new ArrayList<>();
 
 		// map all selections on top of optionCategory
@@ -114,43 +114,7 @@ public class Manager extends User{
 	}
 
 	private void checkProductionStatistics(AssemAssist assemAssist) throws CancelException {
-
-		allStats stats = assemAssist.getStats();
-		System.out.print(stats.avgDelay());
-		
-		ManagerUI.showProductionStatistics(stats);
-			
+		ManagerUI.showProductionStatistics(assemAssist.getStats());
 	}
 
-	/**
-	 * Calculates the median value of a given list.
-	 * @param numberOfCarsEachDay amount of cars each day
-	 * @return median
-	 */
-	private double getMedianOfList(List<Integer> numberOfCarsEachDay) {
-		 if (numberOfCarsEachDay.size() % 2 == 0) {
-			 return (numberOfCarsEachDay.get((numberOfCarsEachDay.size()/2) - 1) +
-					  numberOfCarsEachDay.get(numberOfCarsEachDay.size()/2)/2);
-		 }
-		 return Math.ceil(numberOfCarsEachDay.get(numberOfCarsEachDay.size()/2));
-	}
-	
-	/**
-	 * Returns a list of all the car finished each day: index = the day.
-	 * @param finishedCarTimes the times at which cars are finished
-	 * @return List<Integer> numberOfCarsEachDay
-	 */
-	private List<Integer> getFinishedCarsEachDay(List<TimeStamp> finishedCarTimes) {
-		List<Integer> numberOfCarsEachDay = new ArrayList<>();
-		
-		// calculate the cars for each day
-		while(!finishedCarTimes.isEmpty()) {
-			int day = finishedCarTimes.remove(0).getDay();
-			while((numberOfCarsEachDay.size()-1) < day)
-				numberOfCarsEachDay.add(0);
-			numberOfCarsEachDay.set(day, numberOfCarsEachDay.get(day) + 1);			
-		}
-		Collections.sort(numberOfCarsEachDay);
-		return numberOfCarsEachDay;
-	}
 }
