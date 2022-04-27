@@ -46,7 +46,7 @@ public class GarageHolder extends User{
 
         switch (action) {
             case 0 -> this.generateOrder(assemAssist);
-            case 1 -> this.checkOrderDetails();
+            case 1 -> this.checkOrderDetails(); //TODO: UC-2 needs to go back to step 1 not 3
             case 2 -> {
                 // Do Nothing
             }
@@ -54,19 +54,17 @@ public class GarageHolder extends User{
         }
     }
 
-    private void checkOrderDetails() throws CancelException {
-        String orderID =  GarageHolderUI.selectOrderID();
+    private String checkOrderDetails() throws CancelException {
+        String orderID = GarageHolderUI.selectOrderID();
         while (!isValidOrderID(orderID)) {
             GarageHolderUI.printError("Please provide a valid orderID");
-            orderID =  GarageHolderUI.selectOrderID();
+            orderID = GarageHolderUI.selectOrderID();
         }
         CarOrder carOrder = getOrderFromID(orderID);
+        //TODO: not the proper formatting
         GarageHolderUI.showOrderDetails(carOrder.toString());
 
-        String answer = GarageHolderUI.indicateYesNo("Would you like to view another order?");
-        if (answer.equals("y")) checkOrderDetails();
-
-
+        return GarageHolderUI.indicateYesNo("Would you like to view another order?");
     }
 
     /**
