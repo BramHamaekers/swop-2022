@@ -36,10 +36,10 @@ public class Statistics {
      */
     public void finishOrder(int delayedMinutes, int finishDay) {
         Integer day_I = finishDay;
-        if (this.carDelayMap.containsKey(day_I)) {
-            this.carDelayMap.get(day_I).add(delayedMinutes);
+        if (this.getCarDelayMap().containsKey(day_I)) {
+            this.getCarDelayMap().get(day_I).add(delayedMinutes);
         } else {
-            this.carDelayMap.put(day_I, List.of(delayedMinutes));
+            this.getCarDelayMap().put(day_I, new ArrayList<>(List.of(delayedMinutes)));
         }
     }
 
@@ -49,11 +49,11 @@ public class Statistics {
      */
     public double getAvgDelay() {
         double total = 0;
-        for (List<Integer> delays : this.carDelayMap.values())
+        for (List<Integer> delays : this.getCarDelayMap().values())
             for (Integer delay : delays) {
                 total += delay;
             }
-        return this.carDelayMap.size() > 0 ? total / (double) this.carDelayMap.size() : 0;
+        return this.getCarDelayMap().size() > 0 ? total / (double) this.getCarDelayMap().size() : 0;
     }
 
     /**
@@ -62,7 +62,7 @@ public class Statistics {
      */
     public double getMdnDelay() {
         List<Integer> total = new ArrayList<>();
-        for (List<Integer> delays : this.carDelayMap.values())
+        for (List<Integer> delays : this.getCarDelayMap().values())
             total.addAll(delays);
         Collections.sort(total);
         if (total.size() > 0) {
@@ -80,10 +80,10 @@ public class Statistics {
     public List<Integer> getDelayLast2(){
         List<Integer> result = new ArrayList<>();
         int max = 0;
-        if (!this.carDelayMap.isEmpty())
-            max = Collections.max(this.carDelayMap.keySet());
-        if(this.carDelayMap.size() > 1) result.addAll(this.carDelayMap.get(max-1));
-        if(this.carDelayMap.size() > 0) result.addAll(this.carDelayMap.get(max));
+        if (!this.getCarDelayMap().isEmpty())
+            max = Collections.max(this.getCarDelayMap().keySet());
+        if(this.getCarDelayMap().size() > 1) result.addAll(this.getCarDelayMap().get(max-1));
+        if(this.getCarDelayMap().size() > 0) result.addAll(this.getCarDelayMap().get(max));
         return result;
     }
 
@@ -93,9 +93,9 @@ public class Statistics {
      */
     public double getAvgOrders(){
         double total = 0;
-        for(List<Integer> delays: this.carDelayMap.values())
+        for(List<Integer> delays: this.getCarDelayMap().values())
             total+= delays.size();
-        return this.carDelayMap.size()>0 ? total/(double) this.carDelayMap.size(): 0;
+        return this.getCarDelayMap().size()>0 ? total/(double) this.getCarDelayMap().size(): 0;
     }
 
     /**
@@ -104,7 +104,7 @@ public class Statistics {
      */
     public double getMdnOrders(){
         List<Integer> orders = new ArrayList<>();
-        for(List<Integer> delays: this.carDelayMap.values()){
+        for(List<Integer> delays: this.getCarDelayMap().values()){
             orders.add(delays.size());
         }
         Collections.sort(orders);
@@ -124,11 +124,11 @@ public class Statistics {
     public Map<Integer, Integer> getOrdersLast2(){
         Map<Integer, Integer> result = new HashMap<>();
         int max = 0;
-        if (!this.carDelayMap.isEmpty())
-            max = Collections.max(this.carDelayMap.keySet());
+        if (!this.getCarDelayMap().isEmpty())
+            max = Collections.max(this.getCarDelayMap().keySet());
 
-        if(this.carDelayMap.size() > 1) result.put(max-1, this.carDelayMap.get(max-1).size());
-        if(this.carDelayMap.size() > 0) result.put(max, this.carDelayMap.get(max).size());
+        if(this.getCarDelayMap().size() > 1) result.put(max-1, this.getCarDelayMap().get(max-1).size());
+        if(this.getCarDelayMap().size() > 0) result.put(max, this.getCarDelayMap().get(max).size());
         return result;
     }
     
@@ -140,5 +140,8 @@ public class Statistics {
     	
     	return new allStats(getAvgOrders(), getMdnOrders(), getOrdersLast2(), getAvgDelay(),getMdnDelay(),getDelayLast2());
     }
-    
+
+    public Map<Integer, List<Integer>> getCarDelayMap() {
+        return carDelayMap;
+    }
 }

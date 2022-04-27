@@ -6,11 +6,12 @@ import swop.Miscellaneous.Statistics;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class StatisticsTest {
-    Statistics a = new Statistics();
+    Statistics stats = new Statistics();
     //TODO: how to test listeners
 
     @Test
@@ -19,16 +20,25 @@ class StatisticsTest {
 
     @Test
     void finishOrder() {
+        Statistics stats = new Statistics();
+        stats.finishOrder(30,0);
+        assertEquals(Map.of(0, new ArrayList<>(List.of(30))),stats.getCarDelayMap());
+        stats.finishOrder(40,0);
+        assertEquals(Map.of(0, new ArrayList<>(List.of(30,40))),stats.getCarDelayMap());
+        stats.finishOrder(300,1);
+        assertEquals(Map.of(0, new ArrayList<>(List.of(30,40)), 1, new ArrayList<>(List.of(300))),stats.getCarDelayMap());
     }
 
     @Test
     void getAvgDelay() {
-        assertEquals(a.getAvgDelay(),0);
+        Statistics stats = new Statistics();
+        assertEquals(stats.getAvgDelay(),0);
     }
 
     @Test
     void getMdnDelay() {
-        assertEquals(a.getMdnDelay(),0);
+        Statistics stats = new Statistics();
+        assertEquals(stats.getMdnDelay(),0);
     }
 
     @Test
@@ -38,12 +48,14 @@ class StatisticsTest {
 
     @Test
     void getAvgOrders() {
-        assertEquals(a.getAvgOrders(),0);
+        Statistics stats = new Statistics();
+        assertEquals(stats.getAvgOrders(),0);
     }
 
     @Test
     void getMdnOrders() {
-        assertEquals(a.getMdnOrders(),0);
+        Statistics stats = new Statistics();
+        assertEquals(stats.getMdnOrders(),0);
     }
 
     @Test
