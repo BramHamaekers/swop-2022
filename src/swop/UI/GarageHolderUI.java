@@ -85,7 +85,9 @@ public class GarageHolderUI implements UI {
     public static void displayEstimatedTime(CarOrder order) {
 		DisplayStatus builder = new DisplayStatus();
 		garageHolderGenerator.generateEstimatedTime(builder, order);
+		System.out.println(builder.getDisplay());
 	}
+
     public static void printEmptyLine() {
     	System.out.println("");
     }
