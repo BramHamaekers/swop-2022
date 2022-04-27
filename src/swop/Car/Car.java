@@ -88,9 +88,9 @@ public class Car {
 	}
 
 	/**
-	 * Returns the value of given part based on the model of this car.
-	 * @param category todo
-	 * @return value part
+	 * Returns the value of given carOptionCategory based on the model of this car.
+	 * @param category the given carOptionCategory
+	 * @return value carOptionCategory
 	 */
 	public String getValueOfPart(String category) {
 		return this.getCarModel().getCarModelSpecification().getValueOfPart(category);

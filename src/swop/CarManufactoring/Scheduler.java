@@ -4,7 +4,7 @@ import swop.Miscellaneous.TimeStamp;
 
 import java.util.*;
 
-interface costumIterator<T> {
+interface customIterator<T> {
 	/**
 	 * iterator standard hasnext method
 	 * @return whether the iterator has another element to return
@@ -93,7 +93,7 @@ public class Scheduler {
     	Car station2Car = workstationCars.get(1);
     	Car station3Car = workstationCars.get(2);
 
-    	costumIterator<Car> iter = this.iterator(this.controller.getCarQueue());
+    	customIterator<Car> iter = this.iterator(this.controller.getCarQueue());
 		Car current = iter.next(this.algorithm);
 
 		int time = this.getMax(getUnfinishedCars());
@@ -245,16 +245,20 @@ public class Scheduler {
      * @return this.carQueue.removeFirst()
      */
     public Car getNextScheduledCar() {
-    	costumIterator<Car> iter = this.iterator(this.controller.getCarQueue());
+    	customIterator<Car> iter = this.iterator(this.controller.getCarQueue());
     	if (iter.hasNext())
         	return iter.next(this.algorithm);
     	return null;
     }
 
-    // TODO: split function
-	public costumIterator<Car> iterator(List<Car> l) {
-		return new costumIterator<>() {
-			final List<Car> list = new LinkedList<>(l);
+	/**
+	 * create customIterator used in looping over a given list of cars based on the active scheduling algorithm
+	 * @param cars list of cars to loop over
+	 * @return new customIterator that loops over cars
+	 */
+	public customIterator<Car> iterator(List<Car> cars) {
+		return new customIterator<>() {
+			final List<Car> list = new LinkedList<>(cars);
 
 			public boolean hasNext() {
 				return list.size() > 0;

@@ -5,7 +5,6 @@ import java.util.Map;
 
 public class ModelB extends CarModel {
     private static final List<String> modelBMandatory = List.of("Body","Color", "Engine", "Gearbox", "Seats", "Wheels");
-    //TODO: need to rewrite
     private static final Map<String, List<String>> modelBOptions = Map.of(
             "Body", List.of("sedan", "break", "sport"),
             "Color", List.of("red", "blue", "green", "yellow"),

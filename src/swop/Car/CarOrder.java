@@ -57,7 +57,6 @@ public class CarOrder implements Comparable<CarOrder> {
 	 * @param time the time of ordering
 	 */
 	public void setOrderTime(TimeStamp time) {
-		// TODO maybe do this in garageholder
 		this.orderTime = time;
 	}
 
