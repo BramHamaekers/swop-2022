@@ -79,10 +79,11 @@ public class Statistics {
      */
     public List<Integer> getDelayLast2(){
         List<Integer> result = new ArrayList<>();
-        int max = Collections.max(this.carDelayMap.keySet());
-        //todo: no seperation between 2 days
-        result.addAll(this.carDelayMap.get(max-1));
-        result.addAll(this.carDelayMap.get(max));
+        int max = 0;
+        if (!this.carDelayMap.isEmpty())
+            max = Collections.max(this.carDelayMap.keySet());
+        if(this.carDelayMap.size() > 1) result.addAll(this.carDelayMap.get(max-1));
+        if(this.carDelayMap.size() > 0) result.addAll(this.carDelayMap.get(max));
         return result;
     }
 
@@ -122,7 +123,9 @@ public class Statistics {
      */
     public Map<Integer, Integer> getOrdersLast2(){
         Map<Integer, Integer> result = new HashMap<>();
-        int max = Collections.max(this.carDelayMap.keySet());
+        int max = 0;
+        if (!this.carDelayMap.isEmpty())
+            max = Collections.max(this.carDelayMap.keySet());
 
         if(this.carDelayMap.size() > 1) result.put(max-1, this.carDelayMap.get(max-1).size());
         if(this.carDelayMap.size() > 0) result.put(max, this.carDelayMap.get(max).size());
