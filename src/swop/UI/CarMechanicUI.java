@@ -58,7 +58,12 @@ public class CarMechanicUI implements UI {
 		}
 		
 		public static int askTimeToCompleteTask() throws CancelException {
-	        System.out.println("How much time did it took to finish the task? (in min)");
+	        System.out.println("How much time did it take to finish the task? (in min)");
 	        return scanner.scanNextLineOfTypeInt();
+		}
+
+		public static void noTasks() {
+			System.out.println("No tasks need to be completed!");
+			
 		}
 }

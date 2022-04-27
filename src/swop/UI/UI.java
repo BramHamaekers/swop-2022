@@ -17,7 +17,8 @@ interface UI {
 	 * @throws CancelException when the user types "Cancel"
 	 */
 	static String indicateYesNo(String action) throws CancelException {
-		System.out.printf("Do you want to %s? %n[y] Yes [n] No%n", action);
+		System.out.println("");
+		System.out.printf("%s %n[y] Yes [n] No%n", action);
 		return scanner.scanNextLineOfTypeString(new String[]{"y","n"});
 	}
 

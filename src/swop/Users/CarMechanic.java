@@ -78,8 +78,7 @@ public class CarMechanic extends User{
 			this.performAssemblyTask(assemAssist);
 		}
 		else {
-			// TODO placeholder
-			System.out.println("No tasks need to be completed!");
+			CarMechanicUI.noTasks();
 		}
 	}
 

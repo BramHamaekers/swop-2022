@@ -46,6 +46,8 @@ public class PerformAssemblyTasksTest {
 
         showTaskInfo(output, tasks.get(0)); // system shows the assembly task information
 
+        output.next();
+        
         indicateTimePassed(output);
 
         askWorkPostCanceled(output);
@@ -79,7 +81,7 @@ public class PerformAssemblyTasksTest {
 		
 		assert tasks == null; //maybe return empty list?
 		
-		skip(output, 9);
+		skip(output, 11);
 		
 		noMoreTasksMessage(output);	
 		
@@ -151,7 +153,7 @@ public class PerformAssemblyTasksTest {
     }
 
     private void indicateTimePassed(ListIterator<String> output) {
-        assertEquals("How much time did it took to finish the task? (in min)", output.next());
+        assertEquals("How much time did it take to finish the task? (in min)", output.next());
     }
     
     private void indicateFinished(ListIterator<String> output) {

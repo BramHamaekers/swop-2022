@@ -48,7 +48,9 @@ public class IllegalUsePublicMethodsAssemAssistTest {
 		String s = "a";
 		 s += "a";
 		 s+=System.lineSeparator();
-		 s+="n";
+		 s+="0";
+		 s+=System.lineSeparator();
+		 s+="cancel";
 		 s+=System.lineSeparator();
 		 s+="QUIT";
 		input = new ByteArrayInputStream(s.getBytes());
@@ -64,6 +66,8 @@ public class IllegalUsePublicMethodsAssemAssistTest {
 		 s+=System.lineSeparator();
 		 s+="0";
 		 s+=System.lineSeparator();
+		 s+="cancel";
+		 s+=System.lineSeparator();
 		 s+="QUIT";
 		input = new ByteArrayInputStream(s.getBytes());
 		System.setIn(input);
@@ -76,7 +80,9 @@ public class IllegalUsePublicMethodsAssemAssistTest {
 		 String s = "";
 		 s += "c";
 		 s+=System.lineSeparator();
-		 s+="n";
+		 s+="0";
+		 s+=System.lineSeparator();
+		 s+="cancel";
 		 s+=System.lineSeparator();
 		 s+="QUIT";
 		input = new ByteArrayInputStream(s.getBytes());
