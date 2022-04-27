@@ -49,11 +49,13 @@ public class Statistics {
      */
     public double getAvgDelay() {
         double total = 0;
+        double amount = 0;
         for (List<Integer> delays : this.getCarDelayMap().values())
             for (Integer delay : delays) {
                 total += delay;
+                amount += 1;
             }
-        return this.getCarDelayMap().size() > 0 ? total / (double) this.getCarDelayMap().size() : 0;
+        return this.getCarDelayMap().size() > 0 ? total / amount : 0;
     }
 
     /**
