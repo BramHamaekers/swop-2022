@@ -5,7 +5,7 @@
     <id>UMLGeneric</id>
     <coordinates>
       <x>1096</x>
-      <y>296</y>
+      <y>304</y>
       <w>80</w>
       <h>24</h>
     </coordinates>
@@ -16,7 +16,7 @@
     <id>UMLGeneric</id>
     <coordinates>
       <x>704</x>
-      <y>296</y>
+      <y>304</y>
       <w>80</w>
       <h>24</h>
     </coordinates>
@@ -27,7 +27,7 @@
     <id>UMLGeneric</id>
     <coordinates>
       <x>1472</x>
-      <y>296</y>
+      <y>304</y>
       <w>80</w>
       <h>24</h>
     </coordinates>
@@ -38,7 +38,7 @@
     <id>Relation</id>
     <coordinates>
       <x>1128</x>
-      <y>312</y>
+      <y>320</y>
       <w>24</w>
       <h>56</h>
     </coordinates>
@@ -49,7 +49,7 @@
     <id>Relation</id>
     <coordinates>
       <x>736</x>
-      <y>312</y>
+      <y>320</y>
       <w>24</w>
       <h>144</h>
     </coordinates>
@@ -60,7 +60,7 @@
     <id>Relation</id>
     <coordinates>
       <x>1504</x>
-      <y>312</y>
+      <y>320</y>
       <w>24</w>
       <h>56</h>
     </coordinates>
@@ -71,7 +71,7 @@
     <id>Relation</id>
     <coordinates>
       <x>1136</x>
-      <y>344</y>
+      <y>352</y>
       <w>384</w>
       <h>32</h>
     </coordinates>
@@ -83,7 +83,7 @@
     <id>UMLGeneric</id>
     <coordinates>
       <x>1128</x>
-      <y>352</y>
+      <y>360</y>
       <w>16</w>
       <h>392</h>
     </coordinates>
@@ -94,7 +94,7 @@
     <id>Relation</id>
     <coordinates>
       <x>1136</x>
-      <y>368</y>
+      <y>376</y>
       <w>384</w>
       <h>32</h>
     </coordinates>
@@ -106,7 +106,7 @@
     <id>UMLGeneric</id>
     <coordinates>
       <x>1504</x>
-      <y>352</y>
+      <y>360</y>
       <w>16</w>
       <h>408</h>
     </coordinates>
@@ -117,7 +117,7 @@
     <id>Relation</id>
     <coordinates>
       <x>1136</x>
-      <y>400</y>
+      <y>408</y>
       <w>384</w>
       <h>32</h>
     </coordinates>
@@ -129,7 +129,7 @@
     <id>Relation</id>
     <coordinates>
       <x>1136</x>
-      <y>416</y>
+      <y>424</y>
       <w>384</w>
       <h>32</h>
     </coordinates>
@@ -141,7 +141,7 @@
     <id>UMLGeneric</id>
     <coordinates>
       <x>736</x>
-      <y>440</y>
+      <y>448</y>
       <w>16</w>
       <h>120</h>
     </coordinates>
@@ -152,7 +152,7 @@
     <id>Relation</id>
     <coordinates>
       <x>744</x>
-      <y>432</y>
+      <y>440</y>
       <w>400</w>
       <h>32</h>
     </coordinates>
@@ -164,7 +164,7 @@ carModel.getValidOptions(), carModel.getName()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>744</x>
-      <y>448</y>
+      <y>456</y>
       <w>400</w>
       <h>32</h>
     </coordinates>
@@ -176,7 +176,7 @@ return</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1136</x>
-      <y>456</y>
+      <y>464</y>
       <w>384</w>
       <h>32</h>
     </coordinates>
@@ -188,7 +188,7 @@ return</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1136</x>
-      <y>472</y>
+      <y>480</y>
       <w>384</w>
       <h>32</h>
     </coordinates>
@@ -200,7 +200,7 @@ return</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>824</x>
-      <y>296</y>
+      <y>304</y>
       <w>128</w>
       <h>24</h>
     </coordinates>
@@ -211,7 +211,7 @@ return</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>880</x>
-      <y>312</y>
+      <y>320</y>
       <w>24</w>
       <h>192</h>
     </coordinates>
@@ -222,7 +222,7 @@ return</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>880</x>
-      <y>488</y>
+      <y>496</y>
       <w>16</w>
       <h>32</h>
     </coordinates>
@@ -233,7 +233,7 @@ return</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>888</x>
-      <y>480</y>
+      <y>488</y>
       <w>256</w>
       <h>32</h>
     </coordinates>
@@ -245,7 +245,7 @@ new CarModelSpecification()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>888</x>
-      <y>496</y>
+      <y>504</y>
       <w>256</w>
       <h>32</h>
     </coordinates>
@@ -257,7 +257,7 @@ return valid</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>744</x>
-      <y>520</y>
+      <y>528</y>
       <w>400</w>
       <h>32</h>
     </coordinates>
@@ -269,19 +269,19 @@ carModel.setCarModelSpecification()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>744</x>
-      <y>536</y>
+      <y>544</y>
       <w>400</w>
       <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-void TODO</panel_attributes>
+return</panel_attributes>
     <additional_attributes>480.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
       <x>104</x>
-      <y>296</y>
+      <y>304</y>
       <w>80</w>
       <h>24</h>
     </coordinates>
@@ -292,7 +292,7 @@ void TODO</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>136</x>
-      <y>312</y>
+      <y>320</y>
       <w>24</w>
       <h>264</h>
     </coordinates>
@@ -303,7 +303,7 @@ void TODO</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>136</x>
-      <y>560</y>
+      <y>568</y>
       <w>16</w>
       <h>136</h>
     </coordinates>
@@ -314,7 +314,7 @@ void TODO</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>144</x>
-      <y>560</y>
+      <y>568</y>
       <w>1000</w>
       <h>32</h>
     </coordinates>
@@ -326,7 +326,7 @@ new CarOder(carModel)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>144</x>
-      <y>576</y>
+      <y>584</y>
       <w>1000</w>
       <h>32</h>
     </coordinates>
@@ -338,7 +338,7 @@ return</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>584</x>
-      <y>296</y>
+      <y>304</y>
       <w>80</w>
       <h>24</h>
     </coordinates>
@@ -349,7 +349,7 @@ return</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>616</x>
-      <y>312</y>
+      <y>320</y>
       <w>24</w>
       <h>312</h>
     </coordinates>
@@ -360,7 +360,7 @@ return</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>616</x>
-      <y>608</y>
+      <y>616</y>
       <w>16</w>
       <h>112</h>
     </coordinates>
@@ -371,19 +371,19 @@ return</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>624</x>
-      <y>600</y>
+      <y>608</y>
       <w>520</w>
       <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-7. addOrder()</panel_attributes>
+7. addOrder(CarOrder)</panel_attributes>
     <additional_attributes>10.0;20.0;630.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
       <x>344</x>
-      <y>296</y>
+      <y>304</y>
       <w>176</w>
       <h>24</h>
     </coordinates>
@@ -394,7 +394,7 @@ return</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>424</x>
-      <y>312</y>
+      <y>320</y>
       <w>24</w>
       <h>320</h>
     </coordinates>
@@ -405,7 +405,7 @@ return</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>424</x>
-      <y>616</y>
+      <y>624</y>
       <w>16</w>
       <h>88</h>
     </coordinates>
@@ -416,7 +416,7 @@ return</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>432</x>
-      <y>608</y>
+      <y>616</y>
       <w>200</w>
       <h>32</h>
     </coordinates>
@@ -428,7 +428,7 @@ addOrderToQueue()</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>224</x>
-      <y>296</y>
+      <y>304</y>
       <w>80</w>
       <h>24</h>
     </coordinates>
@@ -439,7 +439,7 @@ addOrderToQueue()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>256</x>
-      <y>312</y>
+      <y>320</y>
       <w>24</w>
       <h>328</h>
     </coordinates>
@@ -450,7 +450,7 @@ addOrderToQueue()</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>256</x>
-      <y>624</y>
+      <y>632</y>
       <w>16</w>
       <h>32</h>
     </coordinates>
@@ -461,7 +461,7 @@ addOrderToQueue()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>264</x>
-      <y>608</y>
+      <y>616</y>
       <w>176</w>
       <h>32</h>
     </coordinates>
@@ -473,7 +473,7 @@ getTime()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>264</x>
-      <y>624</y>
+      <y>632</y>
       <w>176</w>
       <h>32</h>
     </coordinates>
@@ -485,7 +485,7 @@ return</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>144</x>
-      <y>656</y>
+      <y>664</y>
       <w>296</w>
       <h>32</h>
     </coordinates>
@@ -497,7 +497,7 @@ setOrderTime()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>144</x>
-      <y>672</y>
+      <y>680</y>
       <w>296</w>
       <h>32</h>
     </coordinates>
@@ -509,7 +509,7 @@ return</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>432</x>
-      <y>680</y>
+      <y>688</y>
       <w>200</w>
       <h>32</h>
     </coordinates>
@@ -521,7 +521,7 @@ return</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>472</x>
-      <y>720</y>
+      <y>728</y>
       <w>80</w>
       <h>24</h>
     </coordinates>
@@ -532,7 +532,7 @@ return</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>624</x>
-      <y>696</y>
+      <y>704</y>
       <w>520</w>
       <h>32</h>
     </coordinates>
@@ -544,7 +544,7 @@ return</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1136</x>
-      <y>712</y>
+      <y>720</y>
       <w>384</w>
       <h>32</h>
     </coordinates>
@@ -556,12 +556,13 @@ return</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>664</x>
-      <y>160</y>
+      <y>168</y>
       <w>328</w>
       <h>80</h>
     </coordinates>
     <panel_attributes>TODO -&gt; car.setEstimated
--&gt; Alternate flows </panel_attributes>
+-&gt; Alternate flows 
+-&gt; add types on return</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>

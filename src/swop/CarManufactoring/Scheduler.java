@@ -250,7 +250,8 @@ public class Scheduler {
         	return iter.next(this.algorithm);
     	return null;
     }
-    
+
+    // TODO: split function
 	public costumIterator<Car> iterator(List<Car> l) {
 		return new costumIterator<>() {
 			final List<Car> list = new LinkedList<>(l);
