@@ -21,10 +21,10 @@ import swop.Users.Manager;
 
 public class AdaptSchedulingAlgorithmTest {
 
-private ByteArrayInputStream input;
-private AssemAssist assem;
-private Manager manager;
-private ManagerGenerator managerGenerator = new ManagerGenerator();
+	private ByteArrayInputStream input;
+	private AssemAssist assem;
+	private Manager manager;
+	private ManagerGenerator managerGenerator = new ManagerGenerator();
 
 
 
