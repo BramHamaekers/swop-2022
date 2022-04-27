@@ -6,14 +6,16 @@ import java.util.stream.Collectors;
 import swop.Car.Car;
 import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
+import swop.Miscellaneous.Statistics;
 import swop.Miscellaneous.TimeStamp;
+import swop.Records.allStats;
 import swop.UI.ManagerUI;
 
 public class Manager extends User{
 	
 
     public Manager(String id) {
-        super(id);
+        super(id); 
     }
 
     /**
@@ -114,6 +116,8 @@ public class Manager extends User{
 	private void checkProductionStatistics(AssemAssist assemAssist) throws CancelException {
 		//TODO -> the average and median delay on an order, 
 		// together with the 2 last delays and the days they occurred. 
+		allStats stats = assemAssist.getStats();
+		System.out.print(stats.avgDelay());
 		
 		List<TimeStamp> finishedCarTimes = new LinkedList<>(assemAssist.getController().getFinishedCars().stream().map(Car::getCompletionTime).toList());
 		if(finishedCarTimes.isEmpty()) {

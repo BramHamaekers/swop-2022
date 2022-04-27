@@ -2,6 +2,7 @@ package swop.Miscellaneous;
 
 import swop.Car.Car;
 import swop.Listeners.StatisticsListener;
+import swop.Records.allStats;
 
 import java.util.*;
 
@@ -122,8 +123,19 @@ public class Statistics {
     public Map<Integer, Integer> getOrdersLast2(){
         Map<Integer, Integer> result = new HashMap<>();
         int max = Collections.max(this.carDelayMap.keySet());
-        result.put(max-1, this.carDelayMap.get(max-1).size());
-        result.put(max, this.carDelayMap.get(max).size());
+
+        if(this.carDelayMap.size() > 1) result.put(max-1, this.carDelayMap.get(max-1).size());
+        if(this.carDelayMap.size() > 0) result.put(max, this.carDelayMap.get(max).size());
         return result;
     }
+    
+    /**
+     * Returns all the statistics.
+     * @return a map containing the stat as a string and the value
+     */
+    public allStats getOrderStats(){
+    	
+    	return new allStats(getAvgOrders(), getMdnOrders(), getOrdersLast2(), getAvgDelay(),getMdnDelay(),getDelayLast2());
+    }
+    
 }
