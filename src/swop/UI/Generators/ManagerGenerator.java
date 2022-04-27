@@ -36,7 +36,19 @@ public class ManagerGenerator extends UserGenerator {
     public void generateProductionStatistics(DisplayStatus builder, allStats stats){
         builder.appendTitle("Production Statistics");
         builder.appendSubTitle("Cars Produced info");
-       
+        builder.inputInfo(String.format("Avg cars produced daily: %2f",stats.avgOrders()));
+        builder.inputInfo(String.format("Median cars produced daily: %2f",stats.mdnOrders()));
+        String[] day = {"today","yesterday"};
+        int i = 0;
+        for(var cars: stats.ordersLast2().entrySet()) {	
+        	builder.inputInfo(String.format("Cars produced %s: %d",day[i], cars.getValue()));
+        	i++;}
+        builder.appendSubTitle("Cars Delay info");
+        builder.inputInfo(String.format("Avg delay daily: %2f",stats.avgDelay()));
+        builder.inputInfo(String.format("Median delay daily: %2f",stats.mdnDelay()));
+        for(Integer cars: stats.delayLast2()) {	
+        	builder.inputInfo(String.format("Cars produced %s: %d",day[i], cars));
+        	i++;}
         builder.endInfo();
         builder.inputInfo("Done viewing -> press enter");
     }
