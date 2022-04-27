@@ -1,5 +1,6 @@
 package swop.UI.Generators;
 
+import swop.Records.allStats;
 import swop.UI.Builders.DisplayStatus;
 import swop.UI.Builders.FormBuilder;
 
@@ -32,15 +33,10 @@ public class ManagerGenerator extends UserGenerator {
         builder.addOption("Select option", actions.size());
     }
     
-    public void generateProductionStatistics(DisplayStatus builder, Map<String, Double> productionStatistics){
+    public void generateProductionStatistics(DisplayStatus builder, allStats stats){
         builder.appendTitle("Production Statistics");
         builder.appendSubTitle("Cars Produced info");
-        for (Entry<String, Double> s : productionStatistics.entrySet()) {
-        	if(s.getValue() != null)
-        		builder.inputInfo(s.getKey()+ ": " + s.getValue());
-        	else
-        		builder.inputInfo(s.getKey()+ ": " + "No info");
-        }
+       
         builder.endInfo();
         builder.inputInfo("Done viewing -> press enter");
     }

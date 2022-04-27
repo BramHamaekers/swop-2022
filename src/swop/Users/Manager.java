@@ -114,35 +114,12 @@ public class Manager extends User{
 	}
 
 	private void checkProductionStatistics(AssemAssist assemAssist) throws CancelException {
-		//TODO -> the average and median delay on an order, 
-		// together with the 2 last delays and the days they occurred.
-		
-		List<TimeStamp> finishedCarTimes = new LinkedList<>(assemAssist.getController().getFinishedCars().stream().map(Car::getCompletionTime).toList());
-		if(finishedCarTimes.isEmpty()) {
-			ManagerUI.printError("Not enough data to give you statistics");
-			return;
-		}
+
 		allStats stats = assemAssist.getStats();
 		System.out.print(stats.avgDelay());
 		
-		/************the average and median + the exact numbers cars for the last 2 day************/
-		List<Integer> numberOfCarsEachDay = getFinishedCarsEachDay(finishedCarTimes);	
-		//average
-		double average = numberOfCarsEachDay.stream().mapToDouble(d -> d).average().getAsDouble();
-		//median
-		double median = getMedianOfList(numberOfCarsEachDay);
-		ManagerUI.showProductionStatistics(new HashMap<>(){{
-			put( "Average cars finished", average);
-			put( "Median cars finished", median);
-			if(numberOfCarsEachDay.size() < 2) {
-				put( "Cars completed today", numberOfCarsEachDay.get(0).doubleValue());
-				put( "Cars completed yesterday", null);
-			}
-			else {
-				put( "Cars completed today", numberOfCarsEachDay.get(-1).doubleValue());
-				put( "Cars completed yesterday", numberOfCarsEachDay.get(-2).doubleValue());
-			}
-		}});
+		ManagerUI.showProductionStatistics(stats);
+			
 	}
 
 	/**

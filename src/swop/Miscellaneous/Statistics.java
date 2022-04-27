@@ -35,7 +35,7 @@ public class Statistics {
      * @param finishDay the given day that the car was finished on
      */
     public void finishOrder(int delayedMinutes, int finishDay) {
-        Integer day_I = finishDay;
+    	int day_I = finishDay;
         if (this.getCarDelayMap().containsKey(day_I)) {
             this.getCarDelayMap().get(day_I).add(delayedMinutes);
         } else {
@@ -51,7 +51,7 @@ public class Statistics {
         double total = 0;
         double amount = 0;
         for (List<Integer> delays : this.getCarDelayMap().values())
-            for (Integer delay : delays) {
+            for (int delay : delays) {
                 total += delay;
                 amount += 1;
             }
@@ -82,10 +82,21 @@ public class Statistics {
     public List<Integer> getDelayLast2(){
         List<Integer> result = new ArrayList<>();
         int max = 0;
-        if (!this.getCarDelayMap().isEmpty())
-            max = Collections.max(this.getCarDelayMap().keySet());
-        if(this.getCarDelayMap().size() > 1) result.addAll(this.getCarDelayMap().get(max-1));
-        if(this.getCarDelayMap().size() > 0) result.addAll(this.getCarDelayMap().get(max));
+        if (this.getCarDelayMap().isEmpty()) return result;
+        Set<Integer> dayset = new LinkedHashSet<>(this.getCarDelayMap().keySet());
+        max = Collections.max(dayset);
+        List<Integer> delays = this.getCarDelayMap().get(max);
+        if(delays.size() > 1) {
+        	result.add(delays.get(delays.size()-1));
+        	result.add(delays.get(delays.size()-2));
+        	return result;
+        }
+        result.addAll(this.getCarDelayMap().get(max));
+        dayset.remove(max);
+        if(dayset.isEmpty()) return result;
+        max = Collections.max(dayset);
+        delays = this.getCarDelayMap().get(max);
+        result.add(delays.get(delays.size()-1));
         return result;
     }
 
@@ -97,7 +108,11 @@ public class Statistics {
         double total = 0;
         for(List<Integer> delays: this.getCarDelayMap().values())
             total+= delays.size();
-        return this.getCarDelayMap().size()>0 ? total/(double) this.getCarDelayMap().size(): 0;
+        if(this.getCarDelayMap().size()>0) {
+        	int max =  Collections.max(this.getCarDelayMap().keySet()) + 1;
+        	return total/(double)max;
+        }
+        return 0;
     }
 
     /**
@@ -109,13 +124,16 @@ public class Statistics {
         for(List<Integer> delays: this.getCarDelayMap().values()){
             orders.add(delays.size());
         }
+        if (orders.isEmpty()) return 0;
+    	int max =  Collections.max(this.getCarDelayMap().keySet()) + 1;
+    	int initialSize = orders.size();
+    	for(int i = 0; i < Math.abs(max - initialSize);i++)
+    			orders.add(0);
         Collections.sort(orders);
-        if (orders.size() > 0) {
-            if (orders.size() % 2 == 0)
-                return ((double) orders.get(orders.size() / 2) + (double) orders.get(orders.size() / 2 - 1)) / 2;
-            else
-                return (double) orders.get(orders.size() / 2);
-        } else return 0;
+        if (orders.size() % 2 == 0)
+        	return ((double) orders.get(orders.size() / 2) + (double) orders.get(orders.size() / 2 - 1)) / 2;
+        else
+            return (double) orders.get(orders.size() / 2);
     }
 
 
@@ -124,13 +142,19 @@ public class Statistics {
      * @return a map containing the day and the number of orders for that day for the last 2 days
      */
     public Map<Integer, Integer> getOrdersLast2(){
-        Map<Integer, Integer> result = new HashMap<>();
-        int max = 0;
-        if (!this.getCarDelayMap().isEmpty())
-            max = Collections.max(this.getCarDelayMap().keySet());
-
-        if(this.getCarDelayMap().size() > 1) result.put(max-1, this.getCarDelayMap().get(max-1).size());
-        if(this.getCarDelayMap().size() > 0) result.put(max, this.getCarDelayMap().get(max).size());
+        Map<Integer, Integer> result = new LinkedHashMap<>(); //first int is the day + second the number of orders      
+        if (this.getCarDelayMap().isEmpty()) return result;
+        Map<Integer, List<Integer>> daymap = this.getCarDelayMap();
+        int max = Collections.max(daymap.keySet());
+        result.put(max, this.getCarDelayMap().get(max).size());
+        if(!(daymap.size() > 1)) {
+        	return result;
+        }
+        if(!daymap.containsKey(max-1)) {
+        	result.put(max-1, 0);
+        	return result;
+        }
+        result.put(max-1, this.getCarDelayMap().get(max-1).size());
         return result;
     }
     
