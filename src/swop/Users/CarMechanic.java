@@ -67,7 +67,11 @@ public class CarMechanic extends User{
 	private void performAssemblyTask(AssemAssist assemAssist) throws CancelException {
 		WorkStation workStation = this.selectStation(assemAssist);
 		if (workStation == null) throw new IllegalArgumentException("workstation is invalid");
-		List<Task> taskList = getAvailableTasks(assemAssist, workStation);
+		performTaskAtWorkStation(assemAssist, workStation);
+	}
+
+	private void performTaskAtWorkStation(AssemAssist assemAssist, WorkStation workStation) throws CancelException {
+		List<Task> taskList = workStation.getUncompletedTasks();
 		//returns selected task by user
 		Task task = this.selectTask(taskList);
 		//return list of all the tasks
@@ -75,7 +79,7 @@ public class CarMechanic extends User{
 			//Show the information for given task 2 user
 			this.showInfo(assemAssist, task);
 			this.completeTask(assemAssist, task);
-			this.performAssemblyTask(assemAssist);
+			this.performTaskAtWorkStation(assemAssist, workStation);
 		}
 		else {
 			CarMechanicUI.noTasks();
@@ -136,17 +140,4 @@ public class CarMechanic extends User{
 		int option = CarMechanicUI.askOption("Select station: ", workStations.size());	
 		return workStations.get(option);
 	}
-
-	/**
-	 * Get all available tasks
-	 * @param assemAssist given the main program
-	 * @param workStation workstation as a string from the available list of workstations
-	 * @return returns all available task at current workstation.
-	 */
-	private List<Task> getAvailableTasks(AssemAssist assemAssist, WorkStation workStation) {
-		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
-		if (workStation == null) throw new IllegalArgumentException("workstation is invalid");
-		return assemAssist.getsAvailableTasks(workStation);
-	}
-
 }

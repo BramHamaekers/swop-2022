@@ -129,25 +129,10 @@ public class AssemAssist {
 	}
 
 	/**
-	 * @return the names of the stations of the assemblyline
-	 */
-	public List<String> getStationsNames() {
-		return this.getAssemblyLine().getWorkstationNames();
-	}
-
-	/**
 	 * @return the WorkStations of the assemblyline
 	 */
 	public List<WorkStation> getStations() {
 		return this.getAssemblyLine().getWorkStations();
-	}
-
-	/**
-	 * @param workstation the required WorkStation
-	 * @return the available
-	 */
-	public List<Task> getsAvailableTasks(WorkStation workstation) {
-		return this.getAssemblyLine().getUncompletedTasks(workstation);
 	}
 	
 	public List<String> getTaskDescription(Task task) {
