@@ -29,13 +29,14 @@ public enum Task {
 		put( "Wheels", "Mount wheels of type: ");
 	}},"Mount Wheels");
 	
-	private final Map<String,String> partsMap;
+	private final Map<String,String> partsDescriptionMap;
 	private final String name;
 	private WorkStation w;
+	private String value;
 	
 	
 	Task(Map<String,String> map, String name) {
-		this.partsMap = map;
+		this.partsDescriptionMap = map;
 		this.name = name;
 	}
 	
@@ -52,7 +53,7 @@ public enum Task {
 	 * @return List<Part>
 	 */
 	public List<String> getParts() {
-		return new ArrayList<>(partsMap.keySet());
+		return new ArrayList<>(partsDescriptionMap.keySet());
 	}
 	
 	/**
@@ -80,8 +81,7 @@ public enum Task {
 		List<String> taskExplenations = new LinkedList<>();
 		//retrieve all parts that are part of this task
 		for(String part : this.getParts()) {
-			if (this.getWorkStation().isPartOfCurrentCarInWorkStation(part)) 
-				taskExplenations.add(this.getDescription(part) + this.getWorkStation().getValueOfPart(part)); 
+			taskExplenations.add(this.getDescription(part) + this.getWorkStation().getValueOfPart(part)); 
 		}
 		return taskExplenations;
 		
@@ -102,6 +102,7 @@ public enum Task {
 			List<String> parts = task.getParts();
 			parts.retainAll(chosenParts);
 			if(!parts.isEmpty()) tasks.add(task);
+			
 		}
 		return tasks;
 	}
@@ -132,6 +133,6 @@ public enum Task {
 	 * @return this.partsMap.get(category)
 	 */
 	private String getDescription(String category) {
-		return this.partsMap.get(category);
+		return this.partsDescriptionMap.get(category);
 	}
 }

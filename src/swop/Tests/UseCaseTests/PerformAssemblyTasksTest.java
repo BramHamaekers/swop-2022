@@ -49,8 +49,10 @@ public class PerformAssemblyTasksTest {
         output.next();
         
         indicateTimePassed(output);
+        
+        tasks = this.assem.getStations().get(0).getUncompletedTasks();
 
-        askWorkPostCanceled(output);
+        presentAvailableTasks(output, tasks); // shows 1 task can be finished
         
         tasks = this.assem.getStations().get(0).getUncompletedTasks();
         
@@ -81,7 +83,7 @@ public class PerformAssemblyTasksTest {
 		
 		assert tasks == null; //maybe return empty list?
 		
-		skip(output, 11);
+		skip(output, 6);
 		
 		noMoreTasksMessage(output);	
 		
@@ -90,9 +92,9 @@ public class PerformAssemblyTasksTest {
 	@Test
     void completeAllTasksOfCarTest() {
 		setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
-		continueUITest(String.format("b%n0%n0%n0%n0%n45%n0%n0%n0%n45%n" + // complete tasks work post 1
-				"1%n0%n0%n45%n1%n0%n0%n45%n"+ // complete tasks work post 2
-				"2%n0%n0%n45%n2%n0%n0%n45%n2%n0%n0%n45%n0%nQUIT"), 7); // complete tasks work post 3 
+		continueUITest(String.format("b%n0%n0%n0%nENTER%n45%n0%nENTER%n45%n" + // complete tasks work post 1
+				"b%n0%n1%n0%nENTER%n45%n0%nENTER%n45%n"+ // complete tasks work post 2
+				"b%n0%n2%n0%n0%n45%n0%n0%n45%n0%n0%n45%n0%nQUIT"), 7); // complete tasks work post 3 
 		GarageHolder a = (GarageHolder) this.assem.getUserMap().get("a"); 
 		
 		carIsFinished(a);
