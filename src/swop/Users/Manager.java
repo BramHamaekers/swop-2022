@@ -71,6 +71,11 @@ public class Manager extends User{
 
 	}
 
+	/**
+	 * Change the scheduling algorithm to batch
+	 * @param assemAssist the central system to change the algorithm on
+	 * @throws CancelException when the user types "cancel"
+	 */
 	private void changeAlgorithmToBatch(AssemAssist assemAssist) throws CancelException {
 		// get all parts from carQueue
 		List<Map<String, String>> partMaps =  assemAssist.getController().getCarQueue().stream().map(Car::getPartsMap).toList();
@@ -110,6 +115,11 @@ public class Manager extends User{
 		return possibleBatch;
 	}
 
+	/**
+	 * check the production statistics on a given assemAssist
+	 * @param assemAssist the given central system
+	 * @throws CancelException when the user types "CANCEL"
+	 */
 	private void checkProductionStatistics(AssemAssist assemAssist) throws CancelException {
 		ManagerUI.showProductionStatistics(assemAssist.getStats());
 	}

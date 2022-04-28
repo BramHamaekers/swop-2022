@@ -23,7 +23,7 @@ public class Car {
 	 * Complete a remaining task for assembly
 	 * @param task given a completed task
 	 * @throws IllegalArgumentException when task is null
-	 */
+	 * */
 	public void completeTask(Task task) {
 		if (task == null)
 			throw new IllegalArgumentException("task is null");
@@ -45,6 +45,10 @@ public class Car {
 		return getUncompletedTasks().isEmpty();
 	}
 
+	/**
+	 * Return a set of all Tasks of this car that still need to be completed
+	 * @return copy of this.uncompletedTasks
+	 */
 	public Set<Task> getUncompletedTasks() {
 		return Set.copyOf(uncompletedTasks);
 	}
@@ -80,7 +84,12 @@ public class Car {
 	public String getCarModelName() {
 		return this.carModel.getName();
 	}
-	
+
+	/**
+	 * Set this.carModel to the given carModel
+	 * @param carModel the given carModel
+	 * @throws IllegalArgumentException when car is null
+	 */
 	private void setCarModel(CarModel carModel) {
 		if (carModel == null)
 			throw new IllegalArgumentException("car model is null");
@@ -116,14 +125,26 @@ public class Car {
 		this.estimatedCompletionTime = timeStamp;
 	}
 
+	/**
+	 * get the estimated time that this car will be completed on as a TimeStamp
+	 * @return this.estimatedCompletionTime
+	 */
 	public TimeStamp getEstimatedCompletionTime() {
 		return this.estimatedCompletionTime;
 	}
 
+	/**
+	 * get the time that this car was finished at
+	 * @return this.deliveryTime
+	 */
 	public TimeStamp getCompletionTime() {
 		return this.deliveryTime;
 	}
 
+	/**
+	 * Set the time that this car was finished at to a new TimeStamp
+	 * @param timeStamp the given timestamp
+	 */
 	public void setDeliveryTime(TimeStamp timeStamp) {
 		this.deliveryTime = timeStamp;
 	}

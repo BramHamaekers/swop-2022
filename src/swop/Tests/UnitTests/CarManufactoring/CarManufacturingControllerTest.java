@@ -142,7 +142,6 @@ class CarManufacturingControllerTest {
 
         assertEquals("day: 0, time: 06:00",carManufacturingController.getScheduler().getTime().toString());
         assertFalse(carManufacturingController.getAssembly().getUnfinishedCars().contains(car));
-        assertTrue(carManufacturingController.getFinishedCars().contains(car));
         assertEquals(new TimeStamp(0, 0),car.getCompletionTime());
 
         carManufacturingController.getScheduler().addTime(961);

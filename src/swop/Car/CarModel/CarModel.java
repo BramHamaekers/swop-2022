@@ -17,10 +17,18 @@ public abstract class CarModel {
         this.carModelSpecification = selected;
     }
 
+    /**
+     * returns the carModelSpecifiaction of this model.
+     * @return carModelSpecification
+     */
     public CarModelSpecification getCarModelSpecification() {
         return this.carModelSpecification;
     }
 
+    /**
+     * Get all valid carOptionCategories and their options as sorted Map
+     * @return TreeMap<>(this.validOptions)
+     */
     public SortedMap<String, List<String>> getValidOptions(){
         return new TreeMap<>(this.validOptions);
     }
@@ -41,6 +49,11 @@ public abstract class CarModel {
         return this.satisfiesConstraints(specification);
     }
 
+    /**
+     * Check if the given CarModelSpecification satisfies the constraints for a carModel
+     * @param specification the CarModelSpecification to check
+     * @return True if the specification satisfies all constraints
+     */
     private boolean satisfiesConstraints(CarModelSpecification specification){
         for(String part : this.mandatoryParts){
             if (!specification.getAllParts().containsKey(part))
@@ -49,6 +62,10 @@ public abstract class CarModel {
         return true;
     }
 
+    /**
+     * Get the name of this model
+     * @return this.name
+     */
     public String getName() {
         return name;
     }

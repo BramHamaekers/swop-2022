@@ -14,11 +14,18 @@ public class TimeStamp implements Comparable<TimeStamp> {
         this.minutes = minutes;
     }
 
-
+    /**
+     * get the current day of the program
+     * @return this.day
+     */
     public int getDay() {
         return this.day;
     }
 
+    /**
+     * get the current minutes of the program
+     * @return this.minutes
+     */
     public int getMinutes() {
         return this.minutes;
     }

@@ -70,6 +70,12 @@ public class CarMechanic extends User{
 		performTaskAtWorkStation(assemAssist, workStation);
 	}
 
+	/**
+	 * Allows user to perform tasks at a given workstation on a given central system
+	 * @param assemAssist the given central system
+	 * @param workStation the workstation the user wants to perform tasks on
+	 * @throws CancelException when the user types "CANCEL"
+	 */
 	private void performTaskAtWorkStation(AssemAssist assemAssist, WorkStation workStation) throws CancelException {
 		List<Task> taskList = workStation.getUncompletedTasks();
 		//returns selected task by user
