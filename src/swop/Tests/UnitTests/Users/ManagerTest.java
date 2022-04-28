@@ -44,25 +44,4 @@ class ManagerTest {
         assertThrows(IllegalArgumentException.class, () -> man.selectAction(null));
 //        man.selectAction(assem);
     }
-
-    private ListIterator<String> setupUITest(String inputString, int skips) {
-        this.assem = new AssemAssist();
-        this.man = (Manager) this.assem.getUserMap().get("c");
-
-        this.input = new ByteArrayInputStream(inputString.getBytes());
-        System.setIn(input);
-        LoginUI.scanner.updateScanner();
-
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-        assem.run();
-
-        ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
-                .listIterator();
-
-        for(int i =0; i < skips; i++)
-            output.next();
-
-        return output;
-    }
 }
