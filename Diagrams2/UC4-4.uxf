@@ -76,7 +76,7 @@
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-CarMechanicUI.selectAction()</panel_attributes>
+int CarMechanicUI.selectAction()</panel_attributes>
     <additional_attributes>360.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
@@ -133,13 +133,13 @@ CarMechanicUI.selectAction()</panel_attributes>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-getStations()</panel_attributes>
+List&lt;WorkStation&gt; getStations()</panel_attributes>
     <additional_attributes>10.0;20.0;220.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>380</x>
+      <x>280</x>
       <y>150</y>
       <w>100</w>
       <h>30</h>
@@ -150,7 +150,7 @@ getStations()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>420</x>
+      <x>320</x>
       <y>170</y>
       <w>30</w>
       <h>110</h>
@@ -161,7 +161,7 @@ getStations()</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>420</x>
+      <x>320</x>
       <y>260</y>
       <w>20</w>
       <h>40</h>
@@ -172,26 +172,26 @@ getStations()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>430</x>
+      <x>330</x>
       <y>250</y>
-      <w>170</w>
+      <w>270</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-getWorkStations()</panel_attributes>
-    <additional_attributes>10.0;20.0;150.0;20.0</additional_attributes>
+List&lt;WorkStation&gt; getWorkStations()</panel_attributes>
+    <additional_attributes>10.0;20.0;250.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>430</x>
+      <x>330</x>
       <y>270</y>
-      <w>170</w>
+      <w>270</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 return</panel_attributes>
-    <additional_attributes>150.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>250.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -208,7 +208,7 @@ return</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>210</x>
+      <x>170</x>
       <y>150</y>
       <w>100</w>
       <h>30</h>
@@ -219,7 +219,7 @@ return</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>250</x>
+      <x>210</x>
       <y>170</y>
       <w>30</w>
       <h>160</h>
@@ -230,7 +230,7 @@ return</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>250</x>
+      <x>210</x>
       <y>310</y>
       <w>20</w>
       <h>60</h>
@@ -241,26 +241,26 @@ return</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>260</x>
+      <x>220</x>
       <y>310</y>
-      <w>570</w>
+      <w>610</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-getUncompletedTasks(), getCompletedTasks()</panel_attributes>
-    <additional_attributes>10.0;20.0;550.0;20.0</additional_attributes>
+List&lt;Task&gt; getUncompletedTasks(), List&lt;Task&gt; getCompletedTasks()</panel_attributes>
+    <additional_attributes>10.0;20.0;590.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>260</x>
+      <x>220</x>
       <y>330</y>
-      <w>570</w>
+      <w>610</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 return</panel_attributes>
-    <additional_attributes>10.0;20.0;550.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;590.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -271,7 +271,7 @@ return</panel_attributes>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-2. CarMechanicUI.displayStationStatus()</panel_attributes>
+2. void CarMechanicUI.displayStationStatus()</panel_attributes>
     <additional_attributes>10.0;20.0;360.0;20.0</additional_attributes>
   </element>
 </diagram>

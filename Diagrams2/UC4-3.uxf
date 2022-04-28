@@ -49,9 +49,9 @@
     <id>UMLGeneric</id>
     <coordinates>
       <x>1072</x>
-      <y>248</y>
+      <y>432</y>
       <w>16</w>
-      <h>304</h>
+      <h>200</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -62,7 +62,7 @@
       <x>1440</x>
       <y>248</y>
       <w>16</w>
-      <h>320</h>
+      <h>336</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -119,7 +119,7 @@
       <x>832</x>
       <y>248</y>
       <w>16</w>
-      <h>288</h>
+      <h>376</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -233,7 +233,7 @@ return</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>840</x>
-      <y>352</y>
+      <y>432</y>
       <w>248</w>
       <h>32</h>
     </coordinates>
@@ -258,16 +258,16 @@ List&lt;String&gt; getTaskDescription(Task)</panel_attributes>
       <x>568</x>
       <y>208</y>
       <w>24</w>
-      <h>176</h>
+      <h>256</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;200.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;300.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
       <x>568</x>
-      <y>368</y>
+      <y>448</y>
       <w>16</w>
       <h>32</h>
     </coordinates>
@@ -278,7 +278,7 @@ List&lt;String&gt; getTaskDescription(Task)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>576</x>
-      <y>360</y>
+      <y>440</y>
       <w>272</w>
       <h>32</h>
     </coordinates>
@@ -290,7 +290,7 @@ List&lt;String&gt; getTaskDescription()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>576</x>
-      <y>376</y>
+      <y>456</y>
       <w>272</w>
       <h>32</h>
     </coordinates>
@@ -302,7 +302,7 @@ return</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>840</x>
-      <y>384</y>
+      <y>464</y>
       <w>248</w>
       <h>32</h>
     </coordinates>
@@ -314,7 +314,7 @@ return</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1080</x>
-      <y>392</y>
+      <y>472</y>
       <w>376</w>
       <h>32</h>
     </coordinates>
@@ -326,7 +326,7 @@ return</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1080</x>
-      <y>432</y>
+      <y>512</y>
       <w>376</w>
       <h>32</h>
     </coordinates>
@@ -338,7 +338,7 @@ int CarMechanicUI.askTimeToCompleteTask()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1080</x>
-      <y>408</y>
+      <y>488</y>
       <w>376</w>
       <h>32</h>
     </coordinates>
@@ -350,7 +350,7 @@ return</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1080</x>
-      <y>448</y>
+      <y>528</y>
       <w>376</w>
       <h>32</h>
     </coordinates>
@@ -362,7 +362,7 @@ return</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>840</x>
-      <y>456</y>
+      <y>536</y>
       <w>248</w>
       <h>32</h>
     </coordinates>
@@ -374,7 +374,7 @@ void completeTask(Task, int time)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>568</x>
-      <y>392</y>
+      <y>472</y>
       <w>24</w>
       <h>96</h>
     </coordinates>
@@ -385,7 +385,7 @@ void completeTask(Task, int time)</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>568</x>
-      <y>472</y>
+      <y>552</y>
       <w>16</w>
       <h>48</h>
     </coordinates>
@@ -396,7 +396,7 @@ void completeTask(Task, int time)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>576</x>
-      <y>464</y>
+      <y>544</y>
       <w>272</w>
       <h>32</h>
     </coordinates>
@@ -421,16 +421,16 @@ void completeTask(int time)</panel_attributes>
       <x>376</x>
       <y>208</y>
       <w>24</w>
-      <h>280</h>
+      <h>360</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;330.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;430.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
       <x>376</x>
-      <y>472</y>
+      <y>552</y>
       <w>16</w>
       <h>128</h>
     </coordinates>
@@ -441,7 +441,7 @@ void completeTask(int time)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>384</x>
-      <y>464</y>
+      <y>544</y>
       <w>200</w>
       <h>32</h>
     </coordinates>
@@ -466,16 +466,16 @@ void completeTask(Task, int time)</panel_attributes>
       <x>224</x>
       <y>208</y>
       <w>24</w>
-      <h>288</h>
+      <h>368</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;340.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;440.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
       <x>224</x>
-      <y>480</y>
+      <y>560</y>
       <w>16</w>
       <h>32</h>
     </coordinates>
@@ -486,7 +486,7 @@ void completeTask(Task, int time)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>232</x>
-      <y>472</y>
+      <y>552</y>
       <w>160</w>
       <h>32</h>
     </coordinates>
@@ -498,7 +498,7 @@ void completeTask(Task)</panel_attributes>
     <id>UMLFrame</id>
     <coordinates>
       <x>144</x>
-      <y>456</y>
+      <y>536</y>
       <w>416</w>
       <h>72</h>
     </coordinates>
@@ -509,7 +509,7 @@ void completeTask(Task)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>232</x>
-      <y>488</y>
+      <y>568</y>
       <w>160</w>
       <h>32</h>
     </coordinates>
@@ -521,7 +521,7 @@ return</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>384</x>
-      <y>496</y>
+      <y>576</y>
       <w>200</w>
       <h>32</h>
     </coordinates>
@@ -533,7 +533,7 @@ return</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>576</x>
-      <y>504</y>
+      <y>584</y>
       <w>272</w>
       <h>32</h>
     </coordinates>
@@ -545,7 +545,7 @@ return</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>840</x>
-      <y>512</y>
+      <y>592</y>
       <w>248</w>
       <h>32</h>
     </coordinates>
@@ -557,7 +557,7 @@ return</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>96</x>
-      <y>544</y>
+      <y>624</y>
       <w>296</w>
       <h>32</h>
     </coordinates>
@@ -582,16 +582,16 @@ return</panel_attributes>
       <x>88</x>
       <y>208</y>
       <w>24</w>
-      <h>368</h>
+      <h>448</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;440.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;540.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
       <x>88</x>
-      <y>560</y>
+      <y>640</y>
       <w>16</w>
       <h>24</h>
     </coordinates>
@@ -602,7 +602,7 @@ return</panel_attributes>
     <id>UMLFrame</id>
     <coordinates>
       <x>40</x>
-      <y>536</y>
+      <y>616</y>
       <w>440</w>
       <h>72</h>
     </coordinates>
@@ -613,12 +613,92 @@ return</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>96</x>
-      <y>568</y>
+      <y>648</y>
       <w>296</w>
       <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 return</panel_attributes>
     <additional_attributes>350.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1080</x>
+      <y>344</y>
+      <w>416</w>
+      <h>288</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+8.</panel_attributes>
+    <additional_attributes>470.0;10.0;500.0;10.0;500.0;340.0;10.0;340.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1080</x>
+      <y>368</y>
+      <w>376</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+8a. return CancelException</panel_attributes>
+    <additional_attributes>10.0;20.0;450.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLFrame</id>
+    <coordinates>
+      <x>968</x>
+      <y>368</y>
+      <w>496</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>interaction frame</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>1072</x>
+      <y>248</y>
+      <w>16</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>1072</x>
+      <y>376</y>
+      <w>16</w>
+      <h>16</h>
+    </coordinates>
+    <panel_attributes>type=termination</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1072</x>
+      <y>384</y>
+      <w>24</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1080</x>
+      <y>552</y>
+      <w>376</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+7. int CarMechanicUI.displayAvailableTasks(List&lt;Task&gt;);</panel_attributes>
+    <additional_attributes>450.0;20.0;10.0;20.0</additional_attributes>
   </element>
 </diagram>

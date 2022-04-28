@@ -1,6 +1,6 @@
 package swop.UI.Generators;
 
-import swop.Records.allStats;
+import swop.Records.AllStats;
 import swop.UI.Builders.DisplayStatus;
 
 import java.util.Iterator;
@@ -31,7 +31,7 @@ public class ManagerGenerator extends UserGenerator {
         builder.addOption("Select option", actions.size());
     }
     
-    public void generateProductionStatistics(DisplayStatus builder, allStats stats){
+    public void generateProductionStatistics(DisplayStatus builder, AllStats stats){
         builder.appendTitle("Production Statistics");
         builder.appendSubTitle("Cars Produced info");
         builder.inputInfo(String.format("Avg cars produced daily: %2f",stats.avgOrders()));

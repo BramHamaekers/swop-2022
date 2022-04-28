@@ -1,7 +1,7 @@
 package swop.UI;
 
 import swop.Exceptions.CancelException;
-import swop.Records.allStats;
+import swop.Records.AllStats;
 import swop.UI.Builders.DisplayStatus;
 import swop.UI.Generators.ManagerGenerator;
 
@@ -47,7 +47,7 @@ public class ManagerUI implements UI {
 		return UI.selectAction(managerGenerator, actions, question);
 	}
 	
-	public static void showProductionStatistics(allStats stats) throws CancelException {
+	public static void showProductionStatistics(AllStats stats) throws CancelException {
 		DisplayStatus builder = new DisplayStatus();
 		managerGenerator.generateProductionStatistics(builder, stats);
 		System.out.println(builder.getDisplay());

@@ -4,7 +4,7 @@ import swop.Car.CarOrder;
 import swop.CarManufactoring.*;
 import swop.Exceptions.IllegalUserException;
 import swop.Miscellaneous.Statistics;
-import swop.Records.allStats;
+import swop.Records.AllStats;
 import swop.UI.LoginUI;
 import swop.Users.CarMechanic;
 import swop.Users.GarageHolder;
@@ -138,7 +138,7 @@ public class AssemAssist {
 	public List<String> getTaskDescription(Task task) {
 		return task.getTaskDescription();
 	}
-	public allStats getStats() {
+	public AllStats getStats() {
 		return this.statistics.getOrderStats();
 		
 	}

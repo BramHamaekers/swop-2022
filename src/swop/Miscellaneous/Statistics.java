@@ -2,7 +2,7 @@ package swop.Miscellaneous;
 
 import swop.Car.Car;
 import swop.Listeners.StatisticsListener;
-import swop.Records.allStats;
+import swop.Records.AllStats;
 
 import java.util.*;
 
@@ -162,9 +162,9 @@ public class Statistics {
      * Returns all the statistics.
      * @return a map containing the stat as a string and the value
      */
-    public allStats getOrderStats(){
+    public AllStats getOrderStats(){
     	
-    	return new allStats(getAvgOrders(), getMdnOrders(), getOrdersLast2(), getAvgDelay(),getMdnDelay(),getDelayLast2());
+    	return new AllStats(getAvgOrders(), getMdnOrders(), getOrdersLast2(), getAvgDelay(),getMdnDelay(),getDelayLast2());
     }
 
     public Map<Integer, List<Integer>> getCarDelayMap() {
