@@ -204,14 +204,18 @@ public class GarageHolder extends User{
         return carOrder;
     }
 
-    
-    
-
-    /************************ Orders *************************/
+    /**
+     * get the carOrders of this user
+     * @return this.carOrders
+     */
     public Set<CarOrder> getOrders() {
         return this.carOrders;
     }
 
+    /**
+     * Add an order to the CarOrders of this user
+     * @param carOrder the given order to add
+     */
     public void addOrder(CarOrder carOrder) {
         this.carOrders.add(carOrder);
     }

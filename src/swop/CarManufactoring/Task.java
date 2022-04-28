@@ -124,9 +124,14 @@ public enum Task {
 		return tasks;
 	}
 
+	/**
+	 * returns the name of this task
+	 * @return this.name
+	 */
 	public String getName() {
 		return this.name;
 	}
+
 	/**
 	 * Returns instructions for a given part
 	 * @param category the carOptionCategory to get the description from

@@ -43,6 +43,10 @@ public class CarOrder implements Comparable<CarOrder> {
 		return this.getCar().getEstimatedCompletionTime();
 	}
 
+	/**
+	 * get the time that this carOrder was completed at
+	 * @return this.getCar().getCompletionTime()
+	 */
 	public TimeStamp getCompletionTime() {
 		return this.getCar().getCompletionTime();
 	}

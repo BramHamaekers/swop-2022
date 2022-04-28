@@ -12,7 +12,6 @@ import swop.Miscellaneous.TimeStamp;
 public class CarManufacturingController {
 
 	private final LinkedList<Car> carQueue;
-	private final LinkedList<Car> finishedCars = new LinkedList<>();
 	private final AssemblyLine assemblyLine;
 	private final Scheduler scheduler;
 	private final List<StatisticsListener> statisticsListeners = new ArrayList<>();
@@ -82,7 +81,6 @@ public class CarManufacturingController {
 
 		if (finishedCar != null) {
 			setFinishedCarDeliveryTime(maxWorkingMinutes, finishedCar);
-			this.finishedCars.add(finishedCar);
 			this.updateDelay(finishedCar);
 		}
 		//update schedular time
@@ -167,9 +165,5 @@ public class CarManufacturingController {
 	 */
 	public List<Car> getCarQueue() {
 		return List.copyOf(this.carQueue);
-	}
-
-	public List<Car> getFinishedCars() {
-		return new LinkedList<>(finishedCars);
 	}
 }

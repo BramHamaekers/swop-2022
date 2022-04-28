@@ -63,6 +63,10 @@ public class CarModelSpecification {
 		return true;
 	}
 
+	/**
+	 * get the chosenOptions and its value of thes CarModelSpecification as a Map
+	 * @return Map of all the chosen options
+	 */
 	public Map<String, String> getAllParts(){
 		//https://stackoverflow.com/questions/28288546/how-to-copy-hashmap-not-shallow-copy-in-java
 		return this.chosenOptions.entrySet().stream()

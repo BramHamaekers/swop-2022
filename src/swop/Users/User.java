@@ -13,6 +13,10 @@ public abstract class User {
     public abstract void load(AssemAssist assemAssist);
     public abstract void selectAction(AssemAssist assemAssist) throws CancelException;
 
+    /**
+     * get the UserID of this user
+     * @return this.id
+     */
     public String getId() {
         return id;
     }
