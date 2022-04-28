@@ -11,6 +11,7 @@ import swop.Main.AssemAssist;
 import swop.UI.LoginUI;
 import swop.UI.Builders.DisplayStatus;
 import swop.UI.Generators.GarageHolderGenerator;
+import swop.Users.CarMechanic;
 import swop.Users.GarageHolder;
 
 import java.io.ByteArrayInputStream;
@@ -73,30 +74,46 @@ public class OrderNewCarTest {
     }
 
    @Test
-   void cancelAndInvalidOptionOrderingFormTest() {
-        ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%nCANCEL%nQUIT"), 12); // Setup
-	   
+   void cancelOrderingFormTest() {
+       ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%nCANCEL%nQUIT"), 12); // Setup
 	   CarModel a = new ModelA();
-	   
        displayAndIndicateModels(output); // The system shows a list of available car models and how 2 indicate them
-
        displayOrderingForm(output, a); // The system displays the ordering form for model A.
-       
        output.next();
-	   
 	   cancelOrderingFormOnFifthPosition(output, a); // should be cancelled after selecting 5 part preferences
-	   
-       //invalid options
-	   output = setupUITest(String.format("a%n0%n0%n1%n5%n1%nCANCEL%nQUIT"), 12); // Setup
-	   
-       displayAndIndicateModels(output); // The system shows a list of available car models and how 2 indicate them
-
-       displayOrderingForm(output, a); // The system displays the ordering form for model A.
-       
-       output.next();
-	   
-	   invalidOptionForPartTwo(output, a);
    }
+
+   @Test
+   void orderingFormInvalidInputTest() {
+       ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n5%n1%nCANCEL%nQUIT"), 12); // Setup
+       CarModel a = new ModelA();
+       displayAndIndicateModels(output); // The system shows a list of available car models and how 2 indicate them
+       displayOrderingForm(output, a); // The system displays the ordering form for model A.
+       output.next();
+       invalidOptionForPartTwo(output, a);
+   }
+
+   @Test
+   void invalidSpecificationTest_AircoAndEngine() {
+       ListIterator<String> output = setupUITest(String.format("a%n0%n1%n1%n0%n0%n2%n0%n0%n1%n0%nCANCEL%nQUIT"), 12); // Setup
+       CarModel b = new ModelB();
+       displayAndIndicateModels(output); // The system shows a list of available car models and how 2 indicate them
+       displayOrderingForm(output, b); // The system displays the ordering form for model A.
+       skip(output, 2);
+       assertEquals("Airco must be manual or none if you select the ultra engine", output.next());
+       //invalidOptionForPartTwo(output, b);
+   }
+
+    @Test
+    void invalidSpecificationTest_SportNoSpoiler() {
+        ListIterator<String> output = setupUITest(String.format("a%n0%n1%n2%n2%n0%n2%n0%n0%n1%n0%nCANCEL%nQUIT"), 12); // Setup
+        CarModel b = new ModelB();
+        displayAndIndicateModels(output); // The system shows a list of available car models and how 2 indicate them
+        displayOrderingForm(output, b); // The system displays the ordering form for model A.
+        skip(output, 2);
+        assertEquals("Spoiler is mandatory when choosing a sport body", output.next());
+        //invalidOptionForPartTwo(output, b);
+    }
 
    @Test
    void orderMultipleCars(){
@@ -138,25 +155,9 @@ public class OrderNewCarTest {
 
        storeOrder(3); // The system stores the new order.
    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     ///////////////////////////////////////////////////////////////////////////////////////
-    
-    
+
 	private void invalidOptionForPartTwo(ListIterator<String> output, CarModel model) {
     	Set<Entry<String, List<String>>> options = model.getValidOptions().entrySet();
     	String op = "";
@@ -202,47 +203,31 @@ public class OrderNewCarTest {
     private void displayOrderingForm(ListIterator<String> output, CarModel carModel) {
     	DisplayStatus builder = new DisplayStatus();
     	this.garageHolderGenerator.generateOrderingForm(builder, carModel.getValidOptions(), carModel.getName());
-    	ListIterator<String> iterator = Arrays.asList(builder.getDisplay().split(String.format("%n")))
-                .listIterator();
-		while (iterator.hasNext())
-        	assertEquals(iterator.next(), output.next());
+        for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
     }
 
     private void displayAndIndicateModels(ListIterator<String> output) {
     	DisplayStatus builder = new DisplayStatus();
     	this.garageHolderGenerator.generateCarModels(builder, CarModel.types);
-    	ListIterator<String> iterator = Arrays.asList(builder.getDisplay().split(String.format("%n")))
-                .listIterator();
-		while (iterator.hasNext())
-        	assertEquals(iterator.next(), output.next());
+        for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
     }
 
     private void presentActions(ListIterator<String> output) {
     	List<String> actions = Arrays.asList("Place new order", "Check order details", "Exit");
 		DisplayStatus builder = new DisplayStatus();
 		this.garageHolderGenerator.selectAction(builder, actions, "What would you like to do?");
-		ListIterator<String> iterator = Arrays.asList(builder.getDisplay().split(String.format("%n")))
-                .listIterator();
-		while (iterator.hasNext())
-        	assertEquals(iterator.next(), output.next());
+        for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
     }
 
 
     private void presentOverview(ListIterator<String> output) {
 		DisplayStatus builder = new DisplayStatus();
 		this.garageHolderGenerator.generateOrderStatus(builder, this.garageHolder.getOrders());
-		ListIterator<String> iterator = Arrays.asList(builder.getDisplay().split(String.format("%n")))
-                .listIterator();
-		while (iterator.hasNext())
-        	assertEquals(iterator.next(), output.next());
+        for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
     }
-    
-    
-    
+
     ////////////////////////////////////////////////////////////////////////////
-    
-    
-    
+
     private void skip(ListIterator<String> output, int skips) {
 		for(int i =0; i < skips; i++)
 			output.next();
@@ -273,23 +258,8 @@ public class OrderNewCarTest {
 
     private ListIterator<String> setupUITest(String inputString, int skips) {
         this.assem = new AssemAssist();
-        this.garageHolder = (GarageHolder) this.assem.getUserMap().get("a"); 
-
-        this.input = new ByteArrayInputStream(inputString.getBytes());
-        System.setIn(input);
-        LoginUI.scanner.updateScanner();
-
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-        assem.run();
-
-        ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
-                .listIterator();
-
-        for(int i =0; i < skips; i++)
-        	output.next();
-        
-        return output;
+        this.garageHolder = (GarageHolder) this.assem.getUserMap().get("a");
+        return continueUITest(inputString, skips);
     }
 
 

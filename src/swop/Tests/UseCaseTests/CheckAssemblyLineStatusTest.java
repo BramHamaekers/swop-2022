@@ -63,22 +63,11 @@ public class CheckAssemblyLineStatusTest {
     	emptyWorkStation(output, 1, false); // not empty
     	emptyWorkStation(output, 2, true); // empty
     	
-    } 
-    
-    
-    
-    
-    
-    
-
+    }
 
 	//////////////////////////////////////////////////////////////////
 
-    
-    
-    
-    
-    
+
     private void emptyWorkStation(ListIterator<String> output, int i, boolean b) {
     	WorkStation w = this.assem.getStations().get(i);
     	if(b) {
@@ -86,8 +75,7 @@ public class CheckAssemblyLineStatusTest {
      		assert w.getUncompletedTasks() == null;
     	}
     	else {
-    		assert w.getCompletedTasks() != null || w.getUncompletedTasks() != null 
-    				|| !w.getUncompletedTasks().isEmpty() || !w.getCompletedTasks().isEmpty();
+    		assert w.getCompletedTasks() != null || w.getUncompletedTasks() != null || !w.getUncompletedTasks().isEmpty() || !w.getCompletedTasks().isEmpty();
     	}
 	}
 
@@ -164,30 +152,14 @@ public class CheckAssemblyLineStatusTest {
          ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
                  .listIterator();
 
-         for(int i =0; i < skips; i++)
-         	output.next();
+         skip(output,skips);
          
          return output;
     }
 
     private ListIterator<String> setupUITest(String inputString, int skips) {
         this.assem = new AssemAssist();
-        this.carMechanic = (CarMechanic) this.assem.getUserMap().get("b"); 
-
-        this.input = new ByteArrayInputStream(inputString.getBytes());
-        System.setIn(input);
-        LoginUI.scanner.updateScanner();
-
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-        assem.run();
-
-        ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
-                .listIterator();
-
-        for(int i =0; i < skips; i++)
-        	output.next();
-        
-        return output;
+        this.carMechanic = (CarMechanic) this.assem.getUserMap().get("b");
+        return continueUITest(inputString, skips);
     }
 }

@@ -27,7 +27,7 @@ public class GarageHolderUI implements UI {
 	 */
 	public static void displayOrders(Set<CarOrder> carOrders) {
 		if (carOrders == null) {
-			System.out.println("No carOrders placed yet.");
+			UI.printErrorln("No carOrders placed yet.");
 			return;
 		}
 		DisplayStatus builder = new DisplayStatus();
