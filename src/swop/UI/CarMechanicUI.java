@@ -1,7 +1,6 @@
 package swop.UI;
 
 import java.util.List;
-import java.util.Set;
 
 import swop.CarManufactoring.Task;
 import swop.CarManufactoring.WorkStation;

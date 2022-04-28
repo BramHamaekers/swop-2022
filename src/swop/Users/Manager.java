@@ -6,9 +6,6 @@ import java.util.stream.Collectors;
 import swop.Car.Car;
 import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
-import swop.Miscellaneous.Statistics;
-import swop.Miscellaneous.TimeStamp;
-import swop.Records.allStats;
 import swop.UI.ManagerUI;
 
 public class Manager extends User{

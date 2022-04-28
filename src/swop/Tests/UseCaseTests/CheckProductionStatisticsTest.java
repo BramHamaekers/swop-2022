@@ -10,13 +10,10 @@ import java.util.ListIterator;
 
 import org.junit.jupiter.api.Test;
 
-import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
-import swop.Records.allStats;
 import swop.UI.LoginUI;
 import swop.UI.Builders.DisplayStatus;
 import swop.UI.Generators.ManagerGenerator;
-import swop.Users.GarageHolder;
 import swop.Users.Manager;
 
 public class CheckProductionStatisticsTest {

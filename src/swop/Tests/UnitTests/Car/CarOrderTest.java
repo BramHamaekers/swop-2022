@@ -7,8 +7,7 @@ import swop.Car.CarModel.CarModel;
 import swop.Car.CarModel.ModelA;
 import swop.Car.CarModelSpecification;
 import swop.Car.CarOrder;
-import swop.CarManufactoring.*;
-import swop.Exceptions.NotAllTasksCompleteException;
+import swop.Miscellaneous.TimeStamp;
 
 import java.util.Map;
 
@@ -50,8 +49,27 @@ class CarOrderTest {
         CarOrder carOrder = new CarOrder(modelA);
         Car car = carOrder.getCar();
 
-        //car.setEstimatedCompletionTime("PLACEHOLDER"); // CarOrder should have same est completion time as car
-        //assertEquals("PLACEHOLDER",carOrder.getEstimatedCompletionTime());
+        car.setEstimatedCompletionTime(new TimeStamp(1,100)); // CarOrder should have same est completion time as car
+        assertEquals(new TimeStamp(1,100),carOrder.getEstimatedCompletionTime());
+    }
+
+    @Test
+    void testToString() {
+        modelA.setCarModelSpecification(specification);
+        CarOrder carOrder = new CarOrder(modelA);
+        assertEquals(carOrder.toString(),String.format("specification: %s %n" +
+                        "timestamp of ordering: %s %n" +
+                        "Estimated Completion Time: %s",
+                carOrder.getCar().getCarModel().getCarModelSpecification().getAllParts(),
+                carOrder.getOrderTime(),
+                carOrder.getCar().getEstimatedCompletionTime()));
+        carOrder.getCar().getUncompletedTasks().forEach(t -> carOrder.getCar().completeTask(t));
+        assertEquals(carOrder.toString(),String.format("specification: %s %n" +
+                        "timestamp of ordering: %s %n" +
+                        "Completion Time: %s",
+                carOrder.getCar().getCarModel().getCarModelSpecification().getAllParts(),
+                carOrder.getOrderTime(),
+                carOrder.getCompletionTime()));
     }
 }
 

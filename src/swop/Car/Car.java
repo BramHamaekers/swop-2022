@@ -15,7 +15,7 @@ public class Car {
 	private TimeStamp deliveryTime;
     
     public Car(CarModel model){
-        this.setCarModel(model);  
+        this.setCarModel(model);
 		this.initiateUncompletedTasks();
     }
 

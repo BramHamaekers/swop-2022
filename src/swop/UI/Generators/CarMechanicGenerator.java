@@ -6,7 +6,6 @@ import swop.UI.Builders.FormBuilder;
 
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Set;
 
 public class CarMechanicGenerator extends UserGenerator {
 

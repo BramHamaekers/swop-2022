@@ -72,14 +72,13 @@ public class CarOrder implements Comparable<CarOrder> {
 	public String toString() {
 		if (!isCompleted()) {
 			return String.format("specification: %s %n" +
-					"timestamp of ordering: %s" +
+					"timestamp of ordering: %s %n" +
 					"Estimated Completion Time: %s",
 					this.getCar().getCarModel().getCarModelSpecification().getAllParts(),
 					this.getOrderTime(),
 					this.getCar().getEstimatedCompletionTime());
-		}
-		return String.format("specification: %s%n" +
-						"timestamp of ordering: %s%n" +
+		} else return String.format("specification: %s %n" +
+						"timestamp of ordering: %s %n" +
 						"Completion Time: %s",
 				this.getCar().getCarModel().getCarModelSpecification().getAllParts(),
 				this.getOrderTime(),

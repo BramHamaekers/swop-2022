@@ -3,8 +3,6 @@ package swop.Tests.UseCaseTests;
 
 import org.junit.jupiter.api.Test;
 
-import swop.Car.Car;
-import swop.Car.CarOrder;
 import swop.Car.CarModel.CarModel;
 import swop.Car.CarModel.ModelA;
 import swop.Car.CarModel.ModelB;
@@ -19,12 +17,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 

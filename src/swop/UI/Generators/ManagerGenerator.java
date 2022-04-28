@@ -2,13 +2,11 @@ package swop.UI.Generators;
 
 import swop.Records.allStats;
 import swop.UI.Builders.DisplayStatus;
-import swop.UI.Builders.FormBuilder;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class ManagerGenerator extends UserGenerator {
     public void generateBatchSelection(DisplayStatus builder, List<Map<String, String>> possibleBatch) {

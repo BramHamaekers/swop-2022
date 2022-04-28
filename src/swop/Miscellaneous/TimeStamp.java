@@ -1,8 +1,5 @@
 package swop.Miscellaneous;
 
-import swop.Car.CarOrder;
-
-import java.util.Map;
 import java.util.Objects;
 
 public class TimeStamp implements Comparable<TimeStamp> {

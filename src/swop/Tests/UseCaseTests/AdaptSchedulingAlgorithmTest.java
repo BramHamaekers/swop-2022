@@ -24,7 +24,7 @@ public class AdaptSchedulingAlgorithmTest {
 	private ByteArrayInputStream input;
 	private AssemAssist assem;
 	private Manager manager;
-	private ManagerGenerator managerGenerator = new ManagerGenerator();
+	private final ManagerGenerator managerGenerator = new ManagerGenerator();
 
 
 

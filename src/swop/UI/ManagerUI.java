@@ -3,7 +3,6 @@ package swop.UI;
 import swop.Exceptions.CancelException;
 import swop.Records.allStats;
 import swop.UI.Builders.DisplayStatus;
-import swop.UI.Builders.FormBuilder;
 import swop.UI.Generators.ManagerGenerator;
 
 import java.util.List;

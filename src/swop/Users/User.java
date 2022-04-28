@@ -1,6 +1,5 @@
 package swop.Users;
 
-
 import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
 
