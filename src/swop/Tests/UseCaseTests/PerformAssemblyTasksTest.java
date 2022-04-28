@@ -32,13 +32,13 @@ public class PerformAssemblyTasksTest {
     @Test
     void performAssemblyTasksUITest() {
 
-        ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
+        setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
         
         List<Task> tasks = this.assem.getStations().get(0).getUncompletedTasks();
         
         assert tasks.size() == 2; // no tasks are finished on workstation
-        
-        output = continueUITest(String.format("b%n0%n0%n0%n0%n45%nCANCEL%nQUIT"), 7);// complete 1 task and cancel
+
+		ListIterator<String> output = continueUITest(String.format("b%n0%n0%n0%n0%n45%nCANCEL%nQUIT"), 7);// complete 1 task and cancel
 
         askWorkPost(output); // ask user for work post
         
@@ -59,13 +59,13 @@ public class PerformAssemblyTasksTest {
 
 	@Test
     void completeAllTasksOfStationTest() {
-		ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
+		setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
 		
         List<Task> tasks = this.assem.getStations().get(0).getUncompletedTasks();
         
         assert tasks.size() == 2; // no tasks are finished on workstation
-		
-		output = continueUITest(String.format("b%n0%n0%n0%n0%n45%nCANCEL%nQUIT"), 12); // complete task on pos 0
+
+		ListIterator<String> output = continueUITest(String.format("b%n0%n0%n0%n0%n45%nCANCEL%nQUIT"), 12); // complete task on pos 0
 		
 		presentAvailableTasks(output, tasks);
 
@@ -89,8 +89,8 @@ public class PerformAssemblyTasksTest {
 
 	@Test
     void completeAllTasksOfCarTest() {
-		ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
-		output = continueUITest(String.format("b%n0%n0%n0%n0%n45%n0%n0%n0%n45%n" + // complete tasks work post 1
+		setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
+		continueUITest(String.format("b%n0%n0%n0%n0%n45%n0%n0%n0%n45%n" + // complete tasks work post 1
 				"1%n0%n0%n45%n1%n0%n0%n45%n"+ // complete tasks work post 2
 				"2%n0%n0%n45%n2%n0%n0%n45%n2%n0%n0%n45%n0%nQUIT"), 7); // complete tasks work post 3 
 		GarageHolder a = (GarageHolder) this.assem.getUserMap().get("a"); 
@@ -101,8 +101,8 @@ public class PerformAssemblyTasksTest {
 	
 	@Test
     void InvalidOptions() {
-		ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
-		output = continueUITest(String.format("b%ninvalid%n0%ninvalid%n0%n10%n0%n0%n45%nCANCEL%nQUIT"), 7); // complete tasks work post 1
+		setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
+		ListIterator<String> output = continueUITest(String.format("b%ninvalid%n0%ninvalid%n0%n10%n0%n0%n45%nCANCEL%nQUIT"), 7); // complete tasks work post 1
 		invalidOptionMessage(output); //invalid 1
 		skip(output, 4);
 		invalidOptionMessage(output); //invalid 2
@@ -147,9 +147,7 @@ public class PerformAssemblyTasksTest {
     private void presentAvailableTasks(ListIterator<String> output, List<Task> tasks) {
 		DisplayStatus builder = new DisplayStatus();
 		carMechanicGenerator.generateAvailableTasks(builder,tasks);
-		ListIterator<String> iterator = Arrays.asList(builder.getDisplay().split(String.format("%n"))).listIterator();
-		while (iterator.hasNext())
-        	assertEquals(iterator.next(), output.next());
+		for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
     }
 
     private void indicateTimePassed(ListIterator<String> output) {
@@ -163,30 +161,22 @@ public class PerformAssemblyTasksTest {
     private void showTaskInfo(ListIterator<String> output, Task t) {
 		DisplayStatus builder = new DisplayStatus();
 		carMechanicGenerator.generateTaskInfo(builder, t.getTaskDescription());
-		ListIterator<String> iterator = Arrays.asList(builder.getDisplay().split(String.format("%n")))
-                .listIterator();
-		while (iterator.hasNext())
-        	assertEquals(iterator.next(), output.next());
+		for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
 
     }
     
     private void askWorkPostCanceled(ListIterator<String> output) {
     	DisplayStatus builder = new DisplayStatus();
 		carMechanicGenerator.generateStationList(builder, assem.getStations());
-    	ListIterator<String> iterator = Arrays.asList((builder.getDisplay() + "CANCELED").split(String.format("%n")))
-                .listIterator();
-		while (iterator.hasNext())
-        	assertEquals(iterator.next(), output.next());
+		for (String s : (builder.getDisplay() + "CANCELED").split(String.format("%n")))
+			assertEquals(s, output.next());
 		
 	}
 
     private void askWorkPost(ListIterator<String> output) {
     	DisplayStatus builder = new DisplayStatus();
 		carMechanicGenerator.generateStationList(builder, assem.getStations());
-    	ListIterator<String> iterator = Arrays.asList(builder.getDisplay().split(String.format("%n")))
-                .listIterator();
-		while (iterator.hasNext())
-			assertEquals(iterator.next(), output.next());
+		for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
     }
     
     
@@ -234,7 +224,7 @@ public class PerformAssemblyTasksTest {
 
         for(int i =0; i < skips; i++)
         	output.next();
-        
+
         return output;
     }
 

@@ -21,7 +21,7 @@ public class CheckProductionStatisticsTest {
 	private AssemAssist assem;
 	private Manager manager;
 	private ByteArrayInputStream input;
-	private ManagerGenerator managerGenerator = new ManagerGenerator();
+	private final ManagerGenerator managerGenerator = new ManagerGenerator();
 	
 	
 	@Test
@@ -39,9 +39,9 @@ public class CheckProductionStatisticsTest {
 		
 		showProductionNofinishedCarsStatistics(output);
 		
-		output = continueUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
+		continueUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
 		
-		output = continueUITest(String.format("b%n0%n0%n0%n0%n20%n0%n0%n0%n20%n" + // complete tasks work post 1
+		continueUITest(String.format("b%n0%n0%n0%n0%n20%n0%n0%n0%n20%n" + // complete tasks work post 1
 				"1%n0%n0%n20%n1%n0%n0%n20%n"+ // complete tasks work post 2
 				"2%n0%n0%n20%n2%n0%n0%n20%n2%n0%n0%n20%n0%nQUIT"), 7); // complete tasks work post 3
 		
@@ -49,9 +49,9 @@ public class CheckProductionStatisticsTest {
 		
 		showProductionOnefinishedCarStatistics(output);
 		
-		output = continueUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
+		continueUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
 		
-		output = continueUITest(String.format("b%n0%n0%n0%n0%n10%n0%n0%n0%n10%n" + // complete tasks work post 1
+		continueUITest(String.format("b%n0%n0%n0%n0%n10%n0%n0%n0%n10%n" + // complete tasks work post 1
 				"1%n0%n0%n10%n1%n0%n0%n10%n"+ // complete tasks work post 2
 				"2%n0%n0%n10%n2%n0%n0%n10%n2%n0%n0%n10%n0%nQUIT"), 7); // complete tasks work post 3
 		

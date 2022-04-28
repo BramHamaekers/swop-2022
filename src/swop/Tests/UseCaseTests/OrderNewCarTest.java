@@ -46,10 +46,7 @@ public class OrderNewCarTest {
 
     @Test
     void oderNewCarFullUITest() {
-        
-        /**************** UI for garage holder order new car ****************/
-        
-    	 ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 12); // Setup
+        ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 12); // Setup
         
         CarModel a = new ModelA();
 
@@ -67,8 +64,7 @@ public class OrderNewCarTest {
     @Test
     void instaCancelAsGarageHolderTest() {
         ListIterator<String> output = setupUITest(String.format("a%nCANCEL%nQUIT"), 2); // Setup
-        /**************** UI for garage holder at first login + select no action****************/
-        
+
         presentOverview(output); // The system presents an overview of the orders placed by the user -> which are none
 
         output.next();
@@ -78,9 +74,7 @@ public class OrderNewCarTest {
 
    @Test
    void cancelAndInvalidOptionOrderingFormTest() {
-	   
-	   /**************** Cancel ****************/
-	   ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%nCANCEL%nQUIT"), 12); // Setup
+        ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%nCANCEL%nQUIT"), 12); // Setup
 	   
 	   CarModel a = new ModelA();
 	   
@@ -92,8 +86,7 @@ public class OrderNewCarTest {
 	   
 	   cancelOrderingFormOnFifthPosition(output, a); // should be cancelled after selecting 5 part preferences
 	   
-	   /**************** Invalid Option ****************/
-	   
+       //invalid options
 	   output = setupUITest(String.format("a%n0%n0%n1%n5%n1%nCANCEL%nQUIT"), 12); // Setup
 	   
        displayAndIndicateModels(output); // The system shows a list of available car models and how 2 indicate them

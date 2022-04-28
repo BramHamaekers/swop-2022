@@ -35,9 +35,9 @@ public class CheckAssemblyLineStatusTest {
     
     @Test
     void allStatesOneWorkStationTest(){ 
-    	ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
-    	
-    	output = continueUITest(String.format("b%n1%nQUIT"), 7); // check status
+    	setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
+
+		ListIterator<String> output = continueUITest(String.format("b%n1%nQUIT"), 7); // check status
     	
     	pendingInWorkstationStatus(output, 0, true); // has pending (2) tasks on ws 1
     	
@@ -45,7 +45,7 @@ public class CheckAssemblyLineStatusTest {
     	
     	completedInWorkstationStatus(output, 0, false); // has no completed tasks on ws 1
     	
-    	output = continueUITest(String.format("b%n0%n0%n0%n0%n45%nCANCEL%nQUIT"), 1); // complete task on pos 0, ws 1
+    	continueUITest(String.format("b%n0%n0%n0%n0%n45%nCANCEL%nQUIT"), 1); // complete task on pos 0, ws 1
     	
     	output = continueUITest(String.format("b%n1%nQUIT"), 7); // check status
     	
@@ -55,7 +55,7 @@ public class CheckAssemblyLineStatusTest {
     	
     	pendingInWorkstationStatus(output, 0, true); // has pending (1) tasks on ws 1
     	
-    	output = continueUITest(String.format("b%n0%n0%n0%n0%n45%nCANCEL%nQUIT"), 1); // complete task on pos 0, ws 1
+    	continueUITest(String.format("b%n0%n0%n0%n0%n45%nCANCEL%nQUIT"), 1); // complete task on pos 0, ws 1
     	
     	output = continueUITest(String.format("b%n1%nQUIT"), 7); // check status
     	
@@ -99,9 +99,7 @@ public class CheckAssemblyLineStatusTest {
 			assert w.getCompletedTasks() == null;
 			assert w.getUncompletedTasks() == null;
 		}
-		ListIterator<String> iterator = Arrays.asList(builder.getDisplay().split(String.format("%n"))).listIterator();
-		while (iterator.hasNext())
-			assertEquals(iterator.next(), output.next());
+		for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
 
 	}
 
@@ -121,9 +119,7 @@ public class CheckAssemblyLineStatusTest {
     		}
     		i++;
     	}
-		ListIterator<String> iterator = Arrays.asList(builder.getDisplay().split(String.format("%n"))).listIterator();
-		while (iterator.hasNext())
-        	assertEquals(iterator.next(), output.next());
+		for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
 
 	}
 
@@ -143,9 +139,7 @@ public class CheckAssemblyLineStatusTest {
     		}
     		i++;
     	}
-		ListIterator<String> iterator = Arrays.asList(builder.getDisplay().split(String.format("%n"))).listIterator();
-		while (iterator.hasNext())
-        	assertEquals(iterator.next(), output.next());
+		for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
 		
 	}
 
