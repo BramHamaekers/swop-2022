@@ -65,12 +65,12 @@ class AssemblyLineTest {
 
     @Test
     void getUncompletedTasks_NoCarInStation() {
-        assertNull(assemblyLine.getUncompletedTasks("Accessories Post"));
+        assertNull(assemblyLine.getUncompletedTasks(new WorkStation("Accessories Post")));
     }
 
     @Test
     void getUncompletedTasks_InvalidStationName() {
-        assertThrows(IllegalArgumentException.class, () -> assemblyLine.getUncompletedTasks("Invalid Station"));
+        assertThrows(IllegalArgumentException.class, () -> assemblyLine.getUncompletedTasks(new WorkStation("Invalid Station")));
     }
 
     @Test
@@ -78,7 +78,7 @@ class AssemblyLineTest {
         modelA.setCarModelSpecification(specification);
         Car car = new Car(modelA);
         assemblyLine.getWorkStations().get(0).setCar(car);
-        assertEquals(new LinkedList<>(List.of(Task.AssemblyCarBody, Task.PaintCar)) ,assemblyLine.getUncompletedTasks("Car Body Post"));
+        assertEquals(new LinkedList<>(List.of(Task.AssemblyCarBody, Task.PaintCar)) ,assemblyLine.getUncompletedTasks(assemblyLine.getWorkStations().get(0)));
     }
 
     @Test
@@ -87,7 +87,7 @@ class AssemblyLineTest {
         Car car = new Car(modelA);
         car.getUncompletedTasks().forEach(car::completeTask);
         assemblyLine.getWorkStations().get(2).setCar(car);
-        assertEquals(new LinkedList<>() ,assemblyLine.getUncompletedTasks("Accessories Post"));
+        assertEquals(new LinkedList<>() ,assemblyLine.getUncompletedTasks(assemblyLine.getWorkStations().get(2)));
     }
 
     @Test

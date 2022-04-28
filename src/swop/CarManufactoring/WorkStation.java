@@ -67,8 +67,8 @@ public class WorkStation {
 	 * checks if a name is valid to be a name for workstation
 	 */
 	private boolean isValidName(String name) {
-		return (Objects.equals(name, "Car Body Post")) ||
-				(Objects.equals(name, "Drivetrain Post")) || (Objects.equals(name, "Accessories Post"));
+		return (name.equals("Car Body Post")) ||
+				(name.equals("Drivetrain Post")) || (name.equals("Accessories Post"));
 	}
 
 	/**

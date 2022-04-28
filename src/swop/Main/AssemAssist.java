@@ -28,14 +28,13 @@ public class AssemAssist {
 		this.controller = new CarManufacturingController();
 		this.controller.addListener(statistics.statisticsListener);
     }
+
 	/**
      * Starts the program
      */
 	public void run() {
 		this.login();		
 	}
-	
-	/************************ Login *************************/
 
 	/**
 	 * Handles logging in to the system
@@ -69,8 +68,11 @@ public class AssemAssist {
 	private AssemblyLine getAssemblyLine() {
 		return this.controller.getAssembly();
 	}
-	
-	//for order new car test
+
+	/**
+	 * getter for carcontroller
+	 * @return the CarManufacturingController
+	 */
 	public CarManufacturingController getController() {
 		return this.controller;
 	}
@@ -100,10 +102,6 @@ public class AssemAssist {
 			default -> false;
 		};
 	}
-	
-	/************************ Users can communicate with assembly line via these methods*************************/
-	
-	/***********Methods used by garage holder************/
 
 	/**
 	 * add an order to assembly line
@@ -114,13 +112,12 @@ public class AssemAssist {
 		if(isValidUser("garage holder")) this.controller.addOrderToQueue(carOrder);
 		else throw new IllegalUserException("addOrder()");
 	}
-	
-	/***********Methods used by car mechanic************/
+
 
 	/**
 	 * mechanic completes a task
 	 * @param task task which is completed
-	 * @param time 
+	 * @param time the time passed while doing the task
 	 */
 	public void completeTask(Task task, int time) {
 		if (task == null) throw new IllegalArgumentException("task is null");
@@ -130,17 +127,27 @@ public class AssemAssist {
 		else throw new IllegalUserException("completeTask()");
 		
 	}
-	
+
+	/**
+	 * @return the names of the stations of the assemblyline
+	 */
 	public List<String> getStationsNames() {
 		return this.getAssemblyLine().getWorkstationNames();
 	}
 
+	/**
+	 * @return the WorkStations of the assemblyline
+	 */
 	public List<WorkStation> getStations() {
 		return this.getAssemblyLine().getWorkStations();
 	}
-	
-	public List<Task> getsAvailableTasks(String string) {
-		return this.getAssemblyLine().getUncompletedTasks(string);
+
+	/**
+	 * @param workstation the required WorkStation
+	 * @return the available
+	 */
+	public List<Task> getsAvailableTasks(WorkStation workstation) {
+		return this.getAssemblyLine().getUncompletedTasks(workstation);
 	}
 	
 	public List<String> getTaskDescription(Task task) {

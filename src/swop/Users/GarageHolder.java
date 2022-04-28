@@ -54,17 +54,19 @@ public class GarageHolder extends User{
         }
     }
 
-    private String checkOrderDetails() throws CancelException {
-        String orderID = GarageHolderUI.selectOrderID();
-        while (!isValidOrderID(orderID)) {
-            GarageHolderUI.printError("Please provide a valid orderID");
-            orderID = GarageHolderUI.selectOrderID();
-        }
-        CarOrder carOrder = getOrderFromID(orderID);
-        //TODO: not the proper formatting
-        GarageHolderUI.showOrderDetails(carOrder.toString());
-
-        return GarageHolderUI.indicateYesNo("Would you like to view another order?");
+    private void checkOrderDetails() throws CancelException {
+        String question;
+        do {
+            String orderID = GarageHolderUI.selectOrderID();
+            while (!isValidOrderID(orderID)) {
+                GarageHolderUI.printError("Please provide a valid orderID");
+                orderID = GarageHolderUI.selectOrderID();
+            }
+            CarOrder carOrder = getOrderFromID(orderID);
+            //TODO: not the proper formatting
+            GarageHolderUI.showOrderDetails(carOrder.toString());
+            question = GarageHolderUI.indicateYesNo("Would you like to view another order?");
+        } while (question.equals("y"));
     }
 
     /**

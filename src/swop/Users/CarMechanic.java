@@ -65,7 +65,7 @@ public class CarMechanic extends User{
 	 * @throws CancelException when "CANCEL" is the input
 	 */
 	private void performAssemblyTask(AssemAssist assemAssist) throws CancelException {
-		String workStation = this.selectStation(assemAssist);
+		WorkStation workStation = this.selectStation(assemAssist);
 		if (workStation == null) throw new IllegalArgumentException("workstation is invalid");
 		List<Task> taskList = getAvailableTasks(assemAssist, workStation);
 		//returns selected task by user
@@ -128,13 +128,13 @@ public class CarMechanic extends User{
 	 * @return return a station selected from the available stations
 	 * @throws CancelException when "CANCEL" is the input
 	 */
-	private String selectStation(AssemAssist assemAssist) throws CancelException {
+	private WorkStation selectStation(AssemAssist assemAssist) throws CancelException {
 		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
 		List<WorkStation> workStations = assemAssist.getStations();
 		//asks user for workstation
 		CarMechanicUI.displayAvailableStations(workStations);
 		int option = CarMechanicUI.askOption("Select station: ", workStations.size());	
-		return workStations.get(option).getName();
+		return workStations.get(option);
 	}
 
 	/**
@@ -143,12 +143,10 @@ public class CarMechanic extends User{
 	 * @param workStation workstation as a string from the available list of workstations
 	 * @return returns all available task at current workstation.
 	 */
-	private List<Task> getAvailableTasks(AssemAssist assemAssist, String workStation) {
+	private List<Task> getAvailableTasks(AssemAssist assemAssist, WorkStation workStation) {
 		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
 		if (workStation == null) throw new IllegalArgumentException("workstation is invalid");
-		List<Task> tasks = assemAssist.getsAvailableTasks(workStation);
-		if(tasks == null) return null; //Throw error?
-		return tasks;
+		return assemAssist.getsAvailableTasks(workStation);
 	}
 
 }
