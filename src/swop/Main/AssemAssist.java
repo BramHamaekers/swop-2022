@@ -51,11 +51,11 @@ public class AssemAssist {
 	 */
 	private void loadUser(String id) {
 		// Load user database
-		while (!this.userDatabase.containsKey(id) && !(Objects.equals(id, "QUIT"))) {
+		while (!this.userDatabase.containsKey(id) && !(id.equalsIgnoreCase("QUIT"))) {
 			System.out.println("Invalid user ID, type QUIT to exit");
 			id = LoginUI.getUserID();
 		}
-		if(id.equals("QUIT")) return;
+		if(id.equalsIgnoreCase("QUIT")) return;
 		activeUser = this.userDatabase.get(id);
 		activeUser.load(this);
 		login();	
