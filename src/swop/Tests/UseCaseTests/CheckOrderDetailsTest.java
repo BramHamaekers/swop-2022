@@ -27,8 +27,8 @@ public class CheckOrderDetailsTest {
     @Test
     void CheckOrderDetailsFullUITest() {
         
-        ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 12); // Setup
-        output = continueUITest(String.format("a%n1%n"+ this.garageHolder.getOrders().iterator().next().getID() + "%nCANCEL%nQUIT"), 2);
+        setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 12); // Setup
+        ListIterator<String> output = continueUITest(String.format("a%n1%n"+ this.garageHolder.getOrders().iterator().next().getID() + "%nCANCEL%nQUIT"), 2);
         
         presentOverview(output); //the overview should now contain a pending order
         
@@ -41,7 +41,7 @@ public class CheckOrderDetailsTest {
 
     @Test
     void OrderDetailsInvalidIDTest() {
-    	ListIterator<String> output = setupUITest(String.format("a%n1%ninvalid%nCANCEL%nQUIT"), 12); // Setup
+    	ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%na%n1%ninvalid%nCANCEL%nQUIT"), 47); // Setup
     	
     	askOrderID(output); // user fills an invalid order id
     	
@@ -52,12 +52,20 @@ public class CheckOrderDetailsTest {
     	cancel(output); //cancel
     	
     }
+
+    @Test
+    void OrderDetailsNoOrdersPlacedTest() {
+        ListIterator<String> output = setupUITest(String.format("a%n1%nCANCEL%nQUIT"), 12); // Setup
+        noOrdersPlaced(output);
+        skip(output, 5);
+        cancel(output); //cancel
+    }
     
     @Test
     void CheckOrderDetailsTwiceTest() {
-        ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 12); // Setup create new order
+        setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 12); // Setup create new order
     	String id = this.garageHolder.getOrders().iterator().next().getID();
-        output = continueUITest(String.format("a%n1%n"+ id
+        ListIterator<String> output = continueUITest(String.format("a%n1%n"+ id
         		+ "%ny%n"+ id + "%nCANCEL%nQUIT"), 2);
         
         presentOverview(output); //the overview should now contain a pending order
@@ -68,27 +76,9 @@ public class CheckOrderDetailsTest {
 
         presentOrderDetails(output); // The system presents the details of the asked order.
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
 	///////////////////////////////////////////////////////////////////////////////////////
-    
-    
-    
-    
-    
-    
-    
+
     private void invalidID(ListIterator<String> output) {
     	assertEquals("Please provide a valid orderID", output.next());
 	}
@@ -96,8 +86,11 @@ public class CheckOrderDetailsTest {
     
     private void askOrderID(ListIterator<String> output) {	
     	assertEquals("Input an orderID: ", output.next());
-		
 	}
+
+    private  void noOrdersPlaced(ListIterator<String> output) {
+        assertEquals("No orders available to check!", output.next());
+    }
     
     private void cancel(ListIterator<String> output) {
         assertEquals("CANCELED", output.next());
@@ -106,29 +99,20 @@ public class CheckOrderDetailsTest {
     private void presentOrderDetails(ListIterator<String> output) {
     	assertEquals("Input an orderID: ", output.next());
     	String orderinfo = this.garageHolder.getOrders().iterator().next().toString();
-    	ListIterator<String> iterator = Arrays.asList(orderinfo.split(String.format("%n")))
-                .listIterator();
-		while (iterator.hasNext())
-        	assertEquals(iterator.next(), output.next());
+        for (String s : orderinfo.split(String.format("%n"))) assertEquals(s, output.next());
     }
 
     private void presentActions(ListIterator<String> output) {
     	List<String> actions = Arrays.asList("Place new order", "Check order details", "Exit");
 		DisplayStatus builder = new DisplayStatus();
 		this.garageHolderGenerator.selectAction(builder, actions, "What would you like to do?");
-		ListIterator<String> iterator = Arrays.asList(builder.getDisplay().split(String.format("%n")))
-                .listIterator();
-		while (iterator.hasNext())
-        	assertEquals(iterator.next(), output.next());
+        for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
     }
 
     private void presentOverview(ListIterator<String> output) {
 		DisplayStatus builder = new DisplayStatus();
 		this.garageHolderGenerator.generateOrderStatus(builder, this.garageHolder.getOrders());
-		ListIterator<String> iterator = Arrays.asList(builder.getDisplay().split(String.format("%n")))
-                .listIterator();
-		while (iterator.hasNext())
-        	assertEquals(iterator.next(), output.next());
+        for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
     }
     
     

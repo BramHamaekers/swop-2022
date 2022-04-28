@@ -46,7 +46,13 @@ public class GarageHolder extends User{
 
         switch (action) {
             case 0 -> this.generateOrder(assemAssist);
-            case 1 -> this.checkOrderDetails(); //TODO: UC-2 needs to go back to step 1 not 3
+            case 1 -> {
+                if (this.getOrders().isEmpty()) {
+                    GarageHolderUI.printError("No orders available to check!");
+                    this.selectAction(assemAssist);
+                }
+                else this.checkOrderDetails();
+            }
             case 2 -> {
                 // Do Nothing
             }
@@ -55,18 +61,19 @@ public class GarageHolder extends User{
     }
 
     private void checkOrderDetails() throws CancelException {
-        String question;
+        String question = "n";
         do {
+            if (question.equals("y")) GarageHolderUI.displayOrders(this.getOrders());
             String orderID = GarageHolderUI.selectOrderID();
             while (!isValidOrderID(orderID)) {
                 GarageHolderUI.printError("Please provide a valid orderID");
                 orderID = GarageHolderUI.selectOrderID();
             }
             CarOrder carOrder = getOrderFromID(orderID);
-            //TODO: not the proper formatting
             GarageHolderUI.showOrderDetails(carOrder.toString());
             question = GarageHolderUI.indicateYesNo("Would you like to view another order?");
         } while (question.equals("y"));
+
     }
 
     /**

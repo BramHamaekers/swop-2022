@@ -17,7 +17,7 @@ interface UI {
 	 * @throws CancelException when the user types "Cancel"
 	 */
 	static String indicateYesNo(String action) throws CancelException {
-		System.out.println("");
+		System.out.println();
 		System.out.printf("%s %n[y] Yes [n] No%n", action);
 		return scanner.scanNextLineOfTypeString(new String[]{"y","n"});
 	}
@@ -27,6 +27,14 @@ interface UI {
 	 * @param e the error message to print
 	 */
 	static void printError(String e) {
+		System.out.println(e);
+	}
+
+	/**
+	 * Prints an error message followed by a new line
+	 * @param e the error message to print
+	 */
+	static void printErrorln(String e) {
 		System.out.println(e);
 	}
 

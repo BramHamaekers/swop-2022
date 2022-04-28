@@ -138,25 +138,9 @@ public class OrderNewCarTest {
 
        storeOrder(3); // The system stores the new order.
    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     ///////////////////////////////////////////////////////////////////////////////////////
-    
-    
+
 	private void invalidOptionForPartTwo(ListIterator<String> output, CarModel model) {
     	Set<Entry<String, List<String>>> options = model.getValidOptions().entrySet();
     	String op = "";
@@ -202,39 +186,27 @@ public class OrderNewCarTest {
     private void displayOrderingForm(ListIterator<String> output, CarModel carModel) {
     	DisplayStatus builder = new DisplayStatus();
     	this.garageHolderGenerator.generateOrderingForm(builder, carModel.getValidOptions(), carModel.getName());
-    	ListIterator<String> iterator = Arrays.asList(builder.getDisplay().split(String.format("%n")))
-                .listIterator();
-		while (iterator.hasNext())
-        	assertEquals(iterator.next(), output.next());
+        for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
     }
 
     private void displayAndIndicateModels(ListIterator<String> output) {
     	DisplayStatus builder = new DisplayStatus();
     	this.garageHolderGenerator.generateCarModels(builder, CarModel.types);
-    	ListIterator<String> iterator = Arrays.asList(builder.getDisplay().split(String.format("%n")))
-                .listIterator();
-		while (iterator.hasNext())
-        	assertEquals(iterator.next(), output.next());
+        for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
     }
 
     private void presentActions(ListIterator<String> output) {
     	List<String> actions = Arrays.asList("Place new order", "Check order details", "Exit");
 		DisplayStatus builder = new DisplayStatus();
 		this.garageHolderGenerator.selectAction(builder, actions, "What would you like to do?");
-		ListIterator<String> iterator = Arrays.asList(builder.getDisplay().split(String.format("%n")))
-                .listIterator();
-		while (iterator.hasNext())
-        	assertEquals(iterator.next(), output.next());
+        for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
     }
 
 
     private void presentOverview(ListIterator<String> output) {
 		DisplayStatus builder = new DisplayStatus();
 		this.garageHolderGenerator.generateOrderStatus(builder, this.garageHolder.getOrders());
-		ListIterator<String> iterator = Arrays.asList(builder.getDisplay().split(String.format("%n")))
-                .listIterator();
-		while (iterator.hasNext())
-        	assertEquals(iterator.next(), output.next());
+        for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
     }
     
     
