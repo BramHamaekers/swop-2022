@@ -20,7 +20,7 @@ public class AssemblyLine {
 	 */
 	public Car advance(Car nextCar) throws NotAllTasksCompleteException{
 		// check if possible to advance AssemblyLine
-		checkAdvance();
+		this.checkAdvance();
 		Car completedCar = this.workStations.getLast().getCar();
 		//updating completion time of finished car
 		// Move all cars on assembly by 1 position

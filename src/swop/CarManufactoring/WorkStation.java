@@ -88,14 +88,14 @@ public class WorkStation {
 	 * returns name of workstation
 	 */
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	/**
 	 * returns current car in workstation
 	 */
 	public Car getCar() {
-		return car;
+		return this.car;
 	}
 
 	public void setCar(Car car) {

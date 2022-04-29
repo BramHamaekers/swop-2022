@@ -58,7 +58,7 @@ public class AssemAssist {
 		if(id.equalsIgnoreCase("QUIT")) return;
 		activeUser = this.userDatabase.get(id);
 		activeUser.load(this);
-		login();	
+		this.login();	
 	}
 
 	/**

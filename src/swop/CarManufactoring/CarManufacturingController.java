@@ -87,7 +87,7 @@ public class CarManufacturingController {
 		this.updateScheduleTime(maxWorkingMinutes);
 
 		// For every car in queue and workstation update the estimated completion time
-		updateEstimatedCompletionTime();
+		this.updateEstimatedCompletionTime();
 	}
 
 	/**
