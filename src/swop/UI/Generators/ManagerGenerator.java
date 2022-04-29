@@ -44,10 +44,9 @@ public class ManagerGenerator extends UserGenerator {
         builder.appendSubTitle("Cars Delay info");
         builder.inputInfo(String.format("Avg delay daily: %2f",stats.avgDelay()));
         builder.inputInfo(String.format("Median delay daily: %2f",stats.mdnDelay()));
-        String[] d = {"Most recent delay","Delay before"};
         i = 0;
-        for(int delay: stats.delayLast2()) {	
-        	builder.inputInfo(String.format("%s: %d",d[i], delay));
+        for(var delay: stats.delayLast2().entrySet()) {	
+        	builder.inputInfo(String.format("Delay on day %s: %s",delay.getKey(), delay.getValue().toString()));
         	i++;}
         builder.endInfo();
         builder.inputInfo("Done viewing -> press enter");

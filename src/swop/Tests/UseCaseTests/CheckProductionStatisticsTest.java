@@ -28,7 +28,7 @@ public class CheckProductionStatisticsTest {
 	void instaCheckProductionStatisticsUITest() {
 		ListIterator<String> output = setupUITest(String.format("c%n0%n%nQUIT"), 7); // log in as manager and check production stats
 		
-		showProductionNofinishedCarsStatistics(output);
+		noFinishedCarsStatistics(output);
 		
 		assert assem.getStats().delayLast2().isEmpty() && assem.getStats().ordersLast2().isEmpty();
 	}
@@ -37,7 +37,7 @@ public class CheckProductionStatisticsTest {
 	void checkProductionStatisticsAfterCarsCompleted() {
 		ListIterator<String> output = setupUITest(String.format("c%n0%n%nQUIT"), 7); // insta check production stats
 		
-		showProductionNofinishedCarsStatistics(output);
+		noFinishedCarsStatistics(output);
 		
 		continueUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
 		
@@ -47,7 +47,7 @@ public class CheckProductionStatisticsTest {
 		
 		output = continueUITest(String.format("c%n0%n%nQUIT"), 7); // check production stats
 		
-		showProductionOnefinishedCarStatistics(output);
+		noCarsWithDelayOneFinished(output);
 		
 		continueUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
 		
@@ -57,9 +57,34 @@ public class CheckProductionStatisticsTest {
 		
 		output = continueUITest(String.format("c%n0%n%nQUIT"), 7); // check production stats
 		
-		showProductionTwoOrMorefinishedCarsStatistics(output);
-	
+		noCarsWithDelayTwoFinished(output);
+		
+		continueUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
+		
+		continueUITest(String.format("b%n0%n0%n0%n0%n20%n0%n0%n20%n" + // complete tasks work post 1
+				"b%n0%n1%n0%n0%n960%n0%n0%n20%n"+ // complete tasks work post 2
+				"b%n0%n2%n0%n0%n20%n0%n0%n20%n0%n0%n20%n0%nQUIT"), 7); // complete tasks work post 3
+		
+		output = continueUITest(String.format("c%n0%n%nQUIT"), 7);
+		
+		
+		oneCarsWithDelayTwoFinished(output);
+		
+		continueUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
+		
+		continueUITest(String.format("b%n0%n0%n0%n0%n20%n0%n0%n20%n" + // complete tasks work post 1
+				"b%n0%n1%n0%n0%n960%n0%n0%n20%n"+ // complete tasks work post 2
+				"b%n0%n2%n0%n0%n20%n0%n0%n20%n0%n0%n20%n0%nQUIT"), 7); // complete tasks work post 3
+		
+		output = continueUITest(String.format("c%n0%n%nQUIT"), 7);
+		
+		twoCarsWithDelayTwoFinishedDifferentDays(output);
 	}
+
+
+
+
+
 
 
 
@@ -67,37 +92,37 @@ public class CheckProductionStatisticsTest {
 
 /////////////////////////////////////////////////////////////////////////
 
-	private void showProductionNofinishedCarsStatistics(ListIterator<String> output){
+	private void noFinishedCarsStatistics(ListIterator<String> output){
+		checkStatistics(output, 9);
+	}
+	
+	private void checkStatistics(ListIterator<String> output, int size) {
 		DisplayStatus builder = new DisplayStatus();
 		managerGenerator.generateProductionStatistics(builder, assem.getStats());
-		assertEquals(Arrays.asList(builder.getDisplay().split(String.format("%n"))).size(), 9);
+		assertEquals(Arrays.asList(builder.getDisplay().split(String.format("%n"))).size(), size);
 		ListIterator<String> iterator = Arrays.asList(builder.getDisplay().split(String.format("%n")))
 	            .listIterator();
 		while (iterator.hasNext())
 	    	assertEquals(iterator.next(), output.next());
 	}
 	
-	private void showProductionOnefinishedCarStatistics(ListIterator<String> output){
-		DisplayStatus builder = new DisplayStatus();
-		managerGenerator.generateProductionStatistics(builder, assem.getStats());
-		assertEquals(Arrays.asList(builder.getDisplay().split(String.format("%n"))).size(), 11);
-		ListIterator<String> iterator = Arrays.asList(builder.getDisplay().split(String.format("%n")))
-	            .listIterator();
-		while (iterator.hasNext())
-	    	assertEquals(iterator.next(), output.next());
+	private void noCarsWithDelayOneFinished(ListIterator<String> output){
+		checkStatistics(output, 10);
 	}
 	
-	private void showProductionTwoOrMorefinishedCarsStatistics(ListIterator<String> output){
-		DisplayStatus builder = new DisplayStatus();
-		managerGenerator.generateProductionStatistics(builder, assem.getStats());
-		String s = builder.getDisplay();
-		assertEquals(Arrays.asList(builder.getDisplay().split(String.format("%n"))).size(), 12);
-		ListIterator<String> iterator = Arrays.asList(builder.getDisplay().split(String.format("%n")))
-	            .listIterator();
-		while (iterator.hasNext())
-	    	assertEquals(iterator.next(), output.next());
+	private void noCarsWithDelayTwoFinished(ListIterator<String> output) {		
+		checkStatistics(output, 10);
+	}
+	
+	private void oneCarsWithDelayTwoFinished(ListIterator<String> output) {
+		checkStatistics(output, 11);
+		
 	}
 
+	private void twoCarsWithDelayTwoFinishedDifferentDays(ListIterator<String> output) {
+		checkStatistics(output, 13);
+		
+	}
 
 
 ////////////////////////////////////////////////////////////////////////////

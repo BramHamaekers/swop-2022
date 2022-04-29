@@ -78,11 +78,54 @@ class StatisticsTest {
         stats.finishOrder(300,1);
         stats.finishOrder(50,4);
         // 2 different days but spaced first element is the most recent, second the second most recent
-        assertEquals(List.of(50,40), stats.getDelayLast2());
+        assertEquals(new LinkedHashMap<Integer, List<Integer>>(){{
+        	put(4,List.of(50));
+        	put(2,List.of(40));
+        }}, stats.getDelayLast2());
         stats.finishOrder(1,4);
         // 2 delays on same day
-        assertEquals(List.of(1,50), stats.getDelayLast2());
+        assertEquals(new LinkedHashMap<Integer, List<Integer>>(){{
+        	put(4,List.of(1,50));
+        }}, stats.getDelayLast2());
     }
+    
+    @Test
+    void getDelayLast2NoDelayLast() {
+        Statistics stats = new Statistics();
+        assertTrue(stats.getDelayLast2().isEmpty());
+        stats.finishOrder(30,0);
+        stats.finishOrder(40,2);
+        // 2 different days but spaced first element is the most recent, second the second most recent
+        assertEquals(new LinkedHashMap<Integer, List<Integer>>(){{
+        	put(2,List.of(40));
+        	put(0,List.of(30));
+        }}, stats.getDelayLast2());
+        stats.finishOrder(0,4);
+        // 2 delays on same day
+        assertEquals(new LinkedHashMap<Integer, List<Integer>>(){{
+        	put(2,List.of(40));
+        	put(0,List.of(30));
+        }}, stats.getDelayLast2());
+    }
+    
+    @Test
+    void getDelayLast2NoDelayMiddle() {
+        Statistics stats = new Statistics();
+        assertTrue(stats.getDelayLast2().isEmpty());
+        stats.finishOrder(30,0);
+        stats.finishOrder(0,4);
+        // 2 different days but spaced first element is the most recent, second the second most recent
+        assertEquals(new LinkedHashMap<Integer, List<Integer>>(){{
+        	put(0,List.of(30));
+        }}, stats.getDelayLast2());
+        stats.finishOrder(40,6);
+        // 2 delays on same day
+        assertEquals(new LinkedHashMap<Integer, List<Integer>>(){{
+        	put(6,List.of(40));
+        	put(0,List.of(30));
+        }}, stats.getDelayLast2());
+    }
+
 
     @Test
     void getAvgOrders() {

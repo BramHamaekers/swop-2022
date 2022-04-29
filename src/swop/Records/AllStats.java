@@ -13,4 +13,4 @@ import java.util.Map;
  * @param delayLast2 the delay of the last two orders
  */
 public record AllStats(double avgOrders, double mdnOrders, Map<Integer, Integer> ordersLast2, double avgDelay,
-					   double mdnDelay, List<Integer> delayLast2) {}
+		double mdnDelay, Map<Integer, List<Integer>> delayLast2) {}
