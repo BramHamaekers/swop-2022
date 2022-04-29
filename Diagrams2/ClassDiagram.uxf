@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.0.0">
-  <zoom_level>4</zoom_level>
+  <zoom_level>8</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>516</x>
-      <y>32</y>
-      <w>212</w>
-      <h>200</h>
+      <x>952</x>
+      <y>0</y>
+      <w>424</w>
+      <h>400</h>
     </coordinates>
     <panel_attributes>swop.CarManufactoring::Scheduler
 --
@@ -47,10 +47,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>772</x>
-      <y>200</y>
-      <w>164</w>
-      <h>152</h>
+      <x>1464</x>
+      <y>336</y>
+      <w>328</w>
+      <h>304</h>
     </coordinates>
     <panel_attributes>swop.CarManufactoring::CarManufacturingController
 --
@@ -82,10 +82,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1028</x>
-      <y>192</y>
-      <w>120</w>
-      <h>132</h>
+      <x>1976</x>
+      <y>320</y>
+      <w>240</w>
+      <h>264</h>
     </coordinates>
     <panel_attributes>swop.Main::AssemAssist
 --
@@ -115,10 +115,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>536</x>
-      <y>604</y>
-      <w>156</w>
-      <h>156</h>
+      <x>992</x>
+      <y>1144</y>
+      <w>312</w>
+      <h>312</h>
     </coordinates>
     <panel_attributes>swop.Car::Car
 --
@@ -152,10 +152,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>428</x>
-      <y>380</y>
-      <w>152</w>
-      <h>140</h>
+      <x>776</x>
+      <y>696</y>
+      <w>304</w>
+      <h>280</h>
     </coordinates>
     <panel_attributes>swop.CarManufactoring::WorkStation
 --
@@ -185,10 +185,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>676</x>
-      <y>460</y>
-      <w>296</w>
-      <h>112</h>
+      <x>1272</x>
+      <y>856</y>
+      <w>592</w>
+      <h>224</h>
     </coordinates>
     <panel_attributes>swop.Users::GarageHolder
 --
@@ -215,10 +215,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>760</x>
-      <y>596</y>
-      <w>120</w>
-      <h>100</h>
+      <x>1440</x>
+      <y>1128</y>
+      <w>240</w>
+      <h>200</h>
     </coordinates>
     <panel_attributes>swop.Car::CarOrder
 --
@@ -243,14 +243,14 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>244</x>
-      <y>624</y>
-      <w>208</w>
-      <h>88</h>
+      <x>456</x>
+      <y>1360</y>
+      <w>416</w>
+      <h>176</h>
     </coordinates>
     <panel_attributes>/swop.Car.CarModel::CarModel/
 --
--carModelSpecification = CarModelSpecification
+-carModelSpecification: CarModelSpecification
 #name: String
 #validOptions: Map&lt;String, List&lt;String&gt;&gt;
 #mandatoryParts: List&lt;String&gt;
@@ -269,10 +269,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1212</x>
-      <y>208</y>
-      <w>160</w>
-      <h>84</h>
+      <x>2344</x>
+      <y>352</y>
+      <w>320</w>
+      <h>168</h>
     </coordinates>
     <panel_attributes>swop.Miscellaneous::Statistics
 --
@@ -295,10 +295,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>760</x>
-      <y>768</y>
-      <w>128</w>
-      <h>80</h>
+      <x>1440</x>
+      <y>1472</y>
+      <w>256</w>
+      <h>160</h>
     </coordinates>
     <panel_attributes>swop.Miscellaneous::TimeStamp
 --
@@ -319,10 +319,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>996</x>
-      <y>460</y>
-      <w>204</w>
-      <h>84</h>
+      <x>1912</x>
+      <y>856</y>
+      <w>408</w>
+      <h>168</h>
     </coordinates>
     <panel_attributes>swop.Users::CarMechanic
 --
@@ -345,10 +345,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>16</x>
-      <y>632</y>
-      <w>180</w>
-      <h>72</h>
+      <x>0</x>
+      <y>1376</y>
+      <w>360</w>
+      <h>144</h>
     </coordinates>
     <panel_attributes>swop.Car::CarModelSpecification
 --
@@ -368,10 +368,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>428</x>
-      <y>256</y>
-      <w>156</w>
-      <h>72</h>
+      <x>776</x>
+      <y>448</y>
+      <w>312</w>
+      <h>144</h>
     </coordinates>
     <panel_attributes>swop.CarManufactoring::AssemblyLine
 --
@@ -391,10 +391,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1224</x>
-      <y>460</y>
-      <w>212</w>
-      <h>80</h>
+      <x>2368</x>
+      <y>856</y>
+      <w>424</w>
+      <h>160</h>
     </coordinates>
     <panel_attributes>swop.Users::Manager
 --
@@ -416,10 +416,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1028</x>
-      <y>356</y>
-      <w>124</w>
-      <h>48</h>
+      <x>1976</x>
+      <y>648</y>
+      <w>248</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>/swop.Users::User/
 --
@@ -436,10 +436,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>160</x>
-      <y>768</y>
-      <w>112</w>
-      <h>36</h>
+      <x>288</x>
+      <y>1648</y>
+      <w>224</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>swop.Car.CarModel::ModelA
 --
@@ -453,10 +453,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>288</x>
-      <y>768</y>
-      <w>112</w>
-      <h>36</h>
+      <x>544</x>
+      <y>1648</y>
+      <w>224</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>swop.Car.CarModel::ModelB
 --
@@ -471,10 +471,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>408</x>
-      <y>768</y>
-      <w>112</w>
-      <h>36</h>
+      <x>784</x>
+      <y>1648</y>
+      <w>224</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>swop.Car.CarModel::ModelC
 --
@@ -487,10 +487,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>808</x>
-      <y>128</y>
-      <w>92</w>
-      <h>28</h>
+      <x>1536</x>
+      <y>192</y>
+      <w>184</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 swop.Listeners::StatisticsListener
@@ -502,10 +502,10 @@ swop.Listeners::StatisticsListener
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>592</x>
-      <y>292</y>
-      <w>108</w>
-      <h>24</h>
+      <x>1104</x>
+      <y>520</y>
+      <w>216</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 swop.Listeners::TaskCompletedListener
@@ -517,10 +517,10 @@ swop.Listeners::TaskCompletedListener
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>932</x>
-      <y>200</y>
-      <w>104</w>
-      <h>16</h>
+      <x>1784</x>
+      <y>336</y>
+      <w>208</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=1</panel_attributes>
@@ -529,10 +529,10 @@ m1=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1144</x>
-      <y>208</y>
-      <w>76</w>
-      <h>16</h>
+      <x>2208</x>
+      <y>352</y>
+      <w>152</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=1</panel_attributes>
@@ -541,10 +541,10 @@ m1=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1092</x>
-      <y>320</y>
-      <w>20</w>
-      <h>44</h>
+      <x>2104</x>
+      <y>576</y>
+      <w>40</w>
+      <h>88</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=0..*</panel_attributes>
@@ -553,10 +553,10 @@ m1=0..*</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>896</x>
-      <y>400</y>
-      <w>172</w>
-      <h>68</h>
+      <x>1712</x>
+      <y>736</y>
+      <w>344</w>
+      <h>136</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>410.0;10.0;10.0;150.0</additional_attributes>
@@ -564,10 +564,10 @@ m1=0..*</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1092</x>
-      <y>400</y>
-      <w>12</w>
-      <h>68</h>
+      <x>2104</x>
+      <y>736</y>
+      <w>24</w>
+      <h>136</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
@@ -575,10 +575,10 @@ m1=0..*</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1128</x>
-      <y>400</y>
-      <w>208</w>
-      <h>68</h>
+      <x>2176</x>
+      <y>736</y>
+      <w>416</w>
+      <h>136</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;500.0;150.0</additional_attributes>
@@ -586,10 +586,10 @@ m1=0..*</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>816</x>
-      <y>568</y>
-      <w>20</w>
-      <h>36</h>
+      <x>1552</x>
+      <y>1072</y>
+      <w>40</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=0..*</panel_attributes>
@@ -598,10 +598,10 @@ m1=0..*</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>688</x>
-      <y>604</y>
-      <w>80</w>
-      <h>16</h>
+      <x>1296</x>
+      <y>1144</y>
+      <w>160</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=1</panel_attributes>
@@ -610,10 +610,10 @@ m1=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>816</x>
-      <y>692</y>
-      <w>16</w>
-      <h>84</h>
+      <x>1552</x>
+      <y>1320</y>
+      <w>32</w>
+      <h>168</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=1</panel_attributes>
@@ -622,48 +622,60 @@ m1=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>580</x>
-      <y>832</y>
-      <w>40</w>
-      <h>44</h>
+      <x>528</x>
+      <y>1112</y>
+      <w>328</w>
+      <h>200</h>
     </coordinates>
-    <panel_attributes>Task
+    <panel_attributes>swop.CarManufactoring::Task
 --
-
-TODO</panel_attributes>
+-partsDescriptionMap: Map&lt;String,String&gt; 
+-name: String 
+-w: WorkStation 
+-value: String 
+--
++completeTask(int time): void 
++getParts(): List&lt;String&gt; 
++setWorkStation(WorkStation w): void
++getWorkStation(): WorkStation 
++getTaskDescription(): List&lt;String&gt; 
++getAllTasks(Map&lt;String, String&gt; chosenOptions): Set&lt;Task&gt; 
+-getAllTasks(): Set&lt;Task&gt; 
++getName(): String 
+-getDescription(String category): String </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>588</x>
-      <y>756</y>
-      <w>20</w>
-      <h>84</h>
+      <x>848</x>
+      <y>1152</y>
+      <w>160</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=1..*</panel_attributes>
-    <additional_attributes>10.0;190.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;10.0;180.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>448</x>
-      <y>624</y>
-      <w>96</w>
-      <h>16</h>
+      <x>864</x>
+      <y>1360</y>
+      <w>144</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=1</panel_attributes>
-    <additional_attributes>10.0;10.0;220.0;10.0</additional_attributes>
+    <additional_attributes>10.0;10.0;160.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>340</x>
-      <y>708</y>
-      <w>12</w>
-      <h>68</h>
+      <x>648</x>
+      <y>1528</y>
+      <w>24</w>
+      <h>136</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
@@ -671,10 +683,10 @@ m1=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>372</x>
-      <y>708</y>
-      <w>100</w>
-      <h>68</h>
+      <x>712</x>
+      <y>1528</y>
+      <w>200</w>
+      <h>136</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;230.0;150.0</additional_attributes>
@@ -682,10 +694,10 @@ m1=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>212</x>
-      <y>708</y>
-      <w>92</w>
-      <h>68</h>
+      <x>392</x>
+      <y>1528</y>
+      <w>184</w>
+      <h>136</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>210.0;10.0;10.0;150.0</additional_attributes>
@@ -693,10 +705,10 @@ m1=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>192</x>
-      <y>632</y>
-      <w>60</w>
-      <h>16</h>
+      <x>352</x>
+      <y>1376</y>
+      <w>120</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=1</panel_attributes>
@@ -705,10 +717,10 @@ m1=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>656</x>
-      <y>340</y>
-      <w>124</w>
-      <h>272</h>
+      <x>1232</x>
+      <y>616</y>
+      <w>248</w>
+      <h>544</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=0..n</panel_attributes>
@@ -717,10 +729,10 @@ m1=0..n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>724</x>
-      <y>204</y>
-      <w>56</w>
-      <h>16</h>
+      <x>1368</x>
+      <y>344</y>
+      <w>112</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;-&gt;
 m1=1
@@ -730,10 +742,10 @@ m2=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>848</x>
-      <y>152</y>
-      <w>20</w>
-      <h>56</h>
+      <x>1616</x>
+      <y>240</y>
+      <w>40</w>
+      <h>112</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=1..*</panel_attributes>
@@ -742,10 +754,10 @@ m1=1..*</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>696</x>
-      <y>292</y>
-      <w>84</w>
-      <h>16</h>
+      <x>1312</x>
+      <y>520</y>
+      <w>168</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=1</panel_attributes>
@@ -754,10 +766,10 @@ m1=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>580</x>
-      <y>256</y>
-      <w>200</w>
-      <h>16</h>
+      <x>1080</x>
+      <y>448</y>
+      <w>400</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=1</panel_attributes>
@@ -766,10 +778,10 @@ m1=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>496</x>
-      <y>324</y>
-      <w>20</w>
-      <h>64</h>
+      <x>912</x>
+      <y>584</y>
+      <w>40</w>
+      <h>128</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=1..*</panel_attributes>
@@ -778,10 +790,10 @@ m1=1..*</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>648</x>
-      <y>756</y>
-      <w>120</w>
-      <h>32</h>
+      <x>1216</x>
+      <y>1448</y>
+      <w>240</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=3</panel_attributes>
@@ -790,10 +802,10 @@ m1=3</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>576</x>
-      <y>312</y>
-      <w>68</w>
-      <h>80</h>
+      <x>1072</x>
+      <y>560</y>
+      <w>136</w>
+      <h>160</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=1..*</panel_attributes>
@@ -802,10 +814,10 @@ m1=1..*</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>560</x>
-      <y>516</y>
-      <w>20</w>
-      <h>96</h>
+      <x>1040</x>
+      <y>968</y>
+      <w>40</w>
+      <h>192</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=0..1</panel_attributes>
@@ -814,13 +826,25 @@ m1=0..1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>896</x>
-      <y>132</y>
-      <w>344</w>
-      <h>84</h>
+      <x>1712</x>
+      <y>200</y>
+      <w>688</w>
+      <h>168</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=1</panel_attributes>
     <additional_attributes>10.0;10.0;840.0;10.0;840.0;190.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>808</x>
+      <y>968</y>
+      <w>32</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;180.0</additional_attributes>
   </element>
 </diagram>
