@@ -9,6 +9,9 @@ import swop.Listeners.StatisticsListener;
 import swop.Listeners.TaskCompletedListener;
 import swop.Miscellaneous.TimeStamp;
 
+/**
+ * A controller class which handles most of the operations fe. advancing the assembly line
+ */
 public class CarManufacturingController {
 
 	private final LinkedList<Car> carQueue;
@@ -21,10 +24,12 @@ public class CarManufacturingController {
 				};
 
 
-
+	/**
+	 * initializes the controller with an empty carqueue, a scheduler and an assemblyLine with its workstations
+	 */
 	public CarManufacturingController() {
 		this.carQueue = new LinkedList<>();
-		this.assemblyLine = new AssemblyLine(createWorkStations());
+		this.assemblyLine = new AssemblyLine(this.createWorkStations());
 		this.scheduler = new Scheduler(this);
 	}
 
@@ -36,6 +41,10 @@ public class CarManufacturingController {
 		this.statisticsListeners.add(statisticsListener);
 	}
 
+	/**
+	 * for all the listeners, update the statistics class
+	 * @param car a given car that finished
+	 */
 	private void updateDelay(Car car) {
 		statisticsListeners.forEach(l -> l.updateDelay(car));
 	}
@@ -54,6 +63,9 @@ public class CarManufacturingController {
 		return workStations;
 	}
 
+	/**
+	 * @return the assembly line for this controller
+	 */
 	public AssemblyLine getAssembly() {
 		return this.assemblyLine;
 	}

@@ -3,6 +3,9 @@ package swop.Car.CarModel;
 import swop.Car.CarModelSpecification;
 import java.util.*;
 
+/**
+ * The super class for all carmodels
+ */
 public abstract class CarModel {
     private CarModelSpecification carModelSpecification = null;
     protected String name;
@@ -10,6 +13,10 @@ public abstract class CarModel {
     protected List<String> mandatoryParts;
     public static final SortedSet<String> types = new TreeSet<>(List.of("ModelA", "ModelB", "ModelC"));
 
+    /**
+     * set a selection specification for this carModel if it is valid
+     * @param selected a selected {@code CarModelSpecification}
+     */
     public void setCarModelSpecification(CarModelSpecification selected){
         if (!this.isValidSpecification(selected)){
             throw new IllegalArgumentException("invalid car specification for this model");
@@ -35,6 +42,7 @@ public abstract class CarModel {
 
     /**
      * Will check if the generated list of parts contains all the parts.
+     * @param specification the specification for the carModel
      * @return true if all parts are valid
      */
     private boolean isValidSpecification(CarModelSpecification specification){

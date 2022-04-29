@@ -4,6 +4,10 @@ import swop.Miscellaneous.TimeStamp;
 
 import java.util.*;
 
+/**
+ * Iterator for the scheduling algorithm to pick the right car for a specified algorithm
+ * @param <T>
+ */
 interface customIterator<T> {
 	/**
 	 * iterator standard hasnext method
@@ -19,6 +23,9 @@ interface customIterator<T> {
 	T next(String algorithm);
 }
 
+/**
+ * A scheduler manages the time and order of the carqueue
+ */
 public class Scheduler {
 
     private final CarManufacturingController controller;
@@ -34,8 +41,11 @@ public class Scheduler {
 	private String algorithm;
 	private Map<String,String> batchOptions;
 
+	/**
+	 * initializes the scheduler with his controller, the current time at the beginning, the total minutes in a workingday and the algorithm.
+	 * @param carManufacturingController
+	 */
     public Scheduler(CarManufacturingController carManufacturingController) {
-
         this.controller = carManufacturingController;
         this.minutes = 0;
         this.workingDayMinutes = 960; // 06:00 -> 22:00

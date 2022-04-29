@@ -8,10 +8,17 @@ import swop.Exceptions.CancelException;
 import swop.UI.Builders.DisplayStatus;
 import swop.UI.Generators.CarMechanicGenerator;
 
+/**
+ * Class handles all UI interaction with the user for CarMechanic
+ */
 public class CarMechanicUI implements UI {
 
 	private static final CarMechanicGenerator carMechanicGenerator = new CarMechanicGenerator();
 
+	/**
+	 * welcomes user with a welcome message
+	 * @param id string of the id of the user
+	 */
 	public static void init(String id) {
 		System.out.println("Welcome Car Mechanic: " + id + " (You can cancel any action by typing: CANCEL)");
 	}
@@ -20,6 +27,7 @@ public class CarMechanicUI implements UI {
 	 * Asks which action the user wants to take
 	 *
 	 * @param actions available actions for the user
+	 * @param question an initial question for which to display options
 	 * @return int indicating the chosen action
 	 * @throws CancelException when the user types 'Cancel'
 	 */
@@ -29,7 +37,6 @@ public class CarMechanicUI implements UI {
 
 	/**
 	 * Display all the workstations of the given station list
-	 *
 	 * @param stations the given list
 	 */
 	public static void displayAvailableStations(List<WorkStation> stations) {
@@ -38,6 +45,13 @@ public class CarMechanicUI implements UI {
 		System.out.print(builder.getDisplay());
 	}
 
+	/**
+	 * Get the input from the user
+	 * @param s a string to display
+	 * @param numberOfOptions the number of options as an integer
+	 * @return return the input from the user
+	 * @throws CancelException if the user types "cancel"
+	 */
 	public static int askOption(String s, int numberOfOptions) throws CancelException {
 		return scanner.scanNextLineOfTypeInt(0, numberOfOptions);
 

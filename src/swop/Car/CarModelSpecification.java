@@ -5,10 +5,17 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+/**
+ * A selection for each category for a carModel
+ */
 public class CarModelSpecification {
 	
 	Map<String, String> chosenOptions;
 
+	/**
+	 * initialize this specification with a map consisting of the category and the selection for that specification
+	 * @param chosenOptions the selected options for the car
+	 */
 	public CarModelSpecification(Map<String, String> chosenOptions){
 		this.checkConstraints(chosenOptions);
 		this.chosenOptions = chosenOptions;

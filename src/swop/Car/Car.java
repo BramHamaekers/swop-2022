@@ -6,6 +6,9 @@ import swop.Car.CarModel.CarModel;
 import swop.CarManufactoring.Task;
 import swop.Miscellaneous.TimeStamp;
 
+/**
+ * A car representation in assem assist, consisting of tasks and deliver times
+ */
 public class Car {
 	private Set<Task> uncompletedTasks;
 	private Set<Task> allTasks;
@@ -13,8 +16,12 @@ public class Car {
 	private TimeStamp initialCompletionTime;
 	private TimeStamp estimatedCompletionTime;
 	private TimeStamp deliveryTime;
-    
-    public Car(CarModel model){
+
+	/**
+	 * initializes a car with a {@code CarModel}
+	 * @param model a selected carmodel
+	 */
+	public Car(CarModel model){
         this.setCarModel(model);
 		this.initiateUncompletedTasks();
     }
@@ -104,7 +111,11 @@ public class Car {
 	public String getValueOfPart(String category) {
 		return this.getCarModel().getCarModelSpecification().getValueOfPart(category);
 	}
-	public  Map<String, String> getPartsMap() {
+
+	/**
+	 * @return returns a map of all the categories with their selected specification
+	 */
+	public Map<String, String> getPartsMap() {
 		return this.getCarModel().getCarModelSpecification().getAllParts();
 	}
 

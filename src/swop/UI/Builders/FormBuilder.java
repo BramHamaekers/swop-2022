@@ -1,5 +1,8 @@
 package swop.UI.Builders;
 
+/**
+ * A builder to generalize all output
+ */
 public interface FormBuilder {
 	/**
 	 * Will create a line formatted as title and add it to the builder
@@ -21,7 +24,7 @@ public interface FormBuilder {
     /**
      * Will add a string line with option info to the builder + will store this as a possible option the user can select later
      * @param option string with option
-     * @param number
+     * @param number the index of this option in a list of options
      */
     void addOption(String option, int number);
     

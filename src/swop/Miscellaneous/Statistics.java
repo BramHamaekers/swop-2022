@@ -76,12 +76,12 @@ public class Statistics {
     }
 
     /**
-     * get all the delays for the last two days
-     * @return a list containing all the delays from the last two days
+     * get the last 2 delyas
+     * @return a list containing the last two delays
      */
     public List<Integer> getDelayLast2(){
         List<Integer> result = new ArrayList<>();
-        int max = 0;
+        int max;
         if (this.getCarDelayMap().isEmpty()) return result;
         Set<Integer> dayset = new LinkedHashSet<>(this.getCarDelayMap().keySet());
         max = Collections.max(dayset);
@@ -135,7 +135,6 @@ public class Statistics {
         else
             return (double) orders.get(orders.size() / 2);
     }
-
 
     /**
      * get the number of orders for the last two days

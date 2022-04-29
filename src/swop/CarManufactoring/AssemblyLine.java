@@ -5,10 +5,17 @@ import swop.Exceptions.NotAllTasksCompleteException;
 
 import java.util.*;
 
+/**
+ * A assembly line in a factory consisting of multiple workstations
+ */
 public class AssemblyLine {
 
 	private final LinkedList<WorkStation> workStations;
 
+	/**
+	 * initializes the assembly line with a list of {@code WorkStation}
+	 * @param workStations a list of workstations
+	 */
 	public AssemblyLine(LinkedList<WorkStation> workStations) {
 		this.workStations = workStations;
 	}
@@ -17,6 +24,7 @@ public class AssemblyLine {
 	 * advance the assembly line
 	 * @param nextCar Next car on the assemblyLine
 	 * @throws NotAllTasksCompleteException thrown when there are still tasks to do
+	 * @return A finished car or null if there is no finished car
 	 */
 	public Car advance(Car nextCar) throws NotAllTasksCompleteException{
 		// check if possible to advance AssemblyLine

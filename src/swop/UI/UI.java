@@ -42,6 +42,8 @@ interface UI {
 	 * Asks which action the user wants to take
 	 * @return int indicating the chosen action
 	 * @param actions available actions for the user
+	 * @param generator the generator to specify what to build for the string
+	 * @param question an initial question for which to display options
 	 * @throws CancelException when the user types 'Cancel'
 	 */
 	static int selectAction(UserGenerator generator, List<String> actions, String question) throws CancelException {

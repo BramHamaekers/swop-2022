@@ -12,6 +12,10 @@ public class ManagerUI implements UI {
 
 	private static final ManagerGenerator managerGenerator = new ManagerGenerator();
 
+	/**
+	 * welcomes user with a welcome message
+	 * @param id string of the id of the user
+	 */
     public static void init(String id) {
         System.out.println("Welcome Manager: " + id + " (You can cancel any action by typing: CANCEL)");
     }

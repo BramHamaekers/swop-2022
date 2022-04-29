@@ -8,7 +8,14 @@ import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
 import swop.UI.CarMechanicUI;
 
+/**
+ * A car mechanic user
+ */
 public class CarMechanic extends User{
+	/**
+	 * initializes a car mechanic user
+	 * @param id a given id for the car mechanic
+	 */
     public CarMechanic(String id) {
         super(id);
     }
@@ -47,6 +54,10 @@ public class CarMechanic extends User{
 		}
 	}
 
+	/**
+	 * Helper function to display all tasks for each station
+	 * @param assemAssist given the main program
+	 */
 	private void checkAssemblyLineStatus(AssemAssist assemAssist) {
 		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
 		List<WorkStation> workStations = assemAssist.getStations();

@@ -12,6 +12,9 @@ import swop.Users.Manager;
 import swop.Users.User;
 import java.util.*;
 
+/**
+ * AssemAssist is the main program which starts all other classes
+ */
 public class AssemAssist {
 
 	private final CarManufacturingController controller;
@@ -23,6 +26,9 @@ public class AssemAssist {
 		put("c", new Manager("c"));
 	}};
 
+	/**
+	 * Initializes the class with the relevant statistics and the controller
+	 */
 	public AssemAssist() {
 		this.statistics = new Statistics();
 		this.controller = new CarManufacturingController();
@@ -134,13 +140,22 @@ public class AssemAssist {
 	public List<WorkStation> getStations() {
 		return this.getAssemblyLine().getWorkStations();
 	}
-	
+
+	/**
+	 * gets the task description for a given task
+	 * @param task a given task which you want description for
+	 * @return the description of a task as a list of strings
+	 */
 	public List<String> getTaskDescription(Task task) {
 		return task.getTaskDescription();
 	}
+
+	/**
+	 * gets all stats from the {@code Statistics} class
+	 * @return all statistics from {@code Statistics}
+	 */
 	public AllStats getStats() {
 		return this.statistics.getOrderStats();
-		
 	}
 }
 

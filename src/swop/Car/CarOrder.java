@@ -4,7 +4,9 @@ import swop.Car.CarModel.CarModel;
 import swop.Miscellaneous.RandomID;
 import swop.Miscellaneous.TimeStamp;
 
-
+/**
+ * A car order made by a garage holder for a specific {@code Car}
+ */
 public class CarOrder implements Comparable<CarOrder> {
 	private final Car car;
 	private final String ID;
@@ -12,13 +14,16 @@ public class CarOrder implements Comparable<CarOrder> {
 
 	/**
 	 * Creates a new order based on given carModel
-	 * @param carModel ... TODO
+	 * @param carModel the given carModel
 	 */
 	public CarOrder(CarModel carModel) {
 		this.car = new Car(carModel);
 		this.ID = RandomID.random(7);
 	}
 
+	/**
+	 * @return the car for this car order
+	 */
 	public Car getCar() {
 		return this.car;
 	}
@@ -31,13 +36,16 @@ public class CarOrder implements Comparable<CarOrder> {
 		return this.car.isCompleted();
 	}
 
+	/**
+	 * @return the id for this order
+	 */
 	public String getID() {
 		return this.ID;
 	}
 
 	/**
-	 * Est. value of completion for this car.
-	 * @return est. value
+	 * EstEstimated time of completion for this car.
+	 * @return Estimated time of completion
 	 */
 	public TimeStamp getEstimatedCompletionTime() {
 		return this.getCar().getEstimatedCompletionTime();

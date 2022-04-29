@@ -1,20 +1,41 @@
 package swop.UI.Builders;
 
+/**
+ * A class to implement the {@code FormBuilder} for our cli interface
+ */
 public class DisplayStatus implements FormBuilder {
     int titlelength = 0;
     StringBuilder builder = new StringBuilder();
 
+    /**
+     * adds the text to the builder
+     * @param text a given string
+     */
     void print(String text) {
         builder.append(text);
     }
+
+    /**
+     * adds the text to the builder and adds a newline
+     * @param text a given string
+     */
     void println(String text) {
     	print(text + String.format("%n"));
     }
 
+    /**
+     * converts builder to string
+     * @return a string from builder
+     */
     public String getDisplay() {
         return builder.toString();
     }
 
+    /**
+     * converts a number of options to a string with these numbers
+     * @param opts a number of options
+     * @return a string containing the numbers
+     */
     String numberOptions(int opts) {
         StringBuilder res = new StringBuilder();
         for(int i = 0; i<opts; i++)

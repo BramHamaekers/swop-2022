@@ -11,9 +11,16 @@ import swop.UI.GarageHolderUI;
 
 import java.util.*;
 
+/**
+ * A garage holder user
+ */
 public class GarageHolder extends User{
     private final Set<CarOrder> carOrders;
 
+    /**
+     * initializes a garage holder user
+     * @param id a given id for the garage holder
+     */
     public GarageHolder(String id) {
         super(id);
         this.carOrders = new HashSet<>();
@@ -60,6 +67,10 @@ public class GarageHolder extends User{
         }
     }
 
+    /**
+     * Handles the selection of the order to view the details
+     * @throws CancelException when the user wants to cancel viewing details of orders
+     */
     private void checkOrderDetails() throws CancelException {
         String question = "n";
         do {
@@ -177,7 +188,7 @@ public class GarageHolder extends User{
 
 	/**
 	 * Creates new CarModel given the model/optionsMap
-//	 * @param carOptions map from part to actual selection as a string
+     * @param choice the choice for a carmodel the user made
 	 * @return created CarModel
 	 */
     private CarModel createCarModel(int choice) {

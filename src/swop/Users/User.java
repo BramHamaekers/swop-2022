@@ -10,7 +10,17 @@ public abstract class User {
         this.id = id;
     }
 
+    /**
+     * load a user on a login
+     * @param assemAssist given the main program
+     */
     public abstract void load(AssemAssist assemAssist);
+
+    /**
+     * select an action for the relevant user
+     * @param assemAssist given the main program
+     * @throws CancelException gets thrown when user wants to cancel
+     */
     public abstract void selectAction(AssemAssist assemAssist) throws CancelException;
 
     /**
