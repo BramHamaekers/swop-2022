@@ -10,7 +10,7 @@ public class CarModelSpecification {
 	Map<String, String> chosenOptions;
 
 	public CarModelSpecification(Map<String, String> chosenOptions){
-		checkConstraints(chosenOptions);
+		this.checkConstraints(chosenOptions);
 		this.chosenOptions = chosenOptions;
 	}
 

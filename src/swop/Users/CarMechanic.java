@@ -67,7 +67,7 @@ public class CarMechanic extends User{
 	private void performAssemblyTask(AssemAssist assemAssist) throws CancelException {
 		WorkStation workStation = this.selectStation(assemAssist);
 		if (workStation == null) throw new IllegalArgumentException("workstation is invalid");
-		performTaskAtWorkStation(assemAssist, workStation);
+		this.performTaskAtWorkStation(assemAssist, workStation);
 	}
 
 	/**

@@ -87,14 +87,14 @@ public class WorkStation {
 	 * @return returns the name of the workstation
 	 */
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	/**
 	 * @return returns current car in workstation
 	 */
 	public Car getCar() {
-		return car;
+		return this.car;
 	}
 
 	/**

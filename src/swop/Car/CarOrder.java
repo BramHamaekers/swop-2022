@@ -20,7 +20,7 @@ public class CarOrder implements Comparable<CarOrder> {
 	}
 
 	public Car getCar() {
-		return car;
+		return this.car;
 	}
 
 	/**
@@ -28,7 +28,7 @@ public class CarOrder implements Comparable<CarOrder> {
 	 * @return true if all the cars of the order are completed
 	 */
 	public boolean isCompleted() {
-		return car.isCompleted();
+		return this.car.isCompleted();
 	}
 
 	public String getID() {

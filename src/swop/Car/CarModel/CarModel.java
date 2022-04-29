@@ -67,6 +67,6 @@ public abstract class CarModel {
      * @return this.name
      */
     public String getName() {
-        return name;
+        return this.name;
     }
 }
