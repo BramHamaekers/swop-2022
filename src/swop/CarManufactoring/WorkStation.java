@@ -4,13 +4,19 @@ import java.util.*;
 
 import swop.Car.Car;
 import swop.Listeners.TaskCompletedListener;
-
+/**
+ * This class represents a workstation
+ */
 public class WorkStation {
 	private final String name;
 	private Car car;
 	private int currentWorkingTime = 0;
 	private final List<TaskCompletedListener> listeners = new ArrayList<>();
 
+	/**
+	 * Create a new work station with given name
+	 * @param name string of name
+	 */
 	public WorkStation(String name) {
 		if (!isValidName(name)) {
 			throw new IllegalArgumentException("Not a valid work station name"); 
@@ -36,6 +42,7 @@ public class WorkStation {
 	}
 
 	/**
+	 * Returns the list of uncompleted tasks of current car in workstation
 	 * @return a list of uncompleted tasks
 	 */
 	public List<Task> getUncompletedTasks() {
@@ -48,6 +55,7 @@ public class WorkStation {
 	}
 
 	/**
+	 * Returns the list of completed tasks of current car in workstation
 	 * @return a list of completed tasks
 	 */
 	public List<Task> getCompletedTasks() {
@@ -84,14 +92,14 @@ public class WorkStation {
 	}
 
 	/**
-	 * @return returns the name of the workstation
+	 *  returns the name of the workstation
 	 */
 	public String getName() {
 		return this.name;
 	}
 
 	/**
-	 * @return returns current car in workstation
+	 * returns current car in workstation
 	 */
 	public Car getCar() {
 		return this.car;

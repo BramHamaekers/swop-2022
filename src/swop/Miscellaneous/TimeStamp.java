@@ -2,11 +2,19 @@ package swop.Miscellaneous;
 
 import java.util.Objects;
 
+/**
+ * class created for easy store of a moment in time
+ */
 public class TimeStamp implements Comparable<TimeStamp> {
 
     private final int day;
     private final int minutes;
 
+    /**
+     * create a new time stamp
+     * @param day is an integer of the day it occurred
+     * @param minutes an integer of the exact minute
+     */
     public TimeStamp(int day, int minutes)  {
         if (!isValidTimeStamp(day, minutes))
             throw new IllegalArgumentException("Timestamp not valid");

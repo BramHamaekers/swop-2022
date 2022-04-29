@@ -3,9 +3,16 @@ package swop.Users;
 import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
 
+/**
+ * This is an abstract class: garage holder, manager and car mechanic are subclasses of user
+ */
 public abstract class User {
     private final String id;
 
+    /**
+     * Create a new user with given id name
+     * @param id is string of name
+     */
     public User(String id) {
         this.id = id;
     }
