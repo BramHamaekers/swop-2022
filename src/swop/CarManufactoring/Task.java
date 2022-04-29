@@ -1,30 +1,57 @@
 package swop.CarManufactoring;
 
 import java.util.*;
+
+/**
+ * This enum class contains all the tasks that need to be completed off a car
+ */
 public enum Task {
 	
-	
+	/**
+	 * Assembly Car Body Task
+	 */
 	AssemblyCarBody(new HashMap<>(){{
 		put( "Body", "Mount a body on the chassis of type: ");
 	}},"Assembly Car Body"), 
+	/**
+	 * Paint Car Task
+	 */
 	PaintCar(new HashMap<>(){{
 		put("Color", "Paint the body in colour: ");
 	}},"Paint Car"),
+	/**
+	 * Insert Engine Task
+	 */
 	InsertEngine(new HashMap<>(){{
 		put( "Engine", "Insert engine of type: ");
 	}},"Insert Engine"), 
+	/**
+	 * Install Gear box Task
+	 */
 	InstallGearbox(new HashMap<>(){{
 		put( "Gearbox", "Insert gearbox of type: ");
 	}},"Install Gearbox"), 
+	/**
+	 * Install Seats task
+	 */
 	InstallSeats(new HashMap<>(){{
 		put( "Seats", "Install seats of type: ");
 	}},"Install Seats"), 
+	/**
+	 * Install Airco task
+	 */
 	InstallAirco(new HashMap<>(){{
 		put( "Airco", "Install airco of type: ");
 	}},"Install Airco"), 
+	/**
+	 * Install Spoiler task
+	 */
 	InstallSpoiler(new HashMap<>(){{
 		put( "Spoiler", "Install spoiler of type: ");
 	}},"Install Spoiler"), 
+	/**
+	 * Mount Wheels task
+	 */
 	MountWheels(new HashMap<>(){{
 		put( "Wheels", "Mount wheels of type: ");
 	}},"Mount Wheels");
@@ -34,7 +61,11 @@ public enum Task {
 	private WorkStation w;
 	private String value;
 	
-	
+	/**
+	 * create a new task
+	 * @param map containing the parts and descriptions of the task
+	 * @param name the name of the task
+	 */
 	Task(Map<String,String> map, String name) {
 		this.partsDescriptionMap = map;
 		this.name = name;
