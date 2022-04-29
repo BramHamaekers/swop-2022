@@ -8,7 +8,15 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
+/**
+ * A generator for all the output of Manager
+ */
 public class ManagerGenerator extends UserGenerator {
+    /**
+     * Generate the output text for all the possible batches
+     * @param builder the builder used in displaying the possible batches
+     * @param possibleBatch a list of all possible batches to display
+     */
     public void generateBatchSelection(DisplayStatus builder, List<Map<String, String>> possibleBatch) {
         builder.appendTitle("Possible batchoptions");
         ListIterator<Map<String,String>> it = possibleBatch.listIterator();
@@ -19,18 +27,29 @@ public class ManagerGenerator extends UserGenerator {
         builder.addOption("Select the batch", possibleBatch.size());
     }
 
-    public void generateAlgorithmSelection(DisplayStatus builder,List<String> actions, String activeAlgorithm) {
+    /**
+     * Generate the output text for all the possible algorithms
+     * @param builder the builder used in displaying the possible algorithms
+     * @param algorithms a list of all available algorithms
+     * @param activeAlgorithm the current algorithm
+     */
+    public void generateAlgorithmSelection(DisplayStatus builder,List<String> algorithms, String activeAlgorithm) {
         builder.initialQuestion("The available algorithms: ");
         builder.appendSubTitle("Current algorithm: " + activeAlgorithm);
-        Iterator<String> it = actions.iterator();
+        Iterator<String> it = algorithms.iterator();
         int i = 0;
         while(it.hasNext()) {
             builder.inputInfo(String.format("%s [%s]", it.next(), i));
             i++;
         }
-        builder.addOption("Select option", actions.size());
+        builder.addOption("Select option", algorithms.size());
     }
-    
+
+    /**
+     * Generate the output text for all the statistics
+     * @param builder the builder used in displaying the statistics
+     * @param stats all relevant statistics of type {@code AllStats}
+     */
     public void generateProductionStatistics(DisplayStatus builder, AllStats stats){
         builder.appendTitle("Production Statistics");
         builder.appendSubTitle("Cars Produced info");

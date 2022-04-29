@@ -3,6 +3,9 @@ package swop.Car.CarModel;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A carModel subclass
+ */
 public class ModelB extends CarModel {
     private static final List<String> modelBMandatory = List.of("Body","Color", "Engine", "Gearbox", "Seats", "Wheels");
     private static final Map<String, List<String>> modelBOptions = Map.of(
@@ -15,6 +18,10 @@ public class ModelB extends CarModel {
             "Wheels", List.of("winter", "comfort", "sports"),
             "Spoiler", List.of("low", "None")
     );
+
+    /**
+     * initialize the carModel with a name, valid options and a list of mandatory parts
+     */
     public ModelB(){
         this.name = "ModelB";
         this.validOptions = modelBOptions;

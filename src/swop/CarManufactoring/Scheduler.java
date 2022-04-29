@@ -43,7 +43,7 @@ public class Scheduler {
 
 	/**
 	 * initializes the scheduler with his controller, the current time at the beginning, the total minutes in a workingday and the algorithm.
-	 * @param carManufacturingController
+	 * @param carManufacturingController a given controller that initialized this scheduler
 	 */
     public Scheduler(CarManufacturingController carManufacturingController) {
         this.controller = carManufacturingController;
@@ -54,7 +54,7 @@ public class Scheduler {
 
     /**
      * Calculates the estimated completion time based on the CarQueue and overtime done on previous days
-     *
+     * @param car a car for which to calculate the estimated completion time
      * @return Time formatted as string
      */
     public TimeStamp getEstimatedCompletionTime(Car car) {
@@ -96,6 +96,8 @@ public class Scheduler {
 
 	/**
      * Returns how long it will take for the car to be finished
+	 * @param car a car for which to return the estimated waiting time
+	 * @param workstationCars the cars currently on the assembly line
      * @return time
      */
     private int calculateWaitingTime(Car car,List<Car> workstationCars) {
@@ -225,6 +227,7 @@ public class Scheduler {
     /**
      * set the current schedulingAlgorithm to the new given algorithms
      * @param algorithm selected priority algorithm
+	 * @param batchOptions a map of the selected batchoption
      */
     public void setSchedulingAlgorithm(String algorithm, Map<String,String> batchOptions) {
 		if(!this.isValidSchedulingAlgorithm(algorithm)) throw new IllegalArgumentException("Invalid Scheduling Algorithm");

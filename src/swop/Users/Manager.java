@@ -8,9 +8,14 @@ import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
 import swop.UI.ManagerUI;
 
+/**
+ * A manager user
+ */
 public class Manager extends User{
-	
-
+	/**
+	 * initializes a manager user
+	 * @param id a given id for the manager
+	 */
     public Manager(String id) {
         super(id); 
     }

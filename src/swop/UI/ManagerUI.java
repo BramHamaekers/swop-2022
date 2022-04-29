@@ -7,7 +7,9 @@ import swop.UI.Generators.ManagerGenerator;
 
 import java.util.List;
 import java.util.Map;
-
+/**
+ * Class handles all UI interaction with the user for Manager
+ */
 public class ManagerUI implements UI {
 
 	private static final ManagerGenerator managerGenerator = new ManagerGenerator();
@@ -24,6 +26,7 @@ public class ManagerUI implements UI {
 	 * Asks which action the user wants to take
 	 * @return int indicating the chosen action
 	 * @param actions available actions for the user
+	 * @param currentAlgo the current algorithm in use
 	 * @throws CancelException when the user types 'Cancel'
 	 */
 	public static int selectAction(List<String> actions, String currentAlgo) throws CancelException {
@@ -34,6 +37,12 @@ public class ManagerUI implements UI {
 		return scanner.scanNextLineOfTypeInt(0, actions.size());
 	}
 
+	/**
+	 * Display all batch options and get the selection
+	 * @param possibleBatch a list of all possible batches to display
+	 * @return the selected batchoption
+	 * @throws CancelException when the user types 'Cancel'
+	 */
 	public static Map<String,String> getBatchSelection(List<Map<String, String>> possibleBatch) throws CancelException {
 		DisplayStatus builder = new DisplayStatus();
 		managerGenerator.generateBatchSelection(builder, possibleBatch);
@@ -42,15 +51,30 @@ public class ManagerUI implements UI {
 		System.out.println("Batch changed to: " + selection);
 		return possibleBatch.get(selection);
 	}
-
+	/**
+	 * Prints an error message
+	 * @param e the error message to print
+	 */
 	public static void printError(String e) {
 		UI.printError(e);
 	}
 
+	/**
+	 * Asks which action the user wants to take
+	 * @return int indicating the chosen action
+	 * @param actions available actions for the user
+	 * @param question an initial question for which to display options
+	 * @throws CancelException when the user types 'Cancel'
+	 */
 	public static int selectFlow(List<String> actions, String question) throws CancelException {
 		return UI.selectAction(managerGenerator, actions, question);
 	}
-	
+
+	/**
+	 * Generates to production statistics
+	 * @param stats AllStats record with all statistics
+	 * @throws CancelException when the user types 'Cancel'
+	 */
 	public static void showProductionStatistics(AllStats stats) throws CancelException {
 		DisplayStatus builder = new DisplayStatus();
 		managerGenerator.generateProductionStatistics(builder, stats);

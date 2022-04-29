@@ -6,10 +6,11 @@ import swop.Records.AllStats;
 
 import java.util.*;
 
+/**
+ * A class containing all delays and orders for a controller
+ */
 public class Statistics {
     private final Map<Integer, List<Integer>> carDelayMap = new HashMap<>();
-
-    public Statistics() {}
     public final StatisticsListener statisticsListener = this::updateDelay;
 
     /**

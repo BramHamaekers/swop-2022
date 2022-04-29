@@ -49,7 +49,7 @@ public class GarageHolderUI implements UI {
 	 * Ask user a Yes/No question and return the response
 	 * @param action the question to ask
 	 * @return "y" if yes, "n" if no
-	 * @throws CancelException when the user types "Cancel"
+	 * @throws CancelException when the user types 'Cancel'
 	 */
 	public static String indicateYesNo(String action) throws CancelException {
 		return UI.indicateYesNo(action);
@@ -96,7 +96,7 @@ public class GarageHolderUI implements UI {
 	 * @param rightBound the highest available answer
 	 * @param option the option to display
 	 * @return the input from the user
-	 * @throws CancelException if the user wants to cancel and perform another action
+	 * @throws CancelException CancelException when the user types 'Cancel'
 	 */
 	public static int askOption (int leftBound, int rightBound, String option) throws CancelException {
 		System.out.print("Choose " + option + ": ");
@@ -123,6 +123,7 @@ public class GarageHolderUI implements UI {
 	/**
 	 * Lets the user input an orderID
 	 * @return the orderID that the user gave as input
+	 * @throws CancelException when the user types 'Cancel'
 	 */
 	public static String selectOrderID() throws CancelException {
 		System.out.println("Input an orderID: ");
