@@ -36,8 +36,7 @@ public class WorkStation {
 	}
 
 	/**
-	 * Returns a set of uncompleted tasks
-	 * @return Set<Task>
+	 * @return a list of uncompleted tasks
 	 */
 	public List<Task> getUncompletedTasks() {
 		if(this.getCar() == null) {
@@ -49,8 +48,7 @@ public class WorkStation {
 	}
 
 	/**
-	 * Returns a set of completed tasks
-	 * @return Set<Task>
+	 * @return a list of completed tasks
 	 */
 	public List<Task> getCompletedTasks() {
 		if(this.getCar() == null) {
@@ -65,6 +63,7 @@ public class WorkStation {
 
 	/**
 	 * checks if a name is valid to be a name for workstation
+	 * @param name a name for the workstation
 	 */
 	private boolean isValidName(String name) {
 		return (name.equals("Car Body Post")) ||
@@ -85,19 +84,23 @@ public class WorkStation {
 	}
 
 	/**
-	 * returns name of workstation
+	 * @return returns the name of the workstation
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * returns current car in workstation
+	 * @return returns current car in workstation
 	 */
 	public Car getCar() {
 		return car;
 	}
 
+	/**
+	 * setter for the car in the workstation
+	 * @param car the car to be placed in the workstation
+	 */
 	public void setCar(Car car) {
 		this.currentWorkingTime = 0;
 		this.car = car;
@@ -113,6 +116,8 @@ public class WorkStation {
 	
 	/**
 	 * Checks if the part is chosen off the current car in workstation. (defined in the chosenOptions)
+	 * @param part check if a part is chosen for current car
+	 * @return boolean whether the part is chosen or not
 	 */
 	public boolean isPartOfCurrentCarInWorkStation(String part) {
 		Car car = this.getCar();
@@ -124,6 +129,7 @@ public class WorkStation {
 	 * Tries to get value of a carOptionCategory
 	 * @param category the given carOptionCategory to get the value of
 	 * @throws IllegalArgumentException if car == null || part == null
+	 * @return the chosen option for a category
 	 */
 	public String getValueOfPart(String category) {
 		if(this.car == null) throw new IllegalArgumentException("No car in station");

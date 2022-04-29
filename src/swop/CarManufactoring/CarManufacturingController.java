@@ -43,7 +43,7 @@ public class CarManufacturingController {
 	/**
 	 * Function creates all the workstations that are part of the assemblyLine as a linked list so that they have the
 	 * right order.
-	 * @return LinkedList<WorkStation> of all the workstations of this assemblyLine
+	 * @return List of all the workstations of this assemblyLine
 	 */
 	private LinkedList<WorkStation> createWorkStations() {
 		LinkedList<WorkStation> workStations = new LinkedList<>();

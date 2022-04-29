@@ -34,7 +34,7 @@ public class CarModelSpecification {
 	 * If you select the ultra engine, you can only fit the manual airco into your car (or none)
 	 * @param engine chosen engine
 	 * @param airco chosen airco
-	 * @return whether the engine & airco combination is valid
+	 * @return whether the engine and airco combination is valid
 	 */
 	private boolean isValidEngineAirco(String engine, String airco) {
 		if (engine.contains("ultra")) return airco == null || airco.equals("manual");
@@ -45,7 +45,7 @@ public class CarModelSpecification {
 	 * If you select a sport body, you must also select the performance or ultra engine
 	 * @param body chosen body
 	 * @param engine chosen spoiler
-	 * @return whether the body & engine combination is valid
+	 * @return whether the body and engine combination is valid
 	 */
 	private boolean isValidBodyEngineCombination(String body, String engine) {
 		if (body.equals("sport")) return engine.contains("performance") || engine.contains("ultra");
@@ -56,7 +56,7 @@ public class CarModelSpecification {
 	 * If you select a sport body, a spoiler is mandatory
 	 * @param body chosen body
 	 * @param spoiler chosen spoiler
-	 * @return whether the body & spoiler combination is valid
+	 * @return whether the body and spoiler combination is valid
 	 */
 	private boolean isValidBodySpoilerCombination(String body, String spoiler) {
 		if (body.equals("sport")) return spoiler != null;
