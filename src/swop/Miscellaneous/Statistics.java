@@ -167,7 +167,11 @@ public class Statistics {
     	return new AllStats(getAvgOrders(), getMdnOrders(), getOrdersLast2(), getAvgDelay(),getMdnDelay(),getDelayLast2());
     }
 
+    /**
+     * Returns a map containing the day and the list of delays occurred that day
+     * @return map of delays
+     */
     public Map<Integer, List<Integer>> getCarDelayMap() {
-        return carDelayMap;
+        return this.carDelayMap;
     }
 }

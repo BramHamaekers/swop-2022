@@ -43,7 +43,7 @@ public class CarManufacturingController {
 	/**
 	 * Function creates all the workstations that are part of the assemblyLine as a linked list so that they have the
 	 * right order.
-	 * @return LinkedList<WorkStation> of all the workstations of this assemblyLine
+	 * @return List of all the workstations of this assemblyLine
 	 */
 	private LinkedList<WorkStation> createWorkStations() {
 		LinkedList<WorkStation> workStations = new LinkedList<>();
@@ -69,7 +69,7 @@ public class CarManufacturingController {
 				.map(WorkStation::getCurrentWorkingTime).toList();
 		int maxWorkingMinutes = Collections.max(workingTimes);
 		Car finishedCar;
-		if(canFinishNewCar(maxWorkingMinutes) && !this.getCarQueue().isEmpty()) {
+		if(this.canFinishNewCar(maxWorkingMinutes) && !this.getCarQueue().isEmpty()) {
 			Car nextCar = this.getScheduler().getNextScheduledCar();
 			finishedCar = this.assemblyLine.advance(nextCar);
 			this.carQueue.remove(nextCar);
@@ -80,14 +80,14 @@ public class CarManufacturingController {
 		}
 
 		if (finishedCar != null) {
-			setFinishedCarDeliveryTime(maxWorkingMinutes, finishedCar);
+			this.setFinishedCarDeliveryTime(maxWorkingMinutes, finishedCar);
 			this.updateDelay(finishedCar);
 		}
 		//update schedular time
 		this.updateScheduleTime(maxWorkingMinutes);
 
 		// For every car in queue and workstation update the estimated completion time
-		updateEstimatedCompletionTime();
+		this.updateEstimatedCompletionTime();
 	}
 
 	/**
@@ -128,7 +128,7 @@ public class CarManufacturingController {
 	private void updateScheduleTime(int minutes) {
 		this.getScheduler().addTime(minutes);
 		//if all work is done for today, skip to next day
-		if (!canFinishNewCar(0) && this.assemblyLine.isEmptyAssemblyLine()) {
+		if (!this.canFinishNewCar(0) && this.assemblyLine.isEmptyAssemblyLine()) {
 			this.getScheduler().advanceDay();
 		}
 		

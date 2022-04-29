@@ -50,7 +50,7 @@ public enum Task {
 	
 	/**
 	 * Returns a list of parts that are part of this task
-	 * @return List<Part>
+	 * @return List of parts that are part of this task
 	 */
 	public List<String> getParts() {
 		return new ArrayList<>(partsDescriptionMap.keySet());
@@ -89,7 +89,7 @@ public enum Task {
 	
 
 	/**
-	 * Return Set<Task> of all the tasks based on the chosen options
+	 * Return Set of all the tasks based on the chosen options
 	 * @param chosenOptions: the chosen options of a car
 	 * @return A set of tasks
 	 */
@@ -108,7 +108,7 @@ public enum Task {
 	}
 	
 	/**
-	 * Return Set<Task> of all the tasks
+	 * Return Set of all the tasks
 	 * @return A set of tasks
 	 */
 	private static Set<Task> getAllTasks() {

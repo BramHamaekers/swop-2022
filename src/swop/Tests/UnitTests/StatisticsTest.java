@@ -143,13 +143,13 @@ class StatisticsTest {
         stats.finishOrder(30,2);
         stats.finishOrder(30,2);
         // day 2, 2 orders + day 1, 1 order
-        assertEquals(new TreeMap<Integer, Integer>(){{
+        assertEquals(new LinkedHashMap<Integer, Integer>(){{
         	put(2,2);
         	put(1,1);
         }}, stats.getOrdersLast2());
         stats.finishOrder(30,501);
         // day 501, 1 order + day 500, 0 orders
-        assertEquals(new TreeMap<Integer, Integer>(){{
+        assertEquals(new LinkedHashMap<Integer, Integer>(){{
         	put(501,1);
         	put(500,0);
         }}, stats.getOrdersLast2());

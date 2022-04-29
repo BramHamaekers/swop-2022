@@ -39,10 +39,10 @@ public class Car {
 
 	/**
 	 * Checks if all tasks are completed
-	 * @return true if Set<Task> uncompletedTasks is empty
+	 * @return true if Set of uncompletedTasks is empty
 	 */
 	public boolean isCompleted() {
-		return getUncompletedTasks().isEmpty();
+		return this.getUncompletedTasks().isEmpty();
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class Car {
 	 * @return carModel
 	 */
 	public CarModel getCarModel() {
-		return carModel;
+		return this.carModel;
 	}
 
 	/**

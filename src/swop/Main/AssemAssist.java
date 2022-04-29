@@ -58,7 +58,7 @@ public class AssemAssist {
 		if(id.equalsIgnoreCase("QUIT")) return;
 		activeUser = this.userDatabase.get(id);
 		activeUser.load(this);
-		login();	
+		this.login();	
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class AssemAssist {
 	}
 	
 	/**
-	 * Gives you a copy of the user data base in the form of Map <String, User>
+	 * Gives you a copy of the user data base in the form of a Map
 	 * @return userDatabase
 	 */
 	public Map <String, User> getUserMap(){

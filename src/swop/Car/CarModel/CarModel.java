@@ -27,7 +27,7 @@ public abstract class CarModel {
 
     /**
      * Get all valid carOptionCategories and their options as sorted Map
-     * @return TreeMap<>(this.validOptions)
+     * @return Map of the valid options for a certain carmodel
      */
     public SortedMap<String, List<String>> getValidOptions(){
         return new TreeMap<>(this.validOptions);
@@ -67,6 +67,6 @@ public abstract class CarModel {
      * @return this.name
      */
     public String getName() {
-        return name;
+        return this.name;
     }
 }

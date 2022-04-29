@@ -177,7 +177,7 @@ public class Scheduler {
 	/**
 	 * Function checks if there is enough time left in a working day to complete the next car.
 	 * @param minutes the minutes that need to be added to the time before checking
-	 * @return this.minutes <= this.workingDayMinutes - estTime
+	 * @return whether there is enough time in the day to add a car to the assembly line
 	 */
 	public boolean canAddCarToAssemblyLine(int minutes) {
 		Car nextCar = this.getNextScheduledCar();

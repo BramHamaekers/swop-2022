@@ -158,7 +158,7 @@ public class GarageHolder extends User{
     }
 
     /**
-     * Converts Map<String, Integer> to Map<String,String>
+     * Converts Map of string to integer to Map of string to string
      * @param carConfig given a map from part to integer selection
      * @param validOptions the valid options for the carOptions
      * @return map string part to selection string
