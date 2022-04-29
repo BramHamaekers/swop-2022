@@ -89,6 +89,7 @@ public enum Task {
 	
 	/**
 	 * Sets the workstation this task is part of
+	 * @param w a WorkStation
 	 */
 	public void setWorkStation(WorkStation w) {
 		this.w = w;

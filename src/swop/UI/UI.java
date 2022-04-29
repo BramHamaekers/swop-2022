@@ -7,6 +7,9 @@ import swop.Exceptions.CancelException;
 import swop.UI.Builders.DisplayStatus;
 import swop.UI.Generators.UserGenerator;
 
+/**
+ * Interface used to make abstraction between the program and the user IO
+ */
 interface UI {
 	InputScanner scanner = new InputScanner(new Scanner(System.in));
 

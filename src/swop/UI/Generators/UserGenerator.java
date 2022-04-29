@@ -13,7 +13,7 @@ public class UserGenerator {
 	/**
 	 * Will at an action string block to the given builder consisting of a question and a list of actions
 	 * @param builder the FormBuilder where the string block will be added to
-	 * @param actions List<String> of actions
+	 * @param actions List of actions as string
 	 * @param question string with the question
 	 */
     public void selectAction(FormBuilder builder, List<String> actions, String question) {

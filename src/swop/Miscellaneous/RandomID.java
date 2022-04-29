@@ -2,6 +2,9 @@ package swop.Miscellaneous;
 
 import java.util.Random;
 
+/**
+ * Generates ids for car orders
+ */
 public final class RandomID {
 
 	/**

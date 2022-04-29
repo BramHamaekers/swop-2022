@@ -78,10 +78,9 @@ public class Statistics {
     }
 
     /**
-     * get the last 2 delyas
+     * get the last 2 delays
      * @return a list containing the last two delays
      */
-
     public Map<Integer, List<Integer>> getDelayLast2(){
     	Map<Integer, List<Integer>> result = new LinkedHashMap<Integer, List<Integer>>();
         int max = 0;
@@ -109,9 +108,14 @@ public class Statistics {
         return result;
     }
 
-    private Map<Integer, List<Integer>> getFilteredMap(Map<Integer, List<Integer>> carDelayMap2) {
+    /**
+     * filtering out all 0 delays
+     * @param carDelayMap the delayMap mapping day to number of delays (with zero delays)
+     * @return map without zero delays
+     */
+    private Map<Integer, List<Integer>> getFilteredMap(Map<Integer, List<Integer>> carDelayMap) {
     	Map<Integer, List<Integer>> filteredMap = new LinkedHashMap<Integer, List<Integer>>();
-    	for(var v: carDelayMap2.entrySet()) {
+    	for(Map.Entry<Integer, List<Integer>> v: carDelayMap.entrySet()) {
     		List<Integer> notZero = v.getValue().stream().filter(e -> !e.equals(0)).toList();
     		if(!notZero.isEmpty())
     			filteredMap.put(v.getKey(), notZero);

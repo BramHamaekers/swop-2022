@@ -72,6 +72,7 @@ public class WorkStation {
 	/**
 	 * checks if a name is valid to be a name for workstation
 	 * @param name a name for the workstation
+	 * @return whether the naming string is valid
 	 */
 	private boolean isValidName(String name) {
 		return (name.equals("Car Body Post")) ||
@@ -92,7 +93,8 @@ public class WorkStation {
 	}
 
 	/**
-	 *  returns the name of the workstation
+	 * returns the name of the workstation
+	 * @return the name of the workstation
 	 */
 	public String getName() {
 		return this.name;
@@ -100,6 +102,7 @@ public class WorkStation {
 
 	/**
 	 * returns current car in workstation
+	 * @return the car in the workstation
 	 */
 	public Car getCar() {
 		return this.car;

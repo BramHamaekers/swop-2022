@@ -6,7 +6,7 @@ import java.util.*;
 
 /**
  * Iterator for the scheduling algorithm to pick the right car for a specified algorithm
- * @param <T>
+ * @param <T> the type of the iterable
  */
 interface customIterator<T> {
 	/**
