@@ -25,6 +25,7 @@ public class Statistics {
 
         minutes += delayedDays * 3600;
         minutes += delayedMinutes;
+        if(minutes < 0) minutes = 0;
 
         this.finishOrder(minutes, finishDay);
     }
@@ -79,28 +80,44 @@ public class Statistics {
      * get all the delays for the last two days
      * @return a list containing all the delays from the last two days
      */
-    public List<Integer> getDelayLast2(){
-        List<Integer> result = new ArrayList<>();
+    public Map<Integer, List<Integer>> getDelayLast2(){
+    	Map<Integer, List<Integer>> result = new LinkedHashMap<Integer, List<Integer>>();
         int max = 0;
         if (this.getCarDelayMap().isEmpty()) return result;
-        Set<Integer> dayset = new LinkedHashSet<>(this.getCarDelayMap().keySet());
+        Map<Integer, List<Integer>> filteredDelayMap = getFilteredMap(this.getCarDelayMap());
+        Set<Integer> dayset = new LinkedHashSet<>(filteredDelayMap.keySet());
         max = Collections.max(dayset);
-        List<Integer> delays = this.getCarDelayMap().get(max);
+        List<Integer> delays = filteredDelayMap.get(max);
         if(delays.size() > 1) {
-        	result.add(delays.get(delays.size()-1));
-        	result.add(delays.get(delays.size()-2));
+        	if(!delays.get(delays.size()-1).equals(delays.get(delays.size()-2))) {
+        		result.put(max,List.of(delays.get(delays.size()-1), delays.get(delays.size()-2)));
+        	}
+        	else {
+        		result.put(max,List.of(delays.get(delays.size()-1)));
+            	result.put(max,List.of(delays.get(delays.size()-2)));
+        	}
         	return result;
         }
-        result.addAll(this.getCarDelayMap().get(max));
+        result.put(max, filteredDelayMap.get(max));
         dayset.remove(max);
         if(dayset.isEmpty()) return result;
         max = Collections.max(dayset);
-        delays = this.getCarDelayMap().get(max);
-        result.add(delays.get(delays.size()-1));
+        delays = filteredDelayMap.get(max);
+        result.put(max, List.of(delays.get(delays.size()-1)));
         return result;
     }
 
-    /**
+    private Map<Integer, List<Integer>> getFilteredMap(Map<Integer, List<Integer>> carDelayMap2) {
+    	Map<Integer, List<Integer>> filteredMap = new LinkedHashMap<Integer, List<Integer>>();
+    	for(var v: carDelayMap2.entrySet()) {
+    		List<Integer> notZero = v.getValue().stream().filter(e -> !e.equals(0)).toList();
+    		if(!notZero.isEmpty())
+    			filteredMap.put(v.getKey(), notZero);
+    	}
+		return filteredMap;
+	}
+
+	/**
      * Get the average number of orders over all the days
      * @return the average number of orders for all finished cars
      */

@@ -91,7 +91,7 @@ public class CheckProductionStatisticsTest {
 		DisplayStatus builder = new DisplayStatus();
 		managerGenerator.generateProductionStatistics(builder, assem.getStats());
 		String s = builder.getDisplay();
-		assertEquals(Arrays.asList(builder.getDisplay().split(String.format("%n"))).size(), 12);
+		assertEquals(Arrays.asList(builder.getDisplay().split(String.format("%n"))).size(), 11);
 		ListIterator<String> iterator = Arrays.asList(builder.getDisplay().split(String.format("%n")))
 	            .listIterator();
 		while (iterator.hasNext())
