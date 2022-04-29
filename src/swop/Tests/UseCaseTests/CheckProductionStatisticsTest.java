@@ -57,9 +57,18 @@ public class CheckProductionStatisticsTest {
 		
 		output = continueUITest(String.format("c%n0%n%nQUIT"), 7); // check production stats
 		
-		showProductionTwoOrMorefinishedCarsStatistics(output);
-	
+		showProductionTwoOrMorefinishedCarsOnSameDay(output);
+		
+		continueUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
+		
+		continueUITest(String.format("b%n0%n0%n0%n0%n20%n0%n0%n20%n" + // complete tasks work post 1
+				"b%n0%n1%n0%n0%n960%n0%n0%n20%n"+ // complete tasks work post 2
+				"b%n0%n2%n0%n0%n20%n0%n0%n20%n0%n0%n20%n0%nQUIT"), 7); // complete tasks work post 3
+		
+		
+		showProductionTwoOrMorefinishedCarsOnDifferentDays(output);
 	}
+
 
 
 
@@ -80,14 +89,25 @@ public class CheckProductionStatisticsTest {
 	private void showProductionOnefinishedCarStatistics(ListIterator<String> output){
 		DisplayStatus builder = new DisplayStatus();
 		managerGenerator.generateProductionStatistics(builder, assem.getStats());
-		assertEquals(Arrays.asList(builder.getDisplay().split(String.format("%n"))).size(), 11);
+		assertEquals(Arrays.asList(builder.getDisplay().split(String.format("%n"))).size(), 10);
 		ListIterator<String> iterator = Arrays.asList(builder.getDisplay().split(String.format("%n")))
 	            .listIterator();
 		while (iterator.hasNext())
 	    	assertEquals(iterator.next(), output.next());
 	}
 	
-	private void showProductionTwoOrMorefinishedCarsStatistics(ListIterator<String> output){
+	private void showProductionTwoOrMorefinishedCarsOnSameDay(ListIterator<String> output){
+		DisplayStatus builder = new DisplayStatus();
+		managerGenerator.generateProductionStatistics(builder, assem.getStats());
+		String s = builder.getDisplay();
+		assertEquals(Arrays.asList(builder.getDisplay().split(String.format("%n"))).size(), 10);
+		ListIterator<String> iterator = Arrays.asList(builder.getDisplay().split(String.format("%n")))
+	            .listIterator();
+		while (iterator.hasNext())
+	    	assertEquals(iterator.next(), output.next());
+	}
+	
+	private void showProductionTwoOrMorefinishedCarsOnDifferentDays(ListIterator<String> output) {
 		DisplayStatus builder = new DisplayStatus();
 		managerGenerator.generateProductionStatistics(builder, assem.getStats());
 		String s = builder.getDisplay();
@@ -96,7 +116,9 @@ public class CheckProductionStatisticsTest {
 	            .listIterator();
 		while (iterator.hasNext())
 	    	assertEquals(iterator.next(), output.next());
+		
 	}
+
 
 
 

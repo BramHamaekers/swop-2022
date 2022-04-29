@@ -83,8 +83,8 @@ public class Statistics {
     public Map<Integer, List<Integer>> getDelayLast2(){
     	Map<Integer, List<Integer>> result = new LinkedHashMap<Integer, List<Integer>>();
         int max = 0;
-        if (this.getCarDelayMap().isEmpty()) return result;
         Map<Integer, List<Integer>> filteredDelayMap = getFilteredMap(this.getCarDelayMap());
+        if (filteredDelayMap.isEmpty()) return result;
         Set<Integer> dayset = new LinkedHashSet<>(filteredDelayMap.keySet());
         max = Collections.max(dayset);
         List<Integer> delays = filteredDelayMap.get(max);
