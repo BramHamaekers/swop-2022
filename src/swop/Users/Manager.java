@@ -1,19 +1,23 @@
 package swop.Users;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
+import swop.Car.Car;
 import swop.Exceptions.CancelException;
-import swop.Exceptions.NotAllTasksCompleteException;
 import swop.Main.AssemAssist;
 import swop.UI.ManagerUI;
 
+/**
+ * A manager user
+ */
 public class Manager extends User{
-	
-
+	/**
+	 * initializes a manager user
+	 * @param id a given id for the manager
+	 */
     public Manager(String id) {
-        super(id);
+        super(id); 
     }
 
     /**
@@ -30,15 +34,6 @@ public class Manager extends User{
 		} catch (CancelException e) {
 			e.printMessage();
 		}
-
-			try { // TODO: Remove Placeholder
-				String indicate = ManagerUI.indicateAdvance();
-				if (Objects.equals(indicate, "n")) return;
-				//advance assembly
-				this.advanceAssemblyLine(assemAssist);
-			} catch (CancelException e) {
-				e.printMessage();
-			}
 		}
 
 	/**
@@ -47,12 +42,13 @@ public class Manager extends User{
 	 */
 	@Override
 	public void selectAction(AssemAssist assemAssist) throws CancelException {
+		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
 		List<String> actions = Arrays.asList("Check Production Statistics", "Adapt Scheduling Algorithm", "Exit");
-		int action = ManagerUI.selectAction(actions);
+		int action = ManagerUI.selectFlow(actions, "What would you like to do?");
 
 		switch (action) {
-			case 0 -> this.checkProductionStatistics();
-			case 1 -> this.AdaptSchedulingAlgorithm();
+			case 0 -> this.checkProductionStatistics(assemAssist);
+			case 1 -> this.AdaptSchedulingAlgorithm(assemAssist);
 			case 2 -> {
 				// Do Nothing
 			}
@@ -60,34 +56,77 @@ public class Manager extends User{
 		}
 	}
 
-	private void AdaptSchedulingAlgorithm() {
-		System.out.println("Adapt Scheduling Algorithm not yet implemented");
-	}
+	/**
+	 * Ask the user which algorithm it would like to use and change the scheduling algorithm
+	 * @param assemAssist the central system the action is performed on
+	 * @throws CancelException when the user types 'cancel'
+	 */
+	private void AdaptSchedulingAlgorithm(AssemAssist assemAssist) throws CancelException {
 
-	private void checkProductionStatistics() {
-		System.out.println("checkProductionStatistics not yet implemented");
+		List<String> algorithms = assemAssist.getController().getScheduler().getValidAlgorithms();
+		String active = assemAssist.getController().getScheduler().getSchedulingAlgorithm();
+		int option = ManagerUI.selectAction(algorithms, active);
+
+		switch (option) {
+			case 0 -> this.changeAlgorithmToBatch(assemAssist);
+			case 1 -> assemAssist.getController().getScheduler().setSchedulingAlgorithm("FIFO", null);
+			case 2 -> {}
+			default -> throw new IllegalArgumentException("Unexpected value: " + option);
+		}
+
 	}
 
 	/**
-	 * Class handling everything advancement of assembly line
-	 * @param assemAssist given the main program
-	 * @throws CancelException when "CANCEL" is the input
+	 * Change the scheduling algorithm to batch
+	 * @param assemAssist the central system to change the algorithm on
+	 * @throws CancelException when the user types "cancel"
 	 */
-	private void advanceAssemblyLine(AssemAssist assemAssist) throws CancelException {
-		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
-		ManagerUI.displayAssemblyLine(assemAssist.getCurrentAssemblyStatus(), assemAssist.getAdvancedAssemblyStatus());
-		//confirm advance
-		String indicate = ManagerUI.confirmAdvance();
-		if (Objects.equals(indicate, "n")) return;
-		int time = ManagerUI.askTime();
-
-		try {
-			assemAssist.advanceAssembly(time);
-			ManagerUI.exit(assemAssist.getCurrentAssemblyStatus());
-			} 
-		catch (NotAllTasksCompleteException e) {
-			ManagerUI.printException(e);
+	private void changeAlgorithmToBatch(AssemAssist assemAssist) throws CancelException {
+		// get all parts from carQueue
+		List<Map<String, String>> partMaps =  assemAssist.getController().getCarQueue().stream().map(Car::getPartsMap).toList();
+		List<Map<String, String>> possibleBatch = getBatchOptions(partMaps);
+		if (!possibleBatch.isEmpty()) {
+			Map<String, String> selection = ManagerUI.getBatchSelection(possibleBatch);
+			assemAssist.getController().getScheduler().setSchedulingAlgorithm("BATCH", selection);
+		}
+		else {
+			ManagerUI.printError("No batchoptions available -> Algoritm will stay FIFO");
 		}
 	}
-    
+
+	/**
+	 * Returns the possible batch options given a list of part maps
+	 * @param partMaps map of parts
+	 * @return List of batch options
+	 */
+	public List<Map<String, String>> getBatchOptions(List<Map<String, String>> partMaps) {
+		List<Map<String, String>> possibleBatch = new ArrayList<>();
+
+		// map all selections on top of optionCategory
+		Map<String,List<String>> chosenParts = partMaps.stream()
+				.flatMap(map -> map.entrySet().stream())
+				.collect(Collectors.groupingBy(
+						Map.Entry::getKey,
+						Collectors.mapping(Map.Entry::getValue, Collectors.toList())));
+
+		for(Map.Entry<String,List<String>> entry: chosenParts.entrySet()){
+			Set<String> parts = new HashSet<>(entry.getValue());
+			for(String part: parts) {
+				int x = Collections.frequency(entry.getValue(), part);
+				if (x>2)
+					possibleBatch.add(Map.of(entry.getKey(),part));
+			}
+		}
+		return possibleBatch;
+	}
+
+	/**
+	 * check the production statistics on a given assemAssist
+	 * @param assemAssist the given central system
+	 * @throws CancelException when the user types "CANCEL"
+	 */
+	private void checkProductionStatistics(AssemAssist assemAssist) throws CancelException {
+		ManagerUI.showProductionStatistics(assemAssist.getStats());
+	}
+
 }

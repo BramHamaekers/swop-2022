@@ -1,30 +1,31 @@
 package swop.CarManufactoring;
 import swop.Car.Car;
+import swop.Miscellaneous.TimeStamp;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
-interface costumIterator<T> {
+/**
+ * Iterator for the scheduling algorithm to pick the right car for a specified algorithm
+ * @param <T> the type of the iterable
+ */
+interface customIterator<T> {
 	/**
-	 * checks if the iterator has another element to return 
-	 * @return
+	 * iterator standard hasnext method
+	 * @return whether the iterator has another element to return
 	 */
 	boolean hasNext();
 	
 	/**
 	 * Returns next element
-	 * @return
+	 * @param algorithm the algorithm selection (for now fifo or batch)
+	 * @return next element in the list for the iterator
 	 */
 	T next(String algorithm);
-	
-	/**
-	 * Replaces the old iterated list with a new one
-	 * @param l
-	 */
-	void refreshList(List<T> l);
-	
 }
 
+/**
+ * A scheduler manages the time and order of the carqueue
+ */
 public class Scheduler {
 
     private final CarManufacturingController controller;
@@ -36,24 +37,27 @@ public class Scheduler {
 		put( "ModelB",70);
 		put( "ModelC",60);
 	}};
-	private String algorithm = "FIFO";
-	private String[] batchOptions;
+	private final List<String> validAlgorithms = List.of("BATCH", "FIFO", "Cancel selection");
+	private String algorithm;
+	private Map<String,String> batchOptions;
 
+	/**
+	 * initializes the scheduler with his controller, the current time at the beginning, the total minutes in a workingday and the algorithm.
+	 * @param carManufacturingController a given controller that initialized this scheduler
+	 */
     public Scheduler(CarManufacturingController carManufacturingController) {
-
         this.controller = carManufacturingController;
         this.minutes = 0;
         this.workingDayMinutes = 960; // 06:00 -> 22:00
-        //create new iterator
-        setSchedulingAlgorithm("FIFO", null);
+        this.setSchedulingAlgorithm("FIFO", null);
     }
 
     /**
      * Calculates the estimated completion time based on the CarQueue and overtime done on previous days
-     *
+     * @param car a car for which to calculate the estimated completion time
      * @return Time formatted as string
      */
-    public String getEstimatedCompletionTime(Car car) {
+    public TimeStamp getEstimatedCompletionTime(Car car) {
     	  int day = this.day;
           int minutes = this.minutes;
           int workingDayMinutes = this.workingDayMinutes;
@@ -77,12 +81,8 @@ public class Scheduler {
               else {minutes = (int) (Math.ceil( (float) minutes/60) * 60);} // Other cars
 
           }
-          // Convert to format
-          int hours = minutes / 60;
-          hours += 6;
-          minutes = minutes % 60;
 
-          return String.format("day: %s, time: %02d:%02d%n", day, hours, minutes);
+		  return new TimeStamp(day,minutes);
     }
 
 	/**
@@ -96,6 +96,8 @@ public class Scheduler {
 
 	/**
      * Returns how long it will take for the car to be finished
+	 * @param car a car for which to return the estimated waiting time
+	 * @param workstationCars the cars currently on the assembly line
      * @return time
      */
     private int calculateWaitingTime(Car car,List<Car> workstationCars) {
@@ -103,7 +105,7 @@ public class Scheduler {
     	Car station2Car = workstationCars.get(1);
     	Car station3Car = workstationCars.get(2);
 
-    	costumIterator<Car> iter = this.iterator(this.controller.getCarQueue());
+    	customIterator<Car> iter = this.iterator(this.controller.getCarQueue());
 		Car current = iter.next(this.algorithm);
 
 		int time = this.getMax(getUnfinishedCars());
@@ -128,10 +130,11 @@ public class Scheduler {
 
 	/**
      * Returns the maximum time of a list of cars, that a car spends in a workstation
-     * @param cars
-     * @return
+     * @param cars all the cars to check for
+     * @return the maximum time for the list of cars
      */
     private int getMax(List<Car> cars) {
+    	if(cars == null) return 0;
     	List<Integer> l = new LinkedList<>();
     	for(Car c: cars) {
     		if(c != null) l.add(this.timePerWorkstationMap.get(c.getCarModelName()));
@@ -169,12 +172,8 @@ public class Scheduler {
 	 * Get the current time in a string format
 	 * @return string of current time
 	 */
-	public String getTimeAsString() {
-		int hours = this.getMinutes() / 60;
-		hours += 6;
-		int minutes = this.getMinutes() % 60;
-
-		return String.format("day: %s, time: %02d:%02d%n", this.getDay(), hours, minutes);
+	public TimeStamp getTime() {
+		return new TimeStamp(this.getDay(), this.getMinutes());
 	}
 
     /**
@@ -190,7 +189,7 @@ public class Scheduler {
 	/**
 	 * Function checks if there is enough time left in a working day to complete the next car.
 	 * @param minutes the minutes that need to be added to the time before checking
-	 * @return this.minutes <= this.workingDayMinutes - estTime
+	 * @return whether there is enough time in the day to add a car to the assembly line
 	 */
 	public boolean canAddCarToAssemblyLine(int minutes) {
 		Car nextCar = this.getNextScheduledCar();
@@ -198,8 +197,8 @@ public class Scheduler {
 		Car car1 = workstationCars.get(0);
 		Car car2 = workstationCars.get(1);
 		int estTime = this.getMax(Arrays.asList(nextCar, car1, car2))
-				+ this.getMax(Arrays.asList(nextCar, car1))
-				+ this.getMax(List.of(nextCar));
+				+ this.getMax(Arrays.asList(nextCar, car1));
+		if(nextCar != null) estTime += this.getMax(List.of(nextCar));
         return this.minutes + minutes <= this.workingDayMinutes - estTime;
     }
 
@@ -209,7 +208,7 @@ public class Scheduler {
 	 */
 	private List<Car> getWorkStationCars() {
 		ListIterator<WorkStation> workstations = this.controller.getAssembly().getWorkStations().listIterator();
-		ArrayList<Car> workstationCars = null;
+		ArrayList<Car> workstationCars = new ArrayList<>();
 		while (workstations.hasNext()){
 			// check if throws nullpointerexception
 			workstationCars.add(workstations.next().getCar());
@@ -221,18 +220,37 @@ public class Scheduler {
      * Returns the current schedulingAlgorithm
      * @return this.schedulingAlgorithm
      */
-    private String getSchedulingAlgorithm() {
+	public String getSchedulingAlgorithm() {
         return this.algorithm;
     }
 
     /**
      * set the current schedulingAlgorithm to the new given algorithms
-     * @param algorithm
+     * @param algorithm selected priority algorithm
+	 * @param batchOptions a map of the selected batchoption
      */
-    public void setSchedulingAlgorithm(String algorithm, String[] batchOptions) {
-		if(!algorithm.equals("FIFO") && !algorithm.equals("BATCH")) throw new IllegalArgumentException("Invalid Scheduling Algoritm");
+    public void setSchedulingAlgorithm(String algorithm, Map<String,String> batchOptions) {
+		if(!this.isValidSchedulingAlgorithm(algorithm)) throw new IllegalArgumentException("Invalid Scheduling Algorithm");
 		this.algorithm = algorithm;
 		if(algorithm.equals("BATCH")) this.batchOptions = batchOptions;
+		//update the est. completionTime from the car in the queue
+		this.controller.updateEstimatedCompletionTime();
+	}
+
+	/**
+	 * Check if the given algorithm is a valid algorithm
+	 * @param algorithm the given algorithm
+	 * @return True if the given algorithm is valid
+	 */
+	private boolean isValidSchedulingAlgorithm(String algorithm) {
+		return this.getValidAlgorithms().contains(algorithm);
+	}
+
+	/**
+	 * @return copy of the validAlgorithms list
+	 */
+	public List<String> getValidAlgorithms() {
+		return List.copyOf(this.validAlgorithms);
 	}
 
     /**
@@ -240,20 +258,21 @@ public class Scheduler {
      * @return this.carQueue.removeFirst()
      */
     public Car getNextScheduledCar() {
-    	costumIterator<Car> iter = this.iterator(this.controller.getCarQueue());
+    	customIterator<Car> iter = this.iterator(this.controller.getCarQueue());
     	if (iter.hasNext())
         	return iter.next(this.algorithm);
     	return null;
     }
-    
-	public costumIterator<Car> iterator(List<Car> l) {
-		return new costumIterator<>() {
-			List<Car> list = new LinkedList<>(l);
-			
-			public void refreshList(List<Car> l) {
-				list = new LinkedList<>(l);
-			}
-			
+
+	/**
+	 * create customIterator used in looping over a given list of cars based on the active scheduling algorithm
+	 * @param cars list of cars to loop over
+	 * @return new customIterator that loops over cars
+	 */
+	public customIterator<Car> iterator(List<Car> cars) {
+		return new customIterator<>() {
+			final List<Car> list = new LinkedList<>(cars);
+
 			public boolean hasNext() {
 				return list.size() > 0;
 			}
@@ -263,10 +282,12 @@ public class Scheduler {
 				if(algorithm.equals("FIFO")) return list.remove(0);
 				if(algorithm.equals("BATCH"))
 					for(int i = 0; i<list.size();i++) {
-						if(list.get(i).getPartsMap().containsValue(batchOptions))
-							return list.remove(i);
+						for(Map.Entry<String,String> prioSelection : batchOptions.entrySet())
+							if(list.get(i).getPartsMap().get(prioSelection.getKey()) != null)
+									if(list.get(i).getPartsMap().get(prioSelection.getKey()).equals(prioSelection.getValue()))
+										return list.remove(i);
 					}
-				//if there is no more element that is comform the batch, return to fifo
+				//if there is no more element that is conform with the batch, return to fifo
 				return list.remove(0);
 			}
 		};

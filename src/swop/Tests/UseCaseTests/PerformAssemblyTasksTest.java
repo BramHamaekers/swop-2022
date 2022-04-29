@@ -2,8 +2,11 @@ package swop.Tests.UseCaseTests;
 
 import org.junit.jupiter.api.Test;
 import swop.Car.CarOrder;
+import swop.CarManufactoring.Task;
 import swop.Main.AssemAssist;
 import swop.UI.LoginUI;
+import swop.UI.Builders.DisplayStatus;
+import swop.UI.Generators.CarMechanicGenerator;
 import swop.Users.CarMechanic;
 import swop.Users.GarageHolder;
 
@@ -12,7 +15,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
 
@@ -23,136 +26,192 @@ public class PerformAssemblyTasksTest {
     AssemAssist assem;
     CarMechanic carMechanic;
     InputStream input;
-    GarageHolder garageHolder;
+    private static final CarMechanicGenerator carMechanicGenerator = new CarMechanicGenerator();
 
 
     @Test
-    void CarMechanicUITest() {
+    void performAssemblyTasksUITest() {
 
-        ListIterator<String> output = setupUITest(String.format(
-                "a%ny%n0%n1%n1%n1%n1%n1%n1%n1%n" + // place order
-                "c%ny%ny%n45%n%n" + // advance assemblyLine
-                "b%n0%n1%n%n0%n%nQUIT") // Perform assembly Tasks
-        ); // Setup
+        setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
+        
+        List<Task> tasks = this.assem.getStations().get(0).getUncompletedTasks();
+        
+        assert tasks.size() == 2; // no tasks are finished on workstation
 
-        askWorkPost(output); // 1. ask user for work post
+		ListIterator<String> output = continueUITest(String.format("b%n0%n0%n0%n0%n45%nCANCEL%nQUIT"), 7);// complete 1 task and cancel
 
-        selectWorkPost(output); // 2. User selects work post
+        askWorkPost(output); // ask user for work post
+        
+        presentAvailableTasks(output, tasks); // shows 2 tasks can be finished
 
-        presentTasks(output); // 3. show overview of pending tasks
+        showTaskInfo(output, tasks.get(0)); // system shows the assembly task information
 
-        selectTask(output); // 4. User selects task
+        output.next();
+        
+        indicateTimePassed(output);
+        
+        tasks = this.assem.getStations().get(0).getUncompletedTasks();
 
-        showTaskInfo(output); // 5. system shows the assembly task information
-
-        indicateFinished(output); // 6. indicate when task is finished
-
-        storeChanges(); // 7. the system stores the changes
-
-        doNextTask(output); // 8. Usecase continues in 4
-
+        presentAvailableTasks(output, tasks); // shows 1 task can be finished
+        
+        tasks = this.assem.getStations().get(0).getUncompletedTasks();
+        
+        assert tasks.size() == 1; // 1 task is finished on workstation
     }
 
-    @Test
-    void CarMechanicUITestUITestAlternateFlow1() {
+	@Test
+    void completeAllTasksOfStationTest() {
+		setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
+		
+        List<Task> tasks = this.assem.getStations().get(0).getUncompletedTasks();
+        
+        assert tasks.size() == 2; // no tasks are finished on workstation
 
-        ListIterator<String> output = setupUITest(String.format(
-                "a%ny%n0%n1%n1%n1%n1%n1%n1%n1%n" + // place order
-                        "c%ny%ny%n45%n%n" + // advance assemblyLine
-                        "b%n0%n1%n%nCANCEL%nQUIT") // Perform assembly Tasks
-        ); // Setup
+		ListIterator<String> output = continueUITest(String.format("b%n0%n0%n0%n0%n45%nCANCEL%nQUIT"), 12); // complete task on pos 0
+		
+		presentAvailableTasks(output, tasks);
 
-        askWorkPost(output); // 1. ask user for work post
+		tasks = this.assem.getStations().get(0).getUncompletedTasks();
+		
+		assert tasks.size() == 1; // 1 task is finished on workstation
+		
+		output = continueUITest(String.format("b%n0%n0%n0%n0%n45%n0%nQUIT"), 12); // complete task on pos 0
+		
+		presentAvailableTasks(output, tasks);
+		
+		tasks = this.assem.getStations().get(0).getUncompletedTasks();
+		
+		assert tasks == null; //maybe return empty list?
+		
+		skip(output, 6);
+		
+		noMoreTasksMessage(output);	
+		
+	}
 
-        selectWorkPost(output); // 2. User selects work post
-
-        presentTasks(output); // 3. show overview of pending tasks
-
-        selectTask(output); // 4. User selects task
-
-        showTaskInfo(output); // 5. system shows the assembly task information
-
-        indicateFinished(output); // 6. indicate when task is finished
-
-        storeChangesAfter1(); // 7. the system stores the changes
-
-        indicateStop(output); // 8. user indicates to stop performing tasks
-
-    }
-
-    private void indicateStop(ListIterator<String> output) {
-        doNextTask(output);
-        assertEquals("CANCELED", output.next());
-        assertEquals("Welcome!", output.next());
-    }
-
-
-    private void doNextTask(ListIterator<String> output) {
-        assertEquals("", output.next());
-        assertEquals("============ Available Tasks ============", output.next());
-        assertEquals("Assembly Car Body [0] ", output.next());
-        assertEquals("=======================================", output.next());
-        selectTask(output);
-
+	@Test
+    void completeAllTasksOfCarTest() {
+		setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
+		continueUITest(String.format("b%n0%n0%n0%nENTER%n45%n0%nENTER%n45%n" + // complete tasks work post 1
+				"b%n0%n1%n0%nENTER%n45%n0%nENTER%n45%n"+ // complete tasks work post 2
+				"b%n0%n2%n0%n0%n45%n0%n0%n45%n0%n0%n45%n0%nQUIT"), 7); // complete tasks work post 3 
+		GarageHolder a = (GarageHolder) this.assem.getUserMap().get("a"); 
+		
+		carIsFinished(a);
 
     }
+	
+	@Test
+    void InvalidOptions() {
+		setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
+		ListIterator<String> output = continueUITest(String.format("b%ninvalid%n0%ninvalid%n0%n10%n0%n0%n45%nCANCEL%nQUIT"), 7); // complete tasks work post 1
+		invalidOptionMessage(output); //invalid 1
+		skip(output, 4);
+		invalidOptionMessage(output); //invalid 2
+		
+		List<Task> tasks = this.assem.getStations().get(0).getUncompletedTasks();
+		
+		assert tasks.size() == 1; // 1 task is finished on workstation
+	}
 
-    private void storeChanges() {
-        Set<String> nameSet = new HashSet<>();
-        for (CarOrder x : this.garageHolder.getOrders())
-            x.getCar().getUncompletedTasks().forEach(t -> nameSet.add(t.getName()));
-        assertFalse(nameSet.contains("Assembly Car Body"));
-        assertFalse(nameSet.contains("Paint Car"));
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+	////////////////////////////////////////////////////////
+	
+	private void invalidOptionMessage(ListIterator<String> output) {
+		assertTrue(output.next().contains("Please give valid input:"));
+	}
+	
+	private void noMoreTasksMessage(ListIterator<String> output) {
+		assertEquals("No tasks need to be completed!", output.next());
+		
+		
+	}
+
+    private void carIsFinished(GarageHolder a) {
+		Set<CarOrder> orders = a.getOrders();
+		assert orders.size() == 1;
+		for(CarOrder order: orders)
+			assertTrue(order.isCompleted());
+		
+	}
+
+    private void presentAvailableTasks(ListIterator<String> output, List<Task> tasks) {
+		DisplayStatus builder = new DisplayStatus();
+		carMechanicGenerator.generateAvailableTasks(builder,tasks);
+		for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
     }
 
-    private void storeChangesAfter1() {
-        Set<String> nameSet = new HashSet<>();
-        this.garageHolder.getOrders().forEach(x -> x.getCar().getUncompletedTasks().forEach(t ->
-                nameSet.add(t.getName())));
-        assertTrue(nameSet.contains("Assembly Car Body"));
-        assertFalse(nameSet.contains("Paint Car"));
+    private void indicateTimePassed(ListIterator<String> output) {
+        assertEquals("How much time did it take to finish the task? (in min)", output.next());
     }
-
+    
     private void indicateFinished(ListIterator<String> output) {
         assertEquals("Press enter when you are finished", output.next());
     }
 
-    private void showTaskInfo(ListIterator<String> output) {
-        assertEquals("-----------Info For Task----------", output.next());
-        assertEquals("Paint the body in colour: blue", output.next());
-        assertEquals("----------------------------------", output.next());
-    }
-
-
-    private void selectTask(ListIterator<String> output) {
-        assertEquals("Select task: ", output.next());
-    }
-
-    private void presentTasks(ListIterator<String> output) {
-        assertEquals("============ Available Tasks ============", output.next());
-        assertEquals("Assembly Car Body [0] ", output.next());
-        assertEquals("Paint Car [1] ", output.next());
-        assertEquals("=======================================", output.next());
+    private void showTaskInfo(ListIterator<String> output, Task t) {
+		DisplayStatus builder = new DisplayStatus();
+		carMechanicGenerator.generateTaskInfo(builder, t.getTaskDescription());
+		for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
 
     }
-
-    private void selectWorkPost(ListIterator<String> output) {
-        assertEquals("Select station: ", output.next());
-        assertEquals("", output.next());
-    }
+    
+    private void askWorkPostCanceled(ListIterator<String> output) {
+    	DisplayStatus builder = new DisplayStatus();
+		carMechanicGenerator.generateStationList(builder, assem.getStations());
+		for (String s : (builder.getDisplay() + "CANCELED").split(String.format("%n")))
+			assertEquals(s, output.next());
+		
+	}
 
     private void askWorkPost(ListIterator<String> output) {
-        assertEquals("============ Current Stations ============", output.next());
-        assertEquals("Car Body Post [0] ", output.next());
-        assertEquals("Drivetrain Post [1] ", output.next()); // No Pending orders yet
-        assertEquals("Accessories Post [2] ", output.next());
-        assertEquals("=======================================", output.next());
+    	DisplayStatus builder = new DisplayStatus();
+		carMechanicGenerator.generateStationList(builder, assem.getStations());
+		for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
+    }
+    
+    
+    
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    private void skip(ListIterator<String> output, int skips) {
+		for(int i =0; i < skips; i++)
+			output.next();
+		
+	}
+
+    private ListIterator<String> continueUITest(String inputString, int skips) {
+    	 this.input = new ByteArrayInputStream(inputString.getBytes());
+         System.setIn(input);
+         LoginUI.scanner.updateScanner();
+
+         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+         System.setOut(new PrintStream(outContent));
+         assem.run();
+
+         ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
+                 .listIterator();
+
+         for(int i =0; i < skips; i++)
+         	output.next();
+         
+         return output;
     }
 
-    private ListIterator<String> setupUITest(String inputString) {
+    private ListIterator<String> setupUITest(String inputString, int skips) {
         this.assem = new AssemAssist();
-        this.carMechanic = (CarMechanic) this.assem.getUserMap().get("b");
-        this.garageHolder = (GarageHolder) this.assem.getUserMap().get("a");
+        this.carMechanic = (CarMechanic) this.assem.getUserMap().get("b"); 
 
         this.input = new ByteArrayInputStream(inputString.getBytes());
         System.setIn(input);
@@ -165,9 +224,10 @@ public class PerformAssemblyTasksTest {
         ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
                 .listIterator();
 
-        for (int i = 0; i < 61; i++) {
-            output.next();
-        }
+        for(int i =0; i < skips; i++)
+        	output.next();
+
         return output;
     }
+
 }

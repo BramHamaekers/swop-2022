@@ -1,53 +1,87 @@
 package swop.CarManufactoring;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import swop.Car.Car;
 import swop.Car.CarOrder;
 import swop.Exceptions.NotAllTasksCompleteException;
+import swop.Listeners.StatisticsListener;
+import swop.Listeners.TaskCompletedListener;
+import swop.Miscellaneous.TimeStamp;
 
+/**
+ * A controller class which handles most of the operations fe. advancing the assembly line
+ */
 public class CarManufacturingController {
 
 	private final LinkedList<Car> carQueue;
 	private final AssemblyLine assemblyLine;
 	private final Scheduler scheduler;
-	
-	
-	
+	private final List<StatisticsListener> statisticsListeners = new ArrayList<>();
+	private final TaskCompletedListener taskCompletedListener = () -> {
+				try {advanceAssembly();}
+				catch (NotAllTasksCompleteException ignored) {}
+				};
+
+
+	/**
+	 * initializes the controller with an empty carqueue, a scheduler and an assemblyLine with its workstations
+	 */
 	public CarManufacturingController() {
 		this.carQueue = new LinkedList<>();
-		this.assemblyLine = new AssemblyLine(createWorkStations());
+		this.assemblyLine = new AssemblyLine(this.createWorkStations());
 		this.scheduler = new Scheduler(this);
 	}
-	
+
+	/**
+	 * Add statisticsListener to statisticsListeners
+	 * @param statisticsListener the listener to add
+	 */
+	public void addListener(StatisticsListener statisticsListener) {
+		this.statisticsListeners.add(statisticsListener);
+	}
+
+	/**
+	 * for all the listeners, update the statistics class
+	 * @param car a given car that finished
+	 */
+	private void updateDelay(Car car) {
+		statisticsListeners.forEach(l -> l.updateDelay(car));
+	}
+
 	/**
 	 * Function creates all the workstations that are part of the assemblyLine as a linked list so that they have the
 	 * right order.
-	 * @return LinkedList<WorkStation> of all the workstations of this assemblyLine
+	 * @return List of all the workstations of this assemblyLine
 	 */
 	private LinkedList<WorkStation> createWorkStations() {
 		LinkedList<WorkStation> workStations = new LinkedList<>();
 		workStations.add(new WorkStation("Car Body Post"));
 		workStations.add(new WorkStation("Drivetrain Post"));
 		workStations.add(new WorkStation("Accessories Post"));
+		workStations.forEach(s -> s.addListener(this.taskCompletedListener));
 		return workStations;
 	}
 
+	/**
+	 * @return the assembly line for this controller
+	 */
 	public AssemblyLine getAssembly() {
 		return this.assemblyLine;
 	}
 	
 	/**
 	 * Will try to advance the assemblyline + update the scheduler.
-	 * @param minutes that have passed
 	 * @throws NotAllTasksCompleteException if all available tasks are not completed
 	 */
-	public void advanceAssembly(int minutes) throws NotAllTasksCompleteException {
+	public void advanceAssembly() throws NotAllTasksCompleteException {
 		//there is time to finish another car + there are cars on the queue
+		List<WorkStation> workStations = this.getAssembly().getWorkStations();
+		List<Integer> workingTimes = workStations.stream()
+				.map(WorkStation::getCurrentWorkingTime).toList();
+		int maxWorkingMinutes = Collections.max(workingTimes);
 		Car finishedCar;
-		if(canFinishNewCar(minutes) && !this.getCarQueue().isEmpty()) {
+		if(this.canFinishNewCar(maxWorkingMinutes) && !this.getCarQueue().isEmpty()) {
 			Car nextCar = this.getScheduler().getNextScheduledCar();
 			finishedCar = this.assemblyLine.advance(nextCar);
 			this.carQueue.remove(nextCar);
@@ -58,19 +92,20 @@ public class CarManufacturingController {
 		}
 
 		if (finishedCar != null) {
-			setFinishedCarDeliveryTime(minutes, finishedCar);
+			this.setFinishedCarDeliveryTime(maxWorkingMinutes, finishedCar);
+			this.updateDelay(finishedCar);
 		}
 		//update schedular time
-		this.updateScheduleTime(minutes);
+		this.updateScheduleTime(maxWorkingMinutes);
 
 		// For every car in queue and workstation update the estimated completion time
-		updateEstimatedCompletionTime();
+		this.updateEstimatedCompletionTime();
 	}
 
 	/**
 	 * For every car in the carqueue, update the estimated completiontime according to the minutes passed.
 	 */
-	private void updateEstimatedCompletionTime() {
+	public void updateEstimatedCompletionTime() {
 		this.carQueue.forEach(car -> car.setEstimatedCompletionTime(scheduler.getEstimatedCompletionTime(car)));
 		this.assemblyLine.getWorkStations().forEach(w -> {
 			if (w.getCar() != null)
@@ -85,13 +120,8 @@ public class CarManufacturingController {
 	 * @throws IllegalStateException if the car is not completed
 	 */
 	private void setFinishedCarDeliveryTime(int minutes, Car finishedCar) {
-		if (!finishedCar.isCompleted()){
-			throw new IllegalStateException("Car is not completed");
-		}
-		finishedCar.setDeliveryTime(Map.of(
-				"day", scheduler.getDay(),
-				"minutes", scheduler.getMinutes()+ minutes
-		));
+		if (!finishedCar.isCompleted()) throw new IllegalStateException("Car is not completed");
+		finishedCar.setDeliveryTime(new TimeStamp(scheduler.getDay(), scheduler.getMinutes()+ minutes));
 	}
 
 	/**
@@ -105,33 +135,26 @@ public class CarManufacturingController {
 
 	/**
 	 * updates the scheduler.
-	 * @param minutes
+	 * @param minutes minutes to add to the current time
 	 */
 	private void updateScheduleTime(int minutes) {
 		this.getScheduler().addTime(minutes);
 		//if all work is done for today, skip to next day
-		if (!canFinishNewCar(0) && this.assemblyLine.isEmptyAssemblyLine()) {
+		if (!this.canFinishNewCar(0) && this.assemblyLine.isEmptyAssemblyLine()) {
 			this.getScheduler().advanceDay();
 		}
 		
 	}
 
-	//this method is to fix bug for current calculation of AdvancedStatus of assembly line
-	//TODO ??
-	public List<String> getAdvancedStatus() {
-		if(this.getCarQueue().isEmpty()) return this.assemblyLine.getAdvancedStatus(null);
-		return this.assemblyLine.getAdvancedStatus(this.getScheduler().getNextScheduledCar());
-	}
-
 	/**
 	 * add the cars of a specific order 2 the queue
-	 * @param carOrder
+	 * @param carOrder order added to the Queue
 	 */
 	public void addOrderToQueue(CarOrder carOrder) {
 		Car car = carOrder.getCar();
 		if(car == null) throw new IllegalArgumentException("car is null");
 		this.carQueue.add(car);
-		carOrder.setOrderTime(getScheduler().getTimeAsString());
+		carOrder.setOrderTime(getScheduler().getTime());
 		// if it is the only order in queue and the first spot is empty -> put it on the assembly line (if possible)
 		if (this.getCarQueue().size() == 1 && canFinishNewCar(0) && this.getAssembly().getWorkStations().get(0).getCar() == null) {
 			this.getAssembly().getWorkStations().get(0).setCar(car);
@@ -142,18 +165,10 @@ public class CarManufacturingController {
 
 	/**
 	 * Returns the scheduler associated with this controller
-	 * @return
+	 * @return this.scheduler
 	 */
 	public Scheduler getScheduler() {
-		return scheduler;
-	}
-
-	/**
-	 * Returns how many cars are still waiting
-	 * @return carQueue.size()
-	 */
-	public int getCarQueueSize() {
-		return carQueue.size();
+		return this.scheduler;
 	}
 
 	/**

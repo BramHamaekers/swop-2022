@@ -2,8 +2,16 @@ package swop.Tests.UseCaseTests;
 
 
 import org.junit.jupiter.api.Test;
+
+import swop.Car.CarModel.CarModel;
+import swop.Car.CarModel.ModelA;
+import swop.Car.CarModel.ModelB;
+import swop.Car.CarModel.ModelC;
 import swop.Main.AssemAssist;
 import swop.UI.LoginUI;
+import swop.UI.Builders.DisplayStatus;
+import swop.UI.Generators.GarageHolderGenerator;
+import swop.Users.CarMechanic;
 import swop.Users.GarageHolder;
 
 import java.io.ByteArrayInputStream;
@@ -11,7 +19,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
+import java.util.List;
 import java.util.ListIterator;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -21,8 +32,9 @@ public class OrderNewCarTest {
     AssemAssist assem;
     GarageHolder garageHolder;
     InputStream input;
+    GarageHolderGenerator garageHolderGenerator = new GarageHolderGenerator();
 
-    // 1. New user has no orders placed
+
     @Test
     void NewGarageHolderTest() {
         this.assem = new AssemAssist();
@@ -31,161 +43,225 @@ public class OrderNewCarTest {
         // New user has no orders placed
         assert garageHolder.getOrders().size() == 0;
     }
+    
 
     @Test
-    void garageHolderUITest() {
-        ListIterator<String> output = setupUITest(String.format("a%ny%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT")); // Setup
+    void oderNewCarFullUITest() {
+        ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 12); // Setup
+        
+        CarModel a = new ModelA();
 
-        presentOverview(output); // 1. The system presents an overview of the orders placed by the user
+        displayAndIndicateModels(output); // The system shows a list of available car models and how 2 indicate them
 
-        indicateOrderPlacement(output); // 2. user indicates he wants to place an order
+        displayOrderingForm(output, a); // The system displays the ordering form for model A.
+        
+        output.next();
 
-        displayModels(output); // 3. The system shows a list of available car models
+        completeOrderingForm(output, a); // User completes the ordering form for model A
 
-        indicateModel(output); // 4. The user indicates the car model he wishes to order.
-
-        displayOrderingForm(output); // 5. The system displays the ordering form.
-
-        completeOrderingForm(output); // 6. User completes the ordering form
-
-        storeOrder(); // 7. The system stores the new order and updates the production schedule.
-
-        presentEstimatedCompletionDate(output); // 8. The system presents an estimated completion date for the new order.
+        storeOrder(1); // The system stores the new order.
     }
+    
+    @Test
+    void instaCancelAsGarageHolderTest() {
+        ListIterator<String> output = setupUITest(String.format("a%nCANCEL%nQUIT"), 2); // Setup
+
+        presentOverview(output); // The system presents an overview of the orders placed by the user -> which are none
+
+        output.next();
+        
+        presentActions(output); // user indicates he wants to place an order
+    }
+
+   @Test
+   void cancelOrderingFormTest() {
+       ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%nCANCEL%nQUIT"), 12); // Setup
+	   CarModel a = new ModelA();
+       displayAndIndicateModels(output); // The system shows a list of available car models and how 2 indicate them
+       displayOrderingForm(output, a); // The system displays the ordering form for model A.
+       output.next();
+	   cancelOrderingFormOnFifthPosition(output, a); // should be cancelled after selecting 5 part preferences
+   }
+
+   @Test
+   void orderingFormInvalidInputTest() {
+       ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n5%n1%nCANCEL%nQUIT"), 12); // Setup
+       CarModel a = new ModelA();
+       displayAndIndicateModels(output); // The system shows a list of available car models and how 2 indicate them
+       displayOrderingForm(output, a); // The system displays the ordering form for model A.
+       output.next();
+       invalidOptionForPartTwo(output, a);
+   }
+
+   @Test
+   void invalidSpecificationTest_AircoAndEngine() {
+       ListIterator<String> output = setupUITest(String.format("a%n0%n1%n1%n0%n0%n2%n0%n0%n1%n0%nCANCEL%nQUIT"), 12); // Setup
+       CarModel b = new ModelB();
+       displayAndIndicateModels(output); // The system shows a list of available car models and how 2 indicate them
+       displayOrderingForm(output, b); // The system displays the ordering form for model A.
+       skip(output, 2);
+       assertEquals("Airco must be manual or none if you select the ultra engine", output.next());
+       //invalidOptionForPartTwo(output, b);
+   }
 
     @Test
-    void garageHolderUITestAlternateFlow1() {
-        ListIterator<String> output = setupUITest(String.format("a%nn%nQUIT")); // Setup
-
-        presentOverview(output); // 1. The system presents an overview of the orders placed by the user
-
-        indicateOrderPlacementDenied(output); // 1a. user indicates he wants to leave the overview
+    void invalidSpecificationTest_SportNoSpoiler() {
+        ListIterator<String> output = setupUITest(String.format("a%n0%n1%n2%n2%n0%n2%n0%n0%n1%n0%nCANCEL%nQUIT"), 12); // Setup
+        CarModel b = new ModelB();
+        displayAndIndicateModels(output); // The system shows a list of available car models and how 2 indicate them
+        displayOrderingForm(output, b); // The system displays the ordering form for model A.
+        skip(output, 2);
+        assertEquals("Spoiler is mandatory when choosing a sport body", output.next());
+        //invalidOptionForPartTwo(output, b);
     }
 
-    @Test
-    void garageHolderUITestAlternateFlow2() {
-        ListIterator<String> output = setupUITest(String.format("a%ny%n0%nCANCEL%nQUIT")); // Setup
+   @Test
+   void orderMultipleCars(){
+	   ListIterator<String> output = setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 12); // order car modal a
+	   
+       CarModel a = new ModelA();
 
-        presentOverview(output); // 1. The system presents an overview of the orders placed by the user
+       displayAndIndicateModels(output); // The system shows a list of available car models and how 2 indicate them
 
-        indicateOrderPlacement(output); // 2. user indicates he wants to place an order
+       displayOrderingForm(output, a); // The system displays the ordering form for model A.
+       
+       output.next();
 
-        displayModels(output); // 3. The system shows a list of available car models
+       completeOrderingForm(output, a); // User completes the ordering form for model A
 
-        indicateModel(output); // 4. The user indicates the car model he wishes to order.
+       storeOrder(1); // The system stores the new order.
+	   
+	   output = continueUITest(String.format("a%n0%n1%n0%n0%n0%n0%n0%n0%n0%n0%nQUIT"), 19); // order car modal b
+	   
+       CarModel b = new ModelB();
 
-        displayOrderingForm(output); // 5. The system displays the ordering form.
+       displayOrderingForm(output, b); // The system displays the ordering form for model B
+       
+       output.next();
 
-        cancelOrderingForm(output); // 6a. User completes the ordering form
+       completeOrderingForm(output, b); // User completes the ordering form for model B
 
-        storeOrderNoOrderPlaced(); // 7. The system stores the new order and updates the production schedule.
+       storeOrder(2); // The system stores the new order.
+	   
+	   output = continueUITest(String.format("a%n0%n2%n0%n0%n0%n0%n0%n0%n0%n0%nQUIT"), 20); // order car modal c
+	   
+       CarModel c = new ModelC();
+
+       displayOrderingForm(output, c); // The system displays the ordering form for model B
+       
+       output.next();
+
+       completeOrderingForm(output, c); // User completes the ordering form for model B
+
+       storeOrder(3); // The system stores the new order.
+   }
+
+    ///////////////////////////////////////////////////////////////////////////////////////
+
+	private void invalidOptionForPartTwo(ListIterator<String> output, CarModel model) {
+    	Set<Entry<String, List<String>>> options = model.getValidOptions().entrySet();
+    	String op = "";
+    	int i = 0;
+    	for(var option: options) {
+    		if(i<2) op += "Choose " + option.getKey() + ": ";
+    		if(i == 2) op += "Please give valid input:" +  "Choose " + option.getKey() + ": ";
+    		i++;
+    	}
+    	op += "CANCELED";
+    	assertEquals(op, output.next());
+	}
+    
+    
+
+
+    private void completeOrderingForm(ListIterator<String> output, CarModel model) {
+    	Set<Entry<String, List<String>>> options = model.getValidOptions().entrySet();
+    	String op = "";
+    	for(var option: options) {
+    		op += "Choose " + option.getKey() + ": ";
+    	}
+    	assertEquals(op, output.next());
     }
 
-    private void storeOrder() {
-        assert garageHolder.getOrders().size() == 1;
-        assert assem.getController().getCarQueue().size() == 1;
-        garageHolder.getOrders().forEach(
-                x -> assertEquals(x.getCar(), assem.getController().getCarQueue().get(0)));
+    private void cancelOrderingFormOnFifthPosition(ListIterator<String> output, CarModel model) {
+    	Set<Entry<String, List<String>>> options = model.getValidOptions().entrySet();
+    	String op = "";
+    	int i = 0;
+    	for(var option: options) {
+    		if(i<5) op += "Choose " + option.getKey() + ": ";
+    		i++;
+    	}
+    	op += "CANCELED";
+    	assertEquals(op, output.next());
+    }
+    
+    private void cancel(ListIterator<String> output) {
+        assertEquals("CANCELED", output.next());
+    }
+    
+
+    private void displayOrderingForm(ListIterator<String> output, CarModel carModel) {
+    	DisplayStatus builder = new DisplayStatus();
+    	this.garageHolderGenerator.generateOrderingForm(builder, carModel.getValidOptions(), carModel.getName());
+        for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
     }
 
-    private void storeOrderNoOrderPlaced() {
-        assert garageHolder.getOrders().size() == 0;
-        assert assem.getController().getCarQueue().size() == 0;
+    private void displayAndIndicateModels(ListIterator<String> output) {
+    	DisplayStatus builder = new DisplayStatus();
+    	this.garageHolderGenerator.generateCarModels(builder, CarModel.types);
+        for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
     }
 
-
-    private ListIterator<String> setupUITest(String inputString) {
-        this.assem = new AssemAssist();
-        this.garageHolder = (GarageHolder) this.assem.getUserMap().get("a"); 
-
-        this.input = new ByteArrayInputStream(inputString.getBytes());
-        System.setIn(input);
-        LoginUI.scanner.updateScanner();
-
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-        assem.run();
-
-        ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
-                .listIterator();
-
-        for (int i = 0; i < 3; i++) {
-            output.next();
-        }
-        return output;
+    private void presentActions(ListIterator<String> output) {
+    	List<String> actions = Arrays.asList("Place new order", "Check order details", "Exit");
+		DisplayStatus builder = new DisplayStatus();
+		this.garageHolderGenerator.selectAction(builder, actions, "What would you like to do?");
+        for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
     }
 
-    private void presentEstimatedCompletionDate(ListIterator<String> output) {
-        assertEquals("============ Estimated Completion Time ============", output.next());
-        assertEquals("day: 0, time: 09:00", output.next());
-        assertEquals("", output.next());
-        assertEquals("=======================================", output.next());
-    }
-
-    private void completeOrderingForm(ListIterator<String> output) {
-        assertEquals(
-                "Choose Airco: " +
-                        "Choose Body: " +
-                        "Choose Color: " +
-                        "Choose Engine: " +
-                        "Choose GearBox: " +
-                        "Choose Seats: " +
-                        "Choose Wheels: "
-                , output.next());
-    }
-
-    private void cancelOrderingForm(ListIterator<String> output) {
-        assertEquals(
-                "Choose Airco:" +
-                        " CANCELED"
-                , output.next());
-    }
-
-    private void displayOrderingForm(ListIterator<String> output) {
-        assertEquals("============ Ordering Form ============", output.next());
-        assertEquals("Airco: [0] manual, [1] automatic climate control, ", output.next());
-        assertEquals("Body: [0] sedan, [1] break, ", output.next());
-        assertEquals("Color: [0] red, [1] blue, [2] black, [3] white, ", output.next());
-        assertEquals("Engine: [0] standard 2l 4 cilinders, [1] performance 2.5l 6 cilinders, ", output.next());
-        assertEquals("GearBox: [0] 6 speed manual, [1] 5 speed automatic, ", output.next());
-        assertEquals("Seats: [0] leather black, [1] leather white, [2] vinyl grey, ", output.next());
-        assertEquals("Wheels: [0] comfort, [1] sports (low profile), ", output.next());
-        assertEquals("=======================================", output.next());
-    }
-
-    private void indicateModel(ListIterator<String> output) {
-        assertEquals("Which model would you like to order?", output.next());
-        assertEquals("", output.next());
-    }
-
-    private void displayModels(ListIterator<String> output) {
-        assertEquals("============ Car Models ============", output.next());
-        assertEquals("[0] car", output.next());
-        assertEquals("=======================================", output.next());
-        assertEquals("", output.next());
-    }
-
-    private void indicateOrderPlacement(ListIterator<String> output) {
-        assertEquals("Do you want to place an order? ", output.next());
-        assertEquals("[y] Yes [n] No", output.next());
-        assertEquals("", output.next());
-    }
-
-    private void indicateOrderPlacementDenied(ListIterator<String> output) {
-        assertEquals("Do you want to place an order? ", output.next());
-        assertEquals("[y] Yes [n] No", output.next());
-        assertEquals("Welcome!", output.next());
-    }
 
     private void presentOverview(ListIterator<String> output) {
-        assertEquals("============ Orders ============", output.next());
-        assertEquals("Pending:", output.next());
-        assertEquals("", output.next()); // No Pending orders yet
-        assertEquals("Completed:", output.next());
-        assertEquals("", output.next());
-        assertEquals("=======================================", output.next());
-        assertEquals("", output.next());
+		DisplayStatus builder = new DisplayStatus();
+		this.garageHolderGenerator.generateOrderStatus(builder, this.garageHolder.getOrders());
+        for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
     }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    private void skip(ListIterator<String> output, int skips) {
+		for(int i =0; i < skips; i++)
+			output.next();
+		
+	}
+
+    private void storeOrder(int i) {
+        assert garageHolder.getOrders().size() == i;
+    }
+
+    private ListIterator<String> continueUITest(String inputString, int skips) {
+    	 this.input = new ByteArrayInputStream(inputString.getBytes());
+         System.setIn(input);
+         LoginUI.scanner.updateScanner();
+
+         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+         System.setOut(new PrintStream(outContent));
+         assem.run();
+
+         ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
+                 .listIterator();
+
+         for(int i =0; i < skips; i++)
+         	output.next();
+         
+         return output;
+    }
+
+    private ListIterator<String> setupUITest(String inputString, int skips) {
+        this.assem = new AssemAssist();
+        this.garageHolder = (GarageHolder) this.assem.getUserMap().get("a");
+        return continueUITest(inputString, skips);
+    }
+
 
 }
 

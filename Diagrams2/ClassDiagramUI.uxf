@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.0.0">
+  <zoom_level>6</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>534</x>
+      <y>342</y>
+      <w>468</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>swop.UI.Generators::CarMechanicGenerator
+--
++generateStationList(FormBuilder builder, List&lt;WorkStation&gt; workStations): void
++generateWorkStationStatus(FormBuilder builder, String name, List&lt;Task&gt; pendingTasks, List&lt;Task&gt; finishedTasks): void
++generateAvailableTasks(FormBuilder builder, List&lt;Task&gt; taskList): void
++generateTaskInfo(FormBuilder builder, List&lt;String&gt; info): void
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>612</x>
+      <y>192</y>
+      <w>294</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>swop.UI.Generators::UserGenerator
+--
++selectAction(FormBuilder builder, List&lt;String&gt; actions, String question): void
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1008</x>
+      <y>342</y>
+      <w>384</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>swop.UI.Generators::ManagerGenerator
+--
++generateBatchSelection(DisplayStatus builder, List&lt;Map&lt;String, String&gt;&gt; possibleBatch): void
++generateAlgorithmSelection(DisplayStatus builder, List&lt;String&gt; actions, String activeAlgorithm): void
++generateProductionStatistics(DisplayStatus builder, Map&lt;String, Double&gt; productionStatistics): void
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1092</x>
+      <y>138</y>
+      <w>186</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>swop.UI.Builders::DisplayStatus
+--
+~titlelength = 0: int
+~builder = new StringBuilder(): StringBuilder
+--
+~print(String text): void
+~println(String text): void
++getDisplay(): String
+~numberOptions(int opts): String
++appendTitle(String title): void
++inputInfo(String info): void
++endInfo(): void
++addOption(String option, int options): void
++appendSubTitle(String subtitle): void
++initialQuestion(String question): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>960</x>
+      <y>486</y>
+      <w>318</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>swop.UI::ManagerUI
+--
+-managerGenerator = ManagerGenerator
+--
++init(String id): void
++selectAction(List&lt;String&gt; actions, String currentAlgo): int
++getBatchSelection(List&lt;Map&lt;String, String&gt;&gt; possibleBatch): Map&lt;String, String&gt;
++printError(String e): void
++selectFlow(List&lt;String&gt; actions, String question): int
++showProductionStatistics(Map&lt;String, Double&gt; productionStatistics): void
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>120</x>
+      <y>342</y>
+      <w>402</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>swop.UI.Generators::GarageHolderGenerator
+--
++generateCarModels(FormBuilder builder, Set&lt;String&gt; carModels): void
++generateOrderingForm(FormBuilder builder, Map&lt;String, List&lt;String&gt;&gt; optionsMap, String carModel): void
++optionListToString(List&lt;String&gt; options): String
++generateOrderStatus(FormBuilder builder, Set&lt;CarOrder&gt; carOrders): void
++generateEstimatedTime(FormBuilder builder, CarOrder order): void
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>588</x>
+      <y>666</y>
+      <w>312</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+swop.UI::UI
+--
+~scanner = InputScanner
+--
+~indicateYesNo(String action): String
+~printError(String e): void
+~selectAction(UserGenerator generator, List&lt;String&gt; actions, String question): int
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>984</x>
+      <y>666</y>
+      <w>132</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>swop.UI::LoginUI
+--
++init(): void
++getUserID(): String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>210</x>
+      <y>450</y>
+      <w>306</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>swop.UI::GarageHolderUI
+--
+-garageHolderGenerator =  GarageHolderGenerator
+--
++init(String id): void
++printError(String e): void
++displayOrders(Set&lt;CarOrder&gt; carOrders): void
++indicateYesNo(String action): String
++selectAction(List&lt;String&gt; actions, String question): int
++indicateCarModel(Set&lt;String&gt; carModels): int
++displayOrderingForm(Map&lt;String, List&lt;String&gt;&gt; optionsMap, String name): void
++askOption(int leftBound, int rightBound, String option): int
++displayEstimatedTime(CarOrder order): void
++printEmptyLine(): void
++selectOrderID(): String
++showOrderDetails(String string): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>534</x>
+      <y>486</y>
+      <w>408</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>swop.UI::CarMechanicUI
+--
+-carMechanicGenerator = CarMechanicGenerator
+--
++init(String id): void
++selectAction(List&lt;String&gt; actions, String question): int
++displayAvailableStations(List&lt;WorkStation&gt; stations): void
++askOption(String s, int numberOfOptions): int
++displayAvailableTasks(List&lt;Task&gt; taskList): void
++displayTaskInfo(List&lt;String&gt; info): void
++displayStationStatus(WorkStation workStation, List&lt;Task&gt; pendingTasks, List&lt;Task&gt; finishedTasks): void
++askTimeToCompleteTask(): int
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1092</x>
+      <y>6</y>
+      <w>186</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+swop.UI.Builders::FormBuilder
+--
+~appendTitle(String title): void
+~inputInfo(String info): void
+~endInfo(): void
+~addOption(String option, int number): void
+~appendSubTitle(String subtitle): void
+~initialQuestion(String question): void
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>624</x>
+      <y>786</y>
+      <w>228</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>swop.UI::InputScanner
+--
+~inputScanner: Scanner
+--
++InputScanner(Scanner inputscanner): ctor
++scanNextLineOfTypeInt(): int
++scanNextLineOfTypeInt(int leftborder, int rightBorder): int
++scanNextLineOfTypeString(): String
++scanNextLineOfTypeString(String[] strings): String
++updateScanner(): void
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>486</x>
+      <y>588</y>
+      <w>150</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>230.0;130.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>732</x>
+      <y>588</y>
+      <w>18</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;130.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>870</x>
+      <y>570</y>
+      <w>126</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;160.0;190.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>894</x>
+      <y>672</y>
+      <w>102</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;150.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>360</x>
+      <y>408</y>
+      <w>24</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>744</x>
+      <y>396</y>
+      <w>24</w>
+      <h>102</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1140</x>
+      <y>384</y>
+      <w>24</w>
+      <h>114</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;170.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>360</x>
+      <y>222</y>
+      <w>348</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>560.0;10.0;10.0;200.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>744</x>
+      <y>222</y>
+      <w>18</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;200.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>816</x>
+      <y>222</y>
+      <w>336</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;540.0;200.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>732</x>
+      <y>732</y>
+      <w>24</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1176</x>
+      <y>90</y>
+      <w>18</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+</diagram>

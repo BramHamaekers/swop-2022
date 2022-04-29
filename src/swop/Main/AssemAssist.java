@@ -3,18 +3,22 @@ package swop.Main;
 import swop.Car.CarOrder;
 import swop.CarManufactoring.*;
 import swop.Exceptions.IllegalUserException;
-import swop.Exceptions.NotAllTasksCompleteException;
+import swop.Miscellaneous.Statistics;
+import swop.Records.AllStats;
 import swop.UI.LoginUI;
 import swop.Users.CarMechanic;
 import swop.Users.GarageHolder;
 import swop.Users.Manager;
 import swop.Users.User;
-
 import java.util.*;
 
+/**
+ * AssemAssist is the main program which starts all other classes
+ */
 public class AssemAssist {
 
 	private final CarManufacturingController controller;
+	private final Statistics statistics;
 	private User activeUser;
 	final Map <String, User> userDatabase = new HashMap<>() {{
 		put("a", new GarageHolder("a"));
@@ -22,17 +26,21 @@ public class AssemAssist {
 		put("c", new Manager("c"));
 	}};
 
+	/**
+	 * Initializes the class with the relevant statistics and the controller
+	 */
 	public AssemAssist() {
+		this.statistics = new Statistics();
 		this.controller = new CarManufacturingController();
+		this.controller.addListener(statistics.statisticsListener);
     }
+
 	/**
      * Starts the program
      */
 	public void run() {
 		this.login();		
 	}
-
-	/************************ Login *************************/
 
 	/**
 	 * Handles logging in to the system
@@ -49,14 +57,14 @@ public class AssemAssist {
 	 */
 	private void loadUser(String id) {
 		// Load user database
-		while (!this.userDatabase.containsKey(id) && !(Objects.equals(id, "QUIT"))) {
+		while (!this.userDatabase.containsKey(id) && !(id.equalsIgnoreCase("QUIT"))) {
 			System.out.println("Invalid user ID, type QUIT to exit");
 			id = LoginUI.getUserID();
 		}
-		if(id.equals("QUIT")) return;
+		if(id.equalsIgnoreCase("QUIT")) return;
 		activeUser = this.userDatabase.get(id);
 		activeUser.load(this);
-		login();	
+		this.login();	
 	}
 
 	/**
@@ -66,14 +74,17 @@ public class AssemAssist {
 	private AssemblyLine getAssemblyLine() {
 		return this.controller.getAssembly();
 	}
-	
-	//for order new car test
+
+	/**
+	 * getter for carcontroller
+	 * @return the CarManufacturingController
+	 */
 	public CarManufacturingController getController() {
 		return this.controller;
 	}
 	
 	/**
-	 * Gives you a copy of the user data base in the form of Map <String, User>
+	 * Gives you a copy of the user data base in the form of a Map
 	 * @return userDatabase
 	 */
 	public Map <String, User> getUserMap(){
@@ -97,10 +108,6 @@ public class AssemAssist {
 			default -> false;
 		};
 	}
-	
-	/************************ Users can communicate with assembly line via these methods*************************/
-	
-	/***********Methods used by garage holder************/
 
 	/**
 	 * add an order to assembly line
@@ -111,53 +118,44 @@ public class AssemAssist {
 		if(isValidUser("garage holder")) this.controller.addOrderToQueue(carOrder);
 		else throw new IllegalUserException("addOrder()");
 	}
-	
-	/***********Methods used by manager************/
 
-	/**
-	 * advance the assembly line
-	 * @param minutes past since task started
-	 * @throws NotAllTasksCompleteException thrown if there are still tasks not done
-	 */
-	public void advanceAssembly(int minutes) throws NotAllTasksCompleteException {
-		if(isValidUser("manager")) this.controller.advanceAssembly(minutes);
-		else throw new IllegalUserException("advanceAssembly()");
-	}	
-
-	public List<String> getCurrentAssemblyStatus() {
-		return this.getAssemblyLine().getCurrentStatus();
-	}
-	
-	public List<String> getAdvancedAssemblyStatus() {
-		return this.controller.getAdvancedStatus();
-	}
-	
-	/***********Methods used by car mechanic************/
 
 	/**
 	 * mechanic completes a task
 	 * @param task task which is completed
+	 * @param time the time passed while doing the task
 	 */
-	public void completeTask(Task task) {
+	public void completeTask(Task task, int time) {
 		if (task == null) throw new IllegalArgumentException("task is null");
-		if(isValidUser("car mechanic")) task.completeTask();
+		if(isValidUser("car mechanic")) {
+			task.completeTask(time);
+			}
 		else throw new IllegalUserException("completeTask()");
 		
 	}
-	
-	public List<String> getStationsNames() {
-		return this.getAssemblyLine().getWorkstationNames();
-	}
 
+	/**
+	 * @return the WorkStations of the assemblyline
+	 */
 	public List<WorkStation> getStations() {
 		return this.getAssemblyLine().getWorkStations();
 	}
-	
-	public Set<Task> getsAvailableTasks(String string) {
-		return this.getAssemblyLine().getUncompletedTasks(string);
-	}
-	
-	public String getTaskDescription(Task task) {
+
+	/**
+	 * gets the task description for a given task
+	 * @param task a given task which you want description for
+	 * @return the description of a task as a list of strings
+	 */
+	public List<String> getTaskDescription(Task task) {
 		return task.getTaskDescription();
 	}
+
+	/**
+	 * gets all stats from the {@code Statistics} class
+	 * @return all statistics from {@code Statistics}
+	 */
+	public AllStats getStats() {
+		return this.statistics.getOrderStats();
+	}
 }
+

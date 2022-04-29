@@ -1,17 +1,23 @@
 package swop.Car;
 
-import swop.Parts.*;
 
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+/**
+ * A selection for each category for a carModel
+ */
 public class CarModelSpecification {
 	
 	Map<String, String> chosenOptions;
 
+	/**
+	 * initialize this specification with a map consisting of the category and the selection for that specification
+	 * @param chosenOptions the selected options for the car
+	 */
 	public CarModelSpecification(Map<String, String> chosenOptions){
-		checkConstraints(chosenOptions);
+		this.checkConstraints(chosenOptions);
 		this.chosenOptions = chosenOptions;
 	}
 
@@ -35,7 +41,7 @@ public class CarModelSpecification {
 	 * If you select the ultra engine, you can only fit the manual airco into your car (or none)
 	 * @param engine chosen engine
 	 * @param airco chosen airco
-	 * @return whether the engine & airco combination is valid
+	 * @return whether the engine and airco combination is valid
 	 */
 	private boolean isValidEngineAirco(String engine, String airco) {
 		if (engine.contains("ultra")) return airco == null || airco.equals("manual");
@@ -46,7 +52,7 @@ public class CarModelSpecification {
 	 * If you select a sport body, you must also select the performance or ultra engine
 	 * @param body chosen body
 	 * @param engine chosen spoiler
-	 * @return whether the body & engine combination is valid
+	 * @return whether the body and engine combination is valid
 	 */
 	private boolean isValidBodyEngineCombination(String body, String engine) {
 		if (body.equals("sport")) return engine.contains("performance") || engine.contains("ultra");
@@ -57,25 +63,21 @@ public class CarModelSpecification {
 	 * If you select a sport body, a spoiler is mandatory
 	 * @param body chosen body
 	 * @param spoiler chosen spoiler
-	 * @return whether the body & spoiler combination is valid
+	 * @return whether the body and spoiler combination is valid
 	 */
 	private boolean isValidBodySpoilerCombination(String body, String spoiler) {
 		if (body.equals("sport")) return spoiler != null;
 		return true;
 	}
 
+	/**
+	 * get the chosenOptions and its value of thes CarModelSpecification as a Map
+	 * @return Map of all the chosen options
+	 */
 	public Map<String, String> getAllParts(){
 		//https://stackoverflow.com/questions/28288546/how-to-copy-hashmap-not-shallow-copy-in-java
 		return this.chosenOptions.entrySet().stream()
 				.collect(Collectors.toMap(Entry::getKey, Entry::getValue));
-	}
-
-	public String getPart(String key){
-		return this.chosenOptions.get(key);
-	}
-
-	public Map<String, String> getPartsMap() {
-		return this.getAllParts();
 	}
 
 	/**
@@ -87,9 +89,19 @@ public class CarModelSpecification {
 		if(selectedCategory == null) {
 			 throw new IllegalArgumentException("Can't retrieve value (part = null)");
 		}
-		if (!this.chosenOptions.containsKey(selectedCategory)) {
+		if (!isPartInChosenOptions(selectedCategory)) {
 			throw new IllegalArgumentException("invalid category");
 		}
 		return this.chosenOptions.get(selectedCategory);
+	}
+	
+	/**
+	 * Checks if a part is chosen or not
+	 * @param part the part to check
+	 * @return True if part is in this.chosenOptions
+	 */
+	public boolean isPartInChosenOptions(String part) {
+		if(part == null) throw new IllegalArgumentException("Can't retrieve value (part = null)");
+		return this.chosenOptions.containsKey(part);
 	}
 }

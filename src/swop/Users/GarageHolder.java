@@ -11,9 +11,16 @@ import swop.UI.GarageHolderUI;
 
 import java.util.*;
 
+/**
+ * A garage holder user
+ */
 public class GarageHolder extends User{
     private final Set<CarOrder> carOrders;
 
+    /**
+     * initializes a garage holder user
+     * @param id a given id for the garage holder
+     */
     public GarageHolder(String id) {
         super(id);
         this.carOrders = new HashSet<>();
@@ -42,11 +49,17 @@ public class GarageHolder extends User{
     @Override
     public void selectAction(AssemAssist assemAssist) throws CancelException {
         List<String> actions = Arrays.asList("Place new order", "Check order details", "Exit");
-        int action = GarageHolderUI.selectAction(actions);
+        int action = GarageHolderUI.selectAction(actions, "What would you like to do?");
 
         switch (action) {
             case 0 -> this.generateOrder(assemAssist);
-            case 1 -> this.checkOrderDetails();
+            case 1 -> {
+                if (this.getOrders().isEmpty()) {
+                    GarageHolderUI.printError("No orders available to check!");
+                    this.selectAction(assemAssist);
+                }
+                else this.checkOrderDetails();
+            }
             case 2 -> {
                 // Do Nothing
             }
@@ -54,20 +67,23 @@ public class GarageHolder extends User{
         }
     }
 
+    /**
+     * Handles the selection of the order to view the details
+     * @throws CancelException when the user wants to cancel viewing details of orders
+     */
     private void checkOrderDetails() throws CancelException {
-        String orderID =  GarageHolderUI.selectOrderID();
-        while (!isValidOrderID(orderID)) {
-            GarageHolderUI.printError("Please provide a valid orderID");
-            orderID =  GarageHolderUI.selectOrderID();
-        }
-        CarOrder carOrder = getOrderFromID(orderID);
-
-        //TODO: use garaholderUI
-        System.out.println(carOrder.toString());
-
-        String answer = GarageHolderUI.indicateYesNo("Would you like to view another order?");
-        if (answer.equals("y")) checkOrderDetails();
-
+        String question = "n";
+        do {
+            if (question.equals("y")) GarageHolderUI.displayOrders(this.getOrders());
+            String orderID = GarageHolderUI.selectOrderID();
+            while (!isValidOrderID(orderID)) {
+                GarageHolderUI.printError("Please provide a valid orderID");
+                orderID = GarageHolderUI.selectOrderID();
+            }
+            CarOrder carOrder = getOrderFromID(orderID);
+            GarageHolderUI.showOrderDetails(carOrder.toString());
+            question = GarageHolderUI.indicateYesNo("Would you like to view another order?");
+        } while (question.equals("y"));
 
     }
 
@@ -148,11 +164,12 @@ public class GarageHolder extends User{
 			int option = GarageHolderUI.askOption(0, entry.getValue().size(), entry.getKey());
 			carConfig.put(entry.getKey(), option);
 		}
+		GarageHolderUI.printEmptyLine();
 		return carConfig;
     }
 
     /**
-     * Converts Map<String, Integer> to Map<String,String>
+     * Converts Map of string to integer to Map of string to string
      * @param carConfig given a map from part to integer selection
      * @param validOptions the valid options for the carOptions
      * @return map string part to selection string
@@ -171,7 +188,7 @@ public class GarageHolder extends User{
 
 	/**
 	 * Creates new CarModel given the model/optionsMap
-//	 * @param carOptions map from part to actual selection as a string
+     * @param choice the choice for a carmodel the user made
 	 * @return created CarModel
 	 */
     private CarModel createCarModel(int choice) {
@@ -198,14 +215,18 @@ public class GarageHolder extends User{
         return carOrder;
     }
 
-    
-    
-
-    /************************ Orders *************************/
+    /**
+     * get the carOrders of this user
+     * @return this.carOrders
+     */
     public Set<CarOrder> getOrders() {
         return this.carOrders;
     }
 
+    /**
+     * Add an order to the CarOrders of this user
+     * @param carOrder the given order to add
+     */
     public void addOrder(CarOrder carOrder) {
         this.carOrders.add(carOrder);
     }

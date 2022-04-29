@@ -4,33 +4,39 @@ import swop.Car.Car;
 import swop.Exceptions.NotAllTasksCompleteException;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
+/**
+ * A assembly line in a factory consisting of multiple workstations
+ */
 public class AssemblyLine {
 
 	private final LinkedList<WorkStation> workStations;
 
+	/**
+	 * initializes the assembly line with a list of {@code WorkStation}
+	 * @param workStations a list of workstations
+	 */
 	public AssemblyLine(LinkedList<WorkStation> workStations) {
 		this.workStations = workStations;
 	}
 
 	/**
-	 * advance the assembly line if a manager orders and all tasks are done
-	 * //TODO
-//	 * @param minutes minutes past since start of the task
+	 * advance the assembly line
+	 * @param nextCar Next car on the assemblyLine
 	 * @throws NotAllTasksCompleteException thrown when there are still tasks to do
+	 * @return A finished car or null if there is no finished car
 	 */
-	public Car advance(Car car) throws NotAllTasksCompleteException{
+	public Car advance(Car nextCar) throws NotAllTasksCompleteException{
 		// check if possible to advance AssemblyLine
-		checkAdvance();
+		this.checkAdvance();
 		Car completedCar = this.workStations.getLast().getCar();
 		//updating completion time of finished car
-			// Move all cars on assembly by 1 position
+		// Move all cars on assembly by 1 position
 		for (int i = this.workStations.size() - 1; i > 0; i--) {
 			Car previous = this.workStations.get(i-1).getCar();
 			this.workStations.get(i).setCar(previous);
 		}
-		this.workStations.getFirst().setCar(car);
+		this.workStations.getFirst().setCar(nextCar);
 		return completedCar;
 	}
 
@@ -43,60 +49,8 @@ public class AssemblyLine {
 		for (WorkStation workStation: this.workStations)
 			if (!workStation.stationTasksCompleted()) w.add(workStation.getName());
 		
-		if(!w.isEmpty())throw new NotAllTasksCompleteException("Not all tasks completed in: ", w);
-	}
-	
-	/**
-	 * Check if all tasks on all workstations of the assembly line are completed
-	 */
-
-	public boolean allTasksCompleted() {
-		return this.workStations.stream().allMatch(e -> e.stationTasksCompleted());
-
-	}
-	
-	/**
-	 * returns for all works stations current state. 
-	 * Empty = no car, Finished = all tasks completed, Pending = tasks need 2 be completed
-	 * @return list of states from each work station
-	 */
-	public List<String> getCurrentStatus() {
-		List<String> status = new LinkedList<>();
-		this.workStations.forEach(w -> {
-			String s = w.getName();
-			if(w.getCar() == null) s = s.concat(": EMPTY");
-			else {
-				s = s.concat(": " + w.getCar().getCarModel().getCarModelSpecification().getPartsMap());
-				s = w.stationTasksCompleted() ? s.concat(" (FINISHED)") : s.concat(" (PENDING)");
-			}
-			status.add(s);
-		});
-		return status;
-	}
-	
-	/**
-	 * returns for all works stations state if an advance would happen. 
-	 * Empty = no car, Finished = all tasks completed, Pending = tasks need 2 be completed
-	 * @param car a given
-	 * @return list of states from each work station if an advance would take place
-	 */
-	public List<String> getAdvancedStatus(Car car) { 
-		List<String> status = new LinkedList<>();
-		for(int i = 0; i < workStations.size(); i++){
-			WorkStation w = this.workStations.get(i);
-			String s = w.getName();
-			if(0<i) {
-				w = this.workStations.get(i-1);
-				s = w.getCar() == null ? s.concat(": EMPTY") :
-						s.concat(": " + w.getCar().getCarModel().getCarModelSpecification().getPartsMap() + " (PENDING)");
-			}
-			else {
-				s = (car == null) ? s.concat(": EMPTY") :
-						s.concat(": " + car.getCarModel().getCarModelSpecification().getPartsMap() + " (PENDING)");
-			}
-			status.add(s);
-		}
-		return status;
+		if(!w.isEmpty())
+			throw new NotAllTasksCompleteException("Not all tasks completed in: ", w);
 	}
 
 	/**
@@ -124,12 +78,9 @@ public class AssemblyLine {
 	 * @param station the name "string" of the given workstation
 	 * @return all tasks that are uncompleted at station
 	 */
-	public Set<Task> getUncompletedTasks(String station) {
+	public List<Task> getUncompletedTasks(WorkStation station) {
 		if (station== null) throw new IllegalArgumentException("station is null");
-		for(WorkStation wStation: this.workStations) {
-			if(wStation.getName().equals(station)) return wStation.getUncompletedTasks();
-		}
-		throw new IllegalArgumentException("Not a valid workstation name"); 
+		return station.getUncompletedTasks();
 	}
 
 	/**
@@ -147,9 +98,7 @@ public class AssemblyLine {
 	public List<Car> getUnfinishedCars() {
 		List<WorkStation> unFinishedStations = this.getWorkStations().stream()
 				.filter(w -> !w.stationTasksCompleted()).toList();
-		return unFinishedStations.stream()
-				.map(WorkStation::getCar)
-				.collect(Collectors.toList());
+		return unFinishedStations.stream().map(WorkStation::getCar).toList();
 	}
 }
 

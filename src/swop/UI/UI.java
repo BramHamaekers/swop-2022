@@ -7,6 +7,9 @@ import swop.Exceptions.CancelException;
 import swop.UI.Builders.DisplayStatus;
 import swop.UI.Generators.UserGenerator;
 
+/**
+ * Interface used to make abstraction between the program and the user IO
+ */
 interface UI {
 	InputScanner scanner = new InputScanner(new Scanner(System.in));
 
@@ -17,7 +20,8 @@ interface UI {
 	 * @throws CancelException when the user types "Cancel"
 	 */
 	static String indicateYesNo(String action) throws CancelException {
-		System.out.printf("Do you want to %s? %n[y] Yes [n] No%n", action);
+		System.out.println();
+		System.out.printf("%s %n[y] Yes [n] No%n", action);
 		return scanner.scanNextLineOfTypeString(new String[]{"y","n"});
 	}
 
@@ -26,7 +30,14 @@ interface UI {
 	 * @param e the error message to print
 	 */
 	static void printError(String e) {
-		System.out.println();
+		System.out.println(e);
+	}
+
+	/**
+	 * Prints an error message followed by a new line
+	 * @param e the error message to print
+	 */
+	static void printErrorln(String e) {
 		System.out.println(e);
 	}
 
@@ -34,11 +45,13 @@ interface UI {
 	 * Asks which action the user wants to take
 	 * @return int indicating the chosen action
 	 * @param actions available actions for the user
+	 * @param generator the generator to specify what to build for the string
+	 * @param question an initial question for which to display options
 	 * @throws CancelException when the user types 'Cancel'
 	 */
-	static int selectAction(UserGenerator generator, List<String> actions) throws CancelException {
+	static int selectAction(UserGenerator generator, List<String> actions, String question) throws CancelException {
 		DisplayStatus builder = new DisplayStatus();
-		generator.selectAction(builder, actions);
+		generator.selectAction(builder, actions, question);
 		System.out.println(builder.getDisplay());
 		return scanner.scanNextLineOfTypeInt(0, actions.size());
 	}
