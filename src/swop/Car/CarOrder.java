@@ -61,6 +61,9 @@ public class CarOrder implements Comparable<CarOrder> {
 
 	@Override
 	public int compareTo(CarOrder carOrder) {
+		if (!carOrder.isCompleted()) {
+			return this.getEstimatedCompletionTime().compareTo(carOrder.getEstimatedCompletionTime());
+		}
 		return this.getCompletionTime().compareTo(carOrder.getCompletionTime());
 	}
 
