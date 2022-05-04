@@ -57,10 +57,11 @@ Options.txt     // Carorders with at least 3 for airco=manual, color=blue and en
 ------
 Change to batch
 ------
-a   cancel      // Last order in list (est time) should have a manual airco
-                // chosing manual airco as batch will therefore put it (more) in front of others
-c   1   0   0   // chose airco manual option
-a   cancel      // You can see last order was moved to 4th position because there are 2 others with manual airco still in queue
+a   1   [Last ID]   n   // Last order in list (est time) should have a manual airco
+
+                        // chosing manual airco as batch will therefore put it (more) in front of others
+c   1   0   0           // chose airco manual option
+a   cancel              // You can see last order was moved to 4th position because there are 2 others with manual airco still in queue
 
 -------
 change back to FIFO
