@@ -30,10 +30,10 @@ a	1	[Correct ID]	n					// You can see Airco not an attribute in the specificatio
 ------
 Perform assembly Task with delay
 ------
-b	0	0	0	45	0	45					// Take 90 minutes on car that should only take 70
-a											// You can see delay of 20 minutes
+b	0	0	0	ENTER   45	0	ENTER   45	// Take 90 minutes on car that should only take 70
+a   cancel									// You can see delay of 20 minutes
 b	1										// First station empty
-0	0	0	0	0	0	0	0	0	0		// Time is 10:40	-> 50 minutes after car that takes 70 minutes per task 
+a   0	0	0	0	0	0	0	0	0	    // Est Time is 10:40	-> 50 minutes after car that takes 70 minutes per task
 											// So Estimated time keeps in mind that cars before current car can take longer/shorter per task
 b	1
 quit										// New Car was put on the assemblyline
@@ -47,7 +47,7 @@ Order 5 display statistics
 ------
 statistics.txt
 c	0			// fist car has delay so that all other cars get finished on the next day
-
+quit
 
 ------------------------------------------------
 DEMO 4
