@@ -6,8 +6,8 @@ DEMO 1
 Order 1 Car (Model B) and check details
 ------
 a	0	1	0	1	0	0	0	0	0	0 	// Car Ordered
-a	1	[Wrong ID]	[Correct ID]					// Show orderd details
-y	[Correct ID]	n							// view another order
+a	1	[Wrong ID]	[Correct ID]			// Show orderd details
+y	[Correct ID]	n						// view another order
 
 ------
 See that first car has advanced on assemblyline
@@ -25,7 +25,7 @@ Order Invalid Car options
 a	0	1	1	0	0	2	0	0	0	0	// Automatic airco + ultra engine not allowed
 2	2	0	2	0	0	1	0				// Spoiler mandatory
 2	0	0	0	0	0	0	0				// Order valid car
-a	1	[Correct ID]	n						// You can see Airco not an attribute in the specification	
+a	1	[Correct ID]	n					// You can see Airco not an attribute in the specification
 
 ------
 Perform assembly Task with delay
@@ -36,7 +36,7 @@ b	1										// First station empty
 0	0	0	0	0	0	0	0	0	0		// Time is 10:40	-> 50 minutes after car that takes 70 minutes per task 
 											// So Estimated time keeps in mind that cars before current car can take longer/shorter per task
 b	1
-quit											// New Car was put on the assemblyline
+quit										// New Car was put on the assemblyline
 
 ------------------------------------------------
 DEMO 3
