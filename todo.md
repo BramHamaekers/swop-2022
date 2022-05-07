@@ -9,4 +9,4 @@
 # todo for third iteration:
 - Make task (abstract) class with specific tasks as subclasses. To complete a task just set its boolean isCompleted to true. 
 Also remove workstation from tasks. Make car use only 1 set of Tasks and check if all tasks are completed (with boolean)
-to getUncompletedTasks (and completedTasks)
+to getUncompletedTasks (and completedTasks) 
