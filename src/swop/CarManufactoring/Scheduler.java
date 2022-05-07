@@ -1,5 +1,6 @@
 package swop.CarManufactoring;
 import swop.Car.Car;
+import swop.Exceptions.NotAllTasksCompleteException;
 import swop.Miscellaneous.TimeStamp;
 
 import java.util.*;
@@ -184,6 +185,12 @@ public class Scheduler {
         int overTime = this.getMinutes() - this.workingDayMinutes; // Calculate the amount of overtime this day
         this.workingDayMinutes = 960 - overTime;    // Calculate how long the shifts of next day will be
         this.minutes = 0; // Reset amount of minutes that have past this day
+		try {
+			this.controller.advanceAssembly();
+		}
+		catch (NotAllTasksCompleteException e) {
+			//TODO do something (this was just a quick fix)
+			}
     }
 
 	/**

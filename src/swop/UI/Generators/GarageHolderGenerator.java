@@ -66,7 +66,12 @@ public class GarageHolderGenerator extends UserGenerator {
         builder.appendTitle("Orders");
         builder.appendSubTitle("Pending");
 
+        Set<CarOrder> pendingSet = new TreeSet<>();
         carOrders.stream()
+                .filter(o -> !o.isCompleted())
+                .forEach(pendingSet::add);
+
+        pendingSet.stream()
             .filter(o -> !o.isCompleted())
             .forEach(p -> builder.inputInfo(String.format("Order: %s -> %s",
                     p.getID(), p.getEstimatedCompletionTime().toString())));

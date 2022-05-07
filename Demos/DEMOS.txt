@@ -1,0 +1,77 @@
+------------------------------------------------
+DEMO 1
+------------------------------------------------
+
+------
+Order 1 Car (Model B) and check details
+------
+a	0	1	0	1	0	0	0	0	0	0 	// Car Ordered
+a	1	[Wrong ID]	[Correct ID]			// Show orderd details
+y	[Correct ID]	n						// view another order
+
+------
+See that first car has advanced on assemblyline
+------
+b	1
+quit
+
+------------------------------------------------
+DEMO 2
+------------------------------------------------
+
+------
+Order Invalid Car options
+------
+a	0	1	1	0	0	2	0	0	0	0	// Automatic airco + ultra engine not allowed
+2	2	0	2	0	0	1	0				// Spoiler mandatory
+2	0	0	0	0	0	0	0				// Order valid car
+a	1	[Correct ID]	n					// You can see Airco not an attribute in the specification
+
+------
+Perform assembly Task with delay
+------
+b	0	0	0	ENTER   45	0	ENTER   45	// Take 90 minutes on car that should only take 70
+a   cancel									// You can see delay of 20 minutes
+b	1										// First station empty
+a   0	0	0	0	0	0	0	0	0	    // Est Time is 10:40	-> 50 minutes after car that takes 70 minutes per task
+											// So Estimated time keeps in mind that cars before current car can take longer/shorter per task
+b	1
+quit										// New Car was put on the assemblyline
+
+------------------------------------------------
+DEMO 3
+------------------------------------------------
+
+------
+Order 5 display statistics
+------
+statistics.txt
+c	0			// fist car has delay so that all other cars get finished on the next day
+quit
+
+------------------------------------------------
+DEMO 4
+------------------------------------------------
+Options.txt     // Carorders with at least 3 for airco=manual, color=blue and engine=standard
+
+------
+Change to batch
+------
+a   1   [Last ID]   n   // Last order in list (est time) should have a manual airco
+
+                        // chosing manual airco as batch will therefore put it (more) in front of others
+c   1   0   0           // chose airco manual option
+a   cancel              // You can see last order was moved to 4th position because there are 2 others with manual airco still in queue
+
+-------
+change back to FIFO
+------
+c   1   1
+a   cancel
+
+
+
+
+
+
+
