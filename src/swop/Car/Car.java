@@ -3,15 +3,14 @@ package swop.Car;
 import java.util.*;
 
 import swop.Car.CarModel.CarModel;
-import swop.CarManufactoring.Task;
 import swop.Miscellaneous.TimeStamp;
+import swop.CarManufactoring.Task;
 
 /**
  * A car representation in assem assist, consisting of tasks and deliver times
  */
 public class Car {
-	private Set<Task> uncompletedTasks;
-	private Set<Task> allTasks;
+	private Set<Task> tasks;
     private CarModel carModel;
 	private TimeStamp initialCompletionTime;
 	private TimeStamp estimatedCompletionTime;
@@ -53,11 +52,25 @@ public class Car {
 	}
 
 	/**
+	 * Return a set of all Tasks of this car that are completed
+	 * @return Set of all completed tasks in this.tasks
+	 */
+	public Set<Task> getCompletedTasks() {
+		Set<Task> completedTasks = new HashSet<>();
+		this.tasks.stream().filter(t -> !t.isComplete())
+				.forEach(completedTasks::add);
+		return completedTasks;
+	}
+
+	/**
 	 * Return a set of all Tasks of this car that still need to be completed
-	 * @return copy of this.uncompletedTasks
+	 * @return Set of all uncompleted tasks in this.tasks
 	 */
 	public Set<Task> getUncompletedTasks() {
-		return Set.copyOf(uncompletedTasks);
+		Set<Task> uncompletedTasks = new HashSet<>();
+		this.tasks.stream().filter(t -> !t.isComplete())
+							.forEach(uncompletedTasks::add);
+		return uncompletedTasks;
 	}
 
 	/**
@@ -69,11 +82,11 @@ public class Car {
 	}
 
 	/**
-	 * Returns this.allTasks
+	 * Returns this.tasks
 	 * @return all tasks from the car
 	 */
-	public Set<Task> getAllTasks(){
-		return this.allTasks;
+	public Set<Task> getTasks(){
+		return this.tasks;
 	}
 	
 	/**

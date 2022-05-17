@@ -72,7 +72,7 @@ class CarTest {
         modelA.setCarModelSpecification(specification);
         Car car = new Car(modelA);
         Set<Task> tasks = Task.getAllTasks(specification.getAllParts());
-        assertEquals(tasks, car.getAllTasks());
+        assertEquals(tasks, car.getTasks());
     }
 
     @Test

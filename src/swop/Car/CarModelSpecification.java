@@ -71,7 +71,7 @@ public class CarModelSpecification {
 	}
 
 	/**
-	 * get the chosenOptions and its value of thes CarModelSpecification as a Map
+	 * get the chosenOptions and its value of the CarModelSpecification as a Map
 	 * @return Map of all the chosen options
 	 */
 	public Map<String, String> getAllParts(){

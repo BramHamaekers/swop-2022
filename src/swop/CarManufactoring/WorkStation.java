@@ -63,7 +63,7 @@ public class WorkStation {
 			return null;
 		}
 		List<Task> tasksOfWorkstation = this.getTasks();
-		List<Task> allTasksOfCar = new LinkedList<>(this.getCar().getAllTasks());
+		List<Task> allTasksOfCar = new LinkedList<>(this.getCar().getTasks());
 		tasksOfWorkstation.retainAll(allTasksOfCar);
 		tasksOfWorkstation.removeAll(this.getCar().getUncompletedTasks());
 		return tasksOfWorkstation;
