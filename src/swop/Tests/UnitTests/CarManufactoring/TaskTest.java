@@ -6,10 +6,14 @@ import swop.Car.CarModel.CarModel;
 import swop.Car.CarModel.ModelA;
 import swop.Car.CarModelSpecification;
 import swop.CarManufactoring.Task;
+import swop.CarManufactoring.Tasks.AssemblyCarBody;
+import swop.CarManufactoring.Tasks.InstallSeats;
 import swop.CarManufactoring.WorkStation;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 import static java.util.Map.entry;
 import static org.junit.jupiter.api.Assertions.*;
@@ -34,37 +38,32 @@ class TaskTest {
 
         WorkStation station = new WorkStation("Car Body Post");
         station.setCar(car);
-        Task assemblyCarBody = Task.AssemblyCarBody;
+        AssemblyCarBody assemblyCarBody = (AssemblyCarBody) findTask(car, AssemblyCarBody.class);
 
         assertTrue(car.getUncompletedTasks().contains(assemblyCarBody));
-        assemblyCarBody.completeTask(0);
+        assemblyCarBody.complete();
         assertFalse(car.getUncompletedTasks().contains(assemblyCarBody));
-
     }
 
     @Test
-    void setWorkStation() {
+    void getDescription() {
         modelA.setCarModelSpecification(specification);
         Car car = new Car(modelA);
 
         WorkStation station = new WorkStation("Car Body Post");
         station.setCar(car);
-        Task assemblyCarBody = Task.AssemblyCarBody;
+        InstallSeats installSeats = (InstallSeats) findTask(car, InstallSeats.class);
 
-        assemblyCarBody.setWorkStation(station);
-        assertEquals(station, assemblyCarBody.getWorkStation());
+        assertEquals("Install seats of type: leather white", installSeats.getDescription());
     }
 
-    @Test
-    void getTaskDescription() {
-        modelA.setCarModelSpecification(specification);
-        Car car = new Car(modelA);
-
-        WorkStation station = new WorkStation("Car Body Post");
-        station.setCar(car);
-        Task assemblyCarBody = Task.AssemblyCarBody;
-
-        assemblyCarBody.setWorkStation(station);
-        assertEquals(List.of("Mount a body on the chassis of type: sedan"), assemblyCarBody.getTaskDescription());
+    Task findTask(Car car, Class<? extends Task> taskClass) {
+        Set<Task> tasks = car.getTasks();
+        for (Task task : tasks) {
+            if (taskClass.isInstance(task)) {
+                return task;
+            }
+        }
+        return null;
     }
 }

@@ -6,6 +6,7 @@ import swop.Car.CarModel.CarModel;
 import swop.Car.CarModel.ModelA;
 import swop.Car.CarModelSpecification;
 import swop.CarManufactoring.*;
+import swop.CarManufactoring.Tasks.*;
 import swop.Exceptions.NotAllTasksCompleteException;
 
 import java.util.*;
@@ -44,7 +45,7 @@ class AssemblyLineTest {
     void advance_LastCarFinished() throws NotAllTasksCompleteException {
         modelA.setCarModelSpecification(specification);
         Car car = new Car(modelA);
-        car.getUncompletedTasks().forEach(car::completeTask);
+        car.getUncompletedTasks().forEach(Task::complete);
         assemblyLine.getWorkStations().get(2).setCar(car);
         assertEquals(car, assemblyLine.advance(null));
         assertNull(assemblyLine.getWorkStations().get(0).getCar());
@@ -78,14 +79,16 @@ class AssemblyLineTest {
         modelA.setCarModelSpecification(specification);
         Car car = new Car(modelA);
         assemblyLine.getWorkStations().get(0).setCar(car);
-        assertEquals(new LinkedList<>(List.of(Task.AssemblyCarBody, Task.PaintCar)) ,assemblyLine.getUncompletedTasks(assemblyLine.getWorkStations().get(0)));
+        AssemblyCarBody assemblyCarBody = (AssemblyCarBody) findTask(car, AssemblyCarBody.class);
+        PaintCar paintCar = (PaintCar) findTask(car, PaintCar.class);
+        assertEquals(Set.of(assemblyCarBody, paintCar), new HashSet<>(assemblyLine.getUncompletedTasks(assemblyLine.getWorkStations().get(0))));
     }
 
     @Test
     void getUncompletedTasks_CompletedTasks() {
         modelA.setCarModelSpecification(specification);
         Car car = new Car(modelA);
-        car.getUncompletedTasks().forEach(car::completeTask);
+        car.getUncompletedTasks().forEach(Task::complete);
         assemblyLine.getWorkStations().get(2).setCar(car);
         assertEquals(new LinkedList<>() ,assemblyLine.getUncompletedTasks(assemblyLine.getWorkStations().get(2)));
     }
@@ -120,8 +123,18 @@ class AssemblyLineTest {
     void getUnfinishedCars_onlyFinishedCars() {
         modelA.setCarModelSpecification(specification);
         Car car = new Car(modelA);
-        car.getUncompletedTasks().forEach(car::completeTask);
+        car.getUncompletedTasks().forEach(Task::complete);
         assemblyLine.getWorkStations().get(2).setCar(car);
         assertEquals(new LinkedList<>(), assemblyLine.getUnfinishedCars());
+    }
+
+    Task findTask(Car car, Class<? extends Task> taskClass) {
+        Set<Task> tasks = car.getTasks();
+        for (Task task : tasks) {
+            if (taskClass.isInstance(task)) {
+                return task;
+            }
+        }
+        return null;
     }
 }

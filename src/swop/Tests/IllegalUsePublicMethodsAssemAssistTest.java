@@ -36,9 +36,6 @@ public class IllegalUsePublicMethodsAssemAssistTest {
 		loadGarageHolder();
 		//test activeUser = manager but wants to complete a task: Should throw IllegalArgumentException
 		loadManager();
-		assertThrows(IllegalArgumentException.class,
-				() -> assem.completeTask(null, 0));
-		assertThrows(IllegalUserException.class, () -> assem.completeTask(Task.InsertEngine,50));
 		CarModel a = new ModelA();
 		a.setCarModelSpecification(new CarModelSpecification(Map.ofEntries(
 				entry("Body", "sedan"),

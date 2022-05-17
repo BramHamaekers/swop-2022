@@ -3,7 +3,7 @@ package swop.Car;
 import java.util.*;
 
 import swop.Car.CarModel.CarModel;
-import swop.CarManufactoring.Tasks.AssemblyCarBody;
+import swop.CarManufactoring.Tasks.*;
 import swop.Miscellaneous.TimeStamp;
 import swop.CarManufactoring.Task;
 
@@ -61,6 +61,7 @@ public class Car {
 	 */
 	private void initiateTasks() {
 		Map<String, String> parts = this.getCarModel().getCarModelSpecification().getAllParts();
+		this.tasks = new HashSet<>();
 		for (String part: parts.keySet()) {
 			this.tasks.add(createTask(part, parts.get(part)));
 		}
@@ -69,6 +70,14 @@ public class Car {
 	private Task createTask(String part, String option) {
 		return switch (part) {
 			case "Body" -> new AssemblyCarBody(option);
+			case "Color" -> new PaintCar(option);
+			case "Engine" -> new InsertEngine(option);
+			case "Gearbox" -> new InstallGearbox(option);
+			case "Seats" -> new InstallSeats(option);
+			case "Airco" -> new InstallAirco(option);
+			case "Wheels" -> new MountWheels(option);
+			case "Spoiler" -> new InstallSpoiler(option);
+			default -> throw new IllegalArgumentException("part is not valid");
 		};
 	}
 

@@ -49,8 +49,9 @@ public class AssemblyLine {
 		for (WorkStation workStation: this.workStations)
 			if (!workStation.stationTasksCompleted()) w.add(workStation.getName());
 		
-		if(!w.isEmpty())
+		if(!w.isEmpty()) {
 			throw new NotAllTasksCompleteException("Not all tasks completed in: ", w);
+		}
 	}
 
 	/**

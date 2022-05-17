@@ -3,7 +3,7 @@ package swop.CarManufactoring;
 import java.util.*;
 
 import swop.Car.Car;
-import swop.CarManufactoring.Tasks.AssemblyCarBody;
+import swop.CarManufactoring.Tasks.*;
 import swop.Listeners.TaskCompletedListener;
 /**
  * This class represents a workstation
@@ -77,9 +77,9 @@ public class WorkStation {
 	 */
 	public List<Class<? extends Task>> getTasks() {
 		return switch (this.getName()) {
-			case "Car Body Post" -> new LinkedList<Class<? extends Task>>(Arrays.asList(AssemblyCarBody.class, Paintcar.class));
-			case "Drivetrain Post" -> new LinkedList<Class<? extends Task>>(Arrays.asList(InsertEngine.class, InstallGearbox.class));
-			case "Accessories Post" -> new LinkedList<Class<? extends Task>>(Arrays.asList(InstallSeats.class, InstallAirco.class, MountWheels.class, InstallSpoiler.class));
+			case "Car Body Post" -> new LinkedList<>(Arrays.asList(AssemblyCarBody.class, PaintCar.class));
+			case "Drivetrain Post" -> new LinkedList<>(Arrays.asList(InsertEngine.class, InstallGearbox.class));
+			case "Accessories Post" -> new LinkedList<>(Arrays.asList(InstallSeats.class, InstallAirco.class, MountWheels.class, InstallSpoiler.class));
 			default -> throw new IllegalArgumentException("No tasks could be given: Invalid name Workstation");
 		};
 	}
@@ -160,8 +160,7 @@ public class WorkStation {
 	 * @return true if there is no car or all tasks are completed
 	 */
 	public boolean stationTasksCompleted() {
-		return this.getCar() == null || Collections.disjoint(this.getCar().getUncompletedTasks(),
-				this.getTasks()); //returns true if no tasks are uncompleted
+		return this.getUncompletedTasks() == null || this.getUncompletedTasks().isEmpty();
 	}
 	
 }

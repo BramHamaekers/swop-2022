@@ -7,6 +7,7 @@ import swop.Car.CarModel.CarModel;
 import swop.Car.CarModel.ModelA;
 import swop.Car.CarModelSpecification;
 import swop.Car.CarOrder;
+import swop.CarManufactoring.Task;
 import swop.Miscellaneous.TimeStamp;
 
 import java.util.Map;
@@ -32,7 +33,7 @@ class CarOrderTest {
         CarOrder carOrder = new CarOrder(modelA);
         Car car = carOrder.getCar();
         assertFalse(carOrder.isCompleted());
-        car.getUncompletedTasks().forEach(car::completeTask); // Car order is completed if car is completed
+        car.getUncompletedTasks().forEach(Task::complete); // Car order is completed if car is completed
         assertTrue(carOrder.isCompleted());
     }
 
@@ -63,7 +64,7 @@ class CarOrderTest {
                 carOrder.getCar().getCarModel().getCarModelSpecification().getAllParts(),
                 carOrder.getOrderTime(),
                 carOrder.getCar().getEstimatedCompletionTime()));
-        carOrder.getCar().getUncompletedTasks().forEach(t -> carOrder.getCar().completeTask(t));
+        carOrder.getCar().getUncompletedTasks().forEach(Task::complete);
         assertEquals(carOrder.toString(),String.format("specification: %s %n" +
                         "timestamp of ordering: %s %n" +
                         "Completion Time: %s",

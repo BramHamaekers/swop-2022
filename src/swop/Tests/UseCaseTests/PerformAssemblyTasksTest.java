@@ -162,18 +162,10 @@ public class PerformAssemblyTasksTest {
 
     private void showTaskInfo(ListIterator<String> output, Task t) {
 		DisplayStatus builder = new DisplayStatus();
-		carMechanicGenerator.generateTaskInfo(builder, t.getTaskDescription());
+		carMechanicGenerator.generateTaskInfo(builder, t.getDescription());
 		for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
 
     }
-    
-    private void askWorkPostCanceled(ListIterator<String> output) {
-    	DisplayStatus builder = new DisplayStatus();
-		carMechanicGenerator.generateStationList(builder, assem.getStations());
-		for (String s : (builder.getDisplay() + "CANCELED").split(String.format("%n")))
-			assertEquals(s, output.next());
-		
-	}
 
     private void askWorkPost(ListIterator<String> output) {
     	DisplayStatus builder = new DisplayStatus();
