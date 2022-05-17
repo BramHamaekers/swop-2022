@@ -33,7 +33,7 @@ public class Scheduler {
     private int minutes;
     private int day;
     private int workingDayMinutes;
-    private final Map<String, Integer> timePerWorkstationMap = new HashMap<>(){{
+    private final Map<String, Integer> timePerWorkstationMap = new HashMap<>(){{ //TODO use class instance not string
 		put( "ModelA",50);
 		put( "ModelB",70);
 		put( "ModelC",60);

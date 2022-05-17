@@ -62,11 +62,9 @@ public class CarMechanicGenerator extends UserGenerator {
      * @param builder the builder used in displaying the info
      * @param info the info to display
      */
-    public void generateTaskInfo(FormBuilder builder, List<String> info){
+    public void generateTaskInfo(FormBuilder builder, String info){
         builder.appendSubTitle("Info For Task");
-        for (String s : info) {
-            builder.inputInfo(s);
-        }
+        builder.inputInfo(info);
         builder.appendSubTitle("-------------");
         //TODO: kind of janky need to rewrite
         builder.inputInfo(String.format("Finished -> Press Enter"));

@@ -3,6 +3,7 @@ package swop.Car;
 import java.util.*;
 
 import swop.Car.CarModel.CarModel;
+import swop.CarManufactoring.Tasks.AssemblyCarBody;
 import swop.Miscellaneous.TimeStamp;
 import swop.CarManufactoring.Task;
 
@@ -18,37 +19,19 @@ public class Car {
 
 	/**
 	 * initializes a car with a {@code CarModel}
-	 * @param model a selected carmodel
+	 * @param model a selected carModel
 	 */
 	public Car(CarModel model){
         this.setCarModel(model);
-		this.initiateUncompletedTasks();
+		this.initiateTasks();
     }
 
 	/**
-	 * Complete a remaining task for assembly
-	 * @param task given a completed task
-	 * @throws IllegalArgumentException when task is null
-	 * */
-	public void completeTask(Task task) {
-		if (task == null)
-			throw new IllegalArgumentException("task is null");
-		if (!uncompletedTasks.contains(task))
-			throw new IllegalArgumentException("task not in todo list");
-		for(Task t: uncompletedTasks) {
-			if (Objects.equals(task.getName(), t.getName())) {
-				this.uncompletedTasks.remove(t);
-				break;
-			}
-		}
-	}
-
-	/**
 	 * Checks if all tasks are completed
-	 * @return true if Set of uncompletedTasks is empty
+	 * @return true if all tasks in this.task are completed
 	 */
 	public boolean isCompleted() {
-		return this.getUncompletedTasks().isEmpty();
+		return this.tasks.stream().allMatch(Task::isComplete);
 	}
 
 	/**
@@ -57,7 +40,7 @@ public class Car {
 	 */
 	public Set<Task> getCompletedTasks() {
 		Set<Task> completedTasks = new HashSet<>();
-		this.tasks.stream().filter(t -> !t.isComplete())
+		this.tasks.stream().filter(Task::isComplete)
 				.forEach(completedTasks::add);
 		return completedTasks;
 	}
@@ -76,9 +59,17 @@ public class Car {
 	/**
 	 * Sets all tasks that need to be done
 	 */
-	private void initiateUncompletedTasks() {
-		this.uncompletedTasks = Task.getAllTasks(this.getCarModel().getCarModelSpecification().getAllParts());
-		this.allTasks = this.getUncompletedTasks();
+	private void initiateTasks() {
+		Map<String, String> parts = this.getCarModel().getCarModelSpecification().getAllParts();
+		for (String part: parts.keySet()) {
+			this.tasks.add(createTask(part, parts.get(part)));
+		}
+	}
+
+	private Task createTask(String part, String option) {
+		return switch (part) {
+			case "Body" -> new AssemblyCarBody(option);
+		};
 	}
 
 	/**

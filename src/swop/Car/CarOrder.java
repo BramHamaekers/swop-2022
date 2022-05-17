@@ -18,7 +18,7 @@ public class CarOrder implements Comparable<CarOrder> {
 	 */
 	public CarOrder(CarModel carModel) {
 		this.car = new Car(carModel);
-		this.ID = RandomID.random(7);
+		this.ID = RandomID.generateRandomID(7);
 	}
 
 	/**

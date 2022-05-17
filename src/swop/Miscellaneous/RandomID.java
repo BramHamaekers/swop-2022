@@ -8,12 +8,12 @@ import java.util.Random;
 public final class RandomID {
 
 	/**
-	 * A half working method for generating random sequence off symbols
+	 * A method for generating random sequence off symbols
 	 * @param size of the generated string
 	 * @return String of random symbols
 	 */
-	public static String random(int size) {
-		 int leftLim1 = 48; 
+	public static String generateRandomID(int size) {
+		 int leftLim1 = 48;
 		 int rightLim1 = 57;
 		 int leftLim2 = 65; 
 		 int rightLim2 = 90;

@@ -72,7 +72,7 @@ public class CarMechanicUI implements UI {
 	 * @param info the given info
 	 * @throws CancelException when user types "CANCEL"
 	 */
-	public static void displayTaskInfo(List<String> info) throws CancelException {
+	public static void displayTaskInfo(String info) throws CancelException {
 		DisplayStatus builder = new DisplayStatus();
 		carMechanicGenerator.generateTaskInfo(builder, info);
 		System.out.println(builder.getDisplay());

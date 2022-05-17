@@ -74,7 +74,7 @@ public class CarManufacturingController {
 	 * Will try to advance the assemblyline + update the scheduler.
 	 * @throws NotAllTasksCompleteException if all available tasks are not completed
 	 */
-	public void advanceAssembly() throws NotAllTasksCompleteException {
+	public void advanceAssembly() throws NotAllTasksCompleteException { //TODO split this nightmare
 		//there is time to finish another car + there are cars on the queue
 		List<WorkStation> workStations = this.getAssembly().getWorkStations();
 		List<Integer> workingTimes = workStations.stream()

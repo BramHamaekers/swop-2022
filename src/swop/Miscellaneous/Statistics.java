@@ -9,7 +9,7 @@ import java.util.*;
 /**
  * A class containing all delays and orders for a controller
  */
-public class Statistics {
+public class Statistics { //TODO splits methods in class
     private final Map<Integer, List<Integer>> carDelayMap = new HashMap<>();
     public final StatisticsListener statisticsListener = this::updateDelay;
 

@@ -119,35 +119,11 @@ public class AssemAssist {
 		else throw new IllegalUserException("addOrder()");
 	}
 
-
-	/**
-	 * mechanic completes a task
-	 * @param task task which is completed
-	 * @param time the time passed while doing the task
-	 */
-	public void completeTask(Task task, int time) {
-		if (task == null) throw new IllegalArgumentException("task is null");
-		if(isValidUser("car mechanic")) {
-			task.completeTask(time);
-			}
-		else throw new IllegalUserException("completeTask()");
-		
-	}
-
 	/**
 	 * @return the WorkStations of the assemblyline
 	 */
 	public List<WorkStation> getStations() {
 		return this.getAssemblyLine().getWorkStations();
-	}
-
-	/**
-	 * gets the task description for a given task
-	 * @param task a given task which you want description for
-	 * @return the description of a task as a list of strings
-	 */
-	public List<String> getTaskDescription(Task task) {
-		return task.getTaskDescription();
 	}
 
 	/**

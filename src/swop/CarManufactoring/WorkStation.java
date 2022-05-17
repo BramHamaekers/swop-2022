@@ -3,6 +3,7 @@ package swop.CarManufactoring;
 import java.util.*;
 
 import swop.Car.Car;
+import swop.CarManufactoring.Tasks.AssemblyCarBody;
 import swop.Listeners.TaskCompletedListener;
 /**
  * This class represents a workstation
@@ -22,7 +23,6 @@ public class WorkStation {
 			throw new IllegalArgumentException("Not a valid work station name"); 
 		}
 		this.name = name;
-		for(Task t:this.getTasks()) t.setWorkStation(this);
 
 	}
 
@@ -46,12 +46,9 @@ public class WorkStation {
 	 * @return a list of uncompleted tasks
 	 */
 	public List<Task> getUncompletedTasks() {
-		if(this.getCar() == null) {
-			return null;
-		}
-		List<Task> tasks = this.getTasks();
-		tasks.retainAll(this.getCar().getUncompletedTasks()); 
-		return tasks;
+		if(this.getCar() == null) return null;
+		List<Class<? extends Task>> tasksOfWorkstation = this.getTasks();
+		return this.getCar().getUncompletedTasks().stream().filter(t -> tasksOfWorkstation.contains(t.getClass())).toList();
 	}
 
 	/**
@@ -59,14 +56,9 @@ public class WorkStation {
 	 * @return a list of completed tasks
 	 */
 	public List<Task> getCompletedTasks() {
-		if(this.getCar() == null) {
-			return null;
-		}
-		List<Task> tasksOfWorkstation = this.getTasks();
-		List<Task> allTasksOfCar = new LinkedList<>(this.getCar().getTasks());
-		tasksOfWorkstation.retainAll(allTasksOfCar);
-		tasksOfWorkstation.removeAll(this.getCar().getUncompletedTasks());
-		return tasksOfWorkstation;
+		if(this.getCar() == null) return null;
+		List<Class<? extends Task>> tasksOfWorkstation = this.getTasks();
+		return this.getCar().getCompletedTasks().stream().filter(t -> tasksOfWorkstation.contains(t.getClass())).toList();
 	}
 
 	/**
@@ -83,11 +75,11 @@ public class WorkStation {
 	 * returns the tasks that are part of this workstation
 	 * @return tasks of workstation
 	 */
-	public List<Task> getTasks() {
+	public List<Class<? extends Task>> getTasks() {
 		return switch (this.getName()) {
-			case "Car Body Post" -> new LinkedList<>(Arrays.asList(Task.AssemblyCarBody, Task.PaintCar));
-			case "Drivetrain Post" -> new LinkedList<>(Arrays.asList(Task.InsertEngine, Task.InstallGearbox));
-			case "Accessories Post" -> new LinkedList<>(Arrays.asList(Task.InstallSeats, Task.InstallAirco, Task.MountWheels, Task.InstallSpoiler));
+			case "Car Body Post" -> new LinkedList<Class<? extends Task>>(Arrays.asList(AssemblyCarBody.class, Paintcar.class));
+			case "Drivetrain Post" -> new LinkedList<Class<? extends Task>>(Arrays.asList(InsertEngine.class, InstallGearbox.class));
+			case "Accessories Post" -> new LinkedList<Class<? extends Task>>(Arrays.asList(InstallSeats.class, InstallAirco.class, MountWheels.class, InstallSpoiler.class));
 			default -> throw new IllegalArgumentException("No tasks could be given: Invalid name Workstation");
 		};
 	}
@@ -158,7 +150,7 @@ public class WorkStation {
 	public void completeTask(Task task, int time) {
 		if(car == null) throw new IllegalArgumentException("No car in station");
 		if (task == null) throw new IllegalArgumentException("task is null");
-		this.getCar().completeTask(task);
+		task.complete();
 		this.currentWorkingTime += time;
 		this.triggerListenersTaskCompletion();
 	}

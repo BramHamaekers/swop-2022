@@ -64,7 +64,6 @@ public class CarMechanic extends User{
 
 		workStations.forEach(station -> {
 			List<Task> pendingTasks = station.getUncompletedTasks();
-			//TODO finishedTasks should be filtered in station.getCompletedTasks()
 			List<Task> finishedTasks = station.getCompletedTasks();
 			CarMechanicUI.displayStationStatus(station, pendingTasks, finishedTasks);
 		});
@@ -95,7 +94,7 @@ public class CarMechanic extends User{
 		if (task != null) {
 			//Show the information for given task 2 user
 			this.showInfo(assemAssist, task);
-			this.completeTask(assemAssist, task);
+			this.completeTask(workStation, task);
 			this.performTaskAtWorkStation(assemAssist, workStation);
 		}
 		else {
@@ -105,15 +104,14 @@ public class CarMechanic extends User{
 
 	/**
 	 * Helper function to complete a task in assemAssist
-	 * @param assemAssist given the main program
+	 * @param workStation to perform the task at
 	 * @param task task from the tasklist
 	 * @throws CancelException when "CANCEL" is the input
 	 */
-	private void completeTask(AssemAssist assemAssist, Task task) throws CancelException {
-		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
+	private void completeTask(WorkStation workStation, Task task) throws CancelException {
 		if (task == null) throw new IllegalArgumentException("task is null");
 		int time = CarMechanicUI.askTimeToCompleteTask();
-		assemAssist.completeTask(task, time);
+		workStation.completeTask(task, time);
 	}
 
 	/**
@@ -126,7 +124,7 @@ public class CarMechanic extends User{
 	private void showInfo(AssemAssist assemAssist, Task task) throws CancelException {
 		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
 		if (task == null) throw new IllegalArgumentException("task is null");
-		List<String> info = assemAssist.getTaskDescription(task);
+		String info = task.getDescription();
 		CarMechanicUI.displayTaskInfo(info);
 	}
 
