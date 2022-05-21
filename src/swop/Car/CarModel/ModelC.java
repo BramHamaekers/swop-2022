@@ -20,7 +20,7 @@ public class ModelC extends CarModel {
     );
 
     /**
-     * initialize the carModel with a name, valid options and a list of mandatory parts
+     * Initialise the carModel with a name, valid options and a list of mandatory parts
      */
     public ModelC(){
         this.name = "ModelC";

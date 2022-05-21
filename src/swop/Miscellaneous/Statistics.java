@@ -18,6 +18,7 @@ public class Statistics { //TODO splits methods in class
      * @param car of the type Car
      */
     void updateDelay(Car car) {
+    	if (car == null) throw new IllegalArgumentException("Error trying to update the delay: Car can not be null");
         int finishDay = car.getCompletionTime().getDay();
         int delayedDays = finishDay - car.getInitialCompletionTime().getDay();
         int delayedMinutes = car.getCompletionTime().getMinutes() - car.getInitialCompletionTime().getMinutes();

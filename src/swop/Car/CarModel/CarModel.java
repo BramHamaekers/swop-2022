@@ -46,16 +46,25 @@ public abstract class CarModel {
      * @return true if all parts are valid
      */
     private boolean isValidSpecification(CarModelSpecification specification){
-        for(Map.Entry<String,String> selectedMap: specification.getAllParts().entrySet()){
-            String option = selectedMap.getKey();
-            String selected = selectedMap.getValue();
-            if (!validOptions.containsKey(option))
-                return false;
-            if (!validOptions.get(option).contains(selected))
-                return false;
+        for(Map.Entry<String,String> selectedMap: specification.getAllParts().entrySet()){	
+            if (!IsValidOption(selectedMap.getKey(), selectedMap.getValue())) return false;
         }
         return this.satisfiesConstraints(specification);
     }
+
+    /**
+     * Checks if a given option/value combination is valid
+     * @param option that needs to be checked
+     * @param value that needs to be checked
+     * @return false if !validOptions.contains(option/value) else true
+     */
+	private boolean IsValidOption(String option, String value) {
+		if (!validOptions.containsKey(option))
+		    return false;
+		if (!validOptions.get(option).contains(value))
+		    return false;
+		return true;
+	}
 
     /**
      * Check if the given CarModelSpecification satisfies the constraints for a carModel

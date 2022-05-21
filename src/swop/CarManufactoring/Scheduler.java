@@ -186,7 +186,7 @@ public class Scheduler {
         this.workingDayMinutes = 960 - overTime;    // Calculate how long the shifts of next day will be
         this.minutes = 0; // Reset amount of minutes that have past this day
 		try {
-			this.controller.advanceAssembly();
+			this.controller.advanceAssemblyAndUpdateSchedular();
 		}
 		catch (NotAllTasksCompleteException e) {
 			//TODO do something (this was just a quick fix)

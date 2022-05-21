@@ -13,7 +13,7 @@ public class AssemblyLine {
 	private final LinkedList<WorkStation> workStations;
 
 	/**
-	 * initializes the assembly line with a list of {@code WorkStation}
+	 * Initialises the assembly line with a list of {@code WorkStation}
 	 * @param workStations a list of workstations
 	 */
 	public AssemblyLine(LinkedList<WorkStation> workStations) {
@@ -29,8 +29,16 @@ public class AssemblyLine {
 	public Car advance(Car nextCar) throws NotAllTasksCompleteException{
 		// check if possible to advance AssemblyLine
 		this.checkAdvance();
+		return carToNextWorkStation(nextCar);
+	}
+
+	/**
+	 * This method will move the cars to the next workstation
+	 * @param nextCar is the new car that will be put on the first workstation
+	 * @return returns the car leaving the last workstation
+	 */
+	private Car carToNextWorkStation(Car nextCar) {
 		Car completedCar = this.workStations.getLast().getCar();
-		//updating completion time of finished car
 		// Move all cars on assembly by 1 position
 		for (int i = this.workStations.size() - 1; i > 0; i--) {
 			Car previous = this.workStations.get(i-1).getCar();
