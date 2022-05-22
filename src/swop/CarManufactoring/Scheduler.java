@@ -62,7 +62,6 @@ public class Scheduler {
      */
     public TimeStamp getEstimatedCompletionTime(Car car) {
           int totalMinutes = this.getEstCompletionTimeInMinutes(car);
-          if(this.carOnAssembly(car)) return new TimeStamp(this.day, totalMinutes);
           return this.createTimeStamp(totalMinutes, car);
     }
     
@@ -85,35 +84,34 @@ public class Scheduler {
 	 * @param current car
 	 * @return a new TimeStamp
 	 */
-    private TimeStamp createTimeStamp(int minutes, Car car) {
-    	int day = this.day;
-    	int workingDayMinutes = this.workingDayMinutes;
-    	while (minutes > workingDayMinutes) {
-            day += 1;
-            minutes -= workingDayMinutes;
-            workingDayMinutes = 960;
-        }
-    	return new TimeStamp(day,roundMinutes(minutes, day, this.timePerWorkstationMap.get(car.getCarModel().getClass())));
-    }
+	private TimeStamp createTimeStamp(int minutes, Car car) {
+		if(this.carOnAssembly(car)) return new TimeStamp(this.day, minutes); //needs to be finished today
+		int day = this.day;
+		int workingDayMinutes = this.workingDayMinutes;
+		while (minutes > workingDayMinutes) {
+	        day += 1;
+	        minutes -= workingDayMinutes;
+	        workingDayMinutes = 960;
+	    }
+		if(day != this.day) 
+			return new TimeStamp(day,roundMinutes(minutes, this.timePerWorkstationMap.get(car.getCarModel().getClass())));
+		return new TimeStamp(day, minutes);
+	}
     
     /**
      * This function will round the given minutes based on avgTimeCarInStation 
-     * and parameter day != current day
      * @param minutes that need to be rounded
-     * @param day on which the car estimated to be finished
      * @param avgTimeCarInStation how long it typical takes to finish a car of this model
      * @return rounded minutes
      */
-    private int roundMinutes(int minutes,int day, int avgTimeCarInStation) {
-	   	 if (day != this.day) {
-	   		 if (minutes < 3 * avgTimeCarInStation) // First car of the new day
-	   			 return 3 * avgTimeCarInStation;
-	   		 return (int) (Math.ceil( (float) minutes/60) * 60);// Other cars
-	    }
-	   	return minutes;
+    private int roundMinutes(int minutes, int avgTimeCarInStation) {
+	   	if (minutes < 3 * avgTimeCarInStation) // First car of the new day
+	   		return 3 * avgTimeCarInStation;
+	   	return (int) (Math.ceil( (float) minutes/60) * 60);// Other cars
 	}
 
 	/**
+	 * Checks if the parameter car is on the assembly line
 	 * @param car the car to check if it is on the assemblyLine
 	 * @return True if the given car is on the assemblyLine.
 	 */
