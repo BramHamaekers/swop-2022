@@ -13,7 +13,8 @@ public final class RandomID {
 	 * @return String of random symbols
 	 */
 	public static String generateRandomID(int size) {
-		 int leftLim1 = 48;
+
+		int leftLim1 = 48;
 		 int rightLim1 = 57;
 		 int leftLim2 = 65; 
 		 int rightLim2 = 90;

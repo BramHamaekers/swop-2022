@@ -1,6 +1,6 @@
 package swop.CarManufactoring;
 import swop.Car.Car;
-import swop.Exceptions.NotAllTasksCompleteException;
+import swop.Car.CarModel.*;
 import swop.Miscellaneous.TimeStamp;
 
 import java.util.*;
@@ -25,7 +25,7 @@ interface customIterator<T> {
 }
 
 /**
- * A scheduler manages the time and order of the carqueue
+ * A scheduler manages the time and order of the car queue
  */
 public class Scheduler {
 
@@ -33,18 +33,20 @@ public class Scheduler {
     private int minutes;
     private int day;
     private int workingDayMinutes;
-    private final Map<String, Integer> timePerWorkstationMap = new HashMap<>(){{ //TODO use class instance not string
-		put( "ModelA",50);
-		put( "ModelB",70);
-		put( "ModelC",60);
+    private int overTime;
+    private final Map<Class<? extends CarModel>, Integer> timePerWorkstationMap = new HashMap<>(){{
+		put(ModelA.class, 50);
+		put(ModelB.class, 70);
+		put(ModelC.class, 60);
 	}};
 	private final List<String> validAlgorithms = List.of("BATCH", "FIFO", "Cancel selection");
 	private String algorithm;
 	private Map<String,String> batchOptions;
 
 	/**
-	 * initializes the scheduler with his controller, the current time at the beginning, the total minutes in a workingday and the algorithm.
-	 * @param carManufacturingController a given controller that initialized this scheduler
+	 * Initialises the scheduler with his controller, the current time at the beginning, 
+	 * the total minutes in a working day and the algorithm.
+	 * @param carManufacturingController a given controller that initialised this scheduler
 	 */
     public Scheduler(CarManufacturingController carManufacturingController) {
         this.controller = carManufacturingController;
@@ -54,37 +56,62 @@ public class Scheduler {
     }
 
     /**
-     * Calculates the estimated completion time based on the CarQueue and overtime done on previous days
+     * returns the estimated completion time based on the CarQueue and overtime done on previous days
      * @param car a car for which to calculate the estimated completion time
-     * @return Time formatted as string
+     * @return a TimeStamp containing the estimated day and minutes the car will be finished. 
      */
     public TimeStamp getEstimatedCompletionTime(Car car) {
-    	  int day = this.day;
-          int minutes = this.minutes;
-          int workingDayMinutes = this.workingDayMinutes;
-          List<Car> workstationCars = this.getWorkStationCars();
-     
-    
-          minutes += this.calculateWaitingTime(car,  workstationCars);
-
-          // assume no overtime should be made: assignment -> scheduler should minimize overtime
-          // scheduling a car to make overtime to complete should not be allowed
-          while (minutes > workingDayMinutes & !this.carOnAssembly(car)) {
-              day += 1;
-              minutes -= workingDayMinutes;
-              workingDayMinutes = 960;
-          }
-
-          if (day != this.day) {
-              if (minutes < 3 * this.timePerWorkstationMap.get(car.getCarModelName())) { // First car of the new day
-				  minutes = 3 * this.timePerWorkstationMap.get(car.getCarModelName());
-			  }
-              else {minutes = (int) (Math.ceil( (float) minutes/60) * 60);} // Other cars
-
-          }
-
-		  return new TimeStamp(day,minutes);
+          int totalMinutes = this.getEstCompletionTimeInMinutes(car);
+          if(this.carOnAssembly(car)) return new TimeStamp(this.day, totalMinutes);
+          return this.createTimeStamp(totalMinutes, car);
     }
+    
+    /**
+     * calculates the estimated time it will take to finish the car in minutes
+     * @param car from which the estimated time needs to be calculated
+     * @return estimated time in minutes
+     */
+	private int getEstCompletionTimeInMinutes(Car car) {
+    	List<Car> workstationCars = this.getWorkStationCars();
+    	int minutes = this.minutes;
+    	minutes += this.calculateWaitingTime(car,  workstationCars);
+    	return minutes;
+    }
+    
+	/**
+	 * Creates a TimeStamp based on current car 
+	 * and the the estimated time in minutes
+	 * @param the the estimated time in minutes
+	 * @param current car
+	 * @return a new TimeStamp
+	 */
+    private TimeStamp createTimeStamp(int minutes, Car car) {
+    	int day = this.day;
+    	int workingDayMinutes = this.workingDayMinutes;
+    	while (minutes > workingDayMinutes) {
+            day += 1;
+            minutes -= workingDayMinutes;
+            workingDayMinutes = 960;
+        }
+    	return new TimeStamp(day,roundMinutes(minutes, day, this.timePerWorkstationMap.get(car.getCarModel().getClass())));
+    }
+    
+    /**
+     * This function will round the given minutes based on avgTimeCarInStation 
+     * and parameter day != current day
+     * @param minutes that need to be rounded
+     * @param day on which the car estimated to be finished
+     * @param avgTimeCarInStation how long it typical takes to finish a car of this model
+     * @return rounded minutes
+     */
+    private int roundMinutes(int minutes,int day, int avgTimeCarInStation) {
+	   	 if (day != this.day) {
+	   		 if (minutes < 3 * avgTimeCarInStation) // First car of the new day
+	   			 return 3 * avgTimeCarInStation;
+	   		 return (int) (Math.ceil( (float) minutes/60) * 60);// Other cars
+	    }
+	   	return minutes;
+	}
 
 	/**
 	 * @param car the car to check if it is on the assemblyLine
@@ -138,7 +165,7 @@ public class Scheduler {
     	if(cars == null) return 0;
     	List<Integer> l = new LinkedList<>();
     	for(Car c: cars) {
-    		if(c != null) l.add(this.timePerWorkstationMap.get(c.getCarModelName()));
+    		if(c != null) l.add(this.timePerWorkstationMap.get(c.getCarModel().getClass()));
     	}
     	if (l.isEmpty()) return 0;
     	return Collections.max(l);
@@ -146,7 +173,6 @@ public class Scheduler {
 
     /**
      * Add time in minutes to this.minutes
-     *
      * @param minutes Minutes to add to this.minutes
      */
     public void addTime(int minutes) {
@@ -178,19 +204,26 @@ public class Scheduler {
 	}
 
     /**
-     * advances day by 1 and calculates the length of next day
+     * advances day based on the overtime
      */
     public void advanceDay() {
         this.day += 1;  // Go to next day
-        int overTime = this.getMinutes() - this.workingDayMinutes; // Calculate the amount of overtime this day
-        this.workingDayMinutes = 960 - overTime;    // Calculate how long the shifts of next day will be
+        overTime += (this.getMinutes() - this.workingDayMinutes); // Calculate the amount of overtime this day
+        
+        while(overTime > 960) { //overtime more than a day
+        	this.day += 1;
+        	this.workingDayMinutes = 0;
+        	overTime -= 960;
+        }
+        if (overTime > 0){ //overtime less than a day and positive
+        	this.workingDayMinutes = 960 - overTime;
+        	overTime = 0;
+        }
+        else { //negative overtime
+        	overTime = 0; 
+        	this.workingDayMinutes = 960;
+        }
         this.minutes = 0; // Reset amount of minutes that have past this day
-		try {
-			this.controller.advanceAssemblyAndUpdateSchedular();
-		}
-		catch (NotAllTasksCompleteException e) {
-			//TODO do something (this was just a quick fix)
-			}
     }
 
 	/**
@@ -217,7 +250,7 @@ public class Scheduler {
 		ListIterator<WorkStation> workstations = this.controller.getAssembly().getWorkStations().listIterator();
 		ArrayList<Car> workstationCars = new ArrayList<>();
 		while (workstations.hasNext()){
-			// check if throws nullpointerexception
+			// check if throws NullpointerException
 			workstationCars.add(workstations.next().getCar());
 		}
 		return workstationCars;
@@ -234,7 +267,7 @@ public class Scheduler {
     /**
      * set the current schedulingAlgorithm to the new given algorithms
      * @param algorithm selected priority algorithm
-	 * @param batchOptions a map of the selected batchoption
+	 * @param batchOptions a map of the selected batch option
      */
     public void setSchedulingAlgorithm(String algorithm, Map<String,String> batchOptions) {
 		if(!this.isValidSchedulingAlgorithm(algorithm)) throw new IllegalArgumentException("Invalid Scheduling Algorithm");
@@ -294,7 +327,7 @@ public class Scheduler {
 									if(list.get(i).getPartsMap().get(prioSelection.getKey()).equals(prioSelection.getValue()))
 										return list.remove(i);
 					}
-				//if there is no more element that is conform with the batch, return to fifo
+				//if there is no more element that is conform with the batch, return to FiFo
 				return list.remove(0);
 			}
 		};

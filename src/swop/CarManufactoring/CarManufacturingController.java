@@ -178,6 +178,11 @@ public class CarManufacturingController {
 		//if all work is done for today, skip to next day
 		if (!this.canFinishNewCar(0) && this.assemblyLine.isEmptyAssemblyLine()) {
 			this.getScheduler().advanceDay();
+			try {
+				advanceAssemblyAndUpdateSchedular();
+			} catch (NotAllTasksCompleteException e) {
+				
+			}
 		}
 		
 	}
@@ -191,12 +196,13 @@ public class CarManufacturingController {
 		if(car == null) throw new IllegalArgumentException("car is null");
 		this.carQueue.add(car);
 		carOrder.setOrderTime(getScheduler().getTime());
-		// if it is the only order in queue and the first spot is empty -> put it on the assembly line (if possible)
-		if (this.getCarQueue().size() == 1 && canFinishNewCar(0) && this.getAssembly().getWorkStations().get(0).getCar() == null) {
-			this.getAssembly().getWorkStations().get(0).setCar(car);
-			removeCarFromQueue(car);
-		}
 		car.setEstimatedCompletionTime(getScheduler().getEstimatedCompletionTime(car));
+		// if it is the only order in queue and the first spot is empty -> put it on the assembly line (if possible)
+		try {
+			advanceAssemblyAndUpdateSchedular();
+		} catch (NotAllTasksCompleteException e) {
+		}
+		
 	}
 
 	/**
