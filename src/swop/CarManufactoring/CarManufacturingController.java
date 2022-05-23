@@ -128,7 +128,9 @@ public class CarManufacturingController {
 	 * @return the next car in the queue or null if there is no car to be completed
 	 */
 	private Car getNextCarFromQueue(int maxWorkingMinutes) {
-		if(!this.canFinishNewCar(maxWorkingMinutes) || this.getCarQueue().isEmpty()) return null;
+		if(!this.canFinishNewCar(maxWorkingMinutes) || this.getCarQueue().isEmpty()) {	
+			return null;
+		}
 		return this.getScheduler().getNextScheduledCar();
 	}
 
