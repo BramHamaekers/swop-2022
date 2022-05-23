@@ -19,11 +19,9 @@ public class WorkStation {
 	 * @param name string of name
 	 */
 	public WorkStation(String name) {
-		if (!isValidName(name)) {
-			throw new IllegalArgumentException("Not a valid work station name"); 
-		}
+		if (name == null || !isValidName(name))
+			throw new IllegalArgumentException("Not a valid work station name");
 		this.name = name;
-
 	}
 
 	/**
@@ -31,6 +29,8 @@ public class WorkStation {
 	 * @param listener the listener to add
 	 */
 	public void addListener(TaskCompletedListener listener) {
+		if (listener == null)
+			throw new IllegalArgumentException("listener not valid");
 		this.listeners.add(listener);
 	}
 
@@ -67,6 +67,8 @@ public class WorkStation {
 	 * @return whether the naming string is valid
 	 */
 	private boolean isValidName(String name) {
+		if (name == null)
+			throw new IllegalArgumentException("invalid name");
 		return (name.equals("Car Body Post")) ||
 				(name.equals("Drivetrain Post")) || (name.equals("Accessories Post"));
 	}
@@ -123,6 +125,8 @@ public class WorkStation {
 	 * @return boolean whether the part is chosen or not
 	 */
 	public boolean isPartOfCurrentCarInWorkStation(String part) {
+		if (part == null)
+			throw new IllegalArgumentException("empty part");
 		Car car = this.getCar();
 		if(car == null) return false;
 		return car.getCarModel().getCarModelSpecification().isPartInChosenOptions(part);
@@ -148,8 +152,9 @@ public class WorkStation {
 	 * @throws IllegalArgumentException if car == null || task == null
 	 */
 	public void completeTask(Task task, int time) {
-		if(car == null) throw new IllegalArgumentException("No car in station");
+		if (car == null) throw new IllegalArgumentException("No car in station");
 		if (task == null) throw new IllegalArgumentException("task is null");
+		if (time<0) throw new IllegalArgumentException("negative time");
 		task.complete();
 		this.currentWorkingTime += time;
 		this.triggerListenersTaskCompletion();
