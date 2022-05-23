@@ -67,6 +67,6 @@ public class CarMechanicGenerator extends UserGenerator {
         builder.inputInfo(info);
         builder.appendSubTitle("-------------");
         //TODO: kind of janky need to rewrite
-        builder.inputInfo(String.format("Finished -> Press Enter"));
+        builder.inputInfo("Finished -> Press Enter");
     }
 }

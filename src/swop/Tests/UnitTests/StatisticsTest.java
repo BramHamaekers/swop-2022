@@ -171,7 +171,6 @@ class StatisticsTest {
 
     @Test
     void getOrdersLast2() {
-    	//TODO Don't know how to test the order
     	assertEquals(new LinkedHashMap<Integer, Integer>(), stats.getOrdersLast2());
         stats.addTimeToDelayMap(30,0);
         // day 0 and 1 order

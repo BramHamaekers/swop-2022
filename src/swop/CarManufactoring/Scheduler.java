@@ -76,7 +76,6 @@ public class Scheduler {
     	minutes += this.calculateWaitingTime(car,  workstationCars);
     	return minutes;
     }
-    //TODO: unclear description
 	/**
 	 * Creates a TimeStamp based on current car 
 	 * and the the estimated time in minutes
