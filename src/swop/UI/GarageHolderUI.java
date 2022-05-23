@@ -136,6 +136,5 @@ public class GarageHolderUI implements UI {
 	 */
 	public static void showOrderDetails(String string) {
 		System.out.println(string);
-		
 	}
 }

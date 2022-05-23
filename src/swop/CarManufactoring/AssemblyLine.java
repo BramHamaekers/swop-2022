@@ -17,12 +17,16 @@ public class AssemblyLine {
 	 * @param workStations a list of workstations
 	 */
 	public AssemblyLine(LinkedList<WorkStation> workStations) {
+		if (workStations == null)
+			throw new IllegalArgumentException("list of workstations is empty");
+		if (workStations.contains(null))
+			throw new IllegalArgumentException("empty workstation in list of workstations");
 		this.workStations = workStations;
 	}
 
 	/**
 	 * advance the assembly line
-	 * @param nextCar Next car on the assemblyLine
+	 * @param nextCar Next car on the assemblyLine, or null if there is no next car
 	 * @throws NotAllTasksCompleteException thrown when there are still tasks to do
 	 * @return A finished car or null if there is no finished car
 	 */
@@ -34,7 +38,7 @@ public class AssemblyLine {
 
 	/**
 	 * This method will move the cars to the next workstation
-	 * @param nextCar is the new car that will be put on the first workstation
+	 * @param nextCar is the new car that will be put on the first workstation, or null if there is no further order
 	 * @return returns the car leaving the last workstation
 	 */
 	private Car carToNextWorkStation(Car nextCar) {
@@ -50,7 +54,7 @@ public class AssemblyLine {
 
 	/**
 	 * Checks if it is possible to advance the assembly line
-	 * @throws NotAllTasksCompleteException thrown if there are still tasks to do
+	 * @throws NotAllTasksCompleteException thrown if there are still tasks to do on the cars on the workstations
 	 */
 	private void checkAdvance() throws NotAllTasksCompleteException {
 		LinkedList<String> w = new LinkedList<>();
@@ -64,7 +68,7 @@ public class AssemblyLine {
 
 	/**
 	 * returns list with all workstations
-	 * @return this.workStations
+	 * @return a copy of the list of workstations
 	 */
 	public List<WorkStation> getWorkStations() {
 		return List.copyOf(this.workStations);
@@ -72,7 +76,7 @@ public class AssemblyLine {
 
 	/**
 	 * returns list of strings with names of all workstations.
-	 * @return workStations
+	 * @return a list of names of the workstations
 	 */
 	public List<String> getWorkstationNames(){
 		List<String> workStations = new LinkedList<>();
@@ -88,7 +92,7 @@ public class AssemblyLine {
 	 * @return all tasks that are uncompleted at station
 	 */
 	public List<Task> getUncompletedTasks(WorkStation station) {
-		if (station== null) throw new IllegalArgumentException("station is null");
+		if (station == null) throw new IllegalArgumentException("station is null");
 		return station.getUncompletedTasks();
 	}
 

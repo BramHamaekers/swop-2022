@@ -137,7 +137,7 @@ public class WorkStation {
 	public String getValueOfPart(String category) {
 		if(this.car == null) throw new IllegalArgumentException("No car in station");
 		if (category == null) throw new IllegalArgumentException("part is null");
-		return this.getCar().getValueOfPart(category);
+		return this.getCar().getSelectionForPart(category);
 
 	}
 	

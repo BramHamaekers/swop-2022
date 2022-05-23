@@ -7,7 +7,6 @@ import swop.Car.CarModel.CarModel;
 import swop.Car.CarModel.ModelA;
 import swop.Car.CarModelSpecification;
 import swop.CarManufactoring.Task;
-import swop.CarManufactoring.Tasks.AssemblyCarBody;
 import swop.CarManufactoring.Tasks.MountWheels;
 import swop.Miscellaneous.TimeStamp;
 
@@ -76,21 +75,21 @@ class CarTest {
     void getValueOfPart() {
         modelA.setCarModelSpecification(specification);
         Car car = new Car(modelA);
-        assertEquals("sedan", car.getValueOfPart("Body"));
+        assertEquals("sedan", car.getSelectionForPart("Body"));
     }
 
     @Test
     void getValueOfPart_InvalidPart() {
         modelA.setCarModelSpecification(specification);
         Car car = new Car(modelA);
-        assertThrows(IllegalArgumentException.class, () ->  car.getValueOfPart("Invalid"));
+        assertThrows(IllegalArgumentException.class, () ->  car.getSelectionForPart("Invalid"));
     }
 
     @Test
     void getValueOfPart_Null() {
         modelA.setCarModelSpecification(specification);
         Car car = new Car(modelA);
-        assertThrows(IllegalArgumentException.class, () ->  car.getValueOfPart(null));
+        assertThrows(IllegalArgumentException.class, () ->  car.getSelectionForPart(null));
     }
 
     @Test

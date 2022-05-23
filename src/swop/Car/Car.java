@@ -1,6 +1,7 @@
 package swop.Car;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import swop.Car.CarModel.CarModel;
 import swop.CarManufactoring.Tasks.*;
@@ -22,6 +23,7 @@ public class Car {
 	 * @param model a selected carModel
 	 */
 	public Car(CarModel model){
+		// TODO: discuss, do we want double defensive programming or higher coverage
         this.setCarModel(model);
 		this.initiateTasks();
     }
@@ -39,10 +41,7 @@ public class Car {
 	 * @return Set of all completed tasks in this.tasks
 	 */
 	public Set<Task> getCompletedTasks() {
-		Set<Task> completedTasks = new HashSet<>();
-		this.tasks.stream().filter(Task::isComplete)
-				.forEach(completedTasks::add);
-		return completedTasks;
+		return this.tasks.stream().filter(Task::isComplete).collect(Collectors.toSet());
 	}
 
 	/**
@@ -50,10 +49,7 @@ public class Car {
 	 * @return Set of all uncompleted tasks in this.tasks
 	 */
 	public Set<Task> getUncompletedTasks() {
-		Set<Task> uncompletedTasks = new HashSet<>();
-		this.tasks.stream().filter(t -> !t.isComplete())
-							.forEach(uncompletedTasks::add);
-		return uncompletedTasks;
+		return this.tasks.stream().filter(t -> !t.isComplete()).collect(Collectors.toSet());
 	}
 
 	/**
@@ -62,11 +58,15 @@ public class Car {
 	private void initiateTasks() {
 		Map<String, String> parts = this.getCarModel().getCarModelSpecification().getAllParts();
 		this.tasks = new HashSet<>();
-		for (String part: parts.keySet()) {
-			this.tasks.add(createTask(part, parts.get(part)));
-		}
+		parts.forEach((key, value) -> this.tasks.add(createTask(key, value)));
 	}
 
+	/**
+	 * Makes a new task for a specified part and the selected option for that part
+	 * @param part the category for the part e.g. "Body"
+	 * @param option the selected option for the part by the garageholder
+	 * @return a new task
+	 */
 	private Task createTask(String part, String option) {
 		return switch (part) {
 			case "Body" -> new AssemblyCarBody(option);
@@ -98,7 +98,7 @@ public class Car {
 	}
 
 	/**
-	 * get name of carModel
+	 * get name of the carModel
 	 * @return this.carModel.getName()
 	 */
 	public String getCarModelName() {
@@ -106,9 +106,9 @@ public class Car {
 	}
 
 	/**
-	 * Set this.carModel to the given carModel
-	 * @param carModel the given carModel
-	 * @throws IllegalArgumentException when car is null
+	 * Specify the carModel for this car
+	 * @param carModel the specified carModel
+	 * @throws IllegalArgumentException when carmodel is null
 	 */
 	private void setCarModel(CarModel carModel) {
 		if (carModel == null)
@@ -117,12 +117,12 @@ public class Car {
 	}
 
 	/**
-	 * Returns the value of given carOptionCategory based on the model of this car.
+	 * Returns the selected part for a category in the carmodelspecification
 	 * @param category the given carOptionCategory
 	 * @return value carOptionCategory
 	 */
-	public String getValueOfPart(String category) {
-		return this.getCarModel().getCarModelSpecification().getValueOfPart(category);
+	public String getSelectionForPart(String category) {
+		return this.getCarModel().getCarModelSpecification().getSelectionForPart(category);
 	}
 
 	/**
@@ -133,7 +133,7 @@ public class Car {
 	}
 
 	/**
-	 * @return this.initialCompletionTime
+	 * @return get the initial completion time calculated when the car was first ordered
 	 */
 	public TimeStamp getInitialCompletionTime() {
 		return this.initialCompletionTime;
@@ -145,6 +145,8 @@ public class Car {
 	 * @param timeStamp the timeStamp to update the estimatedCompletionTime with
 	 */
 	public void setEstimatedCompletionTime(TimeStamp timeStamp) {
+		if (timeStamp == null)
+			throw new IllegalArgumentException("not a valid timestamp specified");
 		if (this.initialCompletionTime == null) this.initialCompletionTime = timeStamp;
 		this.estimatedCompletionTime = timeStamp;
 	}
@@ -159,7 +161,7 @@ public class Car {
 
 	/**
 	 * get the time that this car was finished at
-	 * @return this.deliveryTime
+	 * @return the delivery time of a finished car, null if it was not finished
 	 */
 	public TimeStamp getCompletionTime() {
 		return this.deliveryTime;
@@ -170,6 +172,8 @@ public class Car {
 	 * @param timeStamp the given timestamp
 	 */
 	public void setDeliveryTime(TimeStamp timeStamp) {
+		if (timeStamp == null)
+			throw new IllegalArgumentException("not a valid timestamp specified");
 		this.deliveryTime = timeStamp;
 	}
 }

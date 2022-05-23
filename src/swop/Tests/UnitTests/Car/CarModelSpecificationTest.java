@@ -30,19 +30,19 @@ class CarModelSpecificationTest {
     @Test
     void getValueOfPart() {
         CarModelSpecification specification = new CarModelSpecification(validOptions);
-        assertEquals("sedan", specification.getValueOfPart("Body"));
+        assertEquals("sedan", specification.getSelectionForPart("Body"));
     }
 
     @Test
     void getValueOfPart_Null() {
         CarModelSpecification specification = new CarModelSpecification(validOptions);
-        assertThrows(IllegalArgumentException.class, () -> specification.getValueOfPart(null));
+        assertThrows(IllegalArgumentException.class, () -> specification.getSelectionForPart(null));
     }
 
     @Test
     void getValueOfPart_InvalidCategory() {
         CarModelSpecification specification = new CarModelSpecification(validOptions);
-        assertThrows(IllegalArgumentException.class, () -> specification.getValueOfPart("Invalid"));
+        assertThrows(IllegalArgumentException.class, () -> specification.getSelectionForPart("Invalid"));
     }
 
     @Test

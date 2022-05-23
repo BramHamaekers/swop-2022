@@ -38,6 +38,7 @@ public class CarManufacturingController {
 	 * @param statisticsListener the listener to add
 	 */
 	public void addListener(StatisticsListener statisticsListener) {
+		//TODO: defensive?
 		this.statisticsListeners.add(statisticsListener);
 	}
 
@@ -46,6 +47,8 @@ public class CarManufacturingController {
 	 * @param car a given car that finished
 	 */
 	private void updateDelay(Car car) {
+		if (car == null)
+			throw new IllegalArgumentException("no finished car");
 		statisticsListeners.forEach(l -> l.updateDelay(car));
 	}
 
@@ -75,17 +78,17 @@ public class CarManufacturingController {
 	 * @throws NotAllTasksCompleteException if all available tasks are not completed
 	 */
 	public void advanceAssemblyAndUpdateSchedular() throws NotAllTasksCompleteException { 
-		int maxWorkingMinutes = getLongestWorkTimeOfWorkStations();
-		Car nextCar = getNextCarFromQueue(maxWorkingMinutes);
-		Car finishedCar = advanceAssemblyLine(nextCar);
-		updateTime(maxWorkingMinutes, finishedCar);
+		int maxWorkingMinutes = this.getLongestWorkTimeOfWorkStations();
+		Car nextCar = this.getNextCarFromQueue(maxWorkingMinutes);
+		Car finishedCar = this.advanceAssemblyLine(nextCar);
+		this.updateTime(maxWorkingMinutes, finishedCar);
 	}
 
 	/**
 	 * This method is the main method for updating all the time aspects based on passedMinutes 
 	 * after a successful advance
 	 * @param passedMinutes the minutes that have passed since last update
-	 * @param finishedCar the car that has been finished
+	 * @param finishedCar the car that has been finished or null if there is no finished car
 	 */
 	private void updateTime(int passedMinutes, Car finishedCar) {
 		//Finalise the Delivery Time of a finished car
@@ -98,14 +101,14 @@ public class CarManufacturingController {
 
 	/**
 	 * This method will try to advance the assembly line
-	 * @param next Car the put on assembly line
+	 * @param nextCar Car the put on assembly line
 	 * @return the finished car leaving the assembly line
-	 * @throws NotAllTasksCompleteException
+	 * @throws NotAllTasksCompleteException if not all tasks are completed
 	 */
 	private Car advanceAssemblyLine(Car nextCar) throws NotAllTasksCompleteException {
 		//first try to advance before removing since it can throw a NotAllTasksCompleteException
 		Car finishedCar = this.assemblyLine.advance(nextCar);
-		removeCarFromQueue(nextCar);
+		this.removeCarFromQueue(nextCar);
 		return finishedCar;
 	}
 
@@ -117,6 +120,11 @@ public class CarManufacturingController {
 		if (car != null) this.carQueue.remove(car);
 	}
 
+	/**
+	 * //TODO: description
+	 * @param maxWorkingMinutes
+	 * @return
+	 */
 	private Car getNextCarFromQueue(int maxWorkingMinutes) {
 		if(!this.canFinishNewCar(maxWorkingMinutes) || this.getCarQueue().isEmpty()) return null;
 		return this.getScheduler().getNextScheduledCar();
@@ -131,12 +139,12 @@ public class CarManufacturingController {
 		List<WorkStation> workStations = this.getAssembly().getWorkStations();
 		List<Integer> workingTimes = workStations.stream()
 				.map(WorkStation::getCurrentWorkingTime).toList();
-		int maxWorkingMinutes = Collections.max(workingTimes);
-		return maxWorkingMinutes;
+		return Collections.max(workingTimes);
 	}
 
 	/**
 	 * For every car in the car queue, update the estimated completion time according to the minutes passed.
+	 * //TODO: minutes should be a param?
 	 */
 	public void updateEstimatedCompletionTime() {
 		this.carQueue.forEach(car -> car.setEstimatedCompletionTime(scheduler.getEstimatedCompletionTime(car)));
@@ -153,9 +161,9 @@ public class CarManufacturingController {
 	 * @throws IllegalStateException if the car is not completed
 	 */
 	private void setFinishedCarDeliveryTime(int minutes, Car finishedCar) {
-		if(finishedCar == null) throw new IllegalArgumentException("Can't set the delivery time cause car == null");
+		if(finishedCar == null) throw new IllegalArgumentException("Can't set the delivery time, car is null");
 		if (!finishedCar.isCompleted()) throw new IllegalStateException("Car is not completed");
-		finishedCar.setDeliveryTime(new TimeStamp(scheduler.getDay(), scheduler.getMinutes()+ minutes));
+		finishedCar.setDeliveryTime(new TimeStamp(scheduler.getDay(), scheduler.getMinutes() + minutes));
 		//update the delay map with the new finished car
 		this.updateDelay(finishedCar);
 	}
@@ -180,9 +188,7 @@ public class CarManufacturingController {
 			this.getScheduler().advanceDay();
 			try {
 				advanceAssemblyAndUpdateSchedular();
-			} catch (NotAllTasksCompleteException e) {
-				
-			}
+			} catch (NotAllTasksCompleteException ignored) {}
 		}
 		
 	}
@@ -200,7 +206,7 @@ public class CarManufacturingController {
 		// if it is the only order in queue and the first spot is empty -> put it on the assembly line (if possible)
 		try {
 			advanceAssemblyAndUpdateSchedular();
-		} catch (NotAllTasksCompleteException e) {
+		} catch (NotAllTasksCompleteException ignored) {
 		}
 		
 	}
