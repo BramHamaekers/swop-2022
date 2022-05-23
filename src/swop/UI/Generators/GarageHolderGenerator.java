@@ -1,5 +1,6 @@
 package swop.UI.Generators;
 
+import swop.Car.CarModel.CarModel;
 import swop.Car.CarOrder;
 import swop.UI.Builders.FormBuilder;
 
@@ -15,12 +16,12 @@ public class GarageHolderGenerator extends UserGenerator {
      * @param builder the builder used in displaying the carModels
      * @param carModels the carModels to display
      */
-    public void generateCarModels(FormBuilder builder, Set<String> carModels) {
+    public void generateCarModels(FormBuilder builder, List<Class<? extends CarModel>> carModels) {
         builder.appendTitle("Car Models");
-        Iterator<String> it = carModels.iterator();
+        Iterator<Class<? extends CarModel>> it = carModels.iterator();
         int i = 0;
         while (it.hasNext()) {
-            builder.inputInfo(String.format("%s [%s]", it.next(), i));
+            builder.inputInfo(String.format("%s [%s]", it.next().getName(), i));
             i++;
         }
         builder.endInfo();

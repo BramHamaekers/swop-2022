@@ -8,6 +8,7 @@ import swop.Car.CarModel.ModelC;
 import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
 import swop.UI.GarageHolderUI;
+import swop.UI.TempGarUI;
 
 import java.util.*;
 
@@ -16,14 +17,16 @@ import java.util.*;
  */
 public class GarageHolder extends User{
     private final Set<CarOrder> carOrders;
+    private final AssemAssist assemAssist;
 
     /**
      * initializes a garage holder user
      * @param id a given id for the garage holder
      */
-    public GarageHolder(String id) {
+    public GarageHolder(String id, AssemAssist assemAssist) {
         super(id);
         this.carOrders = new HashSet<>();
+        this.assemAssist = assemAssist;
     }
 
     /**
@@ -32,14 +35,22 @@ public class GarageHolder extends User{
      */
     @Override
     public void load(AssemAssist assemAssist) {
-        if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
-        try {
-    		GarageHolderUI.init(this.getId());
-    		GarageHolderUI.displayOrders(this.getOrders());
-            this.selectAction(assemAssist);
-        } catch (CancelException e) {
-			e.printMessage();
-			}
+//        if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
+//        try {
+//    		GarageHolderUI.init(this.getId());
+//    		GarageHolderUI.displayOrders(this.getOrders());
+//            this.selectAction(assemAssist);
+//        } catch (CancelException e) {
+//			e.printMessage();
+//			}
+    }
+
+    /**
+     * Get the car orders from the controller
+     * @return a set of all carorders
+     */
+    public Set<CarOrder> getCarOrders() {
+        return this.assemAssist.getController().getTotalOrders();
     }
 
     /**
@@ -48,23 +59,23 @@ public class GarageHolder extends User{
      */
     @Override
     public void selectAction(AssemAssist assemAssist) throws CancelException {
-        List<String> actions = Arrays.asList("Place new order", "Check order details", "Exit");
-        int action = GarageHolderUI.selectAction(actions, "What would you like to do?");
-
-        switch (action) {
-            case 0 -> this.generateOrder(assemAssist);
-            case 1 -> {
-                if (this.getOrders().isEmpty()) {
-                    GarageHolderUI.printError("No orders available to check!");
-                    this.selectAction(assemAssist);
-                }
-                else this.checkOrderDetails();
-            }
-            case 2 -> {
-                // Do Nothing
-            }
-            default -> throw new IllegalArgumentException("Unexpected value: " + action);
-        }
+//        List<String> actions = Arrays.asList("Place new order", "Check order details", "Exit");
+//        int action = GarageHolderUI.selectAction(actions, "What would you like to do?");
+//
+//        switch (action) {
+////            case 0 -> this.generateOrder(assemAssist);
+//            case 1 -> {
+//                if (this.getOrders().isEmpty()) {
+//                    GarageHolderUI.printError("No orders available to check!");
+//                    this.selectAction(assemAssist);
+//                }
+//                else this.checkOrderDetails();
+//            }
+//            case 2 -> {
+//                // Do Nothing
+//            }
+//            default -> throw new IllegalArgumentException("Unexpected value: " + action);
+//        }
     }
 
     /**
@@ -74,7 +85,7 @@ public class GarageHolder extends User{
     private void checkOrderDetails() throws CancelException {
         String question = "n";
         do {
-            if (question.equals("y")) GarageHolderUI.displayOrders(this.getOrders());
+//            if (question.equals("y")) GarageHolderUI.displayOrders(this.getOrders());
             String orderID = GarageHolderUI.selectOrderID();
             while (!isValidOrderID(orderID)) {
                 GarageHolderUI.printError("Please provide a valid orderID");
@@ -111,45 +122,36 @@ public class GarageHolder extends User{
      * Will handle all the steps for generating a new valid order.
      * @param assemAssist assemAssist given the main program
      */
-    private void generateOrder(AssemAssist assemAssist) {
-        if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
-        try {
-            // Select Model
-            int model = GarageHolderUI.indicateCarModel(CarModel.types);
-            CarModel carModel = createCarModel(model);
-
-            // Ordering From
-            this.fillOrderingForm(carModel);
-
-            // Create & Place Order
-			CarOrder order = this.placeOrder(assemAssist, carModel);
-            GarageHolderUI.displayEstimatedTime(order);
-    	} catch (CancelException e) {
-    		e.printMessage();
-		}
-	}
+//    private void generateOrder(AssemAssist assemAssist) {
+//        if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
+//        try {
+//            // Select Model
+//            int model = GarageHolderUI.indicateCarModel(CarModel.types);
+//            CarModel carModel = createCarModel(model);
+//
+//            // Ordering From
+//            this.fillOrderingForm(carModel);
+//
+//            // Create & Place Order
+////			CarOrder order = this.placeOrderOnAssem(assemAssist, carModel);
+////            GarageHolderUI.displayEstimatedTime(order);
+//    	} catch (CancelException e) {
+//    		e.printMessage();
+//		}
+//	}
 
     /**
      * Access the GarageHolderUI to fill in the ordering form and create a carModelSpecification
      * @param carModel the carModel to create a carModelSpecification for
      * @throws CancelException when user types 'cancel'
      */
-    private void fillOrderingForm(CarModel carModel) throws CancelException {
-        while(true) {
-            GarageHolderUI.displayOrderingForm(carModel.getValidOptions(),carModel.getName());
-            Map<String,Integer> carConfig = getFilledOrder(carModel.getValidOptions());
-            Map<String, String> carOptions = this.mapConfigToOptions(carConfig, carModel.getValidOptions());
-
-            try {
-                CarModelSpecification spec = new CarModelSpecification(carOptions);
-                carModel.setCarModelSpecification(spec);
-                break;
-            }
-            catch (IllegalArgumentException e){
-                GarageHolderUI.printError(e.getMessage());
-            }
-        }
-    }
+//    private void fillOrderingForm(CarModel carModel) throws CancelException {
+//        while(true) {
+////            GarageHolderUI.displayOrderingForm(carModel.getValidOptions(),carModel.getName());
+//            Map<String,Integer> carConfig = getFilledOrder(carModel.getValidOptions());
+//
+//        }
+//    }
 
     /**
      * Will return a map with options of car chosen by user.
@@ -158,15 +160,15 @@ public class GarageHolder extends User{
      * @throws CancelException when "CANCEL" is the input
 
      */
-    private Map<String,Integer> getFilledOrder(Map<String, List<String>> validOptions) throws CancelException{
-    	Map<String,Integer> carConfig = new HashMap<>();
-		for (var entry : validOptions.entrySet()) {
-			int option = GarageHolderUI.askOption(0, entry.getValue().size(), entry.getKey());
-			carConfig.put(entry.getKey(), option);
-		}
-		GarageHolderUI.printEmptyLine();
-		return carConfig;
-    }
+//    private Map<String,Integer> getFilledOrder(Map<String, List<String>> validOptions) throws CancelException{
+//    	Map<String,Integer> carConfig = new HashMap<>();
+//		for (var entry : validOptions.entrySet()) {
+//			int option = GarageHolderUI.askOption(0, entry.getValue().size(), entry.getKey());
+//			carConfig.put(entry.getKey(), option);
+//		}
+//		GarageHolderUI.printEmptyLine();
+//		return carConfig;
+//    }
 
     /**
      * Converts Map of string to integer to Map of string to string
@@ -186,12 +188,16 @@ public class GarageHolder extends User{
         return carOpts;
     }
 
+    public List<Class<? extends CarModel>> getModels(){
+        return List.of(ModelA.class, ModelB.class, ModelC.class);
+    }
+
 	/**
 	 * Creates new CarModel given the model/optionsMap
      * @param choice the choice for a carmodel the user made
 	 * @return created CarModel
 	 */
-    private CarModel createCarModel(int choice) {
+    public CarModel createCarModel(int choice) {
             return switch (choice) {
                 case 0 -> new ModelA();
                 case 1 -> new ModelB();
@@ -206,7 +212,7 @@ public class GarageHolder extends User{
      * @param carModel given carmodel
      * @return completed carorder
      */
-    private CarOrder placeOrder(AssemAssist assemAssist, CarModel carModel){
+    private CarOrder placeOrderOnAssem(AssemAssist assemAssist, CarModel carModel){
         if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
         if (carModel == null) throw new IllegalArgumentException("carModel is null");
         CarOrder carOrder = new CarOrder(carModel);
@@ -231,4 +237,20 @@ public class GarageHolder extends User{
         this.carOrders.add(carOrder);
     }
 
+    public SortedMap<String, List<String>> getValidOptions(CarModel model) {
+        return model.getValidOptions();
+    }
+
+    public CarOrder placeOrder(Map<String, Integer> carConfig, CarModel model) {
+        Map<String, String> carOptions = this.mapConfigToOptions(carConfig, model.getValidOptions());
+
+        try {
+            CarModelSpecification spec = new CarModelSpecification(carOptions);
+            model.setCarModelSpecification(spec);
+        }
+        catch (IllegalArgumentException e){
+            GarageHolderUI.printError(e.getMessage());
+        }
+        return this.placeOrderOnAssem(assemAssist, model);
+    }
 }

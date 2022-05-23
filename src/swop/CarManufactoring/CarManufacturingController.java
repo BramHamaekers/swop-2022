@@ -14,6 +14,7 @@ import swop.Miscellaneous.TimeStamp;
  */
 public class CarManufacturingController {
 
+	private final Set<CarOrder> totalOrders;
 	private final LinkedList<Car> carQueue;
 	private final AssemblyLine assemblyLine;
 	private final Scheduler scheduler;
@@ -28,6 +29,7 @@ public class CarManufacturingController {
 	 * Initialises the controller with an empty car queue, a scheduler and an assemblyLine with its workstations
 	 */
 	public CarManufacturingController() {
+		this.totalOrders = new HashSet<>();
 		this.carQueue = new LinkedList<>();
 		this.assemblyLine = new AssemblyLine(this.createWorkStations());
 		this.scheduler = new Scheduler(this);
@@ -197,8 +199,11 @@ public class CarManufacturingController {
 	 * @param carOrder order added to the Queue
 	 */
 	public void addOrderToQueue(CarOrder carOrder) {
+		if (carOrder == null)
+			throw new IllegalArgumentException("car order is null");
 		Car car = carOrder.getCar();
 		if(car == null) throw new IllegalArgumentException("car is null");
+		this.totalOrders.add(carOrder);
 		this.carQueue.add(car);
 		carOrder.setOrderTime(getScheduler().getTime());
 		car.setEstimatedCompletionTime(getScheduler().getEstimatedCompletionTime(car));
@@ -207,7 +212,14 @@ public class CarManufacturingController {
 			advanceAssemblyAndUpdateSchedular();
 		} catch (NotAllTasksCompleteException ignored) {
 		}
-		
+	}
+
+	/**
+	 * Get the set of orders from the manufactoring controller
+	 * @return the set of orders placed
+	 */
+	public Set<CarOrder> getTotalOrders(){
+		return this.totalOrders;
 	}
 
 	/**

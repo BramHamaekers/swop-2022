@@ -32,20 +32,6 @@ public class GarageHolderUI implements UI {
 	}
 
 	/**
-	 * Displays all orders ordered, splits unfinished and finished cars
-	 * @param carOrders a set of all the carorders
-	 */
-	public static void displayOrders(Set<CarOrder> carOrders) {
-		if (carOrders == null) {
-			UI.printErrorln("No carOrders placed yet.");
-			return;
-		}
-		DisplayStatus builder = new DisplayStatus();
-		garageHolderGenerator.generateOrderStatus(builder, carOrders);
-		System.out.println(builder.getDisplay());
-	}
-
-	/**
 	 * Ask user a Yes/No question and return the response
 	 * @param action the question to ask
 	 * @return "y" if yes, "n" if no
@@ -72,23 +58,12 @@ public class GarageHolderUI implements UI {
 	 * @return int indicating the chosen carModel
 	 * @throws CancelException when the user types 'Cancel'
 	 */
-	public static int indicateCarModel(Set<String> carModels) throws CancelException {
-		DisplayStatus builder = new DisplayStatus();
-		garageHolderGenerator.generateCarModels(builder, carModels);
-		System.out.println(builder.getDisplay());
-		return scanner.scanNextLineOfTypeInt(0,carModels.size());
-	}
-
-	/**
-	 * Displays the ordering from a given list of components and its options
-	 * @param name the name of the carmodel
-	 * @param optionsMap list of components and its options
-	 */
-	public static void displayOrderingForm(Map<String, List<String>> optionsMap, String name) {
-		DisplayStatus builder = new DisplayStatus();
-		garageHolderGenerator.generateOrderingForm(builder, optionsMap, name);
-		System.out.println(builder.getDisplay());
-	}
+//	public static int indicateCarModel(Set<String> carModels) throws CancelException {
+//		DisplayStatus builder = new DisplayStatus();
+//		garageHolderGenerator.generateCarModels(builder, carModels);
+//		System.out.println(builder.getDisplay());
+//		return scanner.scanNextLineOfTypeInt(0,carModels.size());
+//	}
 
 	/**
 	 * get the input from the user

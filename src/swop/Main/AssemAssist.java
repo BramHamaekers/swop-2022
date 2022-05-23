@@ -20,11 +20,7 @@ public class AssemAssist {
 	private final CarManufacturingController controller;
 	private final Statistics statistics;
 	private User activeUser;
-	final Map <String, User> userDatabase = new HashMap<>() {{
-		put("a", new GarageHolder("a"));
-		put("b", new CarMechanic("b"));
-		put("c", new Manager("c"));
-	}};
+	final Map <String, User> userDatabase = new HashMap<>();
 
 	/**
 	 * Initializes the class with the relevant statistics and the controller
@@ -33,6 +29,9 @@ public class AssemAssist {
 		this.statistics = new Statistics();
 		this.controller = new CarManufacturingController();
 		this.controller.addListener(statistics.statisticsListener);
+		this.userDatabase.put("a", new GarageHolder("a", this));
+		this.userDatabase.put("b", new CarMechanic("b"));
+		this.userDatabase.put("c", new Manager("c"));
     }
 
 	/**
@@ -63,8 +62,10 @@ public class AssemAssist {
 		}
 		if(id.equalsIgnoreCase("QUIT")) return;
 		activeUser = this.userDatabase.get(id);
-		activeUser.load(this);
-		this.login();	
+//		if (activeUser instanceof GarageHolder)
+//			TempGarUI();
+//		activeUser.load(this);
+//		this.login();
 	}
 
 	/**
@@ -132,6 +133,10 @@ public class AssemAssist {
 	 */
 	public AllStats getStats() {
 		return this.statistics.getOrderStats();
+	}
+
+	public User getUser() {
+		return this.activeUser;
 	}
 }
 
