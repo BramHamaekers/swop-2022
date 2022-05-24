@@ -54,6 +54,10 @@ public class Scheduler {
         this.workingDayMinutes = 960; // 06:00 -> 22:00
         this.setSchedulingAlgorithm("FIFO", null);
     }
+    
+    public int getWorkingDayMinutes() {
+    	return this.workingDayMinutes;
+    }
 
     /**
      * returns the estimated completion time based on the CarQueue and overtime done on previous days
@@ -229,15 +233,32 @@ public class Scheduler {
 	 * @param minutes the minutes that need to be added to the time before checking
 	 * @return whether there is enough time in the day to add a car to the assembly line
 	 */
-	public boolean canAddCarToAssemblyLine(int minutes) {
+	public boolean canAddCarToAssemblyLine(int min) {
+		int m = this.minutes;
+		int d = this.day;
+		int a = this.workingDayMinutes;
+		int estTime = 0;
 		Car nextCar = this.getNextScheduledCar();
 		List<Car> workstationCars = getWorkStationCars();
 		Car car1 = workstationCars.get(0);
 		Car car2 = workstationCars.get(1);
-		int estTime = this.getMax(Arrays.asList(nextCar, car1, car2))
-				+ this.getMax(Arrays.asList(nextCar, car1));
-		if(nextCar != null) estTime += this.getMax(List.of(nextCar));
-        return this.minutes + minutes <= this.workingDayMinutes - estTime;
+		if(nextCar == null) {
+			estTime = Collections.min(this.timePerWorkstationMap.values());
+			if(car1 != null || car2 != null)
+				estTime += this.getMax(Arrays.asList(car2, car1));
+			else
+				estTime += Collections.min(this.timePerWorkstationMap.values());
+			if(car1 != null)
+				estTime += this.getMax(List.of(car1));
+			else
+				estTime += Collections.min(this.timePerWorkstationMap.values());
+		}
+		else {
+			estTime = this.getMax(Arrays.asList(nextCar, car1, car2))
+					+ this.getMax(Arrays.asList(nextCar, car1)) 
+					+ this.getMax(List.of(nextCar));
+		}
+        return this.minutes + min <= this.workingDayMinutes - estTime;
     }
 
 	/**
