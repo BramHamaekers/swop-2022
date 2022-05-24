@@ -101,7 +101,7 @@ private void showBatchOptions(ListIterator<String> output) {
 }
 
 private void cancel(ListIterator<String> output) {
-    assertEquals("CANCELED", output.next());
+    assertEquals("CANCELLED", output.next());
 }
 
 

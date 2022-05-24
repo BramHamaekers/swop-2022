@@ -23,23 +23,15 @@ public class GarageHolderUI implements UI {
 		System.out.println("Welcome Garage Holder: " + id + " (You can cancel any action by typing: CANCEL)");
 	}
 
-	/**
-	 * Prints an error message
-	 * @param e the error message to print
-	 */
-	public static void printError(String e) {
-		UI.printError(e);
-	}
-
-	/**
-	 * Ask user a Yes/No question and return the response
-	 * @param action the question to ask
-	 * @return "y" if yes, "n" if no
-	 * @throws CancelException when the user types 'Cancel'
-	 */
-	public static String indicateYesNo(String action) throws CancelException {
-		return UI.indicateYesNo(action);
-	}
+//	/**
+//	 * Ask user a Yes/No question and return the response
+//	 * @param action the question to ask
+//	 * @return "y" if yes, "n" if no
+//	 * @throws CancelException when the user types 'Cancel'
+//	 */
+//	public static String indicateYesNo(String action) throws CancelException {
+//		return UI.indicateYesNo(action);
+//	}
 	
 	/**
 	 * Asks which action the user wants to take
@@ -86,30 +78,5 @@ public class GarageHolderUI implements UI {
 		DisplayStatus builder = new DisplayStatus();
 		garageHolderGenerator.generateEstimatedTime(builder, order);
 		System.out.println(builder.getDisplay());
-	}
-
-	/**
-	 * Prints an empty line to the UI
-	 */
-    public static void printEmptyLine() {
-    	System.out.println();
-    }
-
-	/**
-	 * Lets the user input an orderID
-	 * @return the orderID that the user gave as input
-	 * @throws CancelException when the user types 'Cancel'
-	 */
-	public static String selectOrderID() throws CancelException {
-		System.out.println("Input an orderID: ");
-		return scanner.scanNextLineOfTypeString();
-	}
-
-	/**
-	 * prints the details of an order
-	 * @param string details of an order
-	 */
-	public static void showOrderDetails(String string) {
-		System.out.println(string);
 	}
 }

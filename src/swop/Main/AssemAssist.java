@@ -19,7 +19,6 @@ public class AssemAssist {
 
 	private final CarManufacturingController controller;
 	private final Statistics statistics;
-//	private User activeUser;
 	final Map <String, User> userDatabase = new HashMap<>();
 
 	/**
@@ -35,20 +34,6 @@ public class AssemAssist {
     }
 	public void run(){
 
-	}
-
-	/**
-	 * Loads the User from the database (database is currently a JSON file)
-	 * @param id is the user ID
-	 */
-	private void loadUser(String id) {
-		// Load user database
-		while (!this.userDatabase.containsKey(id) && !(id.equalsIgnoreCase("QUIT"))) {
-			System.out.println("Invalid user ID, type QUIT to exit");
-			id = LoginUI.getUserID();
-		}
-		if(id.equalsIgnoreCase("QUIT")) return;
-//		activeUser = this.userDatabase.get(id);
 	}
 
 	/**
@@ -77,30 +62,12 @@ public class AssemAssist {
 	}
 	
 	/**
-	 * Check if function is valid
-	 * @param name name of function
-	 * @return whether function is valid
-	 */
-//	private boolean isValidUser(String name) {
-//		if (name==null) throw new IllegalArgumentException("no name for user");
-//		if(this.activeUser == null) return false;
-//
-//		return switch(name) {
-//			case "manager" -> this.activeUser instanceof Manager;
-//			case "garage holder" -> this.activeUser instanceof GarageHolder;
-//			case "car mechanic" -> this.activeUser instanceof CarMechanic;
-//			default -> false;
-//		};
-//	}
-
-	/**
 	 * add an order to assembly line
 	 * @param carOrder the specified order
 	 */
 	public void addOrder(CarOrder carOrder) {
 		if (carOrder == null) throw new IllegalArgumentException("car order is null");
-		/**if(isValidUser("garage holder"))*/ this.controller.addOrderToQueue(carOrder);
-//		else throw new IllegalUserException("addOrder()");
+		this.controller.addOrderToQueue(carOrder);
 	}
 
 	/**

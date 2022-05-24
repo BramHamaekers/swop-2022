@@ -15,6 +15,8 @@ public class TempGarUI {
 
     private static final GarageHolderGenerator garageHolderGenerator = new GarageHolderGenerator();
 
+    private static final List<String> actions = Arrays.asList("Place new order", "Check order details", "Exit");
+
     private GarageHolder garageHolder;
 
     public void setGarageHolder(GarageHolder garageHolder){
@@ -31,38 +33,27 @@ public class TempGarUI {
         System.out.println("Welcome Garage Holder, (You can cancel any action by typing: CANCEL)");
         this.setGarageHolder(gh);
         Set<CarOrder> orders = this.garageHolder.getOrders();
-        this.displayOrders(this.garageHolder.getOrders());
-        List<String> actions = Arrays.asList("Place new order", "Check order details", "Exit");
-        int action = UI.selectAction(garageHolderGenerator,actions, "What would you like to do?");
+        this.displayOrders(orders);
 
+        selectAction();
+    }
+
+    private void selectAction() throws CancelException {
+        int action = UI.selectAction(garageHolderGenerator, actions,"What would you like to do?");
         switch (action) {
             case 0 -> this.generateOrder();
             case 1 -> {
-                if (orders.isEmpty()) {
-                    GarageHolderUI.printError("No orders available to check!");
-                    this.run(gh);
+                if (this.garageHolder.getOrders().isEmpty()) {
+                    printError("No orders available to check!");
+                    this.selectAction();
                 }
-//                else this.checkOrderDetails();
+                else this.checkOrderDetails();
             }
             case 2 -> {
                 // Do Nothing
             }
             default -> throw new IllegalArgumentException("Unexpected value: " + action);
         }
-    }
-
-    /**
-     * Displays all orders ordered, splits unfinished and finished cars
-     * @param carOrders a set of all the carorders
-     */
-    private void displayOrders(Set<CarOrder> carOrders) {
-        if (carOrders == null) {
-            UI.printErrorln("No carOrders placed yet.");
-            return;
-        }
-        DisplayStatus builder = new DisplayStatus();
-        garageHolderGenerator.generateOrderStatus(builder, carOrders);
-        System.out.println(builder.getDisplay());
     }
 
     /**
@@ -84,15 +75,42 @@ public class TempGarUI {
                 int option = askOption(0, entry.getValue().size(), entry.getKey());
                 carConfig.put(entry.getKey(), option);
             }
-            GarageHolderUI.printEmptyLine();
+            printEmptyLine();
 
-            CarOrder order = this.garageHolder.placeOrder(carConfig, model);
-
-            if (order != null)
+            try{
+                CarOrder order = this.garageHolder.placeOrder(carConfig, model);
                 displayEstimatedTime(order);
+            }catch (IllegalArgumentException e){
+                UI.printError(e.getMessage());
+            }
         } catch (CancelException e) {
             e.printMessage();
         }
+    }
+
+    /**
+     * Handles the selection of the order to view the details
+     * @throws CancelException when the user wants to cancel viewing details of orders
+     */
+    private void checkOrderDetails() throws CancelException {
+        String question = "n";
+        do {
+            Set<CarOrder> orders = this.garageHolder.getOrders();
+            if (question.equals("y")){
+                displayOrders(orders);
+            }
+            String orderID = selectOrderID();;
+            while (!isValidOrderID(orders, orderID)){
+                printError("Please provide a valid orderID");
+                orderID = selectOrderID();
+            }
+
+            CarOrder carOrder = getOrderFromID(orders, orderID);
+
+            showOrderDetails(carOrder.toString());
+            question = UI.indicateYesNo("Would you like to view another order?");
+        } while (question.equals("y"));
+
     }
 
     /**
@@ -138,6 +156,74 @@ public class TempGarUI {
     private static void displayEstimatedTime(CarOrder order) {
         DisplayStatus builder = new DisplayStatus();
         garageHolderGenerator.generateEstimatedTime(builder, order);
+        System.out.println(builder.getDisplay());
+    }
+
+    /**
+     * Checks whether the given orderID is a valid ID
+     * @param orderID the given orderID
+     * @return whether the orderID is valid
+     */
+    private boolean isValidOrderID(Set<CarOrder> orders, String orderID) {
+        return orders.stream().anyMatch(o -> o.getID().equalsIgnoreCase(orderID));
+    }
+
+    /**
+     * Returns a carOrder from this user given its orderID
+     * @param orderID the given orderID
+     * @return the CarOrder with the orderID
+     */
+    private CarOrder getOrderFromID(Set<CarOrder> orders, String orderID) {
+        return orders.stream()
+                .filter(o -> o.getID().equalsIgnoreCase(orderID))
+                .findFirst().orElse(null);
+    }
+
+
+    /**
+     * Prints an empty line to the UI
+     */
+    private static void printEmptyLine() {
+        System.out.println();
+    }
+
+    /**
+     * Lets the user input an orderID
+     * @return the orderID that the user gave as input
+     * @throws CancelException when the user types 'Cancel'
+     */
+    private static String selectOrderID() throws CancelException {
+        System.out.println("Input an orderID: ");
+        return scanner.scanNextLineOfTypeString();
+    }
+
+    /**
+     * Prints an error message
+     * @param e the error message to print
+     */
+    private static void printError(String e) {
+        UI.printError(e);
+    }
+
+    /**
+     * prints the details of an order
+     * @param string details of an order
+     */
+    private static void showOrderDetails(String string) {
+        System.out.println(string);
+    }
+
+    /**
+     * Displays all orders ordered, splits unfinished and finished cars
+     * @param carOrders a set of all the carorders
+     */
+    private void displayOrders(Set<CarOrder> carOrders) {
+        if (carOrders == null) {
+            UI.printErrorln("No carOrders placed yet.");
+            return;
+        }
+        DisplayStatus builder = new DisplayStatus();
+        garageHolderGenerator.generateOrderStatus(builder, carOrders);
         System.out.println(builder.getDisplay());
     }
 }

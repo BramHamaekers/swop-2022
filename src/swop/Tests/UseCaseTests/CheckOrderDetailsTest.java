@@ -15,6 +15,7 @@ import swop.Main.AssemAssist;
 import swop.UI.LoginUI;
 import swop.UI.Builders.DisplayStatus;
 import swop.UI.Generators.GarageHolderGenerator;
+import swop.UI.TempUI;
 import swop.Users.GarageHolder;
 
 public class CheckOrderDetailsTest {
@@ -93,7 +94,7 @@ public class CheckOrderDetailsTest {
     }
     
     private void cancel(ListIterator<String> output) {
-        assertEquals("CANCELED", output.next());
+        assertEquals("CANCELLED", output.next());
     }
     
     private void presentOrderDetails(ListIterator<String> output) {
@@ -134,7 +135,7 @@ public class CheckOrderDetailsTest {
 
          ByteArrayOutputStream outContent = new ByteArrayOutputStream();
          System.setOut(new PrintStream(outContent));
-//         assem.run();
+         new TempUI(assem);
 
          ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
                  .listIterator();
@@ -155,7 +156,7 @@ public class CheckOrderDetailsTest {
 
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-//        assem.run();
+        new TempUI(assem);
 
         ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
                 .listIterator();

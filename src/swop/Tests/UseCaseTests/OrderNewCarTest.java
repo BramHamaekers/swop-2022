@@ -168,7 +168,7 @@ public class OrderNewCarTest {
     		if(i == 2) op += "Please give valid input:" +  "Choose " + option.getKey() + ": ";
     		i++;
     	}
-    	op += "CANCELED";
+    	op += "CANCELLED";
     	assertEquals(op, output.next());
 	}
     
@@ -192,12 +192,12 @@ public class OrderNewCarTest {
     		if(i<5) op += "Choose " + option.getKey() + ": ";
     		i++;
     	}
-    	op += "CANCELED";
+    	op += "CANCELLED";
     	assertEquals(op, output.next());
     }
     
     private void cancel(ListIterator<String> output) {
-        assertEquals("CANCELED", output.next());
+        assertEquals("CANCELLED", output.next());
     }
     
 

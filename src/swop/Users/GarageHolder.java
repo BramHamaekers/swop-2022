@@ -8,7 +8,6 @@ import swop.Car.CarModel.ModelC;
 import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
 import swop.UI.GarageHolderUI;
-import swop.UI.TempGarUI;
 
 import java.util.*;
 
@@ -45,47 +44,6 @@ public class GarageHolder extends User{
     @Override
     public void selectAction(AssemAssist assemAssist) throws CancelException {
     }
-
-    /**
-     * Handles the selection of the order to view the details
-     * @throws CancelException when the user wants to cancel viewing details of orders
-     */
-    private void checkOrderDetails() throws CancelException {
-        String question = "n";
-        do {
-//            if (question.equals("y")) GarageHolderUI.displayOrders(this.getOrders());
-            String orderID = GarageHolderUI.selectOrderID();
-            while (!isValidOrderID(orderID)) {
-                GarageHolderUI.printError("Please provide a valid orderID");
-                orderID = GarageHolderUI.selectOrderID();
-            }
-            CarOrder carOrder = getOrderFromID(orderID);
-            GarageHolderUI.showOrderDetails(carOrder.toString());
-            question = GarageHolderUI.indicateYesNo("Would you like to view another order?");
-        } while (question.equals("y"));
-
-    }
-
-    /**
-     * Returns a carOrder from this user given its orderID
-     * @param orderID the given orderID
-     * @return the CarOrder with the orderID
-     */
-    private CarOrder getOrderFromID(String orderID) {
-        return this.getOrders().stream()
-                .filter(o -> o.getID().equalsIgnoreCase(orderID))
-                .findFirst().orElse(null);
-    }
-
-    /**
-     * Checks whether the given orderID is a valid ID
-     * @param orderID the given orderID
-     * @return whether the orderID is valid
-     */
-    private boolean isValidOrderID(String orderID) {
-        return this.getOrders().stream().anyMatch(o -> o.getID().equalsIgnoreCase(orderID));
-    }
-
 
     /**
      * Converts Map of string to integer to Map of string to string
@@ -134,7 +92,6 @@ public class GarageHolder extends User{
         if (carModel == null) throw new IllegalArgumentException("carModel is null");
         CarOrder carOrder = new CarOrder(carModel);
         this.addOrder(carOrder);
-        //TODO remove
         this.assemAssist.addOrder(carOrder);
         return carOrder;
     }
@@ -173,14 +130,8 @@ public class GarageHolder extends User{
     public CarOrder placeOrder(Map<String, Integer> carConfig, CarModel model) {
         Map<String, String> carOptions = this.mapConfigToOptions(carConfig, model.getValidOptions());
 
-        try {
-            CarModelSpecification spec = new CarModelSpecification(carOptions);
-            model.setCarModelSpecification(spec);
-            return this.placeOrderOnAssem(assemAssist, model);
-        }
-        catch (IllegalArgumentException e){
-            GarageHolderUI.printError(e.getMessage());
-            return null;
-        }
+        CarModelSpecification spec = new CarModelSpecification(carOptions);
+        model.setCarModelSpecification(spec);
+        return this.placeOrderOnAssem(assemAssist, model);
     }
 }

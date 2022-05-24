@@ -33,14 +33,18 @@ public class TempUI {
      * Handles logging in to the system
      */
     private User login(AssemAssist assem) {
-        User activeUser;
-        do {
-            LoginUI.init();
-            String id = LoginUI.getUserID();
+        LoginUI.init();
+        String id = LoginUI.getUserID();
+        if (id.equalsIgnoreCase("QUIT"))
+            return null;
+        User activeUser = assem.getUser(id);
+        while(activeUser == null) {
+            System.out.println("Invalid user ID, type QUIT to exit");
+            id = LoginUI.getUserID();
             if (id.equalsIgnoreCase("QUIT"))
                 return null;
             activeUser = assem.getUser(id);
-        } while(activeUser == null);
+        }
         return activeUser;
     }
 }
