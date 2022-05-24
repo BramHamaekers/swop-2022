@@ -11,6 +11,9 @@ import java.util.*;
 
 import static swop.UI.UI.scanner;
 
+/**
+ * A cli class used to implement garage holder's UI
+ */
 public class TempGarUI {
 
     private static final GarageHolderGenerator garageHolderGenerator = new GarageHolderGenerator();
@@ -35,7 +38,7 @@ public class TempGarUI {
         Set<CarOrder> orders = this.garageHolder.getOrders();
         this.displayOrders(orders);
 
-        selectAction();
+        this.selectAction();
     }
 
     private void selectAction() throws CancelException {

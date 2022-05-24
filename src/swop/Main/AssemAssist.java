@@ -29,8 +29,8 @@ public class AssemAssist {
 		this.controller = new CarManufacturingController();
 		this.controller.addListener(statistics.statisticsListener);
 		this.userDatabase.put("a", new GarageHolder("a", this));
-		this.userDatabase.put("b", new CarMechanic("b"));
-		this.userDatabase.put("c", new Manager("c"));
+		this.userDatabase.put("b", new CarMechanic("b", this));
+		this.userDatabase.put("c", new Manager("c", this));
     }
 	public void run(){
 

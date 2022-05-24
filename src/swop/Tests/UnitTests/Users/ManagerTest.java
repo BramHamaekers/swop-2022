@@ -11,9 +11,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ManagerTest {
 
-    Manager man = new Manager("naam");
     InputStream input;
     AssemAssist assem = new AssemAssist();
+    Manager man = new Manager("naam", assem);
     private static final ManagerGenerator managerGenerator = new ManagerGenerator();
 
     @Test

@@ -12,12 +12,14 @@ import swop.UI.ManagerUI;
  * A manager user
  */
 public class Manager extends User{
+	private AssemAssist assemAssist;
 	/**
 	 * initializes a manager user
 	 * @param id a given id for the manager
 	 */
-    public Manager(String id) {
-        super(id); 
+    public Manager(String id, AssemAssist assemAssist) {
+        super(id);
+		this.assemAssist = assemAssist;
     }
 
     /**

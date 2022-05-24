@@ -7,6 +7,7 @@ import swop.Main.AssemAssist;
 import swop.UI.LoginUI;
 import swop.UI.Builders.DisplayStatus;
 import swop.UI.Generators.CarMechanicGenerator;
+import swop.UI.TempUI;
 import swop.Users.CarMechanic;
 import swop.Users.GarageHolder;
 
@@ -180,7 +181,6 @@ public class PerformAssemblyTasksTest {
     private void skip(ListIterator<String> output, int skips) {
 		for(int i =0; i < skips; i++)
 			output.next();
-		
 	}
 
     private ListIterator<String> continueUITest(String inputString, int skips) {
@@ -190,7 +190,7 @@ public class PerformAssemblyTasksTest {
 
          ByteArrayOutputStream outContent = new ByteArrayOutputStream();
          System.setOut(new PrintStream(outContent));
-         assem.run();
+         new TempUI(assem);
 
          ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
                  .listIterator();
@@ -211,7 +211,7 @@ public class PerformAssemblyTasksTest {
 
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        assem.run();
+        new TempUI(assem);
 
         ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
                 .listIterator();

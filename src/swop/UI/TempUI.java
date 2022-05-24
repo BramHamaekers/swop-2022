@@ -2,6 +2,7 @@ package swop.UI;
 
 import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
+import swop.Users.CarMechanic;
 import swop.Users.GarageHolder;
 import swop.Users.User;
 
@@ -9,8 +10,11 @@ public class TempUI {
 
     private final TempGarUI tempGarUI;
 
+    private final TempCarMechUI tempCarMechUI;
+
     public TempUI(AssemAssist assem) {
         this.tempGarUI = new TempGarUI();
+        this.tempCarMechUI = new TempCarMechUI();
         this.run(assem);
     }
 
@@ -23,6 +27,8 @@ public class TempUI {
             try {
                 if (user instanceof GarageHolder)
                     tempGarUI.run((GarageHolder)user);
+                else if (user instanceof CarMechanic)
+                    tempCarMechUI.run((CarMechanic) user);
             }catch (CancelException e){
                 e.printMessage();
             }
