@@ -4,6 +4,7 @@ import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
 import swop.Users.CarMechanic;
 import swop.Users.GarageHolder;
+import swop.Users.Manager;
 import swop.Users.User;
 
 public class TempUI {
@@ -12,14 +13,16 @@ public class TempUI {
 
     private final TempCarMechUI tempCarMechUI;
 
+    private final TempManUI tempManUI;
+
     public TempUI(AssemAssist assem) {
         this.tempGarUI = new TempGarUI();
         this.tempCarMechUI = new TempCarMechUI();
+        this.tempManUI = new TempManUI();
         this.run(assem);
     }
 
     private void run(AssemAssist assem) {
-        //TODO: login loop
         while (true) {
             User user = login(assem);
             if (user == null)
@@ -29,6 +32,8 @@ public class TempUI {
                     tempGarUI.run((GarageHolder)user);
                 else if (user instanceof CarMechanic)
                     tempCarMechUI.run((CarMechanic) user);
+                else if (user instanceof Manager)
+                    tempManUI.run((Manager) user);
             }catch (CancelException e){
                 e.printMessage();
             }

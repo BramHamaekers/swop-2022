@@ -86,12 +86,11 @@ public class AdaptSchedulingAlgorithmTest {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 	
 private void noTasksAvailableMessage(ListIterator<String> output) {
-		assertEquals("No batchoptions available -> Algoritm will stay FIFO", output.next());		
+		assertEquals("No batchoptions available -> Algorithm will stay FIFO", output.next());
 	}
 
 private void showBatchOptions(ListIterator<String> output) {
-	List<Map<String, String>> partMaps = assem.getController().getCarQueue().stream().map(Car::getPartsMap).toList();
-	List<Map<String, String>> possibleBatch = this.manager.getBatchOptions(partMaps);
+	List<Map<String, String>> possibleBatch = this.manager.getBatchOptions();
 	
 	assert !possibleBatch.isEmpty(); 
 	
@@ -142,7 +141,7 @@ private void cancel(ListIterator<String> output) {
 		
 		ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(outContent));
-//		assem.run();
+		new TempUI(assem);
 
 		ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
 				.listIterator();

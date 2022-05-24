@@ -21,16 +21,16 @@ class ManagerTest {
         assertEquals(man.getId(),"naam");
     }
 
-    @Test
-    void load() {
-        assertThrows(IllegalArgumentException.class, () -> man.load(null));
-//        man.load(assem);
+//    @Test
+//    void load() {
+//        assertThrows(IllegalArgumentException.class, () -> man.load(null));
+////        man.load(assem);
+//
+//    }
 
-    }
-
-    @Test
-    void selectAction() {
-        assertThrows(IllegalArgumentException.class, () -> man.selectAction(null));
-//        man.selectAction(assem);
-    }
+//    @Test
+//    void selectAction() {
+//        assertThrows(IllegalArgumentException.class, () -> man.selectAction(null));
+////        man.selectAction(assem);
+//    }
 }

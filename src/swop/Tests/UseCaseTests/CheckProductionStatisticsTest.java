@@ -14,6 +14,8 @@ import swop.Main.AssemAssist;
 import swop.UI.LoginUI;
 import swop.UI.Builders.DisplayStatus;
 import swop.UI.Generators.ManagerGenerator;
+import swop.UI.TempManUI;
+import swop.UI.TempUI;
 import swop.Users.Manager;
 
 public class CheckProductionStatisticsTest {
@@ -136,21 +138,21 @@ public class CheckProductionStatisticsTest {
 	}
 
     private ListIterator<String> continueUITest(String inputString, int skips) {
-    	 this.input = new ByteArrayInputStream(inputString.getBytes());
-         System.setIn(input);
-         LoginUI.scanner.updateScanner();
+		 this.input = new ByteArrayInputStream(inputString.getBytes());
+		 System.setIn(input);
+		 LoginUI.scanner.updateScanner();
 
-         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-         System.setOut(new PrintStream(outContent));
-//         assem.run();
+		 ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+		 System.setOut(new PrintStream(outContent));
+		 new TempUI(assem);
 
-         ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
-                 .listIterator();
+		 ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
+				 .listIterator();
 
-         for(int i =0; i < skips; i++)
-         	output.next();
-         
-         return output;
+		 for(int i =0; i < skips; i++)
+			output.next();
+
+		 return output;
     }
 
     private ListIterator<String> setupUITest(String inputString, int skips) {
@@ -163,7 +165,7 @@ public class CheckProductionStatisticsTest {
 
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-//        assem.run();
+		new TempUI(this.assem);
 
         ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
                 .listIterator();
