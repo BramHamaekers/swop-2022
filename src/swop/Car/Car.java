@@ -23,7 +23,8 @@ public class Car {
 	 * @param model a selected carModel
 	 */
 	public Car(CarModel model){
-		// TODO: discuss, do we want double defensive programming or higher coverage
+		if (model == null)
+			throw new IllegalArgumentException("model is null");
         this.setCarModel(model);
 		this.initiateTasks();
     }

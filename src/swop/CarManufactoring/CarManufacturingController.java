@@ -121,9 +121,9 @@ public class CarManufacturingController {
 	}
 
 	/**
-	 * //TODO: description
-	 * @param maxWorkingMinutes
-	 * @return
+	 * Get the next from queue considering the car is able to finish and the scheduling algorithm
+	 * @param maxWorkingMinutes The remaining time at one station for the car with the average highest working time
+	 * @return the next car in the queue or null if there is no car to be completed
 	 */
 	private Car getNextCarFromQueue(int maxWorkingMinutes) {
 		if(!this.canFinishNewCar(maxWorkingMinutes) || this.getCarQueue().isEmpty()) {	
@@ -146,7 +146,6 @@ public class CarManufacturingController {
 
 	/**
 	 * For every car in the car queue, update the estimated completion time according to the minutes passed.
-	 * //TODO: minutes should be a param?
 	 */
 	public void updateEstimatedCompletionTime() {
 		this.carQueue.forEach(car -> car.setEstimatedCompletionTime(scheduler.getEstimatedCompletionTime(car)));

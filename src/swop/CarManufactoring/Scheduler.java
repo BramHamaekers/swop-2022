@@ -49,6 +49,8 @@ public class Scheduler {
 	 * @param carManufacturingController a given controller that initialised this scheduler
 	 */
     public Scheduler(CarManufacturingController carManufacturingController) {
+		if (carManufacturingController == null)
+			throw new IllegalArgumentException("controller is null");
         this.controller = carManufacturingController;
         this.minutes = 0;
         this.workingDayMinutes = 960; // 06:00 -> 22:00
@@ -65,8 +67,10 @@ public class Scheduler {
      * @return a TimeStamp containing the estimated day and minutes the car will be finished. 
      */
     public TimeStamp getEstimatedCompletionTime(Car car) {
-          int totalMinutes = this.getEstCompletionTimeInMinutes(car);
-          return this.createTimeStamp(totalMinutes, car);
+		if (car == null)
+			throw new IllegalArgumentException("null has no estimated completion time");
+		int totalMinutes = this.getEstCompletionTimeInMinutes(car);
+        return this.createTimeStamp(totalMinutes, car);
     }
     
     /**
@@ -75,13 +79,15 @@ public class Scheduler {
      * @return estimated time in minutes
      */
 	private int getEstCompletionTimeInMinutes(Car car) {
+		if (car == null)
+			throw new IllegalArgumentException("null has no estimated completion time");
     	List<Car> workstationCars = this.getWorkStationCars();
     	int minutes = this.minutes;
     	minutes += this.calculateWaitingTime(car,  workstationCars);
     	return minutes;
     }
-    //TODO: unclear description
 	/**
+	 * TODO: description
 	 * Creates a TimeStamp based on current car 
 	 * and the the estimated time in minutes
 	 * @param minutes the the estimated time in minutes
@@ -89,6 +95,8 @@ public class Scheduler {
 	 * @return a new TimeStamp
 	 */
 	private TimeStamp createTimeStamp(int minutes, Car car) {
+		if (car == null)
+			throw new IllegalArgumentException("car TODO");
 		if(this.carOnAssembly(car)) return new TimeStamp(this.day, minutes); //needs to be finished today
 		int day = this.day;
 		int workingDayMinutes = this.workingDayMinutes;
@@ -109,6 +117,8 @@ public class Scheduler {
      * @return rounded minutes
      */
     private int roundMinutes(int minutes, int avgTimeCarInStation) {
+		if (minutes < 0)
+			throw new IllegalArgumentException("minutes cant be negative");
 	   	if (minutes < 3 * avgTimeCarInStation) // First car of the new day
 	   		return 3 * avgTimeCarInStation;
 	   	return (int) (Math.ceil( (float) minutes/60) * 60);// Other cars
@@ -120,6 +130,8 @@ public class Scheduler {
 	 * @return True if the given car is on the assemblyLine.
 	 */
 	private boolean carOnAssembly(Car car) {
+		if (car == null)
+			throw new IllegalArgumentException("car is null");
 		List<Car> workstationCars = this.getWorkStationCars();
 		return workstationCars.contains(car);
 	}
@@ -131,6 +143,10 @@ public class Scheduler {
      * @return time
      */
     private int calculateWaitingTime(Car car,List<Car> workstationCars) {
+		if (car == null)
+			throw new IllegalArgumentException("car is null");
+		if (workstationCars == null || workstationCars.size() != 3)
+			throw new IllegalArgumentException("not enough cars on station");
 		Car station1Car = workstationCars.get(0);
     	Car station2Car = workstationCars.get(1);
     	Car station3Car = workstationCars.get(2);
@@ -146,7 +162,6 @@ public class Scheduler {
     		current = iter.next(this.algorithm);
     		time += this.getMax(Arrays.asList(station1Car, station2Car, station3Car));
     	}
-
     	return time;
     }
 
@@ -164,7 +179,8 @@ public class Scheduler {
      * @return the maximum time for the list of cars
      */
     private int getMax(List<Car> cars) {
-    	if(cars == null) return 0;
+    	if(cars == null)
+			throw new IllegalArgumentException("empty list");
     	List<Integer> l = new LinkedList<>();
     	for(Car c: cars) {
     		if(c != null) l.add(this.timePerWorkstationMap.get(c.getCarModel().getClass()));
@@ -178,12 +194,15 @@ public class Scheduler {
      * @param minutes Minutes to add to this.minutes
      */
     public void addTime(int minutes) {
+		//TODO: check if can be negative
+		if (minutes<0)
+			throw new IllegalArgumentException("time cant be negative");
         this.minutes = this.getMinutes() + minutes;
     }
     
     /**
      * Get amount of minutes that have already passed in the day
-     * @return this.minutes
+     * @return the current passed minute in the day
      */
     public int getMinutes() {
         return this.minutes;
@@ -191,7 +210,7 @@ public class Scheduler {
 
 	/**
 	 * Get amount of days that have already passed
-	 * @return this.day
+	 * @return the current day
 	 */
     public int getDay() {
         return this.day;
@@ -199,7 +218,7 @@ public class Scheduler {
 
 	/**
 	 * Get the current time in a string format
-	 * @return string of current time
+	 * @return {@code TimeStamp} of current time
 	 */
 	public TimeStamp getTime() {
 		return new TimeStamp(this.getDay(), this.getMinutes());
@@ -233,10 +252,9 @@ public class Scheduler {
 	 * @param minutes the minutes that need to be added to the time before checking
 	 * @return whether there is enough time in the day to add a car to the assembly line
 	 */
-	public boolean canAddCarToAssemblyLine(int min) {
-		int m = this.minutes;
-		int d = this.day;
-		int a = this.workingDayMinutes;
+	public boolean canAddCarToAssemblyLine(int minutes) {
+		if (minutes<0)
+			throw new IllegalArgumentException("no negative minutes");
 		int estTime = 0;
 		Car nextCar = this.getNextScheduledCar();
 		List<Car> workstationCars = getWorkStationCars();
@@ -258,7 +276,7 @@ public class Scheduler {
 					+ this.getMax(Arrays.asList(nextCar, car1)) 
 					+ this.getMax(List.of(nextCar));
 		}
-        return this.minutes + min <= this.workingDayMinutes - estTime;
+        return this.minutes + minutes <= this.workingDayMinutes - estTime;
     }
 
 	/**
@@ -269,7 +287,6 @@ public class Scheduler {
 		ListIterator<WorkStation> workstations = this.controller.getAssembly().getWorkStations().listIterator();
 		ArrayList<Car> workstationCars = new ArrayList<>();
 		while (workstations.hasNext()){
-			// check if throws NullpointerException
 			workstationCars.add(workstations.next().getCar());
 		}
 		return workstationCars;
@@ -289,6 +306,10 @@ public class Scheduler {
 	 * @param batchOptions a map of the selected batch option
      */
     public void setSchedulingAlgorithm(String algorithm, Map<String,String> batchOptions) {
+		if (algorithm == null)
+			throw new IllegalArgumentException("not a valid algorithm selected");
+		if (algorithm.equals("BATCH") && batchOptions == null)
+			throw new IllegalArgumentException("invalid batch options");
 		if(!this.isValidSchedulingAlgorithm(algorithm)) throw new IllegalArgumentException("Invalid Scheduling Algorithm");
 		this.algorithm = algorithm;
 		if(algorithm.equals("BATCH")) this.batchOptions = batchOptions;
@@ -302,6 +323,8 @@ public class Scheduler {
 	 * @return True if the given algorithm is valid
 	 */
 	private boolean isValidSchedulingAlgorithm(String algorithm) {
+		if (algorithm == null)
+			throw new IllegalArgumentException("invalid algorithm");
 		return this.getValidAlgorithms().contains(algorithm);
 	}
 
@@ -314,7 +337,7 @@ public class Scheduler {
 
     /**
      * Returns the car that is scheduled to be the next car on the assemblyLine
-     * @return this.carQueue.removeFirst()
+     * @return returns the first car on the carqueue
      */
     public Car getNextScheduledCar() {
     	customIterator<Car> iter = this.iterator(this.controller.getCarQueue());
@@ -329,6 +352,8 @@ public class Scheduler {
 	 * @return new customIterator that loops over cars
 	 */
 	public customIterator<Car> iterator(List<Car> cars) {
+		if (cars == null)
+			throw new IllegalArgumentException("empty list of cars");
 		return new customIterator<>() {
 			final List<Car> list = new LinkedList<>(cars);
 
