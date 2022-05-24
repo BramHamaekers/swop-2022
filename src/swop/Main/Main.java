@@ -12,7 +12,7 @@ public class Main {
      */
     public static void main(String[] args) {
         AssemAssist assemAssist = new AssemAssist();
-        assemAssist.run();
+//        assemAssist.run();
         new TempUI(assemAssist);
     }
 }

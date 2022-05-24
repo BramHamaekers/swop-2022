@@ -19,7 +19,7 @@ public class AssemAssist {
 
 	private final CarManufacturingController controller;
 	private final Statistics statistics;
-	private User activeUser;
+//	private User activeUser;
 	final Map <String, User> userDatabase = new HashMap<>();
 
 	/**
@@ -33,21 +33,8 @@ public class AssemAssist {
 		this.userDatabase.put("b", new CarMechanic("b"));
 		this.userDatabase.put("c", new Manager("c"));
     }
+	public void run(){
 
-	/**
-     * Starts the program
-     */
-	public void run() {
-		this.login();		
-	}
-
-	/**
-	 * Handles logging in to the system
-	 */
-	private void login() {
-		LoginUI.init();
-		String id = LoginUI.getUserID();
-		this.loadUser(id);		
 	}
 
 	/**
@@ -61,11 +48,7 @@ public class AssemAssist {
 			id = LoginUI.getUserID();
 		}
 		if(id.equalsIgnoreCase("QUIT")) return;
-		activeUser = this.userDatabase.get(id);
-//		if (activeUser instanceof GarageHolder)
-//			TempGarUI();
-//		activeUser.load(this);
-//		this.login();
+//		activeUser = this.userDatabase.get(id);
 	}
 
 	/**
@@ -98,17 +81,17 @@ public class AssemAssist {
 	 * @param name name of function
 	 * @return whether function is valid
 	 */
-	private boolean isValidUser(String name) {
-		if (name==null) throw new IllegalArgumentException("no name for user");
-		if(this.activeUser == null) return false;
-		
-		return switch(name) {
-			case "manager" -> this.activeUser instanceof Manager;
-			case "garage holder" -> this.activeUser instanceof GarageHolder;
-			case "car mechanic" -> this.activeUser instanceof CarMechanic;
-			default -> false;
-		};
-	}
+//	private boolean isValidUser(String name) {
+//		if (name==null) throw new IllegalArgumentException("no name for user");
+//		if(this.activeUser == null) return false;
+//
+//		return switch(name) {
+//			case "manager" -> this.activeUser instanceof Manager;
+//			case "garage holder" -> this.activeUser instanceof GarageHolder;
+//			case "car mechanic" -> this.activeUser instanceof CarMechanic;
+//			default -> false;
+//		};
+//	}
 
 	/**
 	 * add an order to assembly line
@@ -116,8 +99,8 @@ public class AssemAssist {
 	 */
 	public void addOrder(CarOrder carOrder) {
 		if (carOrder == null) throw new IllegalArgumentException("car order is null");
-		if(isValidUser("garage holder")) this.controller.addOrderToQueue(carOrder);
-		else throw new IllegalUserException("addOrder()");
+		/**if(isValidUser("garage holder"))*/ this.controller.addOrderToQueue(carOrder);
+//		else throw new IllegalUserException("addOrder()");
 	}
 
 	/**
@@ -135,8 +118,11 @@ public class AssemAssist {
 		return this.statistics.getOrderStats();
 	}
 
-	public User getUser() {
-		return this.activeUser;
+	public User getUser(String id) {
+		if (!this.userDatabase.containsKey(id)) {
+			return null;
+		}
+		return this.userDatabase.get(id);
 	}
 }
 

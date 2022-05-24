@@ -17,6 +17,7 @@ import swop.Main.AssemAssist;
 import swop.UI.LoginUI;
 import swop.UI.Builders.DisplayStatus;
 import swop.UI.Generators.ManagerGenerator;
+import swop.UI.TempUI;
 import swop.Users.Manager;
 
 public class AdaptSchedulingAlgorithmTest {
@@ -141,8 +142,8 @@ private void cancel(ListIterator<String> output) {
 		
 		ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(outContent));
-		assem.run();
-		
+//		assem.run();
+
 		ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
 				.listIterator();
 		
@@ -162,7 +163,7 @@ private void cancel(ListIterator<String> output) {
 		
 		ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(outContent));
-		assem.run();
+		new TempUI(assem);
 		
 		ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
 				.listIterator();

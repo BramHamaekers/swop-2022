@@ -11,7 +11,7 @@ public abstract class CarModel {
     protected String name;
     protected Map<String, List<String>> validOptions;
     protected List<String> mandatoryParts;
-    public static final SortedSet<String> types = new TreeSet<>(List.of("ModelA", "ModelB", "ModelC"));
+    public static final List<String> types = new ArrayList<>(List.of("ModelA", "ModelB", "ModelC"));
 
     /**
      * set a selection specification for this carModel if it is valid

@@ -17,12 +17,14 @@ import swop.Main.AssemAssist;
 import swop.UI.LoginUI;
 import swop.UI.Builders.DisplayStatus;
 import swop.UI.Generators.CarMechanicGenerator;
+import swop.UI.TempUI;
 import swop.Users.CarMechanic;
 
 public class CheckAssemblyLineStatusTest {
     AssemAssist assem;
     CarMechanic carMechanic;
     InputStream input;
+	TempUI ui;
     private static final CarMechanicGenerator carMechanicGenerator = new CarMechanicGenerator(); 
     
     @Test
@@ -147,7 +149,6 @@ public class CheckAssemblyLineStatusTest {
 
          ByteArrayOutputStream outContent = new ByteArrayOutputStream();
          System.setOut(new PrintStream(outContent));
-         assem.run();
 
          ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
                  .listIterator();
@@ -159,6 +160,7 @@ public class CheckAssemblyLineStatusTest {
 
     private ListIterator<String> setupUITest(String inputString, int skips) {
         this.assem = new AssemAssist();
+		this.ui = new TempUI(assem);
         this.carMechanic = (CarMechanic) this.assem.getUserMap().get("b");
         return continueUITest(inputString, skips);
     }

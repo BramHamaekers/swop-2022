@@ -11,6 +11,7 @@ import swop.Main.AssemAssist;
 import swop.UI.LoginUI;
 import swop.UI.Builders.DisplayStatus;
 import swop.UI.Generators.GarageHolderGenerator;
+import swop.UI.TempUI;
 import swop.Users.CarMechanic;
 import swop.Users.GarageHolder;
 
@@ -208,8 +209,8 @@ public class OrderNewCarTest {
 
     private void displayAndIndicateModels(ListIterator<String> output) {
     	DisplayStatus builder = new DisplayStatus();
-//    	this.garageHolderGenerator.generateCarModels(builder, CarModel.types);
-//        for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
+    	this.garageHolderGenerator.generateCarModels(builder, CarModel.types);
+        for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
     }
 
     private void presentActions(ListIterator<String> output) {
@@ -245,7 +246,7 @@ public class OrderNewCarTest {
 
          ByteArrayOutputStream outContent = new ByteArrayOutputStream();
          System.setOut(new PrintStream(outContent));
-         assem.run();
+         new TempUI(assem);
 
          ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
                  .listIterator();

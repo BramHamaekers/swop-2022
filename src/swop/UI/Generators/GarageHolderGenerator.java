@@ -16,12 +16,12 @@ public class GarageHolderGenerator extends UserGenerator {
      * @param builder the builder used in displaying the carModels
      * @param carModels the carModels to display
      */
-    public void generateCarModels(FormBuilder builder, List<Class<? extends CarModel>> carModels) {
+    public void generateCarModels(FormBuilder builder, List<String> carModels) {
         builder.appendTitle("Car Models");
-        Iterator<Class<? extends CarModel>> it = carModels.iterator();
+        Iterator<String> it = carModels.iterator();
         int i = 0;
         while (it.hasNext()) {
-            builder.inputInfo(String.format("%s [%s]", it.next().getName(), i));
+            builder.inputInfo(String.format("%s [%s]", it.next(), i));
             i++;
         }
         builder.endInfo();

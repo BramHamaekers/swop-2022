@@ -11,16 +11,36 @@ public class TempUI {
 
     public TempUI(AssemAssist assem) {
         this.tempGarUI = new TempGarUI();
-        this.run(assem.getUser());
+        this.run(assem);
     }
 
-    private void run(User user) {
+    private void run(AssemAssist assem) {
         //TODO: login loop
-        try {
-            if (user instanceof GarageHolder)
-                tempGarUI.run((GarageHolder)user);
-        }catch (CancelException e){
-            System.out.println("This is still todo");
+        while (true) {
+            User user = login(assem);
+            if (user == null)
+                break;
+            try {
+                if (user instanceof GarageHolder)
+                    tempGarUI.run((GarageHolder)user);
+            }catch (CancelException e){
+                e.printMessage();
+            }
         }
+    }
+
+    /**
+     * Handles logging in to the system
+     */
+    private User login(AssemAssist assem) {
+        User activeUser;
+        do {
+            LoginUI.init();
+            String id = LoginUI.getUserID();
+            if (id.equalsIgnoreCase("QUIT"))
+                return null;
+            activeUser = assem.getUser(id);
+        } while(activeUser == null);
+        return activeUser;
     }
 }

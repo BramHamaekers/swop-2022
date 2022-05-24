@@ -142,7 +142,7 @@ public class CheckProductionStatisticsTest {
 
          ByteArrayOutputStream outContent = new ByteArrayOutputStream();
          System.setOut(new PrintStream(outContent));
-         assem.run();
+//         assem.run();
 
          ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
                  .listIterator();
@@ -163,7 +163,7 @@ public class CheckProductionStatisticsTest {
 
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        assem.run();
+//        assem.run();
 
         ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
                 .listIterator();

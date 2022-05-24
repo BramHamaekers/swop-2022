@@ -27,9 +27,11 @@ public class TempGarUI {
     public void run(GarageHolder gh) throws CancelException {
         if (gh == null)
             throw new IllegalArgumentException("TODO");
+
+        System.out.println("Welcome Garage Holder, (You can cancel any action by typing: CANCEL)");
         this.setGarageHolder(gh);
-        Set<CarOrder> orders = this.garageHolder.getCarOrders();
-        this.displayOrders(this.garageHolder.getCarOrders());
+        Set<CarOrder> orders = this.garageHolder.getOrders();
+        this.displayOrders(this.garageHolder.getOrders());
         List<String> actions = Arrays.asList("Place new order", "Check order details", "Exit");
         int action = UI.selectAction(garageHolderGenerator,actions, "What would you like to do?");
 
@@ -68,7 +70,7 @@ public class TempGarUI {
      */
     private void generateOrder() {
         try {
-            List<Class<? extends CarModel>> models =  this.garageHolder.getModels();
+            List<String> models =  this.garageHolder.getModels();
             // Select Model
             int choice = indicateCarModel(models);
             CarModel model = this.garageHolder.createCarModel(choice);
@@ -86,8 +88,8 @@ public class TempGarUI {
 
             CarOrder order = this.garageHolder.placeOrder(carConfig, model);
 
-            // Create & Place Order
-            displayEstimatedTime(order);
+            if (order != null)
+                displayEstimatedTime(order);
         } catch (CancelException e) {
             e.printMessage();
         }
@@ -99,7 +101,7 @@ public class TempGarUI {
      * @return int indicating the chosen carModel
      * @throws CancelException when the user types 'Cancel'
      */
-    private static int indicateCarModel(List<Class<? extends CarModel>> carModels) throws CancelException {
+    private static int indicateCarModel(List<String> carModels) throws CancelException {
         DisplayStatus builder = new DisplayStatus();
         garageHolderGenerator.generateCarModels(builder, carModels);
         System.out.println(builder.getDisplay());

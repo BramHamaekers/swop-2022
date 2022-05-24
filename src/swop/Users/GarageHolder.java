@@ -35,23 +35,8 @@ public class GarageHolder extends User{
      */
     @Override
     public void load(AssemAssist assemAssist) {
-//        if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
-//        try {
-//    		GarageHolderUI.init(this.getId());
-//    		GarageHolderUI.displayOrders(this.getOrders());
-//            this.selectAction(assemAssist);
-//        } catch (CancelException e) {
-//			e.printMessage();
-//			}
     }
 
-    /**
-     * Get the car orders from the controller
-     * @return a set of all carorders
-     */
-    public Set<CarOrder> getCarOrders() {
-        return this.assemAssist.getController().getTotalOrders();
-    }
 
     /**
      * Function that handles selecting an action for GarageHolder
@@ -59,23 +44,6 @@ public class GarageHolder extends User{
      */
     @Override
     public void selectAction(AssemAssist assemAssist) throws CancelException {
-//        List<String> actions = Arrays.asList("Place new order", "Check order details", "Exit");
-//        int action = GarageHolderUI.selectAction(actions, "What would you like to do?");
-//
-//        switch (action) {
-////            case 0 -> this.generateOrder(assemAssist);
-//            case 1 -> {
-//                if (this.getOrders().isEmpty()) {
-//                    GarageHolderUI.printError("No orders available to check!");
-//                    this.selectAction(assemAssist);
-//                }
-//                else this.checkOrderDetails();
-//            }
-//            case 2 -> {
-//                // Do Nothing
-//            }
-//            default -> throw new IllegalArgumentException("Unexpected value: " + action);
-//        }
     }
 
     /**
@@ -118,57 +86,6 @@ public class GarageHolder extends User{
         return this.getOrders().stream().anyMatch(o -> o.getID().equalsIgnoreCase(orderID));
     }
 
-    /**
-     * Will handle all the steps for generating a new valid order.
-     * @param assemAssist assemAssist given the main program
-     */
-//    private void generateOrder(AssemAssist assemAssist) {
-//        if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
-//        try {
-//            // Select Model
-//            int model = GarageHolderUI.indicateCarModel(CarModel.types);
-//            CarModel carModel = createCarModel(model);
-//
-//            // Ordering From
-//            this.fillOrderingForm(carModel);
-//
-//            // Create & Place Order
-////			CarOrder order = this.placeOrderOnAssem(assemAssist, carModel);
-////            GarageHolderUI.displayEstimatedTime(order);
-//    	} catch (CancelException e) {
-//    		e.printMessage();
-//		}
-//	}
-
-    /**
-     * Access the GarageHolderUI to fill in the ordering form and create a carModelSpecification
-     * @param carModel the carModel to create a carModelSpecification for
-     * @throws CancelException when user types 'cancel'
-     */
-//    private void fillOrderingForm(CarModel carModel) throws CancelException {
-//        while(true) {
-////            GarageHolderUI.displayOrderingForm(carModel.getValidOptions(),carModel.getName());
-//            Map<String,Integer> carConfig = getFilledOrder(carModel.getValidOptions());
-//
-//        }
-//    }
-
-    /**
-     * Will return a map with options of car chosen by user.
-     * @param validOptions valid options for this carConfiguration
-     * @return carConfig as a map from part to integer
-     * @throws CancelException when "CANCEL" is the input
-
-     */
-//    private Map<String,Integer> getFilledOrder(Map<String, List<String>> validOptions) throws CancelException{
-//    	Map<String,Integer> carConfig = new HashMap<>();
-//		for (var entry : validOptions.entrySet()) {
-//			int option = GarageHolderUI.askOption(0, entry.getValue().size(), entry.getKey());
-//			carConfig.put(entry.getKey(), option);
-//		}
-//		GarageHolderUI.printEmptyLine();
-//		return carConfig;
-//    }
 
     /**
      * Converts Map of string to integer to Map of string to string
@@ -188,8 +105,8 @@ public class GarageHolder extends User{
         return carOpts;
     }
 
-    public List<Class<? extends CarModel>> getModels(){
-        return List.of(ModelA.class, ModelB.class, ModelC.class);
+    public List<String> getModels(){
+        return List.of("ModelA","ModelB","ModelC");
     }
 
 	/**
@@ -217,13 +134,14 @@ public class GarageHolder extends User{
         if (carModel == null) throw new IllegalArgumentException("carModel is null");
         CarOrder carOrder = new CarOrder(carModel);
         this.addOrder(carOrder);
-        assemAssist.addOrder(carOrder);
+        //TODO remove
+        this.assemAssist.addOrder(carOrder);
         return carOrder;
     }
 
     /**
      * get the carOrders of this user
-     * @return this.carOrders
+     * @return the car orders for the garage holder
      */
     public Set<CarOrder> getOrders() {
         return this.carOrders;
@@ -237,20 +155,32 @@ public class GarageHolder extends User{
         this.carOrders.add(carOrder);
     }
 
+    /**
+     * returns the valid options for a specified carmodel
+     * @param model a specified model
+     * @return the valid options for a specified carmodel
+     */
     public SortedMap<String, List<String>> getValidOptions(CarModel model) {
         return model.getValidOptions();
     }
 
+    /**
+     * Place a valid order on the {@code CarManuFacturingController}
+     * @param carConfig the carconfig the garageholder ordered
+     * @param model the model the garageholder ordered
+     * @return returns the order if it was valid, otherwise return null
+     */
     public CarOrder placeOrder(Map<String, Integer> carConfig, CarModel model) {
         Map<String, String> carOptions = this.mapConfigToOptions(carConfig, model.getValidOptions());
 
         try {
             CarModelSpecification spec = new CarModelSpecification(carOptions);
             model.setCarModelSpecification(spec);
+            return this.placeOrderOnAssem(assemAssist, model);
         }
         catch (IllegalArgumentException e){
             GarageHolderUI.printError(e.getMessage());
+            return null;
         }
-        return this.placeOrderOnAssem(assemAssist, model);
     }
 }
