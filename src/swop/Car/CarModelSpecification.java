@@ -27,7 +27,7 @@ public class CarModelSpecification {
 	 */
 	private void checkConstraints(Map<String, String> chosenOptions) {
 		if (chosenOptions == null)
-			throw new IllegalArgumentException("no options chosen");
+			throw new IllegalArgumentException("chosenOptions is null");
 		if (!this.isValidBodySpoilerCombination(chosenOptions.get("Body"), chosenOptions.get("Spoiler")))
 			throw new IllegalArgumentException("Spoiler is mandatory when choosing a sport body");
 
@@ -73,23 +73,22 @@ public class CarModelSpecification {
 	 * @return Map of all the chosen options
 	 */
 	public Map<String, String> getAllParts(){
-		return this.chosenOptions.entrySet().stream()
-				.collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+		return new HashMap<>(this.chosenOptions);
 	}
 
 	/**
-	 * get a given part value from the part
-	 * @param selectedCategory the selected category fe. Body
+	 * Returns the value of option given with the parameter
+	 * @param selectedPart is the part you want to retrieve the value from
 	 * @return part value (String)
 	 */
-	public String getSelectionForPart(String selectedCategory) {
-		if(selectedCategory == null)
-			 throw new IllegalArgumentException("Can't retrieve value (part = null)");
+	public String getSelectionForPart(String selectedPart) {
+		if(selectedPart == null)
+			 throw new IllegalArgumentException("Can't retrieve value (selectedCategory = null)");
 
-		if (!isPartInChosenOptions(selectedCategory))
+		if (!isPartInChosenOptions(selectedPart))
 			throw new IllegalArgumentException("invalid category");
 
-		return this.chosenOptions.get(selectedCategory);
+		return this.chosenOptions.get(selectedPart);
 	}
 	
 	/**
