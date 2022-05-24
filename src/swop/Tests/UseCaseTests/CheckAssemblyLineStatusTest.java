@@ -142,25 +142,27 @@ public class CheckAssemblyLineStatusTest {
 	}
 
     private ListIterator<String> continueUITest(String inputString, int skips) {
-    	 this.input = new ByteArrayInputStream(inputString.getBytes());
-         System.setIn(input);
-         LoginUI.scanner.updateScanner();
+    	this.input = new ByteArrayInputStream(inputString.getBytes());
+        System.setIn(input);
+        LoginUI.scanner.updateScanner();
 
-         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-         System.setOut(new PrintStream(outContent));
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        new TempUI(assem);
 
-         ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
-                 .listIterator();
+        ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
+                .listIterator();
 
-         skip(output,skips);
-         
-         return output;
+        for(int i =0; i < skips; i++)
+        	output.next();
+        
+        return output;
     }
 
     private ListIterator<String> setupUITest(String inputString, int skips) {
-        this.assem = new AssemAssist();
-		new TempUI(assem);
-        this.carMechanic = (CarMechanic) this.assem.getUserMap().get("b");
-        return continueUITest(inputString, skips);
+    	 this.assem = new AssemAssist();
+         this.carMechanic = (CarMechanic) this.assem.getUserMap().get("b"); 
+
+         return continueUITest(inputString, skips);
     }
 }
