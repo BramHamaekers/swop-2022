@@ -58,6 +58,7 @@ public class Car {
 	 */
 	private void initiateTasks() {
 		Map<String, String> parts = this.getCarModel().getCarModelSpecification().getAllParts();
+		if(parts == null) throw new IllegalArgumentException("getAllParts returns null");
 		this.tasks = new HashSet<>();
 		parts.forEach((key, value) -> this.tasks.add(createTask(key, value)));
 	}

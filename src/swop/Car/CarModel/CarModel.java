@@ -4,7 +4,7 @@ import swop.Car.CarModelSpecification;
 import java.util.*;
 
 /**
- * The super class for all carmodels
+ * The super class for all car models
  */
 public abstract class CarModel {
     private CarModelSpecification carModelSpecification = null;
@@ -18,9 +18,9 @@ public abstract class CarModel {
      * @param selected a selected {@code CarModelSpecification}
      */
     public void setCarModelSpecification(CarModelSpecification selected){
-        if (!this.isValidSpecification(selected)){
+        if (!this.isValidSpecification(selected))
             throw new IllegalArgumentException("invalid car specification for this model");
-        }
+
         this.carModelSpecification = selected;
     }
 
@@ -34,7 +34,7 @@ public abstract class CarModel {
 
     /**
      * Get all valid carOptionCategories and their options as sorted Map
-     * @return Map of the valid options for a certain carmodel
+     * @return Map of the valid options for a certain car model
      */
     public SortedMap<String, List<String>> getValidOptions(){
         return new TreeMap<>(this.validOptions);
@@ -62,7 +62,8 @@ public abstract class CarModel {
      * @return false if !validOptions.contains(option/value) else true
      */
 	private boolean IsValidOption(String option, String value) {
-        return validOptions.containsKey(option) && validOptions.get(option).contains(value);
+        return (option != null) && (value != null) && 
+        		validOptions.containsKey(option) && validOptions.get(option).contains(value);
     }
 
     /**

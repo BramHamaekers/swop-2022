@@ -80,21 +80,22 @@ public class Scheduler {
      */
 	private int getEstCompletionTimeInMinutes(Car car) {
 		if (car == null)
-			throw new IllegalArgumentException("null has no estimated completion time");
+			throw new IllegalArgumentException("null has no estimated completion time in minutes");
     	List<Car> workstationCars = this.getWorkStationCars();
     	int minutes = this.minutes;
     	minutes += this.calculateWaitingTime(car,  workstationCars);
     	return minutes;
     }
 	/**
-	 * TODO: description
 	 * Creates a TimeStamp based on current car 
-	 * and the the estimated time in minutes
+	 * and the the estimated time in minutes given as parameter
 	 * @param minutes the the estimated time in minutes
 	 * @param car the current car
 	 * @return a new TimeStamp
 	 */
 	private TimeStamp createTimeStamp(int minutes, Car car) {
+		if (minutes < 0)
+			throw new IllegalArgumentException("minutes cant be negative");
 		if (car == null)
 			throw new IllegalArgumentException("car TODO");
 		if(this.carOnAssembly(car)) return new TimeStamp(this.day, minutes); //needs to be finished today
@@ -117,7 +118,7 @@ public class Scheduler {
      * @return rounded minutes
      */
     private int roundMinutes(int minutes, int avgTimeCarInStation) {
-		if (minutes < 0)
+		if (minutes < 0 || avgTimeCarInStation < 0)
 			throw new IllegalArgumentException("minutes cant be negative");
 	   	if (minutes < 3 * avgTimeCarInStation) // First car of the new day
 	   		return 3 * avgTimeCarInStation;
@@ -139,8 +140,9 @@ public class Scheduler {
 	/**
      * Returns how long it will take for the car to be finished
 	 * @param car a car for which to return the estimated waiting time
-	 * @param workstationCars the cars currently on the assembly line
-     * @return time
+	 * @param workstationCars list of cars currently on the assembly line 
+	 * (this list may have elements like car = null)
+     * @return time the car has to wait before it is completed
      */
     private int calculateWaitingTime(Car car,List<Car> workstationCars) {
 		if (car == null)
@@ -284,12 +286,8 @@ public class Scheduler {
 	 * @return list of cars at workstations
 	 */
 	private List<Car> getWorkStationCars() {
-		ListIterator<WorkStation> workstations = this.controller.getAssembly().getWorkStations().listIterator();
-		ArrayList<Car> workstationCars = new ArrayList<>();
-		while (workstations.hasNext()){
-			workstationCars.add(workstations.next().getCar());
-		}
-		return workstationCars;
+		List<WorkStation> workstations = this.controller.getAssembly().getWorkStations();
+		return new ArrayList<>(workstations.stream().map(WorkStation::getCar).toList());
 	}
 
 	/**
@@ -306,11 +304,9 @@ public class Scheduler {
 	 * @param batchOptions a map of the selected batch option
      */
     public void setSchedulingAlgorithm(String algorithm, Map<String,String> batchOptions) {
-		if (algorithm == null)
-			throw new IllegalArgumentException("not a valid algorithm selected");
+    	if(!this.isValidSchedulingAlgorithm(algorithm)) throw new IllegalArgumentException("Invalid Scheduling Algorithm");
 		if (algorithm.equals("BATCH") && batchOptions == null)
 			throw new IllegalArgumentException("invalid batch options");
-		if(!this.isValidSchedulingAlgorithm(algorithm)) throw new IllegalArgumentException("Invalid Scheduling Algorithm");
 		this.algorithm = algorithm;
 		if(algorithm.equals("BATCH")) this.batchOptions = batchOptions;
 		//update the est. completionTime from the car in the queue

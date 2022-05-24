@@ -52,22 +52,6 @@ public class SchedulerTest {
              entry("Spoiler", "low")
      );
 	
-	
-	void allMethodsToTest() {
-	 	this.scheduler.addTime(0);
-	 	this.scheduler.advanceDay();
-	 	this.scheduler.canAddCarToAssemblyLine(0);
-	 	this.scheduler.getDay();
-	 	this.scheduler.getMinutes();
-	 	this.scheduler.getEstimatedCompletionTime(null);
-	 	this.scheduler.getNextScheduledCar();
-	 	this.scheduler.getSchedulingAlgorithm();
-	 	this.scheduler.getTime();
-	 	this.scheduler.getValidAlgorithms();
-	 	this.scheduler.getWorkingDayMinutes();
-	 	this.scheduler.setSchedulingAlgorithm(null, null);	 	
-	}
-	
 	@Test
 	void intitiateNewSchedular() {
 		refresh();

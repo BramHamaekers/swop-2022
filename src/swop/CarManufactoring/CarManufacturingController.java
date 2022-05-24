@@ -40,7 +40,7 @@ public class CarManufacturingController {
 	 * @param statisticsListener the listener to add
 	 */
 	public void addListener(StatisticsListener statisticsListener) {
-		//TODO: defensive?
+		if(statisticsListener == null) throw new IllegalArgumentException("statisticsListener should not be null");
 		this.statisticsListeners.add(statisticsListener);
 	}
 
@@ -50,7 +50,7 @@ public class CarManufacturingController {
 	 */
 	private void updateDelay(Car car) {
 		if (car == null)
-			throw new IllegalArgumentException("no finished car");
+			throw new IllegalArgumentException("can't update delay when car = null");
 		statisticsListeners.forEach(l -> l.updateDelay(car));
 	}
 
@@ -60,10 +60,10 @@ public class CarManufacturingController {
 	 * @return List of all the workstations of this assemblyLine
 	 */
 	private LinkedList<WorkStation> createWorkStations() {
-		LinkedList<WorkStation> workStations = new LinkedList<>();
-		workStations.add(new WorkStation("Car Body Post"));
-		workStations.add(new WorkStation("Drivetrain Post"));
-		workStations.add(new WorkStation("Accessories Post"));
+		LinkedList<WorkStation> workStations = new LinkedList<>(
+				Arrays.asList(new WorkStation("Car Body Post"),
+							  new WorkStation("Drivetrain Post"),
+							  new WorkStation("Accessories Post")));
 		workStations.forEach(s -> s.addListener(this.taskCompletedListener));
 		return workStations;
 	}
@@ -88,7 +88,7 @@ public class CarManufacturingController {
 
 	/**
 	 * This method is the main method for updating all the time aspects based on passedMinutes 
-	 * after a successful advance
+	 * after a successful advance. (finished car may be null)
 	 * @param passedMinutes the minutes that have passed since last update
 	 * @param finishedCar the car that has been finished or null if there is no finished car
 	 */
@@ -116,6 +116,7 @@ public class CarManufacturingController {
 
 	/**
 	 * if the parameter car is not null remove the car from the waiting queue
+	 * car can be null when there is no next car to add to the assembly line
 	 * @param car that needs to be removed
 	 */
 	private void removeCarFromQueue(Car car) {
@@ -147,7 +148,7 @@ public class CarManufacturingController {
 	}
 
 	/**
-	 * For every car in the car queue, update the estimated completion time according to the minutes passed.
+	 * For every car in the car queue and on workstations, update the estimated completion time according to the minutes passed.
 	 */
 	public void updateEstimatedCompletionTime() {
 		this.carQueue.forEach(car -> car.setEstimatedCompletionTime(scheduler.getEstimatedCompletionTime(car)));
@@ -204,7 +205,7 @@ public class CarManufacturingController {
 		if (carOrder == null)
 			throw new IllegalArgumentException("car order is null");
 		Car car = carOrder.getCar();
-		if(car == null) throw new IllegalArgumentException("car is null");
+		if(car == null) throw new IllegalArgumentException("car from order is null, not allowed");
 		this.totalOrders.add(carOrder);
 		this.carQueue.add(car);
 		carOrder.setOrderTime(getScheduler().getTime());

@@ -104,6 +104,7 @@ public class WorkStation {
 
 	/**
 	 * setter for the car in the workstation
+	 * car may be null
 	 * @param car the car to be placed in the workstation
 	 */
 	public void setCar(Car car) {
@@ -126,22 +127,22 @@ public class WorkStation {
 	 */
 	public boolean isPartOfCurrentCarInWorkStation(String part) {
 		if (part == null)
-			throw new IllegalArgumentException("empty part");
+			throw new IllegalArgumentException("part is null");
 		Car car = this.getCar();
 		if(car == null) return false;
 		return car.getCarModel().getCarModelSpecification().isPartInChosenOptions(part);
 	}
 	
 	/**
-	 * Tries to get value of a carOptionCategory
-	 * @param category the given carOptionCategory to get the value of
+	 * Tries to get value of a part for current car in workstation
+	 * @param part to get the value of
 	 * @throws IllegalArgumentException if car == null || part == null
 	 * @return the chosen option for a category
 	 */
-	public String getValueOfPart(String category) {
+	public String getValueOfPart(String part) {
 		if(this.car == null) throw new IllegalArgumentException("No car in station");
-		if (category == null) throw new IllegalArgumentException("part is null");
-		return this.getCar().getSelectionForPart(category);
+		if (part == null) throw new IllegalArgumentException("part is null");
+		return this.getCar().getSelectionForPart(part);
 
 	}
 	

@@ -25,7 +25,7 @@ public class AssemblyLine {
 	}
 
 	/**
-	 * advance the assembly line
+	 * advance the assembly line (next car may be null)
 	 * @param nextCar Next car on the assemblyLine, or null if there is no next car
 	 * @throws NotAllTasksCompleteException thrown when there are still tasks to do
 	 * @return A finished car or null if there is no finished car
@@ -79,11 +79,7 @@ public class AssemblyLine {
 	 * @return a list of names of the workstations
 	 */
 	public List<String> getWorkstationNames(){
-		List<String> workStations = new LinkedList<>();
-		for(WorkStation station: this.workStations) {
-			workStations.add(station.getName());
-		}
-		return workStations;
+		return new LinkedList<>(this.workStations.stream().map(WorkStation::getName).toList());
 	}
 
 	/**
