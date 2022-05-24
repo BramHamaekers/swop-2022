@@ -89,7 +89,7 @@ public class SchedulerTest {
 		assertEquals(0,this.scheduler.getDay());
 		assertTrue(this.scheduler.getTime().getDay() == this.scheduler.getDay() 
 				&& this.scheduler.getTime().getMinutes() == this.scheduler.getMinutes());
-		//TODO test negative addition
+		assertThrows(IllegalArgumentException.class, () -> this.scheduler.addTime(-50));
 	}
 	
 	@Test 
@@ -117,6 +117,7 @@ public class SchedulerTest {
 	void canAddToAssembly(){
 		refresh();
 		assertTrue(this.scheduler.canAddCarToAssemblyLine(0));
+		assertThrows(IllegalArgumentException.class, () -> this.scheduler.canAddCarToAssemblyLine(-50));
 		assertFalse(this.scheduler.canAddCarToAssemblyLine(900));
 		this.scheduler.addTime(500);
 		assertTrue(this.scheduler.canAddCarToAssemblyLine(0));
@@ -207,8 +208,7 @@ public class SchedulerTest {
 		Car firstCarBatch = this.scheduler.getNextScheduledCar();
 		assertFalse(firstCarFifo.equals(firstCarBatch));
 		assertEquals(firstCarFifo.getCarModel().getClass(), ModelA.class);
-		assertEquals(firstCarBatch.getCarModel().getClass(), ModelC.class);
-		
+		assertEquals(firstCarBatch.getCarModel().getClass(), ModelC.class);	
 	}
 	
 	
