@@ -1,13 +1,11 @@
 package swop.UI;
 
 import swop.Exceptions.CancelException;
-import swop.Main.AssemAssist;
 import swop.Records.AllStats;
 import swop.UI.Builders.DisplayStatus;
 import swop.UI.Generators.ManagerGenerator;
 import swop.Users.Manager;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +33,7 @@ public class TempManUI {
 
     /**
      * Function that handles selecting an action for Manager
-     * @throws CancelException
+     * @throws CancelException when the user types 'cancel'
      */
     private void selectAction() throws CancelException {
         if (this.manager == null) throw new IllegalStateException("no manager accessible");
@@ -57,7 +55,7 @@ public class TempManUI {
      */
     private void AdaptSchedulingAlgorithm() throws CancelException {
         if (this.manager == null) throw new IllegalStateException("no manager accessible");
-        List<String> algorithms = this.manager.getAlgorithms();
+        List<String> algorithms = this.manager.getValidAlgorithms();
         String active = this.manager.getActiveAlgorithm();
         int option = selectAction(algorithms, active);
 

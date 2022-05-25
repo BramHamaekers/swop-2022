@@ -4,10 +4,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import swop.Car.Car;
-import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
 import swop.Records.AllStats;
-import swop.UI.ManagerUI;
 
 /**
  * A manager user
@@ -21,21 +19,39 @@ public class Manager extends User{
         super(id, assemAssist);
     }
 
+	/**
+	 * Method lets the manager select a new schedulingAlgorithm
+	 * @param algorithm the selected algorithm
+	 * @param batchOptions the batchOptions you want to use in the case of choosing the 'batch' algorithm
+	 */
 	public void setSchedulingAlgorithm(String algorithm, Map<String, String> batchOptions){
 		this.assemAssist.getController().getScheduler().setSchedulingAlgorithm(algorithm, batchOptions);
 	}
 
+	/**
+	 * Get the scheduling algorithm that is currently active from the scheduler
+	 * @return the active scheduling algorithm
+	 */
 	public String getActiveAlgorithm() {
-		if (this.assemAssist == null) throw new IllegalStateException("no assemassist instantiated");
+		if (this.assemAssist == null) throw new IllegalStateException("no assemAssist instantiated");
 		return this.assemAssist.getController().getScheduler().getSchedulingAlgorithm();
 	}
 
-	public List<String> getAlgorithms(){
-		if (this.assemAssist == null) throw new IllegalStateException("no assemassist instantiated");
+	/**
+	 * Get a list of all valid scheduling algorithms of the scheduler
+	 * @return list of valid scheduling algorithms
+	 */
+	public List<String> getValidAlgorithms(){
+		if (this.assemAssist == null) throw new IllegalStateException("no assemAssist instantiated");
 		return this.assemAssist.getController().getScheduler().getValidAlgorithms();
 	}
 
-	public List<Map<String, String>> getPartMaps() {
+	/**
+	 * gets a list of partMaps from all the cars in the car queue
+	 * @return a list of partMaps
+	 */
+	public List<Map<String, String>> getPartMapsOfCarQueue() {
+		if (this.assemAssist == null) throw new IllegalStateException("no assemAssist instantiated");
 		return this.assemAssist.getController().getCarQueue().stream().map(Car::getPartsMap).toList();
 	}
 
@@ -44,7 +60,7 @@ public class Manager extends User{
 	 * @return List of batch options
 	 */
 	public List<Map<String, String>> getBatchOptions() {
-		List<Map<String, String>> partMaps = this.getPartMaps();
+		List<Map<String, String>> partMaps = this.getPartMapsOfCarQueue();
 		List<Map<String, String>> possibleBatch = new ArrayList<>();
 
 		// map all selections on top of optionCategory
@@ -65,8 +81,12 @@ public class Manager extends User{
 		return possibleBatch;
 	}
 
+	/**
+	 * Get the stats of the production so far from the assemAssist
+	 * @return a record of mean, average cars produced in a day and info on delays in the production
+	 */
 	public AllStats getStats(){
-		if (this.assemAssist== null) throw new IllegalArgumentException("no assemassist specified");
+		if (this.assemAssist == null) throw new IllegalStateException("no assemAssist instantiated");
 		return this.assemAssist.getStats();
 	}
 
