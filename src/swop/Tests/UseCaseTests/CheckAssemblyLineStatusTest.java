@@ -72,7 +72,7 @@ public class CheckAssemblyLineStatusTest {
 
 
     private void emptyWorkStation(ListIterator<String> output, int i, boolean b) {
-    	WorkStation w = this.assem.getStations().get(i);
+    	WorkStation w = this.assem.getController().getAssembly().getWorkStations().get(i);
     	if(b) {
      		assert w.getCompletedTasks() == null;
      		assert w.getUncompletedTasks() == null;
@@ -84,7 +84,7 @@ public class CheckAssemblyLineStatusTest {
 
 	private void presentAssemblyLineAllEmptyStatus(ListIterator<String> output) {
 		DisplayStatus builder = new DisplayStatus();
-		List<WorkStation> workstations = this.assem.getStations();
+		List<WorkStation> workstations = this.assem.getController().getAssembly().getWorkStations();
 		for(WorkStation w:  workstations) {
 			carMechanicGenerator.generateWorkStationStatus(builder, w.getName(), w.getUncompletedTasks(), w.getCompletedTasks());
 			assert w.getCompletedTasks() == null;
@@ -96,7 +96,7 @@ public class CheckAssemblyLineStatusTest {
 
     private void pendingInWorkstationStatus(ListIterator<String> output, int station, boolean b) {
     	DisplayStatus builder = new DisplayStatus();
-    	List<WorkStation> workstations = this.assem.getStations();
+    	List<WorkStation> workstations = this.assem.getController().getAssembly().getWorkStations();
     	int i = 0;
     	for(WorkStation w:  workstations) {
     		carMechanicGenerator.generateWorkStationStatus(builder, w.getName(), w.getUncompletedTasks(), w.getCompletedTasks());
@@ -116,7 +116,7 @@ public class CheckAssemblyLineStatusTest {
 
     private void completedInWorkstationStatus(ListIterator<String> output, int station, boolean b) {
     	DisplayStatus builder = new DisplayStatus();
-    	List<WorkStation> workstations = this.assem.getStations();
+    	List<WorkStation> workstations = this.assem.getController().getAssembly().getWorkStations();
     	int i = 0;
     	for(WorkStation w:  workstations) {
     		carMechanicGenerator.generateWorkStationStatus(builder, w.getName(), w.getUncompletedTasks(), w.getCompletedTasks());
@@ -158,47 +158,3 @@ public class CheckAssemblyLineStatusTest {
 
 
 
-class handleInputOutput{
-	static AssemAssist assem;
-	
-	
-	 public static ListIterator<String> continueUITest(String inputString, int skips) {
-    	ByteArrayInputStream input = new ByteArrayInputStream(inputString.getBytes());
-        System.setIn(input);
-        LoginUI.scanner.updateScanner();
-
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-        new TempUI(getAssem());
-
-        ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
-                .listIterator();
-
-        skip(output, skips);
-        
-        return output;
-	 }
-
-	 public static ListIterator<String> setupUITest(String inputString, int skips) {
-		 assem = new AssemAssist();
-		 return continueUITest(inputString, skips);
-	 }
-	 
-	 
-	 public static User getUser(String a) {
-		if(getAssem() == null) throw new IllegalArgumentException("assem = null");
-		return getAssem().getUserMap().get(a); 
-	 }
-
-
-	
-	public static void skip(ListIterator<String> output, int skips) {
-		for(int i =0; i < skips; i++)
-			output.next();
-		
-	}
-
-	public static AssemAssist getAssem() {
-		return assem;
-	}
-}

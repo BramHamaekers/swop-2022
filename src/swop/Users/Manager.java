@@ -23,43 +23,6 @@ public class Manager extends User{
 		this.assemAssist = assemAssist;
     }
 
-    /**
-     * Called when logging in as Manager
-	 * @param assemAssist assemAssist given the main program
-     */
-	@Override
-	public void load(AssemAssist assemAssist) {
-//		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
-//
-//		try {
-//			ManagerUI.init(this.getId());
-//			this.selectAction(assemAssist);
-//		} catch (CancelException e) {
-//			e.printMessage();
-//		}
-		}
-
-	/**
-	 * Function that handles selecting an action for Manager
-	 * @param assemAssist the central system the action is performed on
-	 */
-	@Override
-	public void selectAction(AssemAssist assemAssist) throws CancelException {
-//		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
-//		List<String> actions = Arrays.asList("Check Production Statistics", "Adapt Scheduling Algorithm", "Exit");
-//		int action = ManagerUI.selectFlow(actions, "What would you like to do?");
-//
-//		switch (action) {
-//			case 0 -> this.checkProductionStatistics(assemAssist);
-//			case 1 -> this.AdaptSchedulingAlgorithm(assemAssist);
-//			case 2 -> {
-//				// Do Nothing
-//			}
-//			default -> throw new IllegalArgumentException("Unexpected value: " + action);
-//		}
-	}
-
-
 	public void setSchedulingAlgorithm(String algorithm, Map<String, String> batchOptions){
 		this.assemAssist.getController().getScheduler().setSchedulingAlgorithm(algorithm, batchOptions);
 	}

@@ -109,6 +109,42 @@ public class AssemblyLine {
 				.filter(w -> !w.stationTasksCompleted()).toList();
 		return unFinishedStations.stream().map(WorkStation::getCar).toList();
 	}
+
+	/**
+	 *
+	 * @param stationName
+	 * @return
+	 */
+	public WorkStation getStationByName(String stationName) {
+		if (this.workStations == null) throw new IllegalStateException("no workstations on the assemblyline");
+		if (!this.workStations.stream().map(WorkStation::getName).toList().contains(stationName)) throw new IllegalArgumentException("provided station name not valid");
+		for (WorkStation station : this.workStations) {
+			if (station.getName().equals(stationName)) {
+				return station;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 *
+	 * @param stationName
+	 * @return
+	 */
+	public List<Task> getUncompletedTasksByName(String stationName) {
+		if (this.getStationByName(stationName) == null) throw new IllegalArgumentException("provided station name not valid");
+		return this.getStationByName(stationName).getUncompletedTasks();
+	}
+
+	/**
+	 *
+	 * @param stationName
+	 * @return
+	 */
+	public List<Task> getCompletedTasksByName (String stationName) {
+		if (this.getStationByName(stationName) == null) throw new IllegalArgumentException("provided station name not valid");
+		return this.getStationByName(stationName).getCompletedTasks();
+	}
 }
 
 

@@ -71,13 +71,6 @@ public class AssemAssist {
 	}
 
 	/**
-	 * @return the WorkStations of the assemblyline
-	 */
-	public List<WorkStation> getStations() {
-		return this.getAssemblyLine().getWorkStations();
-	}
-
-	/**
 	 * gets all stats from the {@code Statistics} class
 	 * @return all statistics from {@code Statistics}
 	 */

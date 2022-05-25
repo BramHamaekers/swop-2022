@@ -29,23 +29,6 @@ public class GarageHolder extends User{
     }
 
     /**
-     * Called when logging in as GarageHolder
-     * @param assemAssist given the main program
-     */
-    @Override
-    public void load(AssemAssist assemAssist) {
-    }
-
-
-    /**
-     * Function that handles selecting an action for GarageHolder
-     * @param assemAssist the central system the action is performed on
-     */
-    @Override
-    public void selectAction(AssemAssist assemAssist) throws CancelException {
-    }
-
-    /**
      * Converts Map of string to integer to Map of string to string
      * @param carConfig given a map from part to integer selection
      * @param validOptions the valid options for the carOptions

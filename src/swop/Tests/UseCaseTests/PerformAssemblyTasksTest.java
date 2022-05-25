@@ -3,6 +3,7 @@ package swop.Tests.UseCaseTests;
 import org.junit.jupiter.api.Test;
 import swop.Car.CarOrder;
 import swop.CarManufactoring.Task;
+import swop.CarManufactoring.WorkStation;
 import swop.Main.AssemAssist;
 import swop.UI.LoginUI;
 import swop.UI.Builders.DisplayStatus;
@@ -35,7 +36,7 @@ public class PerformAssemblyTasksTest {
 
         setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
         
-        List<Task> tasks = this.assem.getStations().get(0).getUncompletedTasks();
+        List<Task> tasks = this.assem.getController().getAssembly().getWorkStations().get(0).getUncompletedTasks();
         
         assert tasks.size() == 2; // no tasks are finished on workstation
 
@@ -51,11 +52,11 @@ public class PerformAssemblyTasksTest {
         
         indicateTimePassed(output);
         
-        tasks = this.assem.getStations().get(0).getUncompletedTasks();
+        tasks = this.assem.getController().getAssembly().getWorkStations().get(0).getUncompletedTasks();
 
         presentAvailableTasks(output, tasks); // shows 1 task can be finished
         
-        tasks = this.assem.getStations().get(0).getUncompletedTasks();
+        tasks = this.assem.getController().getAssembly().getWorkStations().get(0).getUncompletedTasks();
         
         assert tasks.size() == 1; // 1 task is finished on workstation
     }
@@ -64,7 +65,7 @@ public class PerformAssemblyTasksTest {
     void completeAllTasksOfStationTest() {
 		setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
 		
-        List<Task> tasks = this.assem.getStations().get(0).getUncompletedTasks();
+        List<Task> tasks = this.assem.getController().getAssembly().getWorkStations().get(0).getUncompletedTasks();
         
         assert tasks.size() == 2; // no tasks are finished on workstation
 
@@ -72,7 +73,7 @@ public class PerformAssemblyTasksTest {
 		
 		presentAvailableTasks(output, tasks);
 
-		tasks = this.assem.getStations().get(0).getUncompletedTasks();
+		tasks = this.assem.getController().getAssembly().getWorkStations().get(0).getUncompletedTasks();
 		
 		assert tasks.size() == 1; // 1 task is finished on workstation
 		
@@ -80,7 +81,7 @@ public class PerformAssemblyTasksTest {
 		
 		presentAvailableTasks(output, tasks);
 		
-		tasks = this.assem.getStations().get(0).getUncompletedTasks();
+		tasks = this.assem.getController().getAssembly().getWorkStations().get(0).getUncompletedTasks();
 		
 		assert tasks == null; // TODO maybe return empty list?
 		
@@ -110,7 +111,7 @@ public class PerformAssemblyTasksTest {
 		skip(output, 4);
 		invalidOptionMessage(output); //invalid 2
 		
-		List<Task> tasks = this.assem.getStations().get(0).getUncompletedTasks();
+		List<Task> tasks = this.assem.getController().getAssembly().getWorkStations().get(0).getUncompletedTasks();
 		
 		assert tasks.size() == 1; // 1 task is finished on workstation
 	}
@@ -170,7 +171,7 @@ public class PerformAssemblyTasksTest {
 
     private void askWorkPost(ListIterator<String> output) {
     	DisplayStatus builder = new DisplayStatus();
-		carMechanicGenerator.generateStationList(builder, assem.getStations());
+		carMechanicGenerator.generateStationList(builder, assem.getController().getAssembly().getWorkStations().stream().map(WorkStation::getName).toList());
 		for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
     }
     

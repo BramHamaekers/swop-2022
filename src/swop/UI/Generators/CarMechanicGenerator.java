@@ -15,13 +15,13 @@ public class CarMechanicGenerator extends UserGenerator {
     /**
      * Given a list of workstations display this list
      * @param builder the builder used in displaying the workStations
-     * @param workStations the workstations to display
+     * @param workstationNames the names of the workstations to display
      */
-    public void generateStationList(FormBuilder builder, List<WorkStation> workStations) {
+    public void generateStationList(FormBuilder builder, List<String> workstationNames) {
         builder.appendTitle("Current Stations");
-        ListIterator<WorkStation> w = workStations.listIterator();
+        ListIterator<String> w = workstationNames.listIterator();
         while (w.hasNext()) {
-            builder.inputInfo(String.format("%s [%s]", w.next().getName(), (w.nextIndex() - 1)));
+            builder.inputInfo(String.format("%s [%s]", w.next(), (w.nextIndex() - 1)));
         }
         builder.endInfo();
       //builder.addOption("Select station", workStations.size()); // breaks the use case tests

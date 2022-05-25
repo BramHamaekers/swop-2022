@@ -54,21 +54,20 @@ public class TempCarMechUI {
      * @throws CancelException when "CANCEL" is the input
      */
     private void performAssemblyTask() throws CancelException {
-        WorkStation workStation = this.selectStation();
-        if (workStation == null) throw new IllegalArgumentException("workstation is invalid");
-        this.performTaskAtWorkStation(workStation);
+        String workstationName = this.selectStation();
+        if (workstationName == null) throw new IllegalArgumentException("workstation is invalid");
+        this.performTaskAtWorkStation(workstationName);
     }
 
     /**
      * Helper function to display all tasks for each station
-     * @param assemAssist given the main program
      */
     private void checkAssemblyLineStatus() {
-        List<WorkStation> workStations = this.carmechanic.getStations();
+        List<String> workStations = this.carmechanic.getStationNames();
 
         workStations.forEach(station -> {
-            List<Task> pendingTasks = station.getUncompletedTasks();
-            List<Task> finishedTasks = station.getCompletedTasks();
+            List<Task> pendingTasks = this.carmechanic.getUncompletedTasks(station);
+            List<Task> finishedTasks = this.carmechanic.getCompletedTasks(station);
             displayStationStatus(station, pendingTasks, finishedTasks);
         });
     }
@@ -79,10 +78,10 @@ public class TempCarMechUI {
      * @param pendingTasks the pending tasks on the given workstation
      * @param finishedTasks the finished tasks on the given workstation
      */
-    public static void displayStationStatus(WorkStation workStation, List<Task> pendingTasks, List<Task> finishedTasks) {
+    public static void displayStationStatus(String wsName, List<Task> pendingTasks, List<Task> finishedTasks) {
         //TODO defensive
         DisplayStatus builder = new DisplayStatus();
-        cmGenerator.generateWorkStationStatus(builder, workStation.getName(), pendingTasks, finishedTasks);
+        cmGenerator.generateWorkStationStatus(builder, wsName, pendingTasks, finishedTasks);
         System.out.print(builder.getDisplay());
     }
 
@@ -91,8 +90,8 @@ public class TempCarMechUI {
      * @return return a station selected from the available stations
      * @throws CancelException when "CANCEL" is the input
      */
-    private WorkStation selectStation() throws CancelException {
-        List<WorkStation> workStations = this.carmechanic.getStations();
+    private String selectStation() throws CancelException {
+        List<String> workStations = this.carmechanic.getStationNames();
         //asks user for workstation
         displayAvailableStations(workStations);
         int option = askOption("Select station: ", workStations.size());
@@ -101,11 +100,11 @@ public class TempCarMechUI {
 
     /**
      * Display all the workstations of the given station list
-     * @param stations the given list
+     * @param stationNames the names of all the workstations
      */
-    private static void displayAvailableStations(List<WorkStation> stations) {
+    private static void displayAvailableStations(List<String> stationNames) {
         DisplayStatus builder = new DisplayStatus();
-        cmGenerator.generateStationList(builder, stations);
+        cmGenerator.generateStationList(builder, stationNames);
         System.out.print(builder.getDisplay());
     }
 
@@ -125,17 +124,18 @@ public class TempCarMechUI {
      * @param workStation the workstation the user wants to perform tasks on
      * @throws CancelException when the user types "CANCEL"
      */
-    private void performTaskAtWorkStation(WorkStation workStation) throws CancelException {
+    private void performTaskAtWorkStation(String wsName) throws CancelException {
         //TODO: check if coupling
-        List<Task> taskList = workStation.getUncompletedTasks();
+
+        List<Task> taskList = this.carmechanic.getUncompletedTasks(wsName);
         //returns selected task by user
         Task task = this.selectTask(taskList);
         //return list of all the tasks
         if (task != null) {
             //Show the information for given task 2 user
             this.showInfo(task);
-            this.completeTask(workStation, task);
-            this.performTaskAtWorkStation(workStation);
+            this.completeTask(wsName, task);
+            this.performTaskAtWorkStation(wsName);
         }
         else {
             CarMechanicUI.noTasks();
@@ -190,14 +190,14 @@ public class TempCarMechUI {
 
     /**
      * Helper function to complete a task in assemAssist
-     * @param workStation to perform the task at
+     * @param workstationName Name of the workstation where the task is to be performed
      * @param task task from the tasklist
      * @throws CancelException when "CANCEL" is the input
      */
-    private void completeTask(WorkStation workStation, Task task) throws CancelException {
+    private void completeTask(String workstationName, Task task) throws CancelException {
         if (task == null) throw new IllegalArgumentException("task is null");
-        if (workStation == null) throw new IllegalArgumentException("workstation is null");
+        if (workstationName == null) throw new IllegalArgumentException("workstation is invalid");
         int time = CarMechanicUI.askTimeToCompleteTask();
-        workStation.completeTask(task, time);
+        this.carmechanic.completeTask(workstationName ,task, time);
     }
 }

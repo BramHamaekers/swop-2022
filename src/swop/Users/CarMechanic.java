@@ -21,39 +21,21 @@ public class CarMechanic extends User{
         super(id);
 		this.assemAssist = assemAssist;
     }
-    
-    /**
-     * Called when logging in as CarMechanic
-	 * @param assemAssist given the main program
-     */
-	@Override
-	public void load(AssemAssist assemAssist) {
-		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
-		try {
-			CarMechanicUI.init(this.getId());
-			this.selectAction(assemAssist);
-		} catch (CancelException e) {
-			e.printMessage();
-		}
+
+	public List<String> getStationNames() {
+		return this.assemAssist.getController().getAssembly().getWorkstationNames();
 	}
 
-
-	@Override
-	public void selectAction(AssemAssist assemAssist) throws CancelException {
-//		List<String> actions = Arrays.asList("performAssemblyTask", "checkAssemblyLineStatus", "Exit");
-//		int action = CarMechanicUI.selectAction(actions, "What would you like to do?");
-//
-//		switch (action) {
-//			case 0 -> this.performAssemblyTask(assemAssist);
-//			case 1 -> this.checkAssemblyLineStatus(assemAssist);
-//			case 2 -> {
-//				// Do Nothing
-//			}
-//			default -> throw new IllegalArgumentException("Unexpected value: " + action);
-//		}
+	public List<Task> getUncompletedTasks(String stationName) {
+		return this.assemAssist.getController().getAssembly().getUncompletedTasksByName(stationName);
 	}
 
-	public List<WorkStation> getStations(){
-		return this.assemAssist.getStations();
+	public List<Task> getCompletedTasks(String stationName) {
+		return this.assemAssist.getController().getAssembly().getCompletedTasksByName(stationName);
+	}
+
+	public void completeTask(String stationName, Task task, int timepassed){
+		WorkStation workstation = this.assemAssist.getController().getAssembly().getStationByName(stationName);
+		workstation.completeTask(task, timepassed);
 	}
 }
