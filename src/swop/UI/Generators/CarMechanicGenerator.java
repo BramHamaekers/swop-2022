@@ -50,7 +50,7 @@ public class CarMechanicGenerator extends UserGenerator {
     public void generateAvailableTasks(FormBuilder builder, List<Task> taskList){
         builder.appendTitle("Available tasks");
         ListIterator<Task> it = taskList.listIterator();
-        // cant be empty check CarMechanic.selectTask
+        // can't be empty check CarMechanic.selectTask
         while (it.hasNext()){
             builder.inputInfo(String.format("%s [%d] ",it.next().getName(), (it.nextIndex()-1)));
         }
@@ -66,7 +66,6 @@ public class CarMechanicGenerator extends UserGenerator {
         builder.appendSubTitle("Info For Task");
         builder.inputInfo(info);
         builder.appendSubTitle("-------------");
-        //TODO: kind of janky need to rewrite
         builder.inputInfo("Finished -> Press Enter");
     }
 }

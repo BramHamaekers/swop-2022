@@ -83,7 +83,7 @@ public class PerformAssemblyTasksTest {
 		
 		tasks = this.assem.getController().getAssembly().getWorkStations().get(0).getUncompletedTasks();
 		
-		assert tasks == null; // TODO maybe return empty list?
+		assert tasks == null; 
 		
 		skip(output, 6);
 		

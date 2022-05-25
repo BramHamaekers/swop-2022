@@ -10,7 +10,7 @@ import java.util.Map.Entry;
 /**
  * A class containing all delays and orders for a controller
  */
-public class Statistics { //TODO splits methods in class
+public class Statistics { 
     private final Map<Integer, List<Integer>> carDelayMap = new HashMap<>();
     public final StatisticsListener statisticsListener = this::updateDelay;
 
