@@ -111,9 +111,9 @@ public class AssemblyLine {
 	}
 
 	/**
-	 *
-	 * @param stationName
-	 * @return
+	 * Return the workstation object that corresponds to the given name
+	 * @param stationName The name of the workstation name you want
+	 * @return WorkStation that corresponds to the given stationName
 	 */
 	public WorkStation getStationByName(String stationName) {
 		if (this.workStations == null) throw new IllegalStateException("no workstations on the assemblyline");
@@ -127,21 +127,21 @@ public class AssemblyLine {
 	}
 
 	/**
-	 *
-	 * @param stationName
-	 * @return
+	 * Returns the list of uncompleted tasks at a workstation given the name of a workstation
+	 * @param stationName the name of the workstation you want to get the uncompleted task from.
+	 * @return a List<Task> of uncompleted task at the workstation that corresponds to the given stationName
 	 */
-	public List<Task> getUncompletedTasksByName(String stationName) {
+	public List<Task> getUncompletedOfStationTasksByName(String stationName) {
 		if (this.getStationByName(stationName) == null) throw new IllegalArgumentException("provided station name not valid");
 		return this.getStationByName(stationName).getUncompletedTasks();
 	}
 
 	/**
-	 *
-	 * @param stationName
-	 * @return
+	 * Returns the list of completed tasks at a workstation given the name of a workstation
+	 * @param stationName the name of the workstation you want to get the completed task from
+	 * @return a List<Task> of completed task at the workstation that corresponds to the given stationName
 	 */
-	public List<Task> getCompletedTasksByName (String stationName) {
+	public List<Task> getCompletedTasksOfStationByName(String stationName) {
 		if (this.getStationByName(stationName) == null) throw new IllegalArgumentException("provided station name not valid");
 		return this.getStationByName(stationName).getCompletedTasks();
 	}

@@ -4,9 +4,7 @@ import java.util.*;
 
 import swop.CarManufactoring.Task;
 import swop.CarManufactoring.WorkStation;
-import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
-import swop.UI.CarMechanicUI;
 
 /**
  * A car mechanic user
@@ -27,11 +25,11 @@ public class CarMechanic extends User{
 	}
 
 	public List<Task> getUncompletedTasks(String stationName) {
-		return this.assemAssist.getController().getAssembly().getUncompletedTasksByName(stationName);
+		return this.assemAssist.getController().getAssembly().getUncompletedOfStationTasksByName(stationName);
 	}
 
 	public List<Task> getCompletedTasks(String stationName) {
-		return this.assemAssist.getController().getAssembly().getCompletedTasksByName(stationName);
+		return this.assemAssist.getController().getAssembly().getCompletedTasksOfStationByName(stationName);
 	}
 
 	public void completeTask(String stationName, Task task, int timepassed){
