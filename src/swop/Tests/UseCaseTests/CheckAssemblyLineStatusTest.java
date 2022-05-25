@@ -19,10 +19,12 @@ import swop.UI.Builders.DisplayStatus;
 import swop.UI.Generators.CarMechanicGenerator;
 import swop.UI.TempUI;
 import swop.Users.CarMechanic;
+import swop.Users.Manager;
+import swop.Users.User;
 
 public class CheckAssemblyLineStatusTest {
     AssemAssist assem;
-    CarMechanic carMechanic;
+    //CarMechanic carMechanic;
     InputStream input;
     private static final CarMechanicGenerator carMechanicGenerator = new CarMechanicGenerator(); 
     
@@ -135,34 +137,68 @@ public class CheckAssemblyLineStatusTest {
     
 ///////////////////////////////////////////////////////
 
-	private void skip(ListIterator<String> output, int skips) {
-		for(int i =0; i < skips; i++)
-			output.next();
-		
-	}
 
-    private ListIterator<String> continueUITest(String inputString, int skips) {
-    	this.input = new ByteArrayInputStream(inputString.getBytes());
+
+    private ListIterator<String> continueUITest(String inputString, int skips) { 
+        return handleInputOutput.continueUITest(inputString, skips);
+    }
+
+    private ListIterator<String> setupUITest(String inputString, int skips) {
+       	ListIterator<String> output = handleInputOutput.setupUITest(inputString, skips);
+    	this.assem = handleInputOutput.getAssem();  
+    	return output;
+    }
+    
+    void skip(ListIterator<String> output, int skips) {
+    	handleInputOutput.skip(output, skips);	
+	}
+}
+
+
+
+
+
+class handleInputOutput{
+	static AssemAssist assem;
+	
+	
+	 public static ListIterator<String> continueUITest(String inputString, int skips) {
+    	ByteArrayInputStream input = new ByteArrayInputStream(inputString.getBytes());
         System.setIn(input);
         LoginUI.scanner.updateScanner();
 
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        new TempUI(assem);
+        new TempUI(getAssem());
 
         ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
                 .listIterator();
 
-        for(int i =0; i < skips; i++)
-        	output.next();
+        skip(output, skips);
         
         return output;
-    }
+	 }
 
-    private ListIterator<String> setupUITest(String inputString, int skips) {
-    	 this.assem = new AssemAssist();
-         this.carMechanic = (CarMechanic) this.assem.getUserMap().get("b"); 
+	 public static ListIterator<String> setupUITest(String inputString, int skips) {
+		 assem = new AssemAssist();
+		 return continueUITest(inputString, skips);
+	 }
+	 
+	 
+	 public static User getUser(String a) {
+		if(getAssem() == null) throw new IllegalArgumentException("assem = null");
+		return getAssem().getUserMap().get(a); 
+	 }
 
-         return continueUITest(inputString, skips);
-    }
+
+	
+	public static void skip(ListIterator<String> output, int skips) {
+		for(int i =0; i < skips; i++)
+			output.next();
+		
+	}
+
+	public static AssemAssist getAssem() {
+		return assem;
+	}
 }
