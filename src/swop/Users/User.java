@@ -8,13 +8,15 @@ import swop.Main.AssemAssist;
  */
 public abstract class User {
     private final String id;
+    protected final AssemAssist assemAssist;
 
     /**
      * Create a new user with given id name
      * @param id is string of name
      */
-    public User(String id) {
+    public User(String id, AssemAssist assemAssist) {
         this.id = id;
+        this.assemAssist = assemAssist;
     }
 
     /**

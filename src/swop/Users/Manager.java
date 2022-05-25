@@ -13,14 +13,12 @@ import swop.UI.ManagerUI;
  * A manager user
  */
 public class Manager extends User{
-	private AssemAssist assemAssist;
 	/**
 	 * initializes a manager user
 	 * @param id a given id for the manager
 	 */
     public Manager(String id, AssemAssist assemAssist) {
-        super(id);
-		this.assemAssist = assemAssist;
+        super(id, assemAssist);
     }
 
 	public void setSchedulingAlgorithm(String algorithm, Map<String, String> batchOptions){
@@ -36,24 +34,6 @@ public class Manager extends User{
 		if (this.assemAssist == null) throw new IllegalStateException("no assemassist instantiated");
 		return this.assemAssist.getController().getScheduler().getValidAlgorithms();
 	}
-
-//	/**
-//	 * Change the scheduling algorithm to batch
-//	 * @param assemAssist the central system to change the algorithm on
-//	 * @throws CancelException when the user types "cancel"
-//	 */
-//	private void changeAlgorithmToBatch(AssemAssist assemAssist) throws CancelException {
-//		// get all parts from carQueue
-////		List<Map<String, String>> partMaps = getPartMaps();
-////		List<Map<String, String>> possibleBatch = getBatchOptions(partMaps);
-//		if (!possibleBatch.isEmpty()) {
-//			Map<String, String> selection = ManagerUI.getBatchSelection(possibleBatch);
-//			assemAssist.getController().getScheduler().setSchedulingAlgorithm("BATCH", selection);
-//		}
-//		else {
-//			ManagerUI.printError("No batchoptions available -> Algoritm will stay FIFO");
-//		}
-//	}
 
 	public List<Map<String, String>> getPartMaps() {
 		return this.assemAssist.getController().getCarQueue().stream().map(Car::getPartsMap).toList();

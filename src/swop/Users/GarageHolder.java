@@ -16,16 +16,14 @@ import java.util.*;
  */
 public class GarageHolder extends User{
     private final Set<CarOrder> carOrders;
-    private final AssemAssist assemAssist;
 
     /**
      * initializes a garage holder user
      * @param id a given id for the garage holder
      */
     public GarageHolder(String id, AssemAssist assemAssist) {
-        super(id);
+        super(id, assemAssist);
         this.carOrders = new HashSet<>();
-        this.assemAssist = assemAssist;
     }
 
     /**
