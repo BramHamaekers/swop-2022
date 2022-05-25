@@ -66,7 +66,7 @@ class AssemblyLineTest {
 
     @Test
     void getUncompletedTasks_NoCarInStation() {
-        assertNull(assemblyLine.getUncompletedTasks(new WorkStation("Accessories Post")));
+        assertTrue(assemblyLine.getUncompletedTasks(new WorkStation("Accessories Post")).isEmpty());
     }
 
     @Test

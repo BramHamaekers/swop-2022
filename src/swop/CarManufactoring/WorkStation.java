@@ -46,7 +46,7 @@ public class WorkStation {
 	 * @return a list of uncompleted tasks
 	 */
 	public List<Task> getUncompletedTasks() {
-		if(this.getCar() == null) return null;
+		if(this.getCar() == null) return new ArrayList<>();
 		List<Class<? extends Task>> tasksOfWorkstation = this.getTasks();
 		return this.getCar().getUncompletedTasks().stream().filter(t -> tasksOfWorkstation.contains(t.getClass())).toList();
 	}
@@ -56,7 +56,7 @@ public class WorkStation {
 	 * @return a list of completed tasks
 	 */
 	public List<Task> getCompletedTasks() {
-		if(this.getCar() == null) return null;
+		if(this.getCar() == null) return new ArrayList<>();
 		List<Class<? extends Task>> tasksOfWorkstation = this.getTasks();
 		return this.getCar().getCompletedTasks().stream().filter(t -> tasksOfWorkstation.contains(t.getClass())).toList();
 	}
@@ -154,7 +154,7 @@ public class WorkStation {
 	 */
 	public void completeTask(Task task, int time) {
 		if (car == null) throw new IllegalArgumentException("No car in station");
-		if (task == null) throw new IllegalArgumentException("task is null");
+		if (task == null) throw new IllegalArgumentException("Task is null");
 		if (time<0) throw new IllegalArgumentException("negative time");
 		task.complete();
 		this.currentWorkingTime += time;

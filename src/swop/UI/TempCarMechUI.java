@@ -74,14 +74,14 @@ public class TempCarMechUI {
 
     /**
      * Display the status of a station including pending tasks and finished tasks
-     * @param workStation the given workstation to print the status of
+     * @param stationName the given workstation to print the status of
      * @param pendingTasks the pending tasks on the given workstation
      * @param finishedTasks the finished tasks on the given workstation
      */
-    public static void displayStationStatus(String wsName, List<Task> pendingTasks, List<Task> finishedTasks) {
+    public static void displayStationStatus(String stationName, List<Task> pendingTasks, List<Task> finishedTasks) {
         //TODO defensive
         DisplayStatus builder = new DisplayStatus();
-        cmGenerator.generateWorkStationStatus(builder, wsName, pendingTasks, finishedTasks);
+        cmGenerator.generateWorkStationStatus(builder, stationName, pendingTasks, finishedTasks);
         System.out.print(builder.getDisplay());
     }
 
@@ -121,21 +121,19 @@ public class TempCarMechUI {
 
     /**
      * Allows user to perform tasks at a given workstation on a given central system
-     * @param workStation the workstation the user wants to perform tasks on
+     * @param stationName the name of the workstation the user wants to perform tasks on
      * @throws CancelException when the user types "CANCEL"
      */
-    private void performTaskAtWorkStation(String wsName) throws CancelException {
-        //TODO: check if coupling
-
-        List<Task> taskList = this.carmechanic.getUncompletedTasks(wsName);
+    private void performTaskAtWorkStation(String stationName) throws CancelException {
+        List<Task> taskList = this.carmechanic.getUncompletedTasks(stationName);
         //returns selected task by user
         Task task = this.selectTask(taskList);
         //return list of all the tasks
         if (task != null) {
             //Show the information for given task 2 user
             this.showInfo(task);
-            this.completeTask(wsName, task);
-            this.performTaskAtWorkStation(wsName);
+            this.completeTask(stationName, task);
+            this.performTaskAtWorkStation(stationName);
         }
         else {
             CarMechanicUI.noTasks();
@@ -198,6 +196,6 @@ public class TempCarMechUI {
         if (task == null) throw new IllegalArgumentException("task is null");
         if (workstationName == null) throw new IllegalArgumentException("workstation is invalid");
         int time = CarMechanicUI.askTimeToCompleteTask();
-        this.carmechanic.completeTask(workstationName ,task, time);
+        this.carmechanic.completeTask(workstationName ,task.getName(), time);
     }
 }

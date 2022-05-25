@@ -74,8 +74,8 @@ public class CheckAssemblyLineStatusTest {
     private void emptyWorkStation(ListIterator<String> output, int i, boolean b) {
     	WorkStation w = this.assem.getController().getAssembly().getWorkStations().get(i);
     	if(b) {
-     		assert w.getCompletedTasks() == null;
-     		assert w.getUncompletedTasks() == null;
+			assertTrue(w.getCompletedTasks().isEmpty());
+			assertTrue(w.getUncompletedTasks().isEmpty());
     	}
     	else {
     		assert w.getCompletedTasks() != null || w.getUncompletedTasks() != null || !w.getUncompletedTasks().isEmpty() || !w.getCompletedTasks().isEmpty();
@@ -87,8 +87,8 @@ public class CheckAssemblyLineStatusTest {
 		List<WorkStation> workstations = this.assem.getController().getAssembly().getWorkStations();
 		for(WorkStation w:  workstations) {
 			carMechanicGenerator.generateWorkStationStatus(builder, w.getName(), w.getUncompletedTasks(), w.getCompletedTasks());
-			assert w.getCompletedTasks() == null;
-			assert w.getUncompletedTasks() == null;
+			assertTrue(w.getCompletedTasks().isEmpty());
+			assertTrue(w.getUncompletedTasks().isEmpty());
 		}
 		for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
 

@@ -35,7 +35,7 @@ class WorkStationTest {
     @Test
     void getUncompletedTasks_NoCar() {
         WorkStation station = new WorkStation("Car Body Post");
-        assertNull(station.getUncompletedTasks());
+        assertTrue(station.getUncompletedTasks().isEmpty());
     }
 
     @Test
@@ -52,7 +52,7 @@ class WorkStationTest {
     @Test
     void getCompletedTasks_NoCar() {
         WorkStation station = new WorkStation("Car Body Post");
-        assertNull(station.getCompletedTasks());
+        assertTrue(station.getCompletedTasks().isEmpty());
     }
 
     @Test

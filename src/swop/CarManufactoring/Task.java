@@ -1,6 +1,6 @@
 package swop.CarManufactoring;
 
-public abstract class Task {
+public abstract class Task implements Cloneable {
     protected String name;
     protected String description;
     protected String chosenOption;
@@ -43,5 +43,19 @@ public abstract class Task {
      */
     public String getChosenOption() {
         return this.chosenOption;
+    }
+
+    @Override
+    public Task clone() {
+        try {
+            Task clone = (Task) super.clone();
+            clone.name = this.name;
+            clone.description = this.description;
+            clone.chosenOption = this.chosenOption;
+            clone.isComplete = this.isComplete;
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }
