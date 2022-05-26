@@ -1,4 +1,11 @@
 ------------------------------------------------
+HOW TO RUN THE DEMOS:
+------------------------------------------------
+Inputs for demos are below with explanation provided. Every Tab is an Enter, Text in brackets [] are instructions.
+.txt files -> copy the entire txt file and paste in console, then press Enter.
+At end of every Demo you need to restart the program.
+
+------------------------------------------------
 DEMO 1
 ------------------------------------------------
 
@@ -6,8 +13,8 @@ DEMO 1
 Order 1 Car (Model B) and check details
 ------
 a	0	1	0	1	0	0	0	0	0	0 	// Car Ordered
-a	1	[Wrong ID]	[Correct ID]			// Show orderd details
-y	[Correct ID]	n						// view another order
+a	1	[Wrong ID]	[Correct ID]					// Show orderd details
+y	[Correct ID]	n							// view another order
 
 ------
 See that first car has advanced on assemblyline
@@ -25,16 +32,16 @@ Order Invalid Car options
 a	0	1	1	0	0	2	0	0	0	0	// Automatic airco + ultra engine not allowed
 2	2	0	2	0	0	1	0				// Spoiler mandatory
 2	0	0	0	0	0	0	0				// Order valid car
-a	1	[Correct ID]	n					// You can see Airco not an attribute in the specification
+a	1	[Correct ID]	n						// You can see Airco not an attribute in the specification
 
 ------
 Perform assembly Task with delay
 ------
-b	0	0	0	ENTER   45	0	ENTER   45	// Take 90 minutes on car that should only take 70
+b	0	0	0	ENTER   45	0	ENTER   45		// Take 90 minutes on car that should only take 70
 a   cancel									// You can see delay of 20 minutes
-b	1										// First station empty
-a   0	0	0	0	0	0	0	0	0	    // Est Time is 10:40	-> 50 minutes after car that takes 70 minutes per task
-											// So Estimated time keeps in mind that cars before current car can take longer/shorter per task
+b	1									// First station empty
+a   	0	0	0	0	0	0	0	0	0	    	// Est Time is 10:40	-> 50 minutes after car that takes 70 minutes per task
+										// So Estimated time keeps in mind that cars before current car can take longer/shorter per task
 b	1
 quit										// New Car was put on the assemblyline
 
@@ -43,7 +50,7 @@ DEMO 3
 ------------------------------------------------
 
 ------
-Order 5 display statistics
+Order 4 cars, finish them and display statistics
 ------
 statistics.txt
 c	0			// fist car has delay so that all other cars get finished on the next day
@@ -67,7 +74,7 @@ a   cancel              // You can see last order was moved to 4th position beca
 change back to FIFO
 ------
 c   1   1
-a   cancel
+a   cancel			// Back to original order
 
 
 
