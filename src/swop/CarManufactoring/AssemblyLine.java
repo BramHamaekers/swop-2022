@@ -130,7 +130,7 @@ public class AssemblyLine {
 	/**
 	 * Returns the list of uncompleted tasks at a workstation given the name of a workstation
 	 * @param stationName the name of the workstation you want to get the uncompleted task from.
-	 * @return a List<Task> of uncompleted task at the workstation that corresponds to the given stationName
+	 * @return a List of Tasks of uncompleted task at the workstation that corresponds to the given stationName
 	 */
 	public List<Task> getUncompletedTasksByName(String stationName) {
 		if (this.getStationByName(stationName) == null) throw new IllegalArgumentException("provided station name not valid");
@@ -140,7 +140,7 @@ public class AssemblyLine {
 	/**
 	 * Returns the list of completed tasks at a workstation given the name of a workstation
 	 * @param stationName the name of the workstation you want to get the completed task from
-	 * @return a List<Task> of completed task at the workstation that corresponds to the given stationName
+	 * @return a List of Tasks of completed task at the workstation that corresponds to the given stationName
 	 */
 	public List<Task> getCompletedTasksByName(String stationName) {
 		if (this.getStationByName(stationName) == null) throw new IllegalArgumentException("provided station name not valid");
