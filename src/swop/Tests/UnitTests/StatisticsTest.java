@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class StatisticsTest {
     Statistics stats = new Statistics();
-    //TODO: how to test listeners
 
     @Test
     void updateDelay() {

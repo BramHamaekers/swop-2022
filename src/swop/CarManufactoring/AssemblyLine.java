@@ -20,7 +20,7 @@ public class AssemblyLine {
 		if (workStations == null)
 			throw new IllegalArgumentException("list of workstations is empty");
 		if (workStations.contains(null))
-			throw new IllegalArgumentException("empty workstation in list of workstations");
+			throw new IllegalArgumentException("a workstation in list of workstations was null");
 		this.workStations = workStations;
 	}
 

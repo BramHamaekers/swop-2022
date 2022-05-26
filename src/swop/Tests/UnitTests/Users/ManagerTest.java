@@ -12,11 +12,25 @@ import static org.junit.jupiter.api.Assertions.*;
 class ManagerTest {
 
     AssemAssist assem = new AssemAssist();
-    Manager man = new Manager("id", assem);
+
 
     @Test
     void getId() {
-        assertEquals(man.getId(),"id");
+        Manager manager = new Manager("id", assem);
+        assertEquals(manager.getId(),"id");
+    }
+
+    @Test
+    void setSchedulingAlgorithm_InvalidAlgorithm() {
+        Manager manager = new Manager("id", assem);
+        assertThrows(IllegalArgumentException.class, () -> manager.setSchedulingAlgorithm(null, null));
+        assertThrows(IllegalArgumentException.class, () -> manager.setSchedulingAlgorithm("INVALID", null));
+    }
+
+    @Test
+    void setSchedulingAlgorithm_NullBatchOptions() {
+        Manager manager = new Manager("id", assem);
+        assertThrows(IllegalArgumentException.class, () -> manager.setSchedulingAlgorithm("BATCH", null));
     }
 
 

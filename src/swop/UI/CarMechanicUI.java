@@ -84,7 +84,6 @@ public class CarMechanicUI {
         if (finishedTasks == null)
             throw new IllegalArgumentException("list of finished tasks provided is null");
 
-        //TODO defensive
         DisplayStatus builder = new DisplayStatus();
         cmGenerator.generateWorkStationStatus(builder, stationName, pendingTasks, finishedTasks);
         System.out.print(builder.getDisplay());

@@ -6,8 +6,7 @@ import swop.Car.CarModel.CarModel;
 import swop.Car.CarModel.ModelA;
 import swop.Car.CarModelSpecification;
 import swop.CarManufactoring.Task;
-import swop.CarManufactoring.Tasks.AssemblyCarBody;
-import swop.CarManufactoring.Tasks.InstallSeats;
+import swop.CarManufactoring.Tasks.*;
 import swop.CarManufactoring.WorkStation;
 
 import java.util.List;
@@ -43,6 +42,18 @@ class TaskTest {
         assertTrue(car.getUncompletedTasks().contains(assemblyCarBody));
         assemblyCarBody.complete();
         assertFalse(car.getUncompletedTasks().contains(assemblyCarBody));
+    }
+
+    @Test
+    void newTasks_NullChosenOption() {
+        assertThrows(IllegalArgumentException.class, () -> new AssemblyCarBody(null));
+        assertThrows(IllegalArgumentException.class, () -> new InsertEngine(null));
+        assertThrows(IllegalArgumentException.class, () -> new InstallAirco(null));
+        assertThrows(IllegalArgumentException.class, () -> new InstallGearbox(null));
+        assertThrows(IllegalArgumentException.class, () -> new InstallSeats(null));
+        assertThrows(IllegalArgumentException.class, () -> new InstallSpoiler(null));
+        assertThrows(IllegalArgumentException.class, () -> new MountWheels(null));
+        assertThrows(IllegalArgumentException.class, () -> new PaintCar(null));
     }
 
     @Test

@@ -25,8 +25,8 @@ public class Manager extends User{
 	 * @param batchOptions the batchOptions you want to use in the case of choosing the 'batch' algorithm
 	 */
 	public void setSchedulingAlgorithm(String algorithm, Map<String, String> batchOptions){
-		if (algorithm == null)
-			throw new IllegalArgumentException("null string provided");
+		if (!isValidSchedulingAlgorithm(algorithm))
+			throw new IllegalArgumentException("Provided algorithm " + algorithm + " is not a valid algorithm");
 		if (algorithm.equals("BATCH") && batchOptions == null)
 			throw new IllegalArgumentException("batch options provided are null");
 		this.assemAssist.getController().getScheduler().setSchedulingAlgorithm(algorithm, batchOptions);
@@ -48,6 +48,15 @@ public class Manager extends User{
 	public List<String> getValidAlgorithms(){
 		if (this.assemAssist == null) throw new IllegalStateException("no assemAssist instantiated");
 		return this.assemAssist.getController().getScheduler().getValidAlgorithms();
+	}
+
+	/**
+	 * Check if the given algorithm is a valid algorithm
+	 * @param algorithm the given algorithm
+	 * @return True if the given algorithm is valid
+	 */
+	private boolean isValidSchedulingAlgorithm(String algorithm) {
+		return algorithm != null && this.getValidAlgorithms().contains(algorithm);
 	}
 
 	/**
@@ -93,5 +102,6 @@ public class Manager extends User{
 		if (this.assemAssist == null) throw new IllegalStateException("no assemAssist instantiated");
 		return this.assemAssist.getStats();
 	}
+
 
 }

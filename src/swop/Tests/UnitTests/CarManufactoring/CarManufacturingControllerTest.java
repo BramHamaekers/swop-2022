@@ -192,13 +192,11 @@ class CarManufacturingControllerTest {
     }
 
     @Test
-    void setFinishedCarDeliveryTime_CarNotFinished() {
+    void addOrderToQueue_NullOrder() {
         // Init objects for test
         AssemAssist assemAssist = new AssemAssist();
         CarManufacturingController carManufacturingController = assemAssist.getController();
-        modelA.setCarModelSpecification(specification);
-        CarOrder carOrder1 = new CarOrder(modelA);
-        Car car1 = carOrder1.getCar();
 
+        assertThrows(IllegalArgumentException.class, () -> carManufacturingController.addOrderToQueue(null));
     }
 }

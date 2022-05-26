@@ -39,7 +39,7 @@ public class Scheduler {
 		put(ModelB.class, 70);
 		put(ModelC.class, 60);
 	}};
-	private final List<String> validAlgorithms = List.of("BATCH", "FIFO", "Cancel selection");
+	private final List<String> validAlgorithms = List.of("BATCH", "FIFO");
 	private String algorithm;
 	private Map<String,String> batchOptions;
 

@@ -6,6 +6,7 @@ import swop.UI.Builders.DisplayStatus;
 import swop.UI.Generators.ManagerGenerator;
 import swop.Users.Manager;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -56,8 +57,10 @@ public class ManagerUI {
     private void AdaptSchedulingAlgorithm() throws CancelException {
         if (this.manager == null) throw new IllegalStateException("no manager accessible");
         List<String> algorithms = this.manager.getValidAlgorithms();
+        List<String> options = new ArrayList<>(algorithms);
+        options.add("Cancel selection");
         String active = this.manager.getActiveAlgorithm();
-        int option = selectAction(algorithms, active);
+        int option = selectAction(options, active);
 
         switch (option) {
             case 0 -> this.changeAlgorithmToBatch();

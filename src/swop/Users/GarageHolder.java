@@ -68,7 +68,6 @@ public class GarageHolder extends User{
      */
     private CarOrder placeOrderOnAssem(CarModel carModel){
         if (carModel == null) throw new IllegalArgumentException("carModel is null");
-        if (this.assemAssist == null) throw new IllegalStateException("assemAssist not instantiated");
         CarOrder carOrder = new CarOrder(carModel);
         this.addOrder(carOrder);
         this.assemAssist.addOrder(carOrder);
@@ -100,7 +99,7 @@ public class GarageHolder extends User{
      */
     public SortedMap<String, List<String>> getValidOptions(CarModel model) {
         if (model == null)
-            throw new IllegalArgumentException("no valid carmodel was specified");
+            throw new IllegalArgumentException("CarModel cannot be null");
         return model.getValidOptions();
     }
 

@@ -35,14 +35,6 @@ public class AssemAssist {
 	}
 
 	/**
-	 * Returns the assemblyLine associated with the system
-	 * @return this.assemblyLine
-	 */
-	private AssemblyLine getAssemblyLine() {
-		return this.controller.getAssembly();
-	}
-
-	/**
 	 * getter for carcontroller
 	 * @return the CarManufacturingController
 	 */

@@ -11,6 +11,9 @@ import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.ListIterator;
 
+/**
+ * Class is a utility class to simplify writing tests.
+ */
 public class handleInputOutput {
     private static AssemAssist assem;
 

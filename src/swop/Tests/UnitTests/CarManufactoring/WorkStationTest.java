@@ -88,6 +88,18 @@ class WorkStationTest {
 
     }
 
+    @Test
+    void isPartOfCurrentCarInWorkStation_NullPart() {
+        modelA.setCarModelSpecification(specification);
+        Car car = new Car(modelA);
+        WorkStation station = new WorkStation("Car Body Post");
+        station.setCar(car);
+
+        assertTrue(station.isPartOfCurrentCarInWorkStation("Body"));
+        assertThrows(IllegalArgumentException.class, () -> station.isPartOfCurrentCarInWorkStation(null));
+
+    }
+
 
 
     @Test

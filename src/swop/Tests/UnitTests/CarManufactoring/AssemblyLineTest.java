@@ -34,6 +34,16 @@ class AssemblyLineTest {
 
 
     @Test
+    void newAssembly_NullWorkStations() {
+        assertThrows(IllegalArgumentException.class, () -> new AssemblyLine(null));
+    }
+    @Test
+    void newAssembly_NullInWorkStationsList() {
+        list.add(null);
+        assertThrows(IllegalArgumentException.class, () -> new AssemblyLine(list));
+    }
+
+    @Test
     void advance() throws NotAllTasksCompleteException {
         modelA.setCarModelSpecification(specification);
         Car car = new Car(modelA);
