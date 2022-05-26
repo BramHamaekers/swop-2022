@@ -75,11 +75,11 @@ public class GarageHolder extends User{
     }
 
     /**
-     * get the carOrders of this user
+     * get copy of the carOrders of this user
      * @return the car orders for the garage holder
      */
     public Set<CarOrder> getOrders() {
-        return this.carOrders;
+        return Set.copyOf(this.carOrders);
     }
 
     /**
