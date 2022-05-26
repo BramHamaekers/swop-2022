@@ -133,14 +133,16 @@ public class Car {
 	}
 
 	/**
-	 * @return returns a map of all the categories with their selected specification
+	 * Get a map of all the categories with their selected specification
+	 * @return a map of all the categories with their selected specification
 	 */
 	public Map<String, String> getPartsMap() {
 		return this.carModel.getCarModelSpecification().getAllParts();
 	}
 
 	/**
-	 * @return get the initial completion time calculated when the car was first ordered
+	 * Get the initial completion time calculated when the car was first ordered
+	 * @return  the initial completion time for this car
 	 */
 	public TimeStamp getInitialCompletionTime() {
 		return this.initialCompletionTime;
