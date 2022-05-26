@@ -65,7 +65,7 @@ public class InputScanner {
 	/**
 	 * Will scan next line for a string, keeps asking for input when given string does not meet requirements.
 	 * @return a valid string
-	 * @throws CancelException when the user types 'Cancel'
+	 * @throws CancelException when a user wants to cancel his operation by typing "cancel"
 	 */
 	public String scanNextLineOfTypeString() throws CancelException {
 		String s;
@@ -78,7 +78,7 @@ public class InputScanner {
 	 * Will scan next line for a string, keeps asking for input when given string does not meet requirements.
 	 * @param strings array of Strings that input may be equal to.
 	 * @return a valid string
-	 * @throws CancelException when the user types 'Cancel'
+	 * @throws CancelException when a user wants to cancel his operation by typing "cancel"
 	 */
 	public String scanNextLineOfTypeString(String[] strings) throws CancelException {
 		String s;

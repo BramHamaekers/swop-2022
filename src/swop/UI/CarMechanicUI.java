@@ -49,7 +49,7 @@ public class CarMechanicUI {
 
     /**
      * Helper function to perform a task for this mechanic
-     * @throws CancelException when "CANCEL" is the input
+     * @throws CancelException when a user wants to cancel his operation by typing "cancel"
      */
     private void performAssemblyTask() throws CancelException {
         String workstationName = this.selectStation();
@@ -86,7 +86,7 @@ public class CarMechanicUI {
     /**
      * Select a station for the car mechanic to work at.
      * @return return a station selected from the available stations
-     * @throws CancelException when "CANCEL" is the input
+     * @throws CancelException when a user wants to cancel his operation by typing "cancel"
      */
     private String selectStation() throws CancelException {
         List<String> workStations = this.carmechanic.getStationNames();
@@ -111,7 +111,7 @@ public class CarMechanicUI {
      * @param s a string to display
      * @param numberOfOptions the number of options as an integer
      * @return return the input from the user
-     * @throws CancelException if the user types "cancel"
+     * @throws CancelException when a user wants to cancel his operation by typing "cancel"
      */
     private static int askOption(String s, int numberOfOptions) throws CancelException {
         return scanner.scanNextLineOfTypeInt(0, numberOfOptions);
@@ -120,7 +120,7 @@ public class CarMechanicUI {
     /**
      * Allows user to perform tasks at a given workstation on a given central system
      * @param stationName the name of the workstation the user wants to perform tasks on
-     * @throws CancelException when the user types "CANCEL"
+     * @throws CancelException when a user wants to cancel his operation by typing "cancel"
      */
     private void performTaskAtWorkStation(String stationName) throws CancelException {
         List<Task> taskList = this.carmechanic.getUncompletedTasks(stationName);
@@ -141,7 +141,7 @@ public class CarMechanicUI {
      * Selects a task from available task list.
      * @param taskList List of all available tasks
      * @return return a task selected from the available tasks
-     * @throws CancelException when "CANCEL" is the input
+     * @throws CancelException when a user wants to cancel his operation by typing "cancel"
      */
     private Task selectTask(List<Task> taskList) throws CancelException {
         if (taskList == null || taskList.isEmpty()) return null;
@@ -164,7 +164,7 @@ public class CarMechanicUI {
      * Shows info of given task
      * 	this consists of instruction of each part + value concerning current task.
      * @param task task from the tasklist
-     * @throws CancelException when "CANCEL" is the input
+     * @throws CancelException when a user wants to cancel his operation by typing "cancel"
      */
     private void showInfo(Task task) throws CancelException {
         if (task == null) throw new IllegalArgumentException("task is null");
@@ -175,7 +175,7 @@ public class CarMechanicUI {
     /**
      * display taskInfo
      * @param info the given info
-     * @throws CancelException when user types "CANCEL"
+     * @throws CancelException when a user wants to cancel his operation by typing "cancel"
      */
     private static void displayTaskInfo(String info) throws CancelException {
         DisplayStatus builder = new DisplayStatus();
@@ -188,7 +188,7 @@ public class CarMechanicUI {
      * Helper function to complete a task in assemAssist
      * @param workstationName Name of the workstation where the task is to be performed
      * @param task task from the tasklist
-     * @throws CancelException when "CANCEL" is the input
+     * @throws CancelException when a user wants to cancel his operation by typing "cancel"
      */
     private void completeTask(String workstationName, Task task) throws CancelException {
         if (task == null) throw new IllegalArgumentException("task is null");
@@ -200,7 +200,7 @@ public class CarMechanicUI {
     /**
      * Ask the CarMechanic how long it took him to complete a task
      * @return scanner.scanNextLineOfTypeInt();
-     * @throws CancelException when the user types "Cancel"
+     * @throws CancelException when a user wants to cancel his operation by typing "cancel"
      */
     private static int askTimeToCompleteTask() throws CancelException {
         System.out.println("How much time did it take to finish the task? (in min)");

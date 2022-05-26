@@ -33,7 +33,7 @@ public class ManagerUI {
 
     /**
      * Function that handles selecting an action for Manager
-     * @throws CancelException
+     * @throws CancelException when a user wants to cancel his operation by typing "cancel"
      */
     private void selectAction() throws CancelException {
         if (this.manager == null) throw new IllegalStateException("no manager accessible");
@@ -51,7 +51,7 @@ public class ManagerUI {
 
     /**
      * Ask the user which algorithm it would like to use and change the scheduling algorithm
-     * @throws CancelException when the user types 'cancel'
+     * @throws CancelException when a user wants to cancel his operation by typing "cancel"
      */
     private void AdaptSchedulingAlgorithm() throws CancelException {
         if (this.manager == null) throw new IllegalStateException("no manager accessible");
@@ -69,7 +69,7 @@ public class ManagerUI {
 
     /**
      * Change the scheduling algorithm to batch
-     * @throws CancelException when the user types "cancel"
+     * @throws CancelException when a user wants to cancel his operation by typing "cancel"
      */
     private void changeAlgorithmToBatch() throws CancelException {
         if (this.manager == null) throw new IllegalStateException("no manager accessible");
@@ -85,7 +85,7 @@ public class ManagerUI {
 
     /**
      * check the production statistics on a given assemAssist
-     * @throws CancelException when the user types "CANCEL"
+     * @throws CancelException when a user wants to cancel his operation by typing "cancel"
      */
     private void checkProductionStatistics() throws CancelException {
         if (this.manager.getStats()==null) throw new IllegalStateException("manager not instantiated");
@@ -95,7 +95,7 @@ public class ManagerUI {
     /**
      * Generates to production statistics
      * @param stats AllStats record with all statistics
-     * @throws CancelException when the user types 'Cancel'
+     * @throws CancelException when a user wants to cancel his operation by typing "cancel"
      */
     private static void showProductionStatistics(AllStats stats) throws CancelException {
         DisplayStatus builder = new DisplayStatus();
@@ -109,7 +109,7 @@ public class ManagerUI {
      * @return int indicating the chosen action
      * @param actions available actions for the user
      * @param currentAlgo the current algorithm in use
-     * @throws CancelException when the user types 'Cancel'
+     * @throws CancelException when a user wants to cancel his operation by typing "cancel"
      */
     private static int selectAction(List<String> actions, String currentAlgo) throws CancelException {
         DisplayStatus builder = new DisplayStatus();
@@ -123,7 +123,7 @@ public class ManagerUI {
      * Display all batch options and get the selection
      * @param possibleBatch a list of all possible batches to display
      * @return the selected batchoption
-     * @throws CancelException when the user types 'Cancel'
+     * @throws CancelException when a user wants to cancel his operation by typing "cancel"
      */
     private static Map<String,String> getBatchSelection(List<Map<String, String>> possibleBatch) throws CancelException {
         DisplayStatus builder = new DisplayStatus();
