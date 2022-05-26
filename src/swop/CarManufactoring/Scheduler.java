@@ -196,7 +196,6 @@ public class Scheduler {
      * @param minutes Minutes to add to this.minutes
      */
     public void addTime(int minutes) {
-		//TODO: check if can be negative
 		if (minutes<0)
 			throw new IllegalArgumentException("time cant be negative");
         this.minutes = this.getMinutes() + minutes;

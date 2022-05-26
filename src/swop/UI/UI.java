@@ -12,7 +12,6 @@ import swop.UI.Generators.UserGenerator;
  */
 public interface UI {
 	InputScanner scanner = new InputScanner(new Scanner(System.in));
-	//todo: implement this?
 
 	/**
 	 * Ask user a Yes/No question and return the response

@@ -49,7 +49,6 @@ public class GarageHolderGenerator extends UserGenerator {
      * @return a string containing the output text
      */
     public String optionListToString(List<String> options) {
-        //TODO: wrong builder method
         StringBuilder builder = new StringBuilder();
         ListIterator<String> it = options.listIterator();
         while (it.hasNext()) {
