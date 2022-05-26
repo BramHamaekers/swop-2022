@@ -10,6 +10,8 @@ public abstract class Task implements Cloneable {
      * Set this.isComplete equal to true.
      */
     public void complete() {
+        if (this.isComplete)
+            throw new IllegalStateException("Task is already finished");
         this.isComplete = true;
     }
 
