@@ -32,6 +32,7 @@ public class GarageHolder extends User{
      */
 	private Map<String,String> mapConfigToOptions(Map<String, Integer> carConfig, Map<String, List<String>> validOptions) {
         if (carConfig == null) throw new IllegalArgumentException("carConfig is null");
+        if (validOptions == null) throw new IllegalArgumentException("given validOptions map is null");
         Map<String,String> carOpts = new HashMap<>();
 
         for (String component: carConfig.keySet()) {
@@ -43,7 +44,7 @@ public class GarageHolder extends User{
     }
 
     public List<String> getModels(){
-        return List.of("ModelA","ModelB","ModelC");
+        return CarModel.types;
     }
 
 	/**
@@ -87,6 +88,8 @@ public class GarageHolder extends User{
      * @param carOrder the given order to add
      */
     public void addOrder(CarOrder carOrder) {
+        if (carOrder == null)
+            throw new IllegalArgumentException("no valid carorder was specified");
         this.carOrders.add(carOrder);
     }
 
@@ -96,6 +99,8 @@ public class GarageHolder extends User{
      * @return the valid options for a specified carmodel
      */
     public SortedMap<String, List<String>> getValidOptions(CarModel model) {
+        if (model == null)
+            throw new IllegalArgumentException("no valid carmodel was specified");
         return model.getValidOptions();
     }
 
@@ -106,6 +111,11 @@ public class GarageHolder extends User{
      * @return returns the order if it was valid, otherwise return null
      */
     public CarOrder placeOrder(Map<String, Integer> carConfig, CarModel model) {
+        if (carConfig == null)
+            throw new IllegalArgumentException("invalid config file specified");
+        if (model == null)
+            throw new IllegalArgumentException("no valid carmodel was specified");
+
         Map<String, String> carOptions = this.mapConfigToOptions(carConfig, model.getValidOptions());
 
         CarModelSpecification spec = new CarModelSpecification(carOptions);

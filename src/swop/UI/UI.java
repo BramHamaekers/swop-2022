@@ -12,6 +12,7 @@ import swop.UI.Generators.UserGenerator;
  */
 public interface UI {
 	InputScanner scanner = new InputScanner(new Scanner(System.in));
+	//todo: implement this?
 
 	/**
 	 * Ask user a Yes/No question and return the response
@@ -20,6 +21,7 @@ public interface UI {
 	 * @throws CancelException when the user types "Cancel"
 	 */
 	static String indicateYesNo(String action) throws CancelException {
+		if (action == null) throw new IllegalArgumentException("null string provided");
 		System.out.println();
 		System.out.printf("%s %n[y] Yes [n] No%n", action);
 		return scanner.scanNextLineOfTypeString(new String[]{"y","n"});
@@ -30,6 +32,7 @@ public interface UI {
 	 * @param e the error message to print
 	 */
 	static void printError(String e) {
+		if (e == null) throw new IllegalArgumentException("null string provided");
 		System.out.println(e);
 	}
 
@@ -38,6 +41,7 @@ public interface UI {
 	 * @param e the error message to print
 	 */
 	static void printErrorln(String e) {
+		if (e == null) throw new IllegalArgumentException("null string provided");
 		System.out.println(e);
 	}
 
@@ -50,6 +54,8 @@ public interface UI {
 	 * @throws CancelException when the user types 'Cancel'
 	 */
 	static int selectAction(UserGenerator generator, List<String> actions, String question) throws CancelException {
+		if (actions == null) throw new IllegalArgumentException("list of actions is null");
+		if (question == null) throw new IllegalArgumentException("null string provided");
 		DisplayStatus builder = new DisplayStatus();
 		generator.selectAction(builder, actions, question);
 		System.out.println(builder.getDisplay());

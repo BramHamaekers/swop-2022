@@ -25,6 +25,10 @@ public class Manager extends User{
 	 * @param batchOptions the batchOptions you want to use in the case of choosing the 'batch' algorithm
 	 */
 	public void setSchedulingAlgorithm(String algorithm, Map<String, String> batchOptions){
+		if (algorithm == null)
+			throw new IllegalArgumentException("null string provided");
+		if (algorithm.equals("BATCH") && batchOptions == null)
+			throw new IllegalArgumentException("batch options provided are null");
 		this.assemAssist.getController().getScheduler().setSchedulingAlgorithm(algorithm, batchOptions);
 	}
 

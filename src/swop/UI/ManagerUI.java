@@ -98,6 +98,8 @@ public class ManagerUI {
      * @throws CancelException when a user wants to cancel his operation by typing "cancel"
      */
     private static void showProductionStatistics(AllStats stats) throws CancelException {
+        if (stats == null)
+            throw new IllegalArgumentException("invalid statistics Allstats provided");
         DisplayStatus builder = new DisplayStatus();
         managerGenerator.generateProductionStatistics(builder, stats);
         System.out.println(builder.getDisplay());
@@ -112,10 +114,13 @@ public class ManagerUI {
      * @throws CancelException when a user wants to cancel his operation by typing "cancel"
      */
     private static int selectAction(List<String> actions, String currentAlgo) throws CancelException {
+        if (actions == null)
+            throw new IllegalArgumentException("provided list of actions is null");
+        if (currentAlgo == null)
+            throw new IllegalArgumentException("null string provided");
         DisplayStatus builder = new DisplayStatus();
         managerGenerator.generateAlgorithmSelection(builder, actions, currentAlgo);
         System.out.println(builder.getDisplay());
-        //TODO: check if we cant move these to generator aswell
         return scanner.scanNextLineOfTypeInt(0, actions.size());
     }
 
@@ -126,6 +131,8 @@ public class ManagerUI {
      * @throws CancelException when a user wants to cancel his operation by typing "cancel"
      */
     private static Map<String,String> getBatchSelection(List<Map<String, String>> possibleBatch) throws CancelException {
+        if (possibleBatch == null)
+            throw new IllegalArgumentException("list of batchoptions is null");
         DisplayStatus builder = new DisplayStatus();
         managerGenerator.generateBatchSelection(builder, possibleBatch);
         System.out.println(builder.getDisplay());

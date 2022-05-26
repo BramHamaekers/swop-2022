@@ -32,6 +32,8 @@ public class CarMechanic extends User{
 	 * @return Copy of list of all tasks that are uncompleted at the workstation
 	 */
 	public List<Task> getUncompletedTasks(String stationName) {
+		if (stationName == null)
+			throw new IllegalArgumentException("null string provided");
 		List<Task> copyOfUncompletedTasks = new ArrayList<>();
 		this.assemAssist.getController().getAssembly().getUncompletedTasksByName(stationName).forEach(t -> copyOfUncompletedTasks.add(t.clone()));
 		return copyOfUncompletedTasks;
@@ -43,7 +45,9 @@ public class CarMechanic extends User{
 	 * @return Copy of list of all tasks that are completed at the workstation
 	 */
 	public List<Task> getCompletedTasks(String stationName) {
-	List<Task> copyOfUncompletedTasks = new ArrayList<>();
+		if (stationName == null)
+			throw new IllegalArgumentException("null string provided");
+		List<Task> copyOfUncompletedTasks = new ArrayList<>();
 		this.assemAssist.getController().getAssembly().getCompletedTasksByName(stationName).forEach(t -> copyOfUncompletedTasks.add(t.clone()));
 		return copyOfUncompletedTasks;
 	}
@@ -59,6 +63,8 @@ public class CarMechanic extends User{
 			throw new IllegalArgumentException("Cannot complete task " + taskName + ", " +
 					"task does not exits at " + stationName + "or is already completed");
 		}
+		if (passedTime < 0)
+			throw new IllegalArgumentException("negative minutes passed");
 		WorkStation workstation = this.assemAssist.getController().getAssembly().getStationByName(stationName);
 		Task task = this.assemAssist.getController().getAssembly().getUncompletedTasksByName(stationName).stream()
 				.filter(t -> t.getName().equals(taskName))
@@ -73,6 +79,10 @@ public class CarMechanic extends User{
 	 * @return True if the given task is not yet completed at the station with the given stationName
 	 */
 	public boolean isUncompletedTaskAtStation(String stationName, String taskName) {
+		if (stationName == null)
+			throw new IllegalArgumentException("null string provided");
+		if (taskName == null)
+			throw new IllegalArgumentException("null string provided");
 		return this.getUncompletedTasks(stationName).stream().map(Task::getName).toList().contains(taskName);
 	}
 }

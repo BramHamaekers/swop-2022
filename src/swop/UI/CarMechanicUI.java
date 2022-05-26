@@ -76,7 +76,14 @@ public class CarMechanicUI {
      * @param pendingTasks the pending tasks on the given workstation
      * @param finishedTasks the finished tasks on the given workstation
      */
-    public static void displayStationStatus(String stationName, List<Task> pendingTasks, List<Task> finishedTasks) {
+    private static void displayStationStatus(String stationName, List<Task> pendingTasks, List<Task> finishedTasks) {
+        if (stationName == null)
+            throw new IllegalArgumentException("null string provided");
+        if (pendingTasks == null)
+            throw new IllegalArgumentException("list of pending tasks provided is null");
+        if (finishedTasks == null)
+            throw new IllegalArgumentException("list of finished tasks provided is null");
+
         //TODO defensive
         DisplayStatus builder = new DisplayStatus();
         cmGenerator.generateWorkStationStatus(builder, stationName, pendingTasks, finishedTasks);
@@ -101,6 +108,8 @@ public class CarMechanicUI {
      * @param stationNames the names of all the workstations
      */
     private static void displayAvailableStations(List<String> stationNames) {
+        if (stationNames == null)
+            throw new IllegalArgumentException("list of station names is null");
         DisplayStatus builder = new DisplayStatus();
         cmGenerator.generateStationList(builder, stationNames);
         System.out.print(builder.getDisplay());
@@ -114,6 +123,8 @@ public class CarMechanicUI {
      * @throws CancelException when a user wants to cancel his operation by typing "cancel"
      */
     private static int askOption(String s, int numberOfOptions) throws CancelException {
+        if (numberOfOptions < 0)
+            throw new IllegalArgumentException("negative number of options");
         return scanner.scanNextLineOfTypeInt(0, numberOfOptions);
     }
 
@@ -123,6 +134,8 @@ public class CarMechanicUI {
      * @throws CancelException when a user wants to cancel his operation by typing "cancel"
      */
     private void performTaskAtWorkStation(String stationName) throws CancelException {
+        if (stationName == null)
+            throw new IllegalArgumentException("null string provided");
         List<Task> taskList = this.carmechanic.getUncompletedTasks(stationName);
         //returns selected task by user
         Task task = this.selectTask(taskList);
@@ -155,6 +168,8 @@ public class CarMechanicUI {
      * @param taskList the given taskList
      */
     private static void displayAvailableTasks(List<Task> taskList) {
+        if (taskList == null)
+            throw new IllegalArgumentException("list of tasks is null");
         DisplayStatus builder = new DisplayStatus();
         cmGenerator.generateAvailableTasks(builder, taskList);
         System.out.print(builder.getDisplay());
@@ -167,7 +182,7 @@ public class CarMechanicUI {
      * @throws CancelException when a user wants to cancel his operation by typing "cancel"
      */
     private void showInfo(Task task) throws CancelException {
-        if (task == null) throw new IllegalArgumentException("task is null");
+        if (task == null) throw new IllegalArgumentException("provided task is null");
         String info = task.getDescription();
         displayTaskInfo(info);
     }
@@ -178,6 +193,8 @@ public class CarMechanicUI {
      * @throws CancelException when a user wants to cancel his operation by typing "cancel"
      */
     private static void displayTaskInfo(String info) throws CancelException {
+        if (info == null)
+            throw new IllegalArgumentException("null string provided");
         DisplayStatus builder = new DisplayStatus();
         cmGenerator.generateTaskInfo(builder, info);
         System.out.println(builder.getDisplay());
@@ -191,7 +208,7 @@ public class CarMechanicUI {
      * @throws CancelException when a user wants to cancel his operation by typing "cancel"
      */
     private void completeTask(String workstationName, Task task) throws CancelException {
-        if (task == null) throw new IllegalArgumentException("task is null");
+        if (task == null) throw new IllegalArgumentException("provided task is null");
         if (workstationName == null) throw new IllegalArgumentException("workstation is invalid");
         int time = askTimeToCompleteTask();
         this.carmechanic.completeTask(workstationName ,task.getName(), time);

@@ -18,6 +18,8 @@ public class LoginUI {
     private final ManagerUI managerUI;
 
     public LoginUI(AssemAssist assem) {
+        if (assem == null)
+            throw new IllegalArgumentException("provided assemAssist is null");
         this.garageHolderUI = new GarageHolderUI();
         this.carMechanicUI = new CarMechanicUI();
         this.managerUI = new ManagerUI();

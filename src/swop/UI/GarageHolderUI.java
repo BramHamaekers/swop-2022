@@ -131,6 +131,8 @@ public class GarageHolderUI {
      * @throws CancelException when a user wants to cancel his operation by typing "cancel"
      */
     private static int indicateCarModel(List<String> carModels) throws CancelException {
+        if (carModels == null)
+            throw new IllegalArgumentException("list of carmodels invalid");
         DisplayStatus builder = new DisplayStatus();
         garageHolderGenerator.generateCarModels(builder, carModels);
         System.out.println(builder.getDisplay());
@@ -143,6 +145,10 @@ public class GarageHolderUI {
      * @param optionsMap list of components and its options
      */
     private static void displayOrderingForm(Map<String, List<String>> optionsMap, String name) {
+        if (optionsMap == null)
+            throw new IllegalArgumentException("provided optionsmap is null");
+        if (name == null)
+            throw new IllegalArgumentException("null string provided");
         DisplayStatus builder = new DisplayStatus();
         garageHolderGenerator.generateOrderingForm(builder, optionsMap, name);
         System.out.println(builder.getDisplay());
@@ -156,6 +162,8 @@ public class GarageHolderUI {
      * @throws CancelException when a user wants to cancel his operation by typing "cancel"
      */
     private static int askOption (int leftBound, int rightBound, String option) throws CancelException {
+        if (option == null)
+            throw new IllegalArgumentException("null string provided");
         System.out.print("Choose " + option + ": ");
         return scanner.scanNextLineOfTypeInt(leftBound, rightBound);
     }
@@ -165,6 +173,8 @@ public class GarageHolderUI {
      * @param order the estimated completion time to be displayed
      */
     private static void displayEstimatedTime(CarOrder order) {
+        if (order == null)
+            throw new IllegalArgumentException("provided carorder is null");
         DisplayStatus builder = new DisplayStatus();
         garageHolderGenerator.generateEstimatedTime(builder, order);
         System.out.println(builder.getDisplay());
@@ -177,6 +187,10 @@ public class GarageHolderUI {
      * @return whether the orderID is valid
      */
     private boolean isValidOrderID(Set<CarOrder> orders, String orderID) {
+        if (orderID == null)
+            throw new IllegalArgumentException("null string provided");
+        if (orders == null)
+            throw new IllegalArgumentException("set of orders is null");
         return orders.stream().anyMatch(o -> o.getID().equalsIgnoreCase(orderID));
     }
 
@@ -187,6 +201,10 @@ public class GarageHolderUI {
      * @return the CarOrder with the orderID
      */
     private CarOrder getOrderFromID(Set<CarOrder> orders, String orderID) {
+        if (orderID == null)
+            throw new IllegalArgumentException("null string provided");
+        if (orders == null)
+            throw new IllegalArgumentException("set of orders is null");
         return orders.stream()
                 .filter(o -> o.getID().equalsIgnoreCase(orderID))
                 .findFirst().orElse(null);
@@ -223,6 +241,8 @@ public class GarageHolderUI {
      * @param string details of an order
      */
     private static void showOrderDetails(String string) {
+        if (string == null)
+            throw new IllegalArgumentException("null string provided");
         System.out.println(string);
     }
 

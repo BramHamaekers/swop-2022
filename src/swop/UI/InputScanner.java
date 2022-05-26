@@ -15,6 +15,8 @@ public class InputScanner {
 	 * @param inputscanner a {@code Scanner}
 	 */
 	public InputScanner(Scanner inputscanner) {
+		if (inputscanner == null)
+			throw new IllegalArgumentException("invalid inputscanner");
 		this.inputScanner = inputscanner;
 	}
 	/**
@@ -44,6 +46,8 @@ public class InputScanner {
 	 * @throws CancelException when the user types 'Cancel'
 	 */
 	public int scanNextLineOfTypeInt(int leftborder, int rightBorder) throws CancelException {
+		if (leftborder<0 || rightBorder<=leftborder)
+			throw new IllegalArgumentException("invalid border range");
 		String s;
 		if (inputScanner.hasNextLine()) s = this.inputScanner.nextLine();
 		else s = this.inputScanner.next();
@@ -81,6 +85,8 @@ public class InputScanner {
 	 * @throws CancelException when a user wants to cancel his operation by typing "cancel"
 	 */
 	public String scanNextLineOfTypeString(String[] strings) throws CancelException {
+		if (strings == null)
+			throw new IllegalArgumentException("null stringlist provided");
 		String s;
 		if (inputScanner.hasNextLine()) s = this.inputScanner.nextLine();
 		else s = this.inputScanner.next();
