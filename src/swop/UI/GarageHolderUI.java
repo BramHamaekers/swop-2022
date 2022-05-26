@@ -74,7 +74,7 @@ public class GarageHolderUI {
     private void generateOrder() throws CancelException {
         if (this.garageHolder == null)
             throw new IllegalStateException("garage holder not instantiated");
-        List<String> models =  this.garageHolder.getModels();
+        List<String> models = this.garageHolder.getModels();
         // Select Model
         int choice = indicateCarModel(models);
         CarModel model = this.garageHolder.createCarModel(choice);
