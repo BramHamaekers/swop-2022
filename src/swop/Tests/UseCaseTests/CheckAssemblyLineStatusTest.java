@@ -2,11 +2,7 @@ package swop.Tests.UseCaseTests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.io.PrintStream;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -14,13 +10,8 @@ import org.junit.jupiter.api.Test;
 
 import swop.CarManufactoring.WorkStation;
 import swop.Main.AssemAssist;
-import swop.UI.LoginUI;
 import swop.UI.Builders.DisplayStatus;
 import swop.UI.Generators.CarMechanicGenerator;
-import swop.UI.TempUI;
-import swop.Users.CarMechanic;
-import swop.Users.Manager;
-import swop.Users.User;
 
 public class CheckAssemblyLineStatusTest {
     AssemAssist assem;

@@ -4,10 +4,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import swop.Car.Car;
-import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
 import swop.Records.AllStats;
-import swop.UI.ManagerUI;
 
 /**
  * A manager user

@@ -1,6 +1,5 @@
 package swop.Users;
 
-import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
 
 /**
@@ -15,22 +14,13 @@ public abstract class User {
      * @param id is string of name
      */
     public User(String id, AssemAssist assemAssist) {
+        if (id == null)
+            throw new IllegalArgumentException("invalid id provided");
+        if (assemAssist == null)
+            throw new IllegalArgumentException("invalid assemAssist provided");
         this.id = id;
         this.assemAssist = assemAssist;
     }
-
-    /**
-     * load a user on a login
-     * @param assemAssist given the main program
-     */
-//    public abstract void load(AssemAssist assemAssist);
-
-    /**
-     * select an action for the relevant user
-     * @param assemAssist given the main program
-     * @throws CancelException gets thrown when user wants to cancel
-     */
-//    public abstract void selectAction(AssemAssist assemAssist) throws CancelException;
 
     /**
      * get the UserID of this user

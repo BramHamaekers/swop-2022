@@ -10,7 +10,7 @@ import swop.UI.Generators.UserGenerator;
 /**
  * Interface used to make abstraction between the program and the user IO
  */
-interface UI {
+public interface UI {
 	InputScanner scanner = new InputScanner(new Scanner(System.in));
 
 	/**

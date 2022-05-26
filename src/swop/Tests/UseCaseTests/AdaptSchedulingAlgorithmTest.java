@@ -2,22 +2,15 @@ package swop.Tests.UseCaseTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
-import swop.Car.Car;
 import swop.Main.AssemAssist;
-import swop.UI.LoginUI;
 import swop.UI.Builders.DisplayStatus;
 import swop.UI.Generators.ManagerGenerator;
-import swop.UI.TempUI;
 import swop.Users.Manager;
 
 public class AdaptSchedulingAlgorithmTest {

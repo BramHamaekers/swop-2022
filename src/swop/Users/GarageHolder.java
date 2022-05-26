@@ -5,9 +5,7 @@ import swop.Car.CarModel.CarModel;
 import swop.Car.CarModel.ModelA;
 import swop.Car.CarModel.ModelB;
 import swop.Car.CarModel.ModelC;
-import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
-import swop.UI.GarageHolderUI;
 
 import java.util.*;
 
@@ -54,23 +52,22 @@ public class GarageHolder extends User{
 	 * @return created CarModel
 	 */
     public CarModel createCarModel(int choice) {
-            return switch (choice) {
-                case 0 -> new ModelA();
-                case 1 -> new ModelB();
-                case 2 -> new ModelC();
-                default -> throw new IllegalArgumentException("Unexpected value: " + choice);
-            };
-        }
-    
+        return switch (choice) {
+            case 0 -> new ModelA();
+            case 1 -> new ModelB();
+            case 2 -> new ModelC();
+            default -> throw new IllegalArgumentException("Unexpected value: " + choice);
+        };
+    }
+
     /**
      * Creates and stores a new CarOrder given a carModel
-     * @param assemAssist given the main program
      * @param carModel given carmodel
      * @return completed carorder
      */
-    private CarOrder placeOrderOnAssem(AssemAssist assemAssist, CarModel carModel){
-        if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
+    private CarOrder placeOrderOnAssem(CarModel carModel){
         if (carModel == null) throw new IllegalArgumentException("carModel is null");
+        if (this.assemAssist == null) throw new IllegalStateException("assemAssist not instantiated");
         CarOrder carOrder = new CarOrder(carModel);
         this.addOrder(carOrder);
         this.assemAssist.addOrder(carOrder);
@@ -113,6 +110,6 @@ public class GarageHolder extends User{
 
         CarModelSpecification spec = new CarModelSpecification(carOptions);
         model.setCarModelSpecification(spec);
-        return this.placeOrderOnAssem(assemAssist, model);
+        return this.placeOrderOnAssem(model);
     }
 }

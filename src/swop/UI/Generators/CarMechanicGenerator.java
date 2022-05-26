@@ -1,7 +1,6 @@
 package swop.UI.Generators;
 
 import swop.CarManufactoring.Task;
-import swop.CarManufactoring.WorkStation;
 import swop.UI.Builders.FormBuilder;
 
 import java.util.List;
@@ -24,7 +23,6 @@ public class CarMechanicGenerator extends UserGenerator {
             builder.inputInfo(String.format("%s [%s]", w.next(), (w.nextIndex() - 1)));
         }
         builder.endInfo();
-      //builder.addOption("Select station", workStations.size()); // breaks the use case tests
     }
 
     /**

@@ -5,18 +5,12 @@ import swop.Car.CarOrder;
 import swop.CarManufactoring.Task;
 import swop.CarManufactoring.WorkStation;
 import swop.Main.AssemAssist;
-import swop.UI.LoginUI;
 import swop.UI.Builders.DisplayStatus;
 import swop.UI.Generators.CarMechanicGenerator;
-import swop.UI.TempUI;
 import swop.Users.CarMechanic;
 import swop.Users.GarageHolder;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.io.PrintStream;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;

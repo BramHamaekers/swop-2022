@@ -2,10 +2,8 @@ package swop.Main;
 
 import swop.Car.CarOrder;
 import swop.CarManufactoring.*;
-import swop.Exceptions.IllegalUserException;
 import swop.Miscellaneous.Statistics;
 import swop.Records.AllStats;
-import swop.UI.LoginUI;
 import swop.Users.CarMechanic;
 import swop.Users.GarageHolder;
 import swop.Users.Manager;

@@ -2,20 +2,15 @@ package swop.Tests.UseCaseTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
 
 import org.junit.jupiter.api.Test;
 import swop.Main.AssemAssist;
-import swop.UI.LoginUI;
 import swop.UI.Builders.DisplayStatus;
 import swop.UI.Generators.GarageHolderGenerator;
-import swop.UI.TempUI;
 import swop.Users.GarageHolder;
 
 public class CheckOrderDetailsTest {

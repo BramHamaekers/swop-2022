@@ -2,7 +2,7 @@ package swop.Tests.UseCaseTests;
 
 import swop.Main.AssemAssist;
 import swop.UI.LoginUI;
-import swop.UI.TempUI;
+import swop.UI.UI;
 import swop.Users.User;
 
 import java.io.ByteArrayInputStream;
@@ -15,14 +15,15 @@ public class handleInputOutput {
     private static AssemAssist assem;
 
 
+
     public static ListIterator<String> continueUITest(String inputString, int skips) {
         ByteArrayInputStream input = new ByteArrayInputStream(inputString.getBytes());
         System.setIn(input);
-        LoginUI.scanner.updateScanner();
+        UI.scanner.updateScanner();
 
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        new TempUI(getAssem());
+        new LoginUI(getAssem());
 
         ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
                 .listIterator();
