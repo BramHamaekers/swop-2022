@@ -11,26 +11,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ManagerTest {
 
-    InputStream input;
     AssemAssist assem = new AssemAssist();
-    Manager man = new Manager("naam", assem);
-    private static final ManagerGenerator managerGenerator = new ManagerGenerator();
+    Manager man = new Manager("id", assem);
 
     @Test
     void getId() {
-        assertEquals(man.getId(),"naam");
+        assertEquals(man.getId(),"id");
     }
 
-//    @Test
-//    void load() {
-//        assertThrows(IllegalArgumentException.class, () -> man.load(null));
-////        man.load(assem);
-//
-//    }
 
-//    @Test
-//    void selectAction() {
-//        assertThrows(IllegalArgumentException.class, () -> man.selectAction(null));
-////        man.selectAction(assem);
-//    }
 }

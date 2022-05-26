@@ -20,8 +20,8 @@ import swop.Miscellaneous.TimeStamp;
 
 public class SchedulerTest {
 
-	Scheduler scheduler;
-	CarManufacturingController carManufacturingController;
+	CarManufacturingController carManufacturingController = new CarManufacturingController();
+	Scheduler scheduler = this.carManufacturingController.getScheduler();
 	 Map<String, String> validOptionsModelA = Map.ofEntries(
              entry("Body", "sedan"),
              entry("Color", "red"),
@@ -54,7 +54,7 @@ public class SchedulerTest {
 	
 	@Test
 	void intitiateNewSchedular() {
-		refresh();
+		resetParameters();
 		assertEquals(960,this.scheduler.getWorkingDayMinutes());
 		assertEquals(0,this.scheduler.getMinutes());
 		assertEquals(0,this.scheduler.getDay());
@@ -67,7 +67,7 @@ public class SchedulerTest {
 	
 	@Test 
 	void addTime(){
-		refresh();
+		resetParameters();
 		this.scheduler.addTime(50);
 		assertEquals(50,this.scheduler.getMinutes());
 		assertEquals(0,this.scheduler.getDay());
@@ -78,7 +78,7 @@ public class SchedulerTest {
 	
 	@Test 
 	void advanceDay(){
-		refresh();
+		resetParameters();
 		this.scheduler.addTime(950);
 		assertEquals(950,this.scheduler.getMinutes());
 		assertEquals(0,this.scheduler.getDay());
@@ -99,7 +99,7 @@ public class SchedulerTest {
 	
 	@Test 
 	void canAddToAssembly(){
-		refresh();
+		resetParameters();
 		assertTrue(this.scheduler.canAddCarToAssemblyLine(0));
 		assertThrows(IllegalArgumentException.class, () -> this.scheduler.canAddCarToAssemblyLine(-50));
 		assertFalse(this.scheduler.canAddCarToAssemblyLine(900));
@@ -131,7 +131,7 @@ public class SchedulerTest {
 	
 	@Test 
 	void estimatedCompletionTime(){
-		refresh();
+		resetParameters();
 		CarOrder order = createOrder("a");
 		TimeStamp stamp = new TimeStamp(0,150);
 		this.carManufacturingController.addOrderToQueue(order);
@@ -148,10 +148,9 @@ public class SchedulerTest {
 		carstamp = this.scheduler.getEstimatedCompletionTime(order.getCar());
 		assertEquals(stamp.getDay(),carstamp.getDay());
 		assertEquals(stamp.getMinutes(),carstamp.getMinutes());
-		order = createOrder("c");
 		
 		
-		refresh();
+		resetParameters();
 		this.scheduler.addTime(900);	
 		order = createOrder("a");
 		//car moved to next day since there isn't enough time to finish it today
@@ -167,10 +166,15 @@ public class SchedulerTest {
 		assertEquals(stamp.getDay(),carstamp.getDay());
 		assertEquals(stamp.getMinutes(),carstamp.getMinutes());
 	}
+
+	@Test
+	void getEstCompletionTimeInMinutesTest_NullCar() {
+		assertThrows(IllegalArgumentException.class, () -> this.scheduler.getEstimatedCompletionTime(null));
+	}
 	
 	@Test 
 	void schedulingAlgorithm(){
-		refresh();
+		resetParameters();
 		CarOrder order = createOrder("a");
 		this.carManufacturingController.addOrderToQueue(order);
 		order = createOrder("a");
@@ -179,7 +183,7 @@ public class SchedulerTest {
 		this.carManufacturingController.addOrderToQueue(order);
 		order = createOrder("c");
 		this.carManufacturingController.addOrderToQueue(order);
-		order = createOrder("c");
+		order = createOrder("b");
 		this.carManufacturingController.addOrderToQueue(order);
 		
 		assertEquals("FIFO",this.scheduler.getSchedulingAlgorithm());
@@ -190,16 +194,27 @@ public class SchedulerTest {
 	     );
 		this.scheduler.setSchedulingAlgorithm("BATCH", batchOption);
 		Car firstCarBatch = this.scheduler.getNextScheduledCar();
-		assertFalse(firstCarFifo.equals(firstCarBatch));
+		assertNotEquals(firstCarFifo, firstCarBatch);
 		assertEquals(firstCarFifo.getCarModel().getClass(), ModelA.class);
 		assertEquals(firstCarBatch.getCarModel().getClass(), ModelC.class);	
 	}
-	
-	
-	
-	
-	
-	
+
+	@Test
+	void setSchedulingAlgorithmTest_InvalidAlgorithm() {
+		resetParameters();
+		assertThrows(IllegalArgumentException.class, () -> this.scheduler.setSchedulingAlgorithm("INVALID", null));
+	}
+
+	@Test
+	void setSchedulingAlgorithmTest_NullBatchOptions() {
+		assertThrows(IllegalArgumentException.class, () -> this.scheduler.setSchedulingAlgorithm("BATCH", null));
+	}
+
+	@Test
+	void createIterator_NullCarList() {
+		assertThrows(IllegalArgumentException.class, () -> this.scheduler.createIterator(null));
+	}
+
 	CarOrder createOrder(String model) {
 		if(model.equals("a")) {
 			CarModel m = new ModelA();
@@ -223,17 +238,11 @@ public class SchedulerTest {
 		
 			
 	}
-	
-	
-	
-	
-	
-	
-	void refresh() {
+
+	void resetParameters() {
 		carManufacturingController = new CarManufacturingController();
 		scheduler = this.carManufacturingController.getScheduler();
 	}
-	
-	
+
 	 
 }

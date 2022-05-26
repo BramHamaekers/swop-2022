@@ -11,7 +11,7 @@ import java.util.Map;
 
 import static swop.UI.UI.scanner;
 
-public class ManagerUI {
+public class TempManUI {
 
     private final static ManagerGenerator managerGenerator = new ManagerGenerator();
 
@@ -33,7 +33,7 @@ public class ManagerUI {
 
     /**
      * Function that handles selecting an action for Manager
-     * @throws CancelException
+     * @throws CancelException when the user types 'cancel'
      */
     private void selectAction() throws CancelException {
         if (this.manager == null) throw new IllegalStateException("no manager accessible");

@@ -9,7 +9,7 @@ import java.util.*;
  * Iterator for the scheduling algorithm to pick the right car for a specified algorithm
  * @param <T> the type of the iterable
  */
-interface customIterator<T> {
+interface QueueIterator<T> {
 	/**
 	 * iterator standard hasnext method
 	 * @return whether the iterator has another element to return
@@ -70,7 +70,7 @@ public class Scheduler {
 		if (car == null)
 			throw new IllegalArgumentException("null has no estimated completion time");
 		int totalMinutes = this.getEstCompletionTimeInMinutes(car);
-        return this.createTimeStamp(totalMinutes, car);
+        return this.createTimeStampForCar(totalMinutes, car);
     }
     
     /**
@@ -93,11 +93,11 @@ public class Scheduler {
 	 * @param car the current car
 	 * @return a new TimeStamp
 	 */
-	private TimeStamp createTimeStamp(int minutes, Car car) {
+	private TimeStamp createTimeStampForCar(int minutes, Car car) {
 		if (minutes < 0)
 			throw new IllegalArgumentException("minutes cant be negative");
 		if (car == null)
-			throw new IllegalArgumentException("car TODO");
+			throw new IllegalArgumentException("car cannot be null");
 		if(this.carOnAssembly(car)) return new TimeStamp(this.day, minutes); //needs to be finished today
 		int day = this.day;
 		int workingDayMinutes = this.workingDayMinutes;
@@ -153,7 +153,7 @@ public class Scheduler {
     	Car station2Car = workstationCars.get(1);
     	Car station3Car = workstationCars.get(2);
 
-    	customIterator<Car> iter = this.iterator(this.controller.getCarQueue());
+    	QueueIterator<Car> iter = this.createIterator(this.controller.getCarQueue());
 		Car current = iter.next(this.algorithm);
 
 		int time = this.getMax(getUnfinishedCars());
@@ -235,7 +235,6 @@ public class Scheduler {
         
         while(overTime > 960) { //overtime more than a day
         	this.day += 1;
-        	this.workingDayMinutes = 0;
         	overTime -= 960;
         }
         if (overTime > 0){ //overtime less than a day and positive
@@ -257,7 +256,7 @@ public class Scheduler {
 	public boolean canAddCarToAssemblyLine(int minutes) {
 		if (minutes<0)
 			throw new IllegalArgumentException("no negative minutes");
-		int estTime = 0;
+		int estTime;
 		Car nextCar = this.getNextScheduledCar();
 		List<Car> workstationCars = getWorkStationCars();
 		Car car1 = workstationCars.get(0);
@@ -319,9 +318,7 @@ public class Scheduler {
 	 * @return True if the given algorithm is valid
 	 */
 	private boolean isValidSchedulingAlgorithm(String algorithm) {
-		if (algorithm == null)
-			throw new IllegalArgumentException("invalid algorithm");
-		return this.getValidAlgorithms().contains(algorithm);
+		return algorithm != null && this.getValidAlgorithms().contains(algorithm);
 	}
 
 	/**
@@ -336,7 +333,7 @@ public class Scheduler {
      * @return returns the first car on the carqueue
      */
     public Car getNextScheduledCar() {
-    	customIterator<Car> iter = this.iterator(this.controller.getCarQueue());
+    	QueueIterator<Car> iter = this.createIterator(this.controller.getCarQueue());
     	if (iter.hasNext())
         	return iter.next(this.algorithm);
     	return null;
@@ -347,10 +344,10 @@ public class Scheduler {
 	 * @param cars list of cars to loop over
 	 * @return new customIterator that loops over cars
 	 */
-	public customIterator<Car> iterator(List<Car> cars) {
+	public QueueIterator<Car> createIterator(List<Car> cars) {
 		if (cars == null)
-			throw new IllegalArgumentException("empty list of cars");
-		return new customIterator<>() {
+			throw new IllegalArgumentException("List of cars cannot be null");
+		return new QueueIterator<>() {
 			final List<Car> list = new LinkedList<>(cars);
 
 			public boolean hasNext() {
