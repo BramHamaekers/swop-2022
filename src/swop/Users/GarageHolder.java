@@ -109,7 +109,7 @@ public class GarageHolder extends User{
      * @param model the model the garageholder ordered
      * @return returns the order if it was valid, otherwise return null
      */
-    public CarOrder placeOrder(Map<String, Integer> carConfig, CarModel model) {
+    public String placeOrder(Map<String, Integer> carConfig, CarModel model) {
         if (carConfig == null)
             throw new IllegalArgumentException("invalid config file specified");
         if (model == null)
@@ -119,6 +119,7 @@ public class GarageHolder extends User{
 
         CarModelSpecification spec = new CarModelSpecification(carOptions);
         model.setCarModelSpecification(spec);
-        return this.placeOrderOnAssem(model);
+        CarOrder order = this.placeOrderOnAssem(model);
+        return order.getEstimatedCompletionTime().toString();
     }
 }

@@ -91,11 +91,11 @@ public class GarageHolderGenerator extends UserGenerator {
     /**
      * generate an estimated time for this order
      * @param builder the builder used in displaying the estimated time
-     * @param order a carorder
+     * @param estimatedCompletionTime the estimated completion time for an order
      */
-    public void generateEstimatedTime(FormBuilder builder, CarOrder order){
+    public void generateEstimatedTime(FormBuilder builder, String estimatedCompletionTime){
         builder.appendTitle("Estimated Completion Time");
-        builder.inputInfo(order.getEstimatedCompletionTime().toString());
+        builder.inputInfo(estimatedCompletionTime);
         builder.endInfo();
     }
 }

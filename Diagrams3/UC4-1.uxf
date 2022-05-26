@@ -152,7 +152,7 @@ return options</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>77</x>
+      <x>7</x>
       <y>182</y>
       <w>70</w>
       <h>21</h>
@@ -163,7 +163,7 @@ return options</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>105</x>
+      <x>35</x>
       <y>196</y>
       <w>21</w>
       <h>504</h>
@@ -174,7 +174,7 @@ return options</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>105</x>
+      <x>35</x>
       <y>686</y>
       <w>14</w>
       <h>105</h>
@@ -332,26 +332,26 @@ return timestamp</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>112</x>
+      <x>42</x>
       <y>679</y>
-      <w>287</w>
+      <w>357</w>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 void setOrderTime(TimeStamp)</panel_attributes>
-    <additional_attributes>10.0;20.0;390.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;490.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>112</x>
+      <x>42</x>
       <y>693</y>
-      <w>287</w>
+      <w>357</w>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 return</panel_attributes>
-    <additional_attributes>390.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>490.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -368,7 +368,7 @@ return</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>0</x>
+      <x>77</x>
       <y>182</y>
       <w>70</w>
       <h>21</h>
@@ -403,7 +403,7 @@ List&lt;String&gt; garageHolder.getModels()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>28</x>
+      <x>105</x>
       <y>196</y>
       <w>21</w>
       <h>532</h>
@@ -414,7 +414,7 @@ List&lt;String&gt; garageHolder.getModels()</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>28</x>
+      <x>105</x>
       <y>714</y>
       <w>14</w>
       <h>28</h>
@@ -425,26 +425,26 @@ List&lt;String&gt; garageHolder.getModels()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>35</x>
+      <x>112</x>
       <y>714</y>
-      <w>364</w>
+      <w>287</w>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 void setEstimatedCompletionTime(timestamp)</panel_attributes>
-    <additional_attributes>10.0;20.0;500.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;390.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>35</x>
+      <x>112</x>
       <y>728</y>
-      <w>364</w>
+      <w>287</w>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 return</panel_attributes>
-    <additional_attributes>500.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>390.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
@@ -674,7 +674,7 @@ return</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>924</x>
-      <y>770</y>
+      <y>777</y>
       <w>336</w>
       <h>28</h>
     </coordinates>
@@ -697,25 +697,25 @@ return completionTime</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>112</x>
+      <x>42</x>
       <y>756</y>
-      <w>819</w>
+      <w>889</w>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 TimeStamp getEstimatedCompletionTime()</panel_attributes>
-    <additional_attributes>10.0;20.0;1150.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;1250.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>112</x>
+      <x>42</x>
       <y>770</y>
-      <w>819</w>
+      <w>889</w>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=.&gt;
 return timestamp</panel_attributes>
-    <additional_attributes>10.0;20.0;1150.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;1250.0;20.0</additional_attributes>
   </element>
 </diagram>

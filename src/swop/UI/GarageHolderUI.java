@@ -83,19 +83,24 @@ public class GarageHolderUI {
         SortedMap<String, List<String>> options = this.garageHolder.getValidOptions(model);
         displayOrderingForm(options, model.getName());
 
+        Map<String, Integer> carConfig = getOrderForm(options);
+
+        try{
+            String completionTime = this.garageHolder.placeOrder(carConfig, model);
+            displayEstimatedTime(completionTime);
+        }catch (IllegalArgumentException e){
+            UI.printError(e.getMessage());
+        }
+    }
+
+    private static Map<String, Integer> getOrderForm(SortedMap<String, List<String>> options) throws CancelException {
         Map<String,Integer> carConfig = new HashMap<>();
         for (var entry : options.entrySet()) {
             int option = askOption(0, entry.getValue().size(), entry.getKey());
             carConfig.put(entry.getKey(), option);
         }
         printEmptyLine();
-
-        try{
-            CarOrder order = this.garageHolder.placeOrder(carConfig, model);
-            displayEstimatedTime(order);
-        }catch (IllegalArgumentException e){
-            UI.printError(e.getMessage());
-        }
+        return carConfig;
     }
 
     /**
@@ -170,13 +175,13 @@ public class GarageHolderUI {
 
     /**
      * Prints the given estimated completion time.
-     * @param order the estimated completion time to be displayed
+     * @param estCompletiontime the estimated completion time to be displayed
      */
-    private static void displayEstimatedTime(CarOrder order) {
-        if (order == null)
-            throw new IllegalArgumentException("provided carorder is null");
+    private static void displayEstimatedTime(String estCompletiontime) {
+        if (estCompletiontime == null)
+            throw new IllegalArgumentException("Null string provided");
         DisplayStatus builder = new DisplayStatus();
-        garageHolderGenerator.generateEstimatedTime(builder, order);
+        garageHolderGenerator.generateEstimatedTime(builder, estCompletiontime);
         System.out.println(builder.getDisplay());
     }
 
