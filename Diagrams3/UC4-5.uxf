@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.0.0">
-  <zoom_level>7</zoom_level>
+  <zoom_level>8</zoom_level>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>700</x>
-      <y>119</y>
-      <w>70</w>
-      <h>21</h>
+      <x>776</x>
+      <y>104</y>
+      <w>80</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>:Manager</panel_attributes>
     <additional_attributes/>
@@ -15,10 +15,10 @@
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>406</x>
-      <y>119</y>
-      <w>70</w>
-      <h>21</h>
+      <x>440</x>
+      <y>104</y>
+      <w>80</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>:Statistics</panel_attributes>
     <additional_attributes/>
@@ -26,10 +26,10 @@
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>966</x>
-      <y>119</y>
-      <w>70</w>
-      <h>21</h>
+      <x>1080</x>
+      <y>104</y>
+      <w>80</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>:UI</panel_attributes>
     <additional_attributes/>
@@ -37,10 +37,10 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>434</x>
-      <y>133</y>
-      <w>21</w>
-      <h>77</h>
+      <x>472</x>
+      <y>120</y>
+      <w>24</w>
+      <h>88</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
@@ -48,10 +48,10 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>728</x>
-      <y>133</y>
-      <w>21</w>
-      <h>140</h>
+      <x>808</x>
+      <y>120</y>
+      <w>24</w>
+      <h>160</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;180.0</additional_attributes>
@@ -59,10 +59,10 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>994</x>
-      <y>133</y>
-      <w>21</w>
-      <h>112</h>
+      <x>1112</x>
+      <y>120</y>
+      <w>24</w>
+      <h>128</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
@@ -70,10 +70,10 @@
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>728</x>
-      <y>259</y>
-      <w>14</w>
-      <h>126</h>
+      <x>808</x>
+      <y>264</y>
+      <w>16</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -81,10 +81,10 @@
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>994</x>
-      <y>231</y>
-      <w>14</w>
-      <h>175</h>
+      <x>1112</x>
+      <y>232</y>
+      <w>16</w>
+      <h>184</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -92,10 +92,10 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>735</x>
-      <y>252</y>
-      <w>273</w>
-      <h>28</h>
+      <x>816</x>
+      <y>256</y>
+      <w>312</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 AllStats manager.getStats()</panel_attributes>
@@ -104,10 +104,10 @@ AllStats manager.getStats()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>735</x>
-      <y>308</y>
-      <w>273</w>
-      <h>28</h>
+      <x>816</x>
+      <y>320</y>
+      <w>312</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 return stats</panel_attributes>
@@ -116,21 +116,21 @@ return stats</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>567</x>
-      <y>133</y>
-      <w>21</w>
-      <h>119</h>
+      <x>624</x>
+      <y>120</y>
+      <w>24</w>
+      <h>168</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;190.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>539</x>
-      <y>119</y>
-      <w>70</w>
-      <h>21</h>
+      <x>592</x>
+      <y>104</y>
+      <w>80</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>:AssemAssist</panel_attributes>
     <additional_attributes/>
@@ -138,10 +138,10 @@ return stats</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>567</x>
-      <y>238</y>
-      <w>14</w>
-      <h>133</h>
+      <x>624</x>
+      <y>272</y>
+      <w>16</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -149,10 +149,10 @@ return stats</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>441</x>
-      <y>273</y>
-      <w>140</w>
-      <h>28</h>
+      <x>480</x>
+      <y>280</y>
+      <w>160</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 AllStats getOrderStats()</panel_attributes>
@@ -161,10 +161,10 @@ AllStats getOrderStats()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>441</x>
-      <y>294</y>
-      <w>140</w>
-      <h>28</h>
+      <x>480</x>
+      <y>304</y>
+      <w>160</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 return stats</panel_attributes>
@@ -173,10 +173,10 @@ return stats</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>175</x>
-      <y>119</y>
-      <w>133</w>
-      <h>21</h>
+      <x>176</x>
+      <y>104</y>
+      <w>152</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>:CarManufacturingController</panel_attributes>
     <additional_attributes/>
@@ -184,21 +184,21 @@ return stats</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>231</x>
-      <y>133</y>
-      <w>21</w>
-      <h>49</h>
+      <x>240</x>
+      <y>120</y>
+      <w>24</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>231</x>
-      <y>168</y>
-      <w>14</w>
-      <h>56</h>
+      <x>240</x>
+      <y>184</y>
+      <w>16</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -206,10 +206,10 @@ return stats</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>434</x>
-      <y>196</y>
-      <w>14</w>
-      <h>161</h>
+      <x>472</x>
+      <y>192</y>
+      <w>16</w>
+      <h>136</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -217,10 +217,10 @@ return stats</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>238</x>
-      <y>196</y>
-      <w>210</w>
-      <h>28</h>
+      <x>248</x>
+      <y>192</y>
+      <w>240</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 void statisticsListeners.updateDelay()</panel_attributes>
@@ -229,10 +229,10 @@ void statisticsListeners.updateDelay()</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>77</x>
-      <y>119</y>
-      <w>70</w>
-      <h>21</h>
+      <x>64</x>
+      <y>104</y>
+      <w>80</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>:WorkStation</panel_attributes>
     <additional_attributes/>
@@ -240,21 +240,21 @@ void statisticsListeners.updateDelay()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>105</x>
-      <y>133</y>
-      <w>21</w>
-      <h>49</h>
+      <x>96</x>
+      <y>120</y>
+      <w>24</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>105</x>
-      <y>168</y>
-      <w>14</w>
-      <h>42</h>
+      <x>96</x>
+      <y>184</y>
+      <w>16</w>
+      <h>16</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -262,10 +262,10 @@ void statisticsListeners.updateDelay()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>112</x>
-      <y>182</y>
-      <w>133</w>
-      <h>28</h>
+      <x>104</x>
+      <y>176</y>
+      <w>152</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 void advanceAssembly()</panel_attributes>
@@ -274,10 +274,10 @@ void advanceAssembly()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>574</x>
-      <y>259</y>
-      <w>168</w>
-      <h>28</h>
+      <x>632</x>
+      <y>264</y>
+      <w>192</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 AllStats getStats()</panel_attributes>
@@ -286,10 +286,10 @@ AllStats getStats()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1001</x>
-      <y>231</y>
-      <w>231</w>
-      <h>42</h>
+      <x>1120</x>
+      <y>232</y>
+      <w>264</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 1. void checkProductionStatistics()</panel_attributes>
@@ -298,10 +298,10 @@ AllStats getStats()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1001</x>
-      <y>322</y>
-      <w>231</w>
-      <h>42</h>
+      <x>1120</x>
+      <y>336</y>
+      <w>264</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 2. void showProductionStatistics()</panel_attributes>
@@ -310,10 +310,10 @@ AllStats getStats()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>574</x>
-      <y>301</y>
-      <w>168</w>
-      <h>28</h>
+      <x>632</x>
+      <y>312</y>
+      <w>192</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 return stats</panel_attributes>
@@ -322,10 +322,10 @@ return stats</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1001</x>
-      <y>357</y>
-      <w>133</w>
-      <h>42</h>
+      <x>1120</x>
+      <y>376</y>
+      <w>152</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 3. key press</panel_attributes>
