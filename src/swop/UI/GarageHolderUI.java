@@ -83,14 +83,15 @@ public class GarageHolderUI {
         SortedMap<String, List<String>> options = this.garageHolder.getValidOptions(model);
         displayOrderingForm(options, model.getName());
 
-        Map<String, Integer> carConfig = getOrderForm(options);
-
-        try{
-            String completionTime = this.garageHolder.placeOrder(carConfig, model);
-            displayEstimatedTime(completionTime);
-        }catch (IllegalArgumentException e){
-            UI.printError(e.getMessage());
-        }
+        while(true)
+            try{
+                Map<String, Integer> carConfig = getOrderForm(options);
+                String completionTime = this.garageHolder.placeOrder(carConfig, model);
+                displayEstimatedTime(completionTime);
+                break;
+            }catch (IllegalArgumentException e){
+                UI.printError(e.getMessage());
+            }
     }
 
     private static Map<String, Integer> getOrderForm(SortedMap<String, List<String>> options) throws CancelException {
