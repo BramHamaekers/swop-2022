@@ -50,7 +50,7 @@ public class Scheduler {
 	 */
     public Scheduler(CarManufacturingController carManufacturingController) {
 		if (carManufacturingController == null)
-			throw new IllegalArgumentException("controller is null");
+			throw new IllegalArgumentException("provided controller is null, provide a controller to make a scheduler");
         this.controller = carManufacturingController;
         this.minutes = 0;
         this.workingDayMinutes = 960; // 06:00 -> 22:00
@@ -68,7 +68,7 @@ public class Scheduler {
      */
     public TimeStamp getEstimatedCompletionTime(Car car) {
 		if (car == null)
-			throw new IllegalArgumentException("null has no estimated completion time");
+			throw new IllegalArgumentException("null car object has no estimated completion time");
 		int totalMinutes = this.getEstCompletionTimeInMinutes(car);
         return this.createTimeStampForCar(totalMinutes, car);
     }
@@ -80,7 +80,7 @@ public class Scheduler {
      */
 	private int getEstCompletionTimeInMinutes(Car car) {
 		if (car == null)
-			throw new IllegalArgumentException("null has no estimated completion time in minutes");
+			throw new IllegalArgumentException("null car obeject has no estimated completion time in minutes");
     	List<Car> workstationCars = this.getWorkStationCars();
     	int minutes = this.minutes;
     	minutes += this.calculateWaitingTime(car,  workstationCars);
@@ -113,9 +113,9 @@ public class Scheduler {
     
     /**
      * This function will round the given minutes based on avgTimeCarInStation 
-     * @param minutes that need to be rounded
+     * @param minutes the passed minutes that need to be rounded
      * @param avgTimeCarInStation how long it typical takes to finish a car of this model
-     * @return rounded minutes
+     * @return rounded minutes based on the model
      */
     private int roundMinutes(int minutes, int avgTimeCarInStation) {
 		if (minutes < 0 || avgTimeCarInStation < 0)
@@ -132,7 +132,7 @@ public class Scheduler {
 	 */
 	private boolean carOnAssembly(Car car) {
 		if (car == null)
-			throw new IllegalArgumentException("car is null");
+			throw new IllegalArgumentException("Provided car is null");
 		List<Car> workstationCars = this.getWorkStationCars();
 		return workstationCars.contains(car);
 	}
@@ -147,21 +147,21 @@ public class Scheduler {
     private int calculateWaitingTime(Car car,List<Car> workstationCars) {
 		if (car == null)
 			throw new IllegalArgumentException("car is null");
-		if (workstationCars == null || workstationCars.size() != 3)
+		if (workstationCars == null || workstationCars.size() != 3) // null objects count as car
 			throw new IllegalArgumentException("not enough cars on station");
 		Car station1Car = workstationCars.get(0);
     	Car station2Car = workstationCars.get(1);
     	Car station3Car = workstationCars.get(2);
 
-    	QueueIterator<Car> iter = this.createIterator(this.controller.getCarQueue());
-		Car current = iter.next(this.algorithm);
+    	QueueIterator<Car> carqueue = this.createIterator(this.controller.getCarQueue());
+		Car current = carqueue.next(this.algorithm);
 
 		int time = this.getMax(getUnfinishedCars());
     	while(station3Car == null || !station3Car.equals(car)) {
 			station3Car = station2Car;
 			station2Car = station1Car;
 			station1Car = current;
-    		current = iter.next(this.algorithm);
+    		current = carqueue.next(this.algorithm);
     		time += this.getMax(Arrays.asList(station1Car, station2Car, station3Car));
     	}
     	return time;
@@ -197,20 +197,20 @@ public class Scheduler {
      */
     public void addTime(int minutes) {
 		if (minutes<0)
-			throw new IllegalArgumentException("time cant be negative");
+			throw new IllegalArgumentException("time can't be negative");
         this.minutes = this.getMinutes() + minutes;
     }
     
     /**
-     * Get amount of minutes that have already passed in the day
-     * @return the current passed minute in the day
+     * Get amount of minutes that has already passed in the day
+     * @return the current passed minutes in the day
      */
     public int getMinutes() {
         return this.minutes;
     }
 
 	/**
-	 * Get amount of days that have already passed
+	 * Get the amount of days that have already passed
 	 * @return the current day
 	 */
     public int getDay() {
@@ -226,7 +226,7 @@ public class Scheduler {
 	}
 
     /**
-     * advances day based on the overtime
+     * Advances the day based on the overtime
      */
     public void advanceDay() {
         this.day += 1;  // Go to next day
@@ -290,7 +290,7 @@ public class Scheduler {
 
 	/**
      * Returns the current schedulingAlgorithm
-     * @return this.schedulingAlgorithm
+     * @return the current scheduling algorithm (Batch or fifo)
      */
 	public String getSchedulingAlgorithm() {
         return this.algorithm;

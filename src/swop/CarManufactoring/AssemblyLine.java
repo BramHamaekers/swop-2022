@@ -88,7 +88,7 @@ public class AssemblyLine {
 	 * @return all tasks that are uncompleted at station
 	 */
 	public List<Task> getUncompletedTasks(WorkStation station) {
-		if (station == null) throw new IllegalArgumentException("station is null");
+		if (station == null) throw new IllegalArgumentException("Provided workstation is null");
 		return station.getUncompletedTasks();
 	}
 
@@ -97,7 +97,7 @@ public class AssemblyLine {
 	 * @return True: all workstations are empty | False: not all workstations are empty
 	 */
 	public boolean isEmptyAssemblyLine() {
-		return this.getWorkStations().stream().allMatch(s -> s.getCar() == null);
+		return this.workStations.stream().allMatch(s -> s.getCar() == null);
 	}
 
 	/**
@@ -105,7 +105,7 @@ public class AssemblyLine {
 	 * @return all unFinishedCars on the assemblyLine
 	 */
 	public List<Car> getUnfinishedCars() {
-		List<WorkStation> unFinishedStations = this.getWorkStations().stream()
+		List<WorkStation> unFinishedStations = this.workStations.stream()
 				.filter(w -> !w.stationTasksCompleted()).toList();
 		return unFinishedStations.stream().map(WorkStation::getCar).toList();
 	}
@@ -116,7 +116,8 @@ public class AssemblyLine {
 	 * @return WorkStation that corresponds to the given stationName
 	 */
 	public WorkStation getStationByName(String stationName) {
-		if (this.workStations == null) throw new IllegalStateException("no workstations on the assemblyline");
+		if (stationName == null) throw new IllegalArgumentException("Null string provided");
+		if (this.workStations == null) throw new IllegalStateException("No workstations on the assemblyline");
 		if (!this.workStations.stream().map(WorkStation::getName).toList().contains(stationName)) throw new IllegalArgumentException("provided station name not valid");
 		for (WorkStation station : this.workStations) {
 			if (station.getName().equals(stationName)) {

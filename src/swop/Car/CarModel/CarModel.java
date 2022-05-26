@@ -46,11 +46,11 @@ public abstract class CarModel {
      * @return true if all parts are valid
      */
     private boolean isValidSpecification(CarModelSpecification specification){
-        if (specification==null){
+        if (specification == null){
             return false;
         }
         for(Map.Entry<String,String> selectedMap: specification.getAllParts().entrySet()){	
-            if (!IsValidOption(selectedMap.getKey(), selectedMap.getValue())) return false;
+            if (!this.IsValidOption(selectedMap.getKey(), selectedMap.getValue())) return false;
         }
         return this.satisfiesConstraints(specification);
     }
@@ -72,6 +72,8 @@ public abstract class CarModel {
      * @return True if the specification satisfies all constraints
      */
     private boolean satisfiesConstraints(CarModelSpecification specification){
+        if (specification == null)
+            throw new IllegalArgumentException("Provided CarModelSpecification is null");
         for(String part : this.mandatoryParts){
             if (!specification.getAllParts().containsKey(part))
                 return false;

@@ -13,8 +13,6 @@ import swop.Miscellaneous.TimeStamp;
  * A controller class which handles most of the operations fe. advancing the assembly line
  */
 public class CarManufacturingController {
-
-	private final Set<CarOrder> totalOrders;
 	private final LinkedList<Car> carQueue;
 	private final AssemblyLine assemblyLine;
 	private final Scheduler scheduler;
@@ -29,7 +27,6 @@ public class CarManufacturingController {
 	 * Initialises the controller with an empty car queue, a scheduler and an assemblyLine with its workstations
 	 */
 	public CarManufacturingController() {
-		this.totalOrders = new HashSet<>();
 		this.carQueue = new LinkedList<>();
 		this.assemblyLine = new AssemblyLine(this.createWorkStations());
 		this.scheduler = new Scheduler(this);
@@ -50,7 +47,7 @@ public class CarManufacturingController {
 	 */
 	private void updateDelay(Car car) {
 		if (car == null)
-			throw new IllegalArgumentException("can't update delay when car = null");
+			throw new IllegalArgumentException("can't update delay when car is null");
 		statisticsListeners.forEach(l -> l.updateDelay(car));
 	}
 
@@ -95,6 +92,7 @@ public class CarManufacturingController {
 	private void updateTime(int passedMinutes, Car finishedCar) {
 		//Finalise the Delivery Time of a finished car
 		if (finishedCar != null) this.setFinishedCarDeliveryTime(passedMinutes, finishedCar);
+		if (passedMinutes < 0) throw new IllegalArgumentException("Can't add negative time, passedMinuted < 0");
 		//update scheduler
 		this.updateScheduleTime(passedMinutes);
 		// For every car in queue and workstation update the estimated completion time
@@ -105,7 +103,7 @@ public class CarManufacturingController {
 	 * This method will try to advance the assembly line
 	 * @param nextCar Car the put on assembly line
 	 * @return the finished car leaving the assembly line
-	 * @throws NotAllTasksCompleteException if not all tasks are completed
+	 * @throws NotAllTasksCompleteException if not all tasks are completed on all workstations
 	 */
 	private Car advanceAssemblyLine(Car nextCar) throws NotAllTasksCompleteException {
 		//first try to advance before removing since it can throw a NotAllTasksCompleteException
@@ -165,8 +163,9 @@ public class CarManufacturingController {
 	 * @throws IllegalStateException if the car is not completed
 	 */
 	private void setFinishedCarDeliveryTime(int minutes, Car finishedCar) {
-		if(finishedCar == null) throw new IllegalArgumentException("Can't set the delivery time, car is null");
+		if (finishedCar == null) throw new IllegalArgumentException("Can't set the delivery time, car is null");
 		if (!finishedCar.isCompleted()) throw new IllegalStateException("Car is not completed");
+		if (minutes < 0) throw new IllegalArgumentException("Can't set a negative completion time");
 		finishedCar.setDeliveryTime(new TimeStamp(scheduler.getDay(), scheduler.getMinutes() + minutes));
 		//update the delay map with the new finished car
 		this.updateDelay(finishedCar);
@@ -178,14 +177,18 @@ public class CarManufacturingController {
 	 * @return whether a new car can be finished in time
 	 */
 	private boolean canFinishNewCar(int minutes) {
+		if (minutes < 0)
+			throw new IllegalArgumentException("Can't add negative minutes");
 		return this.getScheduler().canAddCarToAssemblyLine(minutes);
 	}
 
 	/**
-	 * updates the scheduler.
+	 * Updates the scheduler with the passed time
 	 * @param minutes minutes to add to the current time
 	 */
 	private void updateScheduleTime(int minutes) {
+		if (minutes < 0)
+			throw new IllegalArgumentException("Can't add negative minutes");
 		this.getScheduler().addTime(minutes);
 		//if all work is done for today, skip to next day
 		if (!this.canFinishNewCar(0) && this.assemblyLine.isEmptyAssemblyLine()) {
@@ -206,7 +209,6 @@ public class CarManufacturingController {
 			throw new IllegalArgumentException("car order is null");
 		Car car = carOrder.getCar();
 		if(car == null) throw new IllegalArgumentException("car from order is null, not allowed");
-		this.totalOrders.add(carOrder);
 		this.carQueue.add(car);
 		carOrder.setOrderTime(getScheduler().getTime());
 		car.setEstimatedCompletionTime(getScheduler().getEstimatedCompletionTime(car));
@@ -215,14 +217,6 @@ public class CarManufacturingController {
 			advanceAssemblyAndUpdateSchedular();
 		} catch (NotAllTasksCompleteException ignored) {
 		}
-	}
-
-	/**
-	 * Get the set of orders from the manufactoring controller
-	 * @return the set of orders placed
-	 */
-	public Set<CarOrder> getTotalOrders(){
-		return this.totalOrders;
 	}
 
 	/**

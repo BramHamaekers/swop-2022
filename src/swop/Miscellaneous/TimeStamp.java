@@ -60,6 +60,8 @@ public class TimeStamp implements Comparable<TimeStamp> {
 
     @Override
     public int compareTo(TimeStamp timeStamp) {
+        if (timeStamp == null)
+            throw new IllegalArgumentException("can't compare timestamp to null object");
         int day1 = this.day;
         int day2 = timeStamp.day;
         if (day1 != day2) return Integer.compare(day1, day2);

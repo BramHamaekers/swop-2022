@@ -27,7 +27,7 @@ public class CarModelSpecification {
 	 */
 	private void checkConstraints(Map<String, String> chosenOptions) {
 		if (chosenOptions == null)
-			throw new IllegalArgumentException("chosenOptions is null");
+			throw new IllegalArgumentException("ChosenOptions is null");
 		if (!this.isValidBodySpoilerCombination(chosenOptions.get("Body"), chosenOptions.get("Spoiler")))
 			throw new IllegalArgumentException("Spoiler is mandatory when choosing a sport body");
 
@@ -45,6 +45,8 @@ public class CarModelSpecification {
 	 * @return returns whether the engine and airco combination is valid
 	 */
 	private boolean isValidEngineAirco(String engine, String airco) {
+		if (engine == null)
+			throw new IllegalArgumentException("Null string provided");
 		return !engine.contains("ultra") || airco == null || airco.equals("manual");
 	}
 
@@ -55,6 +57,10 @@ public class CarModelSpecification {
 	 * @return whether the body and engine combination is valid
 	 */
 	private boolean isValidBodyEngineCombination(String body, String engine) {
+		if (body == null)
+			throw new IllegalArgumentException("Null string provided");
+		if (engine == null)
+			throw new IllegalArgumentException("Null string provided");
 		return !body.equals("sport") || engine.contains("performance") || engine.contains("ultra");
 	}
 
@@ -65,6 +71,8 @@ public class CarModelSpecification {
 	 * @return whether the body and spoiler combination is valid
 	 */
 	private boolean isValidBodySpoilerCombination(String body, String spoiler) {
+		if (body == null)
+			throw new IllegalArgumentException("Null string provided");
 		return !body.equals("sport") || spoiler != null;
 	}
 
@@ -86,7 +94,7 @@ public class CarModelSpecification {
 			 throw new IllegalArgumentException("Can't retrieve value (selectedCategory = null)");
 
 		if (!isPartInChosenOptions(selectedPart))
-			throw new IllegalArgumentException("invalid category");
+			throw new IllegalArgumentException("Provided category does not exist");
 
 		return this.chosenOptions.get(selectedPart);
 	}

@@ -54,7 +54,7 @@ public class Car {
 	}
 
 	/**
-	 * Sets all tasks that need to be done
+	 * Sets all tasks that need to be done for a specific car model
 	 */
 	private void initiateTasks() {
 		Map<String, String> parts = this.getCarModel().getCarModelSpecification().getAllParts();
@@ -70,6 +70,10 @@ public class Car {
 	 * @return a new task
 	 */
 	private Task createTask(String part, String option) {
+		if (part == null)
+			throw new IllegalArgumentException("Null string provided");
+		if (option == null)
+			throw new IllegalArgumentException("Null string provided");
 		return switch (part) {
 			case "Body" -> new AssemblyCarBody(option);
 			case "Color" -> new PaintCar(option);
@@ -110,7 +114,6 @@ public class Car {
 	/**
 	 * Specify the carModel for this car
 	 * @param carModel the specified carModel
-	 * @throws IllegalArgumentException when carmodel is null
 	 */
 	private void setCarModel(CarModel carModel) {
 		if (carModel == null)
@@ -124,14 +127,16 @@ public class Car {
 	 * @return value carOptionCategory
 	 */
 	public String getSelectionForPart(String category) {
-		return this.getCarModel().getCarModelSpecification().getSelectionForPart(category);
+		if (category == null)
+			throw new IllegalArgumentException("Null string provided");
+		return this.carModel.getCarModelSpecification().getSelectionForPart(category);
 	}
 
 	/**
 	 * @return returns a map of all the categories with their selected specification
 	 */
 	public Map<String, String> getPartsMap() {
-		return this.getCarModel().getCarModelSpecification().getAllParts();
+		return this.carModel.getCarModelSpecification().getAllParts();
 	}
 
 	/**

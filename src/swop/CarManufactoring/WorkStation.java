@@ -68,7 +68,7 @@ public class WorkStation {
 	 */
 	private boolean isValidName(String name) {
 		if (name == null)
-			throw new IllegalArgumentException("invalid name");
+			throw new IllegalArgumentException("invalid name, null string provided");
 		return (name.equals("Car Body Post")) ||
 				(name.equals("Drivetrain Post")) || (name.equals("Accessories Post"));
 	}
@@ -104,7 +104,7 @@ public class WorkStation {
 
 	/**
 	 * setter for the car in the workstation
-	 * car may be null
+	 * car may be null if there is no car on the workstation
 	 * @param car the car to be placed in the workstation
 	 */
 	public void setCar(Car car) {
@@ -127,7 +127,7 @@ public class WorkStation {
 	 */
 	public boolean isPartOfCurrentCarInWorkStation(String part) {
 		if (part == null)
-			throw new IllegalArgumentException("part is null");
+			throw new IllegalArgumentException("provided part is null");
 		Car car = this.getCar();
 		if(car == null) return false;
 		return car.getCarModel().getCarModelSpecification().isPartInChosenOptions(part);
@@ -140,7 +140,7 @@ public class WorkStation {
 	 * @return the chosen option for a category
 	 */
 	public String getValueOfPart(String part) {
-		if(this.car == null) throw new IllegalArgumentException("No car in station");
+		if (this.car == null) throw new IllegalStateException("No car in station");
 		if (part == null) throw new IllegalArgumentException("part is null");
 		return this.getCar().getSelectionForPart(part);
 

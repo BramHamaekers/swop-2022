@@ -18,7 +18,9 @@ public class Statistics {
      * Updates the delay map given a Car
      * @param car of the type Car
      */
-    void updateDelay(Car car) {
+    public void updateDelay(Car car) {
+        if (car == null)
+            throw new IllegalArgumentException("updateDelay of null object not possible");
     	int[] dayAndMinutes = getDayAndDelayMinutesCar(car);
         this.addTimeToDelayMap(dayAndMinutes[1], dayAndMinutes[0]);
     }
@@ -36,7 +38,7 @@ public class Statistics {
 
     /**
      * Will calculate the total delay in minutes (if negative delay -> return 0 delay minutes)
-     * @param the finished car
+     * @param car the finished car
      * @return total delay in minutes
      */
 	private int calculateDelayMinutes(Car car) {
@@ -51,8 +53,8 @@ public class Statistics {
 
 	/**
      * update the delays map when a car is finished
-     * @param the given day that the car was finished on
-     * @param the given delay in minutes
+     * @param minutes the given day that the car was finished on
+     * @param day the given delay in minutes
      */
     public void addTimeToDelayMap(int minutes, int day) {
         if (this.carDelayMap.containsKey(day)) {
@@ -98,14 +100,14 @@ public class Statistics {
      * @return a list containing the last two delays
      */
     public Map<Integer, List<Integer>> getDelayLast2(){
-    	Map<Integer, List<Integer>> result = new LinkedHashMap<Integer, List<Integer>>();
+    	Map<Integer, List<Integer>> result = new LinkedHashMap<>();
     	Map<Integer, List<Integer>> filteredDelayMap = getFilteredMap(this.getCarDelayMap());
     	Set<Integer> dayset = new LinkedHashSet<>(filteredDelayMap.keySet());
     	int total = 0;
     	while (total < 2 && !dayset.isEmpty()) {
     		int day = Collections.max(dayset);
     		List<Integer> delays = filteredDelayMap.get(day);
-    		result.put(day,new ArrayList<Integer>());
+    		result.put(day,new ArrayList<>());
     		for(int i = 1; i<=delays.size() && i <= 2 ;i++)
     			result.get(day).add(delays.get(delays.size()-i));
     		total += delays.size();
@@ -115,12 +117,14 @@ public class Statistics {
     }
 
     /**
-     * filtering out all 0 delays
+     * Filtering out all 0 delays
      * @param carDelayMap the delayMap mapping day to number of delays (with zero delays)
-     * @return map without zero delays
+     * @return map containing only the nonzero delays
      */
     private Map<Integer, List<Integer>> getFilteredMap(Map<Integer, List<Integer>> carDelayMap) {
-    	Map<Integer, List<Integer>> filteredMap = new LinkedHashMap<Integer, List<Integer>>();
+        if (carDelayMap == null)
+            throw new IllegalArgumentException("provided delayMap is null");
+    	Map<Integer, List<Integer>> filteredMap = new LinkedHashMap<>();
     	for(Map.Entry<Integer, List<Integer>> v: carDelayMap.entrySet()) {
     		List<Integer> notZero = v.getValue().stream().filter(e -> !e.equals(0)).toList();
     		if(!notZero.isEmpty())

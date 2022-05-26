@@ -64,7 +64,7 @@ public class CarOrder implements Comparable<CarOrder> {
 	@Override
 	public int compareTo(CarOrder carOrder) {
 		if (carOrder == null)
-			throw new IllegalArgumentException("can't compare to null");
+			throw new IllegalArgumentException("Can't compare to null");
 
 		if (!carOrder.isCompleted())
 			return this.getEstimatedCompletionTime().compareTo(carOrder.getEstimatedCompletionTime());
@@ -78,7 +78,7 @@ public class CarOrder implements Comparable<CarOrder> {
 	 */
 	public void setOrderTime(TimeStamp time) {
 		if (time == null)
-			throw new IllegalArgumentException("timestamp is not valid");
+			throw new IllegalArgumentException("Timestamp is not valid");
 		this.orderTime = time;
 	}
 
