@@ -18,6 +18,7 @@ public class GarageHolder extends User{
     /**
      * initializes a garage holder user
      * @param id a given id for the garage holder
+     * @param assemAssist the given assemassist used to communicate with the assemblyline and the controller etc.
      */
     public GarageHolder(String id, AssemAssist assemAssist) {
         super(id, assemAssist);
@@ -43,6 +44,10 @@ public class GarageHolder extends User{
         return carOpts;
     }
 
+    /**
+     * Get the possible types of carmodels (e.g. "modelA")
+     * @return A list of strings representing the names of the carmodels
+     */
     public List<String> getModels(){
         return CarModel.types;
     }

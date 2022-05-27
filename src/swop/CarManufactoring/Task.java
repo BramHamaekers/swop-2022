@@ -9,6 +9,12 @@ public abstract class Task implements Cloneable {
     protected String chosenOption;
     protected boolean isComplete = false;
 
+    /**
+     * Initialize a Task with a name, description and the chosenOption
+     * @param name The name of the task
+     * @param description The description of the task, will help the mechanic in the assembly
+     * @param chosenOption The chosen option for a part category
+     */
     public Task(String name, String description, String chosenOption) {
         if (description == null)
             throw new IllegalArgumentException("Null string provided");

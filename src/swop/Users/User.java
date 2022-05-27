@@ -12,6 +12,7 @@ public abstract class User {
     /**
      * Create a new user with given id name
      * @param id is string of name
+     * @param assemAssist the given assemassist used to communicate with the assemblyline and the controller etc.
      */
     public User(String id, AssemAssist assemAssist) {
         if (id == null)
