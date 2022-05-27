@@ -65,6 +65,11 @@ public class AssemAssist {
 		return this.statistics.getOrderStats();
 	}
 
+	/**
+	 * Get a {@code User} class from the userdatabase map, can be {@code GarageHolder}, {@code CarMechanic} or {@code Manager}
+	 * @param id the id of the user (a for {@code GarageHolder}, b for {@code CarMechanic} and c for {@code Manager})
+	 * @return a {@code User} class for the provided id
+	 */
 	public User getUser(String id) {
 		if (!this.userDatabase.containsKey(id)) {
 			return null;

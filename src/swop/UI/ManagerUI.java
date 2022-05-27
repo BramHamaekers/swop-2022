@@ -87,7 +87,7 @@ public class ManagerUI {
     }
 
     /**
-     * check the production statistics on a given assemAssist
+     * Check the production statistics on a given assemAssist
      * @throws CancelException when a user wants to cancel his operation by typing "cancel"
      */
     private void checkProductionStatistics() throws CancelException {

@@ -13,6 +13,7 @@ public class CarMechanic extends User{
 	/**
 	 * initializes a car mechanic user
 	 * @param id a given id for the car mechanic
+	 * @param assemAssist the given assemassist used to communicate with the assemblyline and the controller etc.
 	 */
     public CarMechanic(String id, AssemAssist assemAssist) {
         super(id, assemAssist);
