@@ -1,34 +1,33 @@
 package swop.Users;
 
-import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
 
 /**
  * This is an abstract class: garage holder, manager and car mechanic are subclasses of user
  */
 public abstract class User {
+    /**
+     * The ID of this user, used for logging in.
+     */
     private final String id;
+    /**
+     * The assemAssist this user interacts with
+     */
+    protected final AssemAssist assemAssist;
 
     /**
      * Create a new user with given id name
      * @param id is string of name
+     * @param assemAssist the given assemassist used to communicate with the assemblyline and the controller etc.
      */
-    public User(String id) {
+    public User(String id, AssemAssist assemAssist) {
+        if (id == null)
+            throw new IllegalArgumentException("invalid id provided");
+        if (assemAssist == null)
+            throw new IllegalArgumentException("invalid assemAssist provided");
         this.id = id;
+        this.assemAssist = assemAssist;
     }
-
-    /**
-     * load a user on a login
-     * @param assemAssist given the main program
-     */
-    public abstract void load(AssemAssist assemAssist);
-
-    /**
-     * select an action for the relevant user
-     * @param assemAssist given the main program
-     * @throws CancelException gets thrown when user wants to cancel
-     */
-    public abstract void selectAction(AssemAssist assemAssist) throws CancelException;
 
     /**
      * get the UserID of this user

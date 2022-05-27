@@ -10,27 +10,42 @@ import java.util.*;
  */
 public class AssemblyLine {
 
+	/**
+	 * The workstations that make up this AssemblyLine
+	 */
 	private final LinkedList<WorkStation> workStations;
 
 	/**
-	 * initializes the assembly line with a list of {@code WorkStation}
+	 * Initialises the assembly line with a list of {@code WorkStation}
 	 * @param workStations a list of workstations
 	 */
 	public AssemblyLine(LinkedList<WorkStation> workStations) {
+		if (workStations == null)
+			throw new IllegalArgumentException("list of workstations is empty");
+		if (workStations.contains(null))
+			throw new IllegalArgumentException("a workstation in list of workstations was null");
 		this.workStations = workStations;
 	}
 
 	/**
-	 * advance the assembly line
-	 * @param nextCar Next car on the assemblyLine
+	 * advance the assembly line (next car may be null)
+	 * @param nextCar Next car on the assemblyLine, or null if there is no next car
 	 * @throws NotAllTasksCompleteException thrown when there are still tasks to do
 	 * @return A finished car or null if there is no finished car
 	 */
 	public Car advance(Car nextCar) throws NotAllTasksCompleteException{
 		// check if possible to advance AssemblyLine
 		this.checkAdvance();
+		return carToNextWorkStation(nextCar);
+	}
+
+	/**
+	 * This method will move the cars to the next workstation
+	 * @param nextCar is the new car that will be put on the first workstation, or null if there is no further order
+	 * @return returns the car leaving the last workstation
+	 */
+	private Car carToNextWorkStation(Car nextCar) {
 		Car completedCar = this.workStations.getLast().getCar();
-		//updating completion time of finished car
 		// Move all cars on assembly by 1 position
 		for (int i = this.workStations.size() - 1; i > 0; i--) {
 			Car previous = this.workStations.get(i-1).getCar();
@@ -42,20 +57,21 @@ public class AssemblyLine {
 
 	/**
 	 * Checks if it is possible to advance the assembly line
-	 * @throws NotAllTasksCompleteException thrown if there are still tasks to do
+	 * @throws NotAllTasksCompleteException thrown if there are still tasks to do on the cars on the workstations
 	 */
 	private void checkAdvance() throws NotAllTasksCompleteException {
 		LinkedList<String> w = new LinkedList<>();
 		for (WorkStation workStation: this.workStations)
 			if (!workStation.stationTasksCompleted()) w.add(workStation.getName());
 		
-		if(!w.isEmpty())
+		if(!w.isEmpty()) {
 			throw new NotAllTasksCompleteException("Not all tasks completed in: ", w);
+		}
 	}
 
 	/**
 	 * returns list with all workstations
-	 * @return this.workStations
+	 * @return a copy of the list of workstations
 	 */
 	public List<WorkStation> getWorkStations() {
 		return List.copyOf(this.workStations);
@@ -63,14 +79,10 @@ public class AssemblyLine {
 
 	/**
 	 * returns list of strings with names of all workstations.
-	 * @return workStations
+	 * @return a list of names of the workstations
 	 */
 	public List<String> getWorkstationNames(){
-		List<String> workStations = new LinkedList<>();
-		for(WorkStation station: this.workStations) {
-			workStations.add(station.getName());
-		}
-		return workStations;
+		return new LinkedList<>(this.workStations.stream().map(WorkStation::getName).toList());
 	}
 
 	/**
@@ -79,7 +91,7 @@ public class AssemblyLine {
 	 * @return all tasks that are uncompleted at station
 	 */
 	public List<Task> getUncompletedTasks(WorkStation station) {
-		if (station== null) throw new IllegalArgumentException("station is null");
+		if (station == null) throw new IllegalArgumentException("Provided workstation is null");
 		return station.getUncompletedTasks();
 	}
 
@@ -88,7 +100,7 @@ public class AssemblyLine {
 	 * @return True: all workstations are empty | False: not all workstations are empty
 	 */
 	public boolean isEmptyAssemblyLine() {
-		return this.getWorkStations().stream().allMatch(s -> s.getCar() == null);
+		return this.workStations.stream().allMatch(s -> s.getCar() == null);
 	}
 
 	/**
@@ -96,9 +108,46 @@ public class AssemblyLine {
 	 * @return all unFinishedCars on the assemblyLine
 	 */
 	public List<Car> getUnfinishedCars() {
-		List<WorkStation> unFinishedStations = this.getWorkStations().stream()
+		List<WorkStation> unFinishedStations = this.workStations.stream()
 				.filter(w -> !w.stationTasksCompleted()).toList();
 		return unFinishedStations.stream().map(WorkStation::getCar).toList();
+	}
+
+	/**
+	 * Return the workstation object that corresponds to the given name
+	 * @param stationName The name of the workstation name you want
+	 * @return WorkStation that corresponds to the given stationName
+	 */
+	public WorkStation getStationByName(String stationName) {
+		if (stationName == null) throw new IllegalArgumentException("Null string provided");
+		if (this.workStations == null) throw new IllegalStateException("No workstations on the assemblyline");
+		if (!this.workStations.stream().map(WorkStation::getName).toList().contains(stationName)) throw new IllegalArgumentException("provided station name not valid");
+		for (WorkStation station : this.workStations) {
+			if (station.getName().equals(stationName)) {
+				return station;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Returns the list of uncompleted tasks at a workstation given the name of a workstation
+	 * @param stationName the name of the workstation you want to get the uncompleted task from.
+	 * @return a List of Tasks of uncompleted task at the workstation that corresponds to the given stationName
+	 */
+	public List<Task> getUncompletedTasksByName(String stationName) {
+		if (this.getStationByName(stationName) == null) throw new IllegalArgumentException("provided station name not valid");
+		return this.getStationByName(stationName).getUncompletedTasks();
+	}
+
+	/**
+	 * Returns the list of completed tasks at a workstation given the name of a workstation
+	 * @param stationName the name of the workstation you want to get the completed task from
+	 * @return a List of Tasks of completed task at the workstation that corresponds to the given stationName
+	 */
+	public List<Task> getCompletedTasksByName(String stationName) {
+		if (this.getStationByName(stationName) == null) throw new IllegalArgumentException("provided station name not valid");
+		return this.getStationByName(stationName).getCompletedTasks();
 	}
 }
 

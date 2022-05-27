@@ -3,14 +3,27 @@ package swop.CarManufactoring;
 import java.util.*;
 
 import swop.Car.Car;
+import swop.CarManufactoring.Tasks.*;
 import swop.Listeners.TaskCompletedListener;
 /**
  * This class represents a workstation
  */
 public class WorkStation {
+	/**
+	 * The name of this workstation
+	 */
 	private final String name;
+	/**
+	 * The car currently located at this workstation. Equals null if there is no car currently at this station
+	 */
 	private Car car;
+	/**
+	 * The amount of time that was worked on the current car so far at this workstation
+	 */
 	private int currentWorkingTime = 0;
+	/**
+	 * Listeners from the CarManufacturingController to listen if a task was completed at this workstation
+	 */
 	private final List<TaskCompletedListener> listeners = new ArrayList<>();
 
 	/**
@@ -18,12 +31,9 @@ public class WorkStation {
 	 * @param name string of name
 	 */
 	public WorkStation(String name) {
-		if (!isValidName(name)) {
-			throw new IllegalArgumentException("Not a valid work station name"); 
-		}
+		if (name == null || !isValidName(name))
+			throw new IllegalArgumentException("Not a valid work station name");
 		this.name = name;
-		for(Task t:this.getTasks()) t.setWorkStation(this);
-
 	}
 
 	/**
@@ -31,6 +41,8 @@ public class WorkStation {
 	 * @param listener the listener to add
 	 */
 	public void addListener(TaskCompletedListener listener) {
+		if (listener == null)
+			throw new IllegalArgumentException("listener not valid");
 		this.listeners.add(listener);
 	}
 
@@ -46,12 +58,9 @@ public class WorkStation {
 	 * @return a list of uncompleted tasks
 	 */
 	public List<Task> getUncompletedTasks() {
-		if(this.getCar() == null) {
-			return null;
-		}
-		List<Task> tasks = this.getTasks();
-		tasks.retainAll(this.getCar().getUncompletedTasks()); 
-		return tasks;
+		if(this.getCar() == null) return new ArrayList<>();
+		List<Class<? extends Task>> tasksOfWorkstation = this.getTasks();
+		return this.getCar().getUncompletedTasks().stream().filter(t -> tasksOfWorkstation.contains(t.getClass())).toList();
 	}
 
 	/**
@@ -59,14 +68,9 @@ public class WorkStation {
 	 * @return a list of completed tasks
 	 */
 	public List<Task> getCompletedTasks() {
-		if(this.getCar() == null) {
-			return null;
-		}
-		List<Task> tasksOfWorkstation = this.getTasks();
-		List<Task> allTasksOfCar = new LinkedList<>(this.getCar().getAllTasks());
-		tasksOfWorkstation.retainAll(allTasksOfCar);
-		tasksOfWorkstation.removeAll(this.getCar().getUncompletedTasks());
-		return tasksOfWorkstation;
+		if(this.getCar() == null) return new ArrayList<>();
+		List<Class<? extends Task>> tasksOfWorkstation = this.getTasks();
+		return this.getCar().getCompletedTasks().stream().filter(t -> tasksOfWorkstation.contains(t.getClass())).toList();
 	}
 
 	/**
@@ -75,6 +79,8 @@ public class WorkStation {
 	 * @return whether the naming string is valid
 	 */
 	private boolean isValidName(String name) {
+		if (name == null)
+			throw new IllegalArgumentException("invalid name, null string provided");
 		return (name.equals("Car Body Post")) ||
 				(name.equals("Drivetrain Post")) || (name.equals("Accessories Post"));
 	}
@@ -83,11 +89,11 @@ public class WorkStation {
 	 * returns the tasks that are part of this workstation
 	 * @return tasks of workstation
 	 */
-	public List<Task> getTasks() {
+	public List<Class<? extends Task>> getTasks() {
 		return switch (this.getName()) {
-			case "Car Body Post" -> new LinkedList<>(Arrays.asList(Task.AssemblyCarBody, Task.PaintCar));
-			case "Drivetrain Post" -> new LinkedList<>(Arrays.asList(Task.InsertEngine, Task.InstallGearbox));
-			case "Accessories Post" -> new LinkedList<>(Arrays.asList(Task.InstallSeats, Task.InstallAirco, Task.MountWheels, Task.InstallSpoiler));
+			case "Car Body Post" -> new LinkedList<>(Arrays.asList(AssemblyCarBody.class, PaintCar.class));
+			case "Drivetrain Post" -> new LinkedList<>(Arrays.asList(InsertEngine.class, InstallGearbox.class));
+			case "Accessories Post" -> new LinkedList<>(Arrays.asList(InstallSeats.class, InstallAirco.class, MountWheels.class, InstallSpoiler.class));
 			default -> throw new IllegalArgumentException("No tasks could be given: Invalid name Workstation");
 		};
 	}
@@ -110,6 +116,7 @@ public class WorkStation {
 
 	/**
 	 * setter for the car in the workstation
+	 * car may be null if there is no car on the workstation
 	 * @param car the car to be placed in the workstation
 	 */
 	public void setCar(Car car) {
@@ -131,21 +138,23 @@ public class WorkStation {
 	 * @return boolean whether the part is chosen or not
 	 */
 	public boolean isPartOfCurrentCarInWorkStation(String part) {
+		if (part == null)
+			throw new IllegalArgumentException("provided part is null");
 		Car car = this.getCar();
 		if(car == null) return false;
 		return car.getCarModel().getCarModelSpecification().isPartInChosenOptions(part);
 	}
 	
 	/**
-	 * Tries to get value of a carOptionCategory
-	 * @param category the given carOptionCategory to get the value of
+	 * Tries to get value of a part for current car in workstation
+	 * @param part to get the value of
 	 * @throws IllegalArgumentException if car == null || part == null
 	 * @return the chosen option for a category
 	 */
-	public String getValueOfPart(String category) {
-		if(this.car == null) throw new IllegalArgumentException("No car in station");
-		if (category == null) throw new IllegalArgumentException("part is null");
-		return this.getCar().getValueOfPart(category);
+	public String getValueOfPart(String part) {
+		if (this.car == null) throw new IllegalStateException("No car in station");
+		if (part == null) throw new IllegalArgumentException("part is null");
+		return this.getCar().getSelectionForPart(part);
 
 	}
 	
@@ -156,9 +165,10 @@ public class WorkStation {
 	 * @throws IllegalArgumentException if car == null || task == null
 	 */
 	public void completeTask(Task task, int time) {
-		if(car == null) throw new IllegalArgumentException("No car in station");
-		if (task == null) throw new IllegalArgumentException("task is null");
-		this.getCar().completeTask(task);
+		if (car == null) throw new IllegalArgumentException("No car in station");
+		if (task == null) throw new IllegalArgumentException("Task is null");
+		if (time<0) throw new IllegalArgumentException("negative time");
+		task.complete();
 		this.currentWorkingTime += time;
 		this.triggerListenersTaskCompletion();
 	}
@@ -168,8 +178,7 @@ public class WorkStation {
 	 * @return true if there is no car or all tasks are completed
 	 */
 	public boolean stationTasksCompleted() {
-		return this.getCar() == null || Collections.disjoint(this.getCar().getUncompletedTasks(),
-				this.getTasks()); //returns true if no tasks are uncompleted
+		return this.getUncompletedTasks() == null || this.getUncompletedTasks().isEmpty();
 	}
 	
 }

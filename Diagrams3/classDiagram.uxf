@@ -1,0 +1,1214 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.0.0">
+  <help_text/>
+  <zoom_level>6</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>582</x>
+      <y>0</y>
+      <w>318</w>
+      <h>330</h>
+    </coordinates>
+    <panel_attributes>swop.CarManufactoring::Scheduler
+--
+-controller: CarManufacturingController
+-minutes: int
+-day: int
+-workingDayMinutes: int
+-overTime: int
+-timePerWorkstationMap: Map&lt;Class&lt;? extends CarModel&gt;, Integer&gt;
+-validAlgorithms: List&lt;String&gt;
+-algorithm: String
+-batchOptions: Map&lt;String, String&gt;
+--
++Scheduler(CarManufacturingController carManufacturingController): ctor
++getWorkingDayMinutes(): int
++getEstimatedCompletionTime(Car car): TimeStamp
+-getEstCompletionTimeInMinutes(Car car): int
+-createTimeStampForCar(int minutes, Car car): TimeStamp
+-roundMinutes(int minutes, int avgTimeCarInStation): int
+-carOnAssembly(Car car): boolean
+-calculateWaitingTime(Car car, List&lt;Car&gt; workstationCars): int
+-getUnfinishedCars(): List&lt;Car&gt;
+-getMax(List&lt;Car&gt; cars): int
++addTime(int minutes): void
++getMinutes(): int
++getDay(): int
++getTime(): TimeStamp
++advanceDay(): void
++canAddCarToAssemblyLine(int minutes): boolean
+-getWorkStationCars(): List&lt;Car&gt;
++getSchedulingAlgorithm(): String
++setSchedulingAlgorithm(String algorithm, Map&lt;String, String&gt; batchOptions): void
+-isValidSchedulingAlgorithm(String algorithm): boolean
++getValidAlgorithms(): List&lt;String&gt;
++getNextScheduledCar(): Car
++createIterator(List&lt;Car&gt; cars): QueueIterator&lt;Car&gt;
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>624</x>
+      <y>384</y>
+      <w>246</w>
+      <h>246</h>
+    </coordinates>
+    <panel_attributes>swop.CarManufactoring::CarManufacturingController
+--
+-carQueue: LinkedList&lt;Car&gt;
+-assemblyLine: AssemblyLine
+-scheduler: Scheduler
+-statisticsListeners: List&lt;StatisticsListener&gt;
+-taskCompletedListener: TaskCompletedListener
+--
++CarManufacturingController(): ctor
++addListener(StatisticsListener statisticsListener): void
+-updateDelay(Car car): void
+-createWorkStations(): LinkedList&lt;WorkStation&gt;
++getAssembly(): AssemblyLine
++advanceAssemblyAndUpdateSchedular(): void
+-updateTime(int passedMinutes, Car finishedCar): void
+-advanceAssemblyLine(Car nextCar): Car
+-removeCarFromQueue(Car car): void
+-getNextCarFromQueue(int maxWorkingMinutes): Car
+-getLongestWorkTimeOfWorkStations(): int
++updateEstimatedCompletionTime(): void
+-setFinishedCarDeliveryTime(int minutes, Car finishedCar): void
+-canFinishNewCar(int minutes): boolean
+-updateScheduleTime(int minutes): void
++addOrderToQueue(CarOrder carOrder): void
++getScheduler(): Scheduler
++getCarQueue(): List&lt;Car&gt;
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>636</x>
+      <y>684</y>
+      <w>234</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>swop.Car::Car
+--
+-tasks: Set&lt;Task&gt;
+-carModel: CarModel
+-initialCompletionTime: TimeStamp
+-estimatedCompletionTime: TimeStamp
+-deliveryTime: TimeStamp
+--
++Car(CarModel model): ctor
++isCompleted(): boolean
++getCompletedTasks(): Set&lt;Task&gt;
++getUncompletedTasks(): Set&lt;Task&gt;
+-initiateTasks(): void
+-createTask(String part, String option): Task
++getTasks(): Set&lt;Task&gt;
++getCarModel(): CarModel
++getCarModelName(): String
+-setCarModel(CarModel carModel): void
++getSelectionForPart(String category): String
++getPartsMap(): Map&lt;String, String&gt;
++getInitialCompletionTime(): TimeStamp
++setEstimatedCompletionTime(TimeStamp timeStamp): void
++getEstimatedCompletionTime(): TimeStamp
++getCompletionTime(): TimeStamp
++setDeliveryTime(TimeStamp timeStamp): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2004</x>
+      <y>948</y>
+      <w>384</w>
+      <h>216</h>
+    </coordinates>
+    <panel_attributes>swop.UI::CarMechanicUI
+--
+-cmGenerator: CarMechanicGenerator
+-actions: List&lt;String&gt;
+-carmechanic: CarMechanic
+--
++setCarMechanic(CarMechanic carmechanic): void
++run(CarMechanic carmechanic): void
+-selectAction(): void
+-performAssemblyTask(): void
+-checkAssemblyLineStatus(): void
+-displayStationStatus(String stationName, List&lt;Task&gt; pendingTasks, List&lt;Task&gt; finishedTasks): void
+-selectStation(): String
+-displayAvailableStations(List&lt;String&gt; stationNames): void
+-askOption(String s, int numberOfOptions): int
+-performTaskAtWorkStation(String stationName): void
+-selectTask(List&lt;Task&gt; taskList): Task
+-displayAvailableTasks(List&lt;Task&gt; taskList): void
+-showInfo(Task task): void
+-displayTaskInfo(String info): void
+-completeTask(String workstationName, Task task): void
+-askTimeToCompleteTask(): int
+-noTasks(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1272</x>
+      <y>948</y>
+      <w>318</w>
+      <h>216</h>
+    </coordinates>
+    <panel_attributes>swop.UI::GarageHolderUI
+--
+-garageHolderGenerator: GarageHolderGenerator
+-actions: List&lt;String&gt;
+-garageHolder: GarageHolder
+--
++setGarageHolder(GarageHolder garageHolder): void
++run(GarageHolder gh): void
+-selectAction(): void
+-generateOrder(): void
+-getOrderForm(SortedMap&lt;String, List&lt;String&gt;&gt; options): Map&lt;String, Integer&gt;
+-checkOrderDetails(): void
+-indicateCarModel(List&lt;String&gt; carModels): int
+-displayOrderingForm(Map&lt;String, List&lt;String&gt;&gt; optionsMap, String name): void
+-askOption(int leftBound, int rightBound, String option): int
+-displayEstimatedTime(String estCompletiontime): void
+-isValidOrderID(Set&lt;CarOrder&gt; orders, String orderID): boolean
+-getOrderFromID(Set&lt;CarOrder&gt; orders, String orderID): CarOrder
+-printEmptyLine(): void
+-selectOrderID(): String
+-printError(String e): void
+-showOrderDetails(String string): void
+-displayOrders(Set&lt;CarOrder&gt; carOrders): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>312</x>
+      <y>684</y>
+      <w>228</w>
+      <h>204</h>
+    </coordinates>
+    <panel_attributes>swop.CarManufactoring::WorkStation
+--
+-name: String
+-car: Car
+-currentWorkingTime = 0: int
+-listeners: List&lt;TaskCompletedListener&gt;
+--
++WorkStation(String name): ctor
++addListener(TaskCompletedListener listener): void
++triggerListenersTaskCompletion(): void
++getUncompletedTasks(): List&lt;Task&gt;
++getCompletedTasks(): List&lt;Task&gt;
+-isValidName(String name): boolean
++getTasks(): List&lt;Class&lt;? extends Task&gt;&gt;
++getName(): String
++getCar(): Car
++setCar(Car car): void
++getCurrentWorkingTime(): int
++isPartOfCurrentCarInWorkStation(String part): boolean
++getValueOfPart(String part): String
++completeTask(Task task, int time): void
++stationTasksCompleted(): boolean
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1194</x>
+      <y>294</y>
+      <w>342</w>
+      <h>174</h>
+    </coordinates>
+    <panel_attributes>swop.Miscellaneous::Statistics
+--
+-carDelayMap: Map&lt;Integer, List&lt;Integer&gt;&gt;
++statisticsListener: StatisticsListener
+--
++updateDelay(Car car): void
+-getDayAndDelayMinutesCar(Car car): int[]
+-calculateDelayMinutes(Car car): int
++addTimeToDelayMap(int minutes, int day): void
++getAvgDelay(): double
++getMdnDelay(): double
++getDelayLast2(): Map&lt;Integer, List&lt;Integer&gt;&gt;
+-getFilteredMap(Map&lt;Integer, List&lt;Integer&gt;&gt; carDelayMap): Map&lt;Integer, List&lt;Integer&gt;&gt;
++getAvgOrders(): double
++getMdnOrders(): double
+-getOrdersDailyFinished(): List&lt;Integer&gt;
++getOrdersLast2(): Map&lt;Integer, Integer&gt;
++getOrderStats(): AllStats
++getCarDelayMap(): Map&lt;Integer, List&lt;Integer&gt;&gt;
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>954</x>
+      <y>666</y>
+      <w>180</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>swop.Car::CarOrder
+--
+-car: Car
+-ID: String
+-orderTime: TimeStamp
+--
++CarOrder(CarModel carModel): ctor
++getCar(): Car
++isCompleted(): boolean
++getID(): String
++getEstimatedCompletionTime(): TimeStamp
++getCompletionTime(): TimeStamp
++compareTo(CarOrder carOrder): int
++setOrderTime(TimeStamp time): void
++getOrderTime(): TimeStamp
++toString(): String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>300</x>
+      <y>468</y>
+      <w>252</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>swop.CarManufactoring::AssemblyLine
+--
+-workStations: LinkedList&lt;WorkStation&gt;
+--
++AssemblyLine(LinkedList&lt;WorkStation&gt; workStations): ctor
++advance(Car nextCar): Car
+-carToNextWorkStation(Car nextCar): Car
+-checkAdvance(): void
++getWorkStations(): List&lt;WorkStation&gt;
++getWorkstationNames(): List&lt;String&gt;
++getUncompletedTasks(WorkStation station): List&lt;Task&gt;
++isEmptyAssemblyLine(): boolean
++getUnfinishedCars(): List&lt;Car&gt;
++getStationByName(String stationName): WorkStation
++getUncompletedTasksByName(String stationName): List&lt;Task&gt;
++getCompletedTasksByName(String stationName): List&lt;Task&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1656</x>
+      <y>948</y>
+      <w>318</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>swop.UI::ManagerUI
+--
+-managerGenerator: ManagerGenerator
+-actions: List&lt;String&gt;
+-manager: Manager
+--
++setManager(Manager manager): void
++run(Manager manager): void
+-selectAction(): void
+-AdaptSchedulingAlgorithm(): void
+-changeAlgorithmToBatch(): void
+-checkProductionStatistics(): void
+-showProductionStatistics(AllStats stats): void
+-selectAction(List&lt;String&gt; actions, String currentAlgo): int
+-getBatchSelection(List&lt;Map&lt;String, String&gt;&gt; possibleBatch): Map&lt;String, String&gt;
+-printError(String e): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>636</x>
+      <y>1038</y>
+      <w>258</w>
+      <h>138</h>
+    </coordinates>
+    <panel_attributes>/swop.Car.CarModel::CarModel/
+--
+-carModelSpecification : CarModelSpecification
+#name: String
+#validOptions: Map&lt;String, List&lt;String&gt;&gt;
+#mandatoryParts: List&lt;String&gt;
++types: List&lt;String&gt;
+--
++setCarModelSpecification(CarModelSpecification selected): void
++getCarModelSpecification(): CarModelSpecification
++getValidOptions(): SortedMap&lt;String, List&lt;String&gt;&gt;
+-isValidSpecification(CarModelSpecification specification): boolean
+-IsValidOption(String option, String value): boolean
+-satisfiesConstraints(CarModelSpecification specification): boolean
++getName(): String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>276</x>
+      <y>906</y>
+      <w>252</w>
+      <h>126</h>
+    </coordinates>
+    <panel_attributes>/swop.CarManufactoring::Task/
+--
+#name: String
+#description: String
+#chosenOption: String
+#isComplete = false: boolean
+--
++Task(String name, String description, String chosenOption): ctor
++complete(): void
++isComplete(): boolean
++getName(): String
++getDescription(): String
++getChosenOption(): String
++clone(): Task
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1194</x>
+      <y>588</y>
+      <w>174</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>swop.Main::AssemAssist
+--
+-controller: CarManufacturingController
+-statistics: Statistics
+~userDatabase: Map&lt;String, User&gt;
+--
++AssemAssist(): ctor
++run(): void
++getController(): CarManufacturingController
++getUserMap(): Map&lt;String, User&gt;
++addOrder(CarOrder carOrder): void
++getStats(): AllStats
++getUser(String id): User
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>954</x>
+      <y>906</y>
+      <w>192</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>swop.Miscellaneous::TimeStamp
+--
+-day: int
+-minutes: int
+--
++TimeStamp(int day, int minutes): ctor
++getDay(): int
++getMinutes(): int
+-isValidTimeStamp(int day, int minutes): boolean
++toString(): String
++compareTo(TimeStamp timeStamp): int
++equals(Object o): boolean
++hashCode(): int
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1188</x>
+      <y>744</y>
+      <w>444</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>swop.Users::GarageHolder
+--
+-carOrders: Set&lt;CarOrder&gt;
+--
++GarageHolder(String id, AssemAssist assemAssist): ctor
+-mapConfigToOptions(Map&lt;String, Integer&gt; carConfig, Map&lt;String, List&lt;String&gt;&gt; validOptions): Map&lt;String, String&gt;
++getModels(): List&lt;String&gt;
++createCarModel(int choice): CarModel
+-placeOrderOnAssem(CarModel carModel): CarOrder
++getOrders(): Set&lt;CarOrder&gt;
++addOrder(CarOrder carOrder): void
++getValidOptions(CarModel model): SortedMap&lt;String, List&lt;String&gt;&gt;
++placeOrder(Map&lt;String, Integer&gt; carConfig, CarModel model): String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>948</x>
+      <y>1050</y>
+      <w>270</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>swop.Car::CarModelSpecification
+--
+~chosenOptions: Map&lt;String, String&gt;
+--
++CarModelSpecification(Map&lt;String, String&gt; chosenOptions): ctor
+-checkConstraints(Map&lt;String, String&gt; chosenOptions): void
+-isValidEngineAirco(String engine, String airco): boolean
+-isValidBodyEngineCombination(String body, String engine): boolean
+-isValidBodySpoilerCombination(String body, String spoiler): boolean
++getAllParts(): Map&lt;String, String&gt;
++getSelectionForPart(String selectedPart): String
++isPartInChosenOptions(String part): boolean
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1734</x>
+      <y>1170</y>
+      <w>138</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>swop.UI::LoginUI
+--
+-garageHolderUI: GarageHolderUI
+-carMechanicUI: CarMechanicUI
+-managerUI: ManagerUI
+--
++LoginUI(AssemAssist assem): ctor
+-run(AssemAssist assem): void
+-login(AssemAssist assem): User
+-init(): void
++getUserID(): String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1656</x>
+      <y>744</y>
+      <w>318</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>swop.Users::Manager
+--
++Manager(String id, AssemAssist assemAssist): ctor
++setSchedulingAlgorithm(String algorithm, Map&lt;String, String&gt; batchOptions): void
++getActiveAlgorithm(): String
++getValidAlgorithms(): List&lt;String&gt;
+-isValidSchedulingAlgorithm(String algorithm): boolean
++getPartMapsOfCarQueue(): List&lt;Map&lt;String, String&gt;&gt;
++getBatchOptions(): List&lt;Map&lt;String, String&gt;&gt;
++getStats(): AllStats
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2010</x>
+      <y>744</y>
+      <w>300</w>
+      <h>78</h>
+    </coordinates>
+    <panel_attributes>swop.Users::CarMechanic
+--
++CarMechanic(String id, AssemAssist assemAssist): ctor
++getStationNames(): List&lt;String&gt;
++getUncompletedTasks(String stationName): List&lt;Task&gt;
++getCompletedTasks(String stationName): List&lt;Task&gt;
++completeTask(String stationName, String taskName, int passedTime): void
++isUncompletedTaskAtStation(String stationName, String taskName): boolean
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1710</x>
+      <y>588</y>
+      <w>192</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>/swop.Users::User/
+--
+-id: String
+#assemAssist: AssemAssist
+--
++User(String id, AssemAssist assemAssist): ctor
++getId(): String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>486</x>
+      <y>1242</y>
+      <w>168</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>swop.Car.CarModel::ModelA
+--
+-modelAMandatory: List&lt;String&gt;
+-modelAOptions: Map&lt;String, List&lt;String&gt;&gt;
+--
++ModelA(): ctor</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>672</x>
+      <y>1242</y>
+      <w>168</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>swop.Car.CarModel::ModelB
+--
+-modelBMandatory: List&lt;String&gt;
+-modelBOptions: Map&lt;String, List&lt;String&gt;&gt;
+--
++ModelB(): ctor
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>858</x>
+      <y>1242</y>
+      <w>168</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>swop.Car.CarModel::ModelC
+--
+-modelBMandatory: List&lt;String&gt;
+-modelBOptions: Map&lt;String, List&lt;String&gt;&gt;
+--
++ModelC(): ctor
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>924</x>
+      <y>384</y>
+      <w>132</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+swop.Listeners::StatisticsListener
+--
+~updateDelay(Car car): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>342</x>
+      <y>372</y>
+      <w>162</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+swop.Listeners::TaskCompletedListener
+--
+~taskCompleted(): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>162</x>
+      <y>1176</y>
+      <w>198</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>swop.CarManufactoring.Tasks::AssemblyCarBody
+--
++AssemblyCarBody(String chosenOption): ctor
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>162</x>
+      <y>1134</y>
+      <w>198</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>swop.CarManufactoring.Tasks::InsertEngine
+--
++InsertEngine(String chosenOption): ctor
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>162</x>
+      <y>1092</y>
+      <w>198</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>swop.CarManufactoring.Tasks::InstallAirco
+--
++InstallAirco(String chosenOption): ctor
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>162</x>
+      <y>1050</y>
+      <w>198</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>swop.CarManufactoring.Tasks::InstallGearbox
+--
++InstallGearbox(String chosenOption): ctor
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>432</x>
+      <y>1134</y>
+      <w>180</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>swop.CarManufactoring.Tasks::InstallSeats
+--
++InstallSeats(String chosenOption): ctor
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>432</x>
+      <y>1092</y>
+      <w>180</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>swop.CarManufactoring.Tasks::InstallSpoiler
+--
++InstallSpoiler(String chosenOption): ctor
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>432</x>
+      <y>1050</y>
+      <w>180</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>swop.CarManufactoring.Tasks::MountWheels
+--
++MountWheels(String chosenOption): ctor
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>432</x>
+      <y>1176</y>
+      <w>180</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>swop.CarManufactoring.Tasks::PaintCar
+--
++PaintCar(String chosenOption): ctor
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>744</x>
+      <y>324</y>
+      <w>24</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-&gt;
+m1=1
+m2=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>738</x>
+      <y>624</y>
+      <w>30</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+m2=0..*</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>864</x>
+      <y>684</y>
+      <w>102</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>10.0;10.0;150.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1044</x>
+      <y>810</y>
+      <w>24</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>10.0;160.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>846</x>
+      <y>918</y>
+      <w>120</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=3</panel_attributes>
+    <additional_attributes>180.0;80.0;10.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>744</x>
+      <y>918</y>
+      <w>24</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>10.0;200.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>594</x>
+      <y>1170</y>
+      <w>108</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>160.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>750</x>
+      <y>1170</y>
+      <w>18</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>840</x>
+      <y>1170</y>
+      <w>72</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;100.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>888</x>
+      <y>1056</y>
+      <w>72</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>864</x>
+      <y>606</y>
+      <w>342</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m2=1</panel_attributes>
+    <additional_attributes>10.0;10.0;550.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>534</x>
+      <y>702</y>
+      <w>114</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..1</panel_attributes>
+    <additional_attributes>170.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>420</x>
+      <y>612</y>
+      <w>30</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..*</panel_attributes>
+    <additional_attributes>10.0;120.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>546</x>
+      <y>486</y>
+      <w>90</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>10.0;10.0;130.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>414</x>
+      <y>408</y>
+      <w>30</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..*</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>498</x>
+      <y>384</y>
+      <w>138</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>10.0;10.0;210.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1290</x>
+      <y>462</y>
+      <w>24</w>
+      <h>138</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;210.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1050</x>
+      <y>390</y>
+      <w>156</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>10.0;10.0;240.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>864</x>
+      <y>390</y>
+      <w>72</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..*</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1362</x>
+      <y>594</y>
+      <w>360</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-&gt;
+m1=0..*
+m2=1</panel_attributes>
+    <additional_attributes>580.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1794</x>
+      <y>642</y>
+      <w>18</w>
+      <h>114</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;170.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1524</x>
+      <y>642</y>
+      <w>228</w>
+      <h>114</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>360.0;10.0;10.0;170.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1866</x>
+      <y>642</y>
+      <w>216</w>
+      <h>114</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;340.0;170.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1128</x>
+      <y>744</y>
+      <w>78</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>10.0;10.0;110.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2166</x>
+      <y>816</y>
+      <w>24</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+m2=1</panel_attributes>
+    <additional_attributes>10.0;220.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1794</x>
+      <y>834</y>
+      <w>24</w>
+      <h>126</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;190.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1404</x>
+      <y>858</y>
+      <w>24</w>
+      <h>102</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1794</x>
+      <y>1086</y>
+      <w>24</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>522</x>
+      <y>918</y>
+      <w>156</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..*</panel_attributes>
+    <additional_attributes>10.0;80.0;240.0;80.0;240.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>414</x>
+      <y>1026</y>
+      <w>30</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;</panel_attributes>
+    <additional_attributes>30.0;60.0;10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>354</x>
+      <y>1026</y>
+      <w>30</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30.0;10.0;30.0;60.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>354</x>
+      <y>1026</y>
+      <w>36</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;130.0;40.0;130.0;40.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>354</x>
+      <y>1026</y>
+      <w>42</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;200.0;50.0;200.0;50.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>354</x>
+      <y>1026</y>
+      <w>48</w>
+      <h>174</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;270.0;60.0;270.0;60.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>396</x>
+      <y>1026</y>
+      <w>48</w>
+      <h>174</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;</panel_attributes>
+    <additional_attributes>60.0;270.0;10.0;270.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>402</x>
+      <y>1026</y>
+      <w>42</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;</panel_attributes>
+    <additional_attributes>50.0;200.0;10.0;200.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>408</x>
+      <y>1026</y>
+      <w>36</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;</panel_attributes>
+    <additional_attributes>40.0;130.0;10.0;130.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1866</x>
+      <y>1158</y>
+      <w>330</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>520.0;10.0;520.0;60.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1416</x>
+      <y>1158</y>
+      <w>330</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0;530.0;60.0</additional_attributes>
+  </element>
+</diagram>

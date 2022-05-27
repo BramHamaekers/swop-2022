@@ -9,7 +9,10 @@ import java.util.stream.Collectors;
  * A selection for each category for a carModel
  */
 public class CarModelSpecification {
-	
+
+	/**
+	 * The options chosen for this carModelSpecification
+	 */
 	Map<String, String> chosenOptions;
 
 	/**
@@ -26,26 +29,28 @@ public class CarModelSpecification {
 	 * @param chosenOptions chosen options
 	 */
 	private void checkConstraints(Map<String, String> chosenOptions) {
-		if (!this.isValidBodySpoilerCombination(chosenOptions.get("Body"), chosenOptions.get("Spoiler"))) {
+		if (chosenOptions == null)
+			throw new IllegalArgumentException("ChosenOptions is null");
+		if (!this.isValidBodySpoilerCombination(chosenOptions.get("Body"), chosenOptions.get("Spoiler")))
 			throw new IllegalArgumentException("Spoiler is mandatory when choosing a sport body");
-		}
-		if (!this.isValidBodyEngineCombination(chosenOptions.get("Body"), chosenOptions.get("Engine"))) {
+
+		if (!this.isValidBodyEngineCombination(chosenOptions.get("Body"), chosenOptions.get("Engine")))
 			throw new IllegalArgumentException("Engine must be performance or ultra when choosing a sport body");
-		}
-		if (!this.isValidEngineAirco(chosenOptions.get("Engine"), chosenOptions.get("Airco"))) {
+
+		if (!this.isValidEngineAirco(chosenOptions.get("Engine"), chosenOptions.get("Airco")))
 			throw new IllegalArgumentException("Airco must be manual or none if you select the ultra engine");
-		}
 	}
 
 	/**
 	 * If you select the ultra engine, you can only fit the manual airco into your car (or none)
 	 * @param engine chosen engine
 	 * @param airco chosen airco
-	 * @return whether the engine and airco combination is valid
+	 * @return returns whether the engine and airco combination is valid
 	 */
 	private boolean isValidEngineAirco(String engine, String airco) {
-		if (engine.contains("ultra")) return airco == null || airco.equals("manual");
-		return true;
+		if (engine == null)
+			throw new IllegalArgumentException("Null string provided");
+		return !engine.contains("ultra") || airco == null || airco.equals("manual");
 	}
 
 	/**
@@ -55,8 +60,11 @@ public class CarModelSpecification {
 	 * @return whether the body and engine combination is valid
 	 */
 	private boolean isValidBodyEngineCombination(String body, String engine) {
-		if (body.equals("sport")) return engine.contains("performance") || engine.contains("ultra");
-		return true;
+		if (body == null)
+			throw new IllegalArgumentException("Null string provided");
+		if (engine == null)
+			throw new IllegalArgumentException("Null string provided");
+		return !body.equals("sport") || engine.contains("performance") || engine.contains("ultra");
 	}
 
 	/**
@@ -66,33 +74,32 @@ public class CarModelSpecification {
 	 * @return whether the body and spoiler combination is valid
 	 */
 	private boolean isValidBodySpoilerCombination(String body, String spoiler) {
-		if (body.equals("sport")) return spoiler != null;
-		return true;
+		if (body == null)
+			throw new IllegalArgumentException("Null string provided");
+		return !body.equals("sport") || spoiler != null;
 	}
 
 	/**
-	 * get the chosenOptions and its value of thes CarModelSpecification as a Map
+	 * get the chosenOptions and its value of the CarModelSpecification as a Map
 	 * @return Map of all the chosen options
 	 */
 	public Map<String, String> getAllParts(){
-		//https://stackoverflow.com/questions/28288546/how-to-copy-hashmap-not-shallow-copy-in-java
-		return this.chosenOptions.entrySet().stream()
-				.collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+		return new HashMap<>(this.chosenOptions);
 	}
 
 	/**
-	 * get a given part value from the part
-	 * @param selectedCategory the selected category fe. Body
+	 * Returns the value of option given with the parameter
+	 * @param selectedPart is the part you want to retrieve the value from
 	 * @return part value (String)
 	 */
-	public String getValueOfPart(String selectedCategory) {
-		if(selectedCategory == null) {
-			 throw new IllegalArgumentException("Can't retrieve value (part = null)");
-		}
-		if (!isPartInChosenOptions(selectedCategory)) {
-			throw new IllegalArgumentException("invalid category");
-		}
-		return this.chosenOptions.get(selectedCategory);
+	public String getSelectionForPart(String selectedPart) {
+		if(selectedPart == null)
+			 throw new IllegalArgumentException("Can't retrieve value (selectedCategory = null)");
+
+		if (!isPartInChosenOptions(selectedPart))
+			throw new IllegalArgumentException("Provided category does not exist");
+
+		return this.chosenOptions.get(selectedPart);
 	}
 	
 	/**

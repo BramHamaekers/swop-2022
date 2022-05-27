@@ -8,6 +8,9 @@ import swop.Exceptions.CancelException;
  * A class used to scan and get the user input
  */
 public class InputScanner {
+	/**
+	 * The scanner used for scanning input by a user
+	 */
 	Scanner inputScanner;
 
 	/**
@@ -15,6 +18,8 @@ public class InputScanner {
 	 * @param inputscanner a {@code Scanner}
 	 */
 	public InputScanner(Scanner inputscanner) {
+		if (inputscanner == null)
+			throw new IllegalArgumentException("invalid inputscanner");
 		this.inputScanner = inputscanner;
 	}
 	/**
@@ -44,6 +49,8 @@ public class InputScanner {
 	 * @throws CancelException when the user types 'Cancel'
 	 */
 	public int scanNextLineOfTypeInt(int leftborder, int rightBorder) throws CancelException {
+		if (leftborder<0 || rightBorder<=leftborder)
+			throw new IllegalArgumentException("invalid border range");
 		String s;
 		if (inputScanner.hasNextLine()) s = this.inputScanner.nextLine();
 		else s = this.inputScanner.next();
@@ -65,7 +72,7 @@ public class InputScanner {
 	/**
 	 * Will scan next line for a string, keeps asking for input when given string does not meet requirements.
 	 * @return a valid string
-	 * @throws CancelException when the user types 'Cancel'
+	 * @throws CancelException when a user wants to cancel his operation by typing "cancel"
 	 */
 	public String scanNextLineOfTypeString() throws CancelException {
 		String s;
@@ -78,9 +85,11 @@ public class InputScanner {
 	 * Will scan next line for a string, keeps asking for input when given string does not meet requirements.
 	 * @param strings array of Strings that input may be equal to.
 	 * @return a valid string
-	 * @throws CancelException when the user types 'Cancel'
+	 * @throws CancelException when a user wants to cancel his operation by typing "cancel"
 	 */
 	public String scanNextLineOfTypeString(String[] strings) throws CancelException {
+		if (strings == null)
+			throw new IllegalArgumentException("null stringlist provided");
 		String s;
 		if (inputScanner.hasNextLine()) s = this.inputScanner.nextLine();
 		else s = this.inputScanner.next();

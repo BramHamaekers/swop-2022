@@ -12,3 +12,4 @@ Also remove workstation from tasks. Make car use only 1 set of Tasks and check i
 to getUncompletedTasks (and completedTasks)
 
 2. Write test for advancing to next day with orders still in queue (like the demo)
+3. remove redundant defensive programming if tests pass

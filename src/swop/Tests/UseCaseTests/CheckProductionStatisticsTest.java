@@ -3,15 +3,12 @@ package swop.Tests.UseCaseTests;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.ListIterator;
 
 import org.junit.jupiter.api.Test;
 
 import swop.Main.AssemAssist;
-import swop.UI.LoginUI;
 import swop.UI.Builders.DisplayStatus;
 import swop.UI.Generators.ManagerGenerator;
 import swop.Users.Manager;
@@ -129,48 +126,18 @@ public class CheckProductionStatisticsTest {
     
     
     
-    private void skip(ListIterator<String> output, int skips) {
-		for(int i =0; i < skips; i++)
-			output.next();
-		
-	}
+	 private ListIterator<String> continueUITest(String inputString, int skips) { 
+	        return handleInputOutput.continueUITest(inputString, skips);
+	    }
 
-    private ListIterator<String> continueUITest(String inputString, int skips) {
-    	 this.input = new ByteArrayInputStream(inputString.getBytes());
-         System.setIn(input);
-         LoginUI.scanner.updateScanner();
-
-         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-         System.setOut(new PrintStream(outContent));
-         assem.run();
-
-         ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
-                 .listIterator();
-
-         for(int i =0; i < skips; i++)
-         	output.next();
-         
-         return output;
-    }
-
-    private ListIterator<String> setupUITest(String inputString, int skips) {
-        this.assem = new AssemAssist();
-        this.manager = (Manager) this.assem.getUserMap().get("c"); 
-
-        this.input = new ByteArrayInputStream(inputString.getBytes());
-        System.setIn(input);
-        LoginUI.scanner.updateScanner();
-
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-        assem.run();
-
-        ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
-                .listIterator();
-
-        for(int i =0; i < skips; i++)
-        	output.next();
-        
-        return output;
-    }
+	    private ListIterator<String> setupUITest(String inputString, int skips) {
+	    	ListIterator<String> output = handleInputOutput.setupUITest(inputString, skips);
+	    	this.assem = handleInputOutput.getAssem();  
+	    	this.manager = (Manager) handleInputOutput.getUser("c");
+	    	return output;
+	    }
+	    
+	    void skip(ListIterator<String> output, int skips) {
+	    	handleInputOutput.skip(output, skips);	
+		}
 }

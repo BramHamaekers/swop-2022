@@ -7,6 +7,7 @@ import swop.Car.CarModel.CarModel;
 import swop.Car.CarModel.ModelA;
 import swop.Car.CarModelSpecification;
 import swop.CarManufactoring.Task;
+import swop.CarManufactoring.Tasks.MountWheels;
 import swop.Miscellaneous.TimeStamp;
 
 import java.util.Map;
@@ -39,40 +40,23 @@ class CarTest {
     void getUncompletedTasks() {
         modelA.setCarModelSpecification(specification);
         Car car = new Car(modelA);
-        assertEquals(Task.getAllTasks(specification.getAllParts()), car.getUncompletedTasks());
+        assertEquals(7, car.getUncompletedTasks().size());
     }
 
     @Test
-    void completeTask() {
+    void getUncompletedTasks_OneTaskCompleted() {
         modelA.setCarModelSpecification(specification);
         Car car = new Car(modelA);
-        car.completeTask(Task.PaintCar);
-        Set<Task> tasks = Task.getAllTasks(specification.getAllParts());
-        tasks.remove(Task.PaintCar);
-        assertEquals(tasks, car.getUncompletedTasks());
+        MountWheels mountWheels = (MountWheels) findTask(car, MountWheels.class);
+        mountWheels.complete();
+        assertEquals(6, car.getUncompletedTasks().size());
     }
 
     @Test
-    void completeTask_Null() {
+    void getTasks() {
         modelA.setCarModelSpecification(specification);
         Car car = new Car(modelA);
-        assertThrows(IllegalArgumentException.class, () ->car.completeTask(null));
-    }
-
-    @Test
-    void completeTask_TaskAlreadyCompleted() {
-        modelA.setCarModelSpecification(specification);
-        Car car = new Car(modelA);
-        car.completeTask(Task.PaintCar);
-        assertThrows(IllegalArgumentException.class, () ->car.completeTask(Task.PaintCar));
-    }
-
-    @Test
-    void getAllTasks() {
-        modelA.setCarModelSpecification(specification);
-        Car car = new Car(modelA);
-        Set<Task> tasks = Task.getAllTasks(specification.getAllParts());
-        assertEquals(tasks, car.getAllTasks());
+        assertEquals(7, car.getTasks().size());
     }
 
     @Test
@@ -91,21 +75,21 @@ class CarTest {
     void getValueOfPart() {
         modelA.setCarModelSpecification(specification);
         Car car = new Car(modelA);
-        assertEquals("sedan", car.getValueOfPart("Body"));
+        assertEquals("sedan", car.getSelectionForPart("Body"));
     }
 
     @Test
     void getValueOfPart_InvalidPart() {
         modelA.setCarModelSpecification(specification);
         Car car = new Car(modelA);
-        assertThrows(IllegalArgumentException.class, () ->  car.getValueOfPart("Invalid"));
+        assertThrows(IllegalArgumentException.class, () ->  car.getSelectionForPart("Invalid"));
     }
 
     @Test
     void getValueOfPart_Null() {
         modelA.setCarModelSpecification(specification);
         Car car = new Car(modelA);
-        assertThrows(IllegalArgumentException.class, () ->  car.getValueOfPart(null));
+        assertThrows(IllegalArgumentException.class, () ->  car.getSelectionForPart(null));
     }
 
     @Test
@@ -151,6 +135,16 @@ class CarTest {
         assertNull(car.getCompletionTime());
         assertThrows(IllegalArgumentException.class, () -> car.setDeliveryTime(new TimeStamp(0, -200)));
         assertNull(car.getCompletionTime());
+    }
+
+    Task findTask(Car car, Class<? extends Task> taskClass) {
+        Set<Task> tasks = car.getTasks();
+        for (Task task : tasks) {
+            if (taskClass.isInstance(task)) {
+                return task;
+            }
+        }
+        return null;
     }
 
 }

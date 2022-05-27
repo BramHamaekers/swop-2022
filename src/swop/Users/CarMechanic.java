@@ -4,9 +4,7 @@ import java.util.*;
 
 import swop.CarManufactoring.Task;
 import swop.CarManufactoring.WorkStation;
-import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
-import swop.UI.CarMechanicUI;
 
 /**
  * A car mechanic user
@@ -15,146 +13,77 @@ public class CarMechanic extends User{
 	/**
 	 * initializes a car mechanic user
 	 * @param id a given id for the car mechanic
+	 * @param assemAssist the given assemassist used to communicate with the assemblyline and the controller etc.
 	 */
-    public CarMechanic(String id) {
-        super(id);
+    public CarMechanic(String id, AssemAssist assemAssist) {
+        super(id, assemAssist);
     }
-    
-    /**
-     * Called when logging in as CarMechanic
-	 * @param assemAssist given the main program
-     */
-	@Override
-	public void load(AssemAssist assemAssist) {
-		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
-		try {
-			CarMechanicUI.init(this.getId());
-			this.selectAction(assemAssist);
-		} catch (CancelException e) {
-			e.printMessage();
+
+	/**
+	 * Get a list of names of all the workstations on the assembly line
+	 * @return list of strings, strings are names of all the workstations on the assembly line
+	 */
+	public List<String> getStationNames() {
+		return this.assemAssist.getController().getAssembly().getWorkstationNames();
+	}
+
+	/**
+	 * Get all the uncompleted tasks at a workstation given the name of that station
+	 * @param stationName the given workstation name
+	 * @return Copy of list of all tasks that are uncompleted at the workstation
+	 */
+	public List<Task> getUncompletedTasks(String stationName) {
+		if (stationName == null)
+			throw new IllegalArgumentException("null string provided");
+		List<Task> copyOfUncompletedTasks = new ArrayList<>();
+		this.assemAssist.getController().getAssembly().getUncompletedTasksByName(stationName).forEach(t -> copyOfUncompletedTasks.add(t.clone()));
+		return copyOfUncompletedTasks;
+	}
+
+	/**
+	 * Get all the completed tasks at a workstation given the name of that station
+	 * @param stationName the given workstation name
+	 * @return Copy of list of all tasks that are completed at the workstation
+	 */
+	public List<Task> getCompletedTasks(String stationName) {
+		if (stationName == null)
+			throw new IllegalArgumentException("null string provided");
+		List<Task> copyOfUncompletedTasks = new ArrayList<>();
+		this.assemAssist.getController().getAssembly().getCompletedTasksByName(stationName).forEach(t -> copyOfUncompletedTasks.add(t.clone()));
+		return copyOfUncompletedTasks;
+	}
+
+	/**
+	 * Methods that lets a carMechanic complete a task with the given name at a workstation with the given name
+	 * @param stationName the given name of a workstation to complete a task at
+	 * @param taskName the name of the task you want to complete at a workstation
+	 * @param passedTime the time it took to complete the task
+	 */
+	public void completeTask(String stationName, String taskName, int passedTime){
+		if(!isUncompletedTaskAtStation(stationName, taskName)) {
+			throw new IllegalArgumentException("Cannot complete task " + taskName + ", " +
+					"task does not exits at " + stationName + "or is already completed");
 		}
+		if (passedTime < 0)
+			throw new IllegalArgumentException("negative minutes passed");
+		WorkStation workstation = this.assemAssist.getController().getAssembly().getStationByName(stationName);
+		Task task = this.assemAssist.getController().getAssembly().getUncompletedTasksByName(stationName).stream()
+				.filter(t -> t.getName().equals(taskName))
+				.findFirst().orElse(null);
+		workstation.completeTask(task, passedTime);
 	}
 
 	/**
-	 * Function that handles selecting an action for CarMechanic
-	 * @param assemAssist the central system the action is performed on
+	 * Check if the given task is an uncompleted task at the station with the given stationName
+	 * @param stationName the given name of a station
+	 * @param taskName the given name of a task you want to complete
+	 * @return True if the given task is not yet completed at the station with the given stationName
 	 */
-	@Override
-	public void selectAction(AssemAssist assemAssist) throws CancelException {
-		List<String> actions = Arrays.asList("performAssemblyTask", "checkAssemblyLineStatus", "Exit");
-		int action = CarMechanicUI.selectAction(actions, "What would you like to do?");
-
-		switch (action) {
-			case 0 -> this.performAssemblyTask(assemAssist);
-			case 1 -> this.checkAssemblyLineStatus(assemAssist);
-			case 2 -> {
-				// Do Nothing
-			}
-			default -> throw new IllegalArgumentException("Unexpected value: " + action);
-		}
-	}
-
-	/**
-	 * Helper function to display all tasks for each station
-	 * @param assemAssist given the main program
-	 */
-	private void checkAssemblyLineStatus(AssemAssist assemAssist) {
-		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
-		List<WorkStation> workStations = assemAssist.getStations();
-
-		workStations.forEach(station -> {
-			List<Task> pendingTasks = station.getUncompletedTasks();
-			//TODO finishedTasks should be filtered in station.getCompletedTasks()
-			List<Task> finishedTasks = station.getCompletedTasks();
-			CarMechanicUI.displayStationStatus(station, pendingTasks, finishedTasks);
-		});
-	}
-
-	/**
-	 * Helper function to perform a task for this mechanic
-	 * @param assemAssist given the main program
-	 * @throws CancelException when "CANCEL" is the input
-	 */
-	private void performAssemblyTask(AssemAssist assemAssist) throws CancelException {
-		WorkStation workStation = this.selectStation(assemAssist);
-		if (workStation == null) throw new IllegalArgumentException("workstation is invalid");
-		this.performTaskAtWorkStation(assemAssist, workStation);
-	}
-
-	/**
-	 * Allows user to perform tasks at a given workstation on a given central system
-	 * @param assemAssist the given central system
-	 * @param workStation the workstation the user wants to perform tasks on
-	 * @throws CancelException when the user types "CANCEL"
-	 */
-	private void performTaskAtWorkStation(AssemAssist assemAssist, WorkStation workStation) throws CancelException {
-		List<Task> taskList = workStation.getUncompletedTasks();
-		//returns selected task by user
-		Task task = this.selectTask(taskList);
-		//return list of all the tasks
-		if (task != null) {
-			//Show the information for given task 2 user
-			this.showInfo(assemAssist, task);
-			this.completeTask(assemAssist, task);
-			this.performTaskAtWorkStation(assemAssist, workStation);
-		}
-		else {
-			CarMechanicUI.noTasks();
-		}
-	}
-
-	/**
-	 * Helper function to complete a task in assemAssist
-	 * @param assemAssist given the main program
-	 * @param task task from the tasklist
-	 * @throws CancelException when "CANCEL" is the input
-	 */
-	private void completeTask(AssemAssist assemAssist, Task task) throws CancelException {
-		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
-		if (task == null) throw new IllegalArgumentException("task is null");
-		int time = CarMechanicUI.askTimeToCompleteTask();
-		assemAssist.completeTask(task, time);
-	}
-
-	/**
-	 * Shows info of given task
-	 * 	this consists of instruction of each part + value concerning current task.
-	 * @param assemAssist given the main program
-	 * @param task task from the tasklist
-	 * @throws CancelException when "CANCEL" is the input
-	 */
-	private void showInfo(AssemAssist assemAssist, Task task) throws CancelException {
-		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
-		if (task == null) throw new IllegalArgumentException("task is null");
-		List<String> info = assemAssist.getTaskDescription(task);
-		CarMechanicUI.displayTaskInfo(info);
-	}
-
-	/**
-	 * Selects a task from available task list.
-	 * @param taskList List of all available tasks
-	 * @return return a task selected from the available tasks
-	 * @throws CancelException when "CANCEL" is the input
-	 */
-	private Task selectTask(List<Task> taskList) throws CancelException {
-		if (taskList == null || taskList.isEmpty()) return null;
-		CarMechanicUI.displayAvailableTasks(taskList);
-		int option = CarMechanicUI.askOption("Select task: ", taskList.size());
-		return taskList.get(option);
-	}
-
-	/**
-	 * Select a station for the car mechanic to work at.
-	 * @param assemAssist given the main program
-	 * @return return a station selected from the available stations
-	 * @throws CancelException when "CANCEL" is the input
-	 */
-	private WorkStation selectStation(AssemAssist assemAssist) throws CancelException {
-		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
-		List<WorkStation> workStations = assemAssist.getStations();
-		//asks user for workstation
-		CarMechanicUI.displayAvailableStations(workStations);
-		int option = CarMechanicUI.askOption("Select station: ", workStations.size());	
-		return workStations.get(option);
+	public boolean isUncompletedTaskAtStation(String stationName, String taskName) {
+		if (stationName == null)
+			throw new IllegalArgumentException("null string provided");
+		if (taskName == null)
+			throw new IllegalArgumentException("null string provided");
+		return this.getUncompletedTasks(stationName).stream().map(Task::getName).toList().contains(taskName);
 	}
 }

@@ -8,16 +8,11 @@ import swop.Car.CarModel.ModelA;
 import swop.Car.CarModel.ModelB;
 import swop.Car.CarModel.ModelC;
 import swop.Main.AssemAssist;
-import swop.UI.LoginUI;
 import swop.UI.Builders.DisplayStatus;
 import swop.UI.Generators.GarageHolderGenerator;
-import swop.Users.CarMechanic;
 import swop.Users.GarageHolder;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
@@ -38,7 +33,7 @@ public class OrderNewCarTest {
     @Test
     void NewGarageHolderTest() {
         this.assem = new AssemAssist();
-        this.garageHolder = new GarageHolder("user1");
+        this.garageHolder = new GarageHolder("user1", this.assem);
 
         // New user has no orders placed
         assert garageHolder.getOrders().size() == 0;
@@ -167,7 +162,7 @@ public class OrderNewCarTest {
     		if(i == 2) op += "Please give valid input:" +  "Choose " + option.getKey() + ": ";
     		i++;
     	}
-    	op += "CANCELED";
+    	op += "CANCELLED";
     	assertEquals(op, output.next());
 	}
     
@@ -191,12 +186,12 @@ public class OrderNewCarTest {
     		if(i<5) op += "Choose " + option.getKey() + ": ";
     		i++;
     	}
-    	op += "CANCELED";
+    	op += "CANCELLED";
     	assertEquals(op, output.next());
     }
     
     private void cancel(ListIterator<String> output) {
-        assertEquals("CANCELED", output.next());
+        assertEquals("CANCELLED", output.next());
     }
     
 
@@ -228,40 +223,24 @@ public class OrderNewCarTest {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    private void skip(ListIterator<String> output, int skips) {
-		for(int i =0; i < skips; i++)
-			output.next();
-		
-	}
-
     private void storeOrder(int i) {
         assert garageHolder.getOrders().size() == i;
     }
 
-    private ListIterator<String> continueUITest(String inputString, int skips) {
-    	 this.input = new ByteArrayInputStream(inputString.getBytes());
-         System.setIn(input);
-         LoginUI.scanner.updateScanner();
-
-         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-         System.setOut(new PrintStream(outContent));
-         assem.run();
-
-         ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
-                 .listIterator();
-
-         for(int i =0; i < skips; i++)
-         	output.next();
-         
-         return output;
+    private ListIterator<String> continueUITest(String inputString, int skips) { 
+        return handleInputOutput.continueUITest(inputString, skips);
     }
 
     private ListIterator<String> setupUITest(String inputString, int skips) {
-        this.assem = new AssemAssist();
-        this.garageHolder = (GarageHolder) this.assem.getUserMap().get("a");
-        return continueUITest(inputString, skips);
+       	ListIterator<String> output = handleInputOutput.setupUITest(inputString, skips);
+    	this.assem = handleInputOutput.getAssem();  
+    	this.garageHolder = (GarageHolder) handleInputOutput.getUser("a");
+    	return output;
     }
-
+    
+    void skip(ListIterator<String> output, int skips) {
+    	handleInputOutput.skip(output, skips);	
+	}
 
 }
 

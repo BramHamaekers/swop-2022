@@ -1,5 +1,7 @@
 package swop.Main;
 
+import swop.UI.LoginUI;
+
 /**
  * Main class to run the project
  */
@@ -10,6 +12,6 @@ public class Main {
      */
     public static void main(String[] args) {
         AssemAssist assemAssist = new AssemAssist();
-        assemAssist.run();
+        new LoginUI(assemAssist);
     }
 }

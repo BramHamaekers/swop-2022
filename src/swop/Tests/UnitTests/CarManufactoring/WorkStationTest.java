@@ -6,11 +6,10 @@ import swop.Car.CarModel.CarModel;
 import swop.Car.CarModel.ModelA;
 import swop.Car.CarModelSpecification;
 import swop.CarManufactoring.Task;
+import swop.CarManufactoring.Tasks.*;
 import swop.CarManufactoring.WorkStation;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.util.Map.entry;
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,7 +35,7 @@ class WorkStationTest {
     @Test
     void getUncompletedTasks_NoCar() {
         WorkStation station = new WorkStation("Car Body Post");
-        assertNull(station.getUncompletedTasks());
+        assertTrue(station.getUncompletedTasks().isEmpty());
     }
 
     @Test
@@ -45,13 +44,15 @@ class WorkStationTest {
         Car car = new Car(modelA);
         WorkStation station = new WorkStation("Car Body Post");
         station.setCar(car);
-        assertEquals(List.of(Task.AssemblyCarBody, Task.PaintCar), station.getUncompletedTasks());
+        AssemblyCarBody assemblyCarBody = (AssemblyCarBody) findTask(car, AssemblyCarBody.class);
+        PaintCar paintCar = (PaintCar) findTask(car, PaintCar.class);
+        assertEquals(Set.of(assemblyCarBody, paintCar), new HashSet<>(station.getUncompletedTasks()));
     }
 
     @Test
     void getCompletedTasks_NoCar() {
         WorkStation station = new WorkStation("Car Body Post");
-        assertNull(station.getCompletedTasks());
+        assertTrue(station.getCompletedTasks().isEmpty());
     }
 
     @Test
@@ -69,8 +70,10 @@ class WorkStationTest {
         Car car = new Car(modelA);
         WorkStation station = new WorkStation("Car Body Post");
         station.setCar(car);
-        car.completeTask(Task.AssemblyCarBody);
-        assertEquals(List.of(Task.AssemblyCarBody), station.getCompletedTasks());
+        AssemblyCarBody assemblyCarBody = (AssemblyCarBody) findTask(car, AssemblyCarBody.class);
+        assemblyCarBody.complete();
+        assertTrue(assemblyCarBody.isComplete());
+        assertEquals(List.of(assemblyCarBody), station.getCompletedTasks());
     }
 
     @Test
@@ -85,6 +88,18 @@ class WorkStationTest {
 
     }
 
+    @Test
+    void isPartOfCurrentCarInWorkStation_NullPart() {
+        modelA.setCarModelSpecification(specification);
+        Car car = new Car(modelA);
+        WorkStation station = new WorkStation("Car Body Post");
+        station.setCar(car);
+
+        assertTrue(station.isPartOfCurrentCarInWorkStation("Body"));
+        assertThrows(IllegalArgumentException.class, () -> station.isPartOfCurrentCarInWorkStation(null));
+
+    }
+
 
 
     @Test
@@ -93,9 +108,9 @@ class WorkStationTest {
         WorkStation station2 = new WorkStation("Drivetrain Post");
         WorkStation station3 = new WorkStation("Accessories Post");
 
-        assertEquals(List.of(Task.AssemblyCarBody, Task.PaintCar),station1.getTasks());
-        assertEquals(List.of(Task.InsertEngine, Task.InstallGearbox),station2.getTasks());
-        assertEquals(List.of(Task.InstallSeats, Task.InstallAirco, Task.MountWheels, Task.InstallSpoiler),station3.getTasks());
+        assertEquals(List.of(AssemblyCarBody.class, PaintCar.class),station1.getTasks());
+        assertEquals(List.of(InsertEngine.class, InstallGearbox.class),station2.getTasks());
+        assertEquals(List.of(InstallSeats.class, InstallAirco.class, MountWheels.class, InstallSpoiler.class),station3.getTasks());
     }
 
     @Test
@@ -132,7 +147,8 @@ class WorkStationTest {
         station.setCar(car);
 
         assertEquals(0, station.getCurrentWorkingTime());
-        station.completeTask(Task.PaintCar, 20);
+        PaintCar paintCar = (PaintCar) findTask(car, PaintCar.class);
+        station.completeTask(paintCar, 20);
         assertEquals(20, station.getCurrentWorkingTime());
 
     }
@@ -144,10 +160,13 @@ class WorkStationTest {
         WorkStation station = new WorkStation("Car Body Post");
         station.setCar(car);
 
+        PaintCar paintCar = (PaintCar) findTask(car, PaintCar.class);
         assertFalse(station.stationTasksCompleted());
-        station.completeTask(Task.PaintCar, 20);
+        station.completeTask(paintCar, 20);
+
+        AssemblyCarBody assemblyCarBody = (AssemblyCarBody) findTask(car, AssemblyCarBody.class);
         assertFalse(station.stationTasksCompleted());
-        station.completeTask(Task.AssemblyCarBody, 20);
+        station.completeTask(assemblyCarBody, 20);
         assertTrue(station.stationTasksCompleted());
     }
 
@@ -156,5 +175,15 @@ class WorkStationTest {
         WorkStation station = new WorkStation("Car Body Post");
         assertTrue(station.stationTasksCompleted());
 
+    }
+
+    Task findTask(Car car, Class<? extends Task> taskClass) {
+        Set<Task> tasks = car.getTasks();
+        for (Task task : tasks) {
+            if (taskClass.isInstance(task)) {
+                return task;
+            }
+        }
+        return null;
     }
 }

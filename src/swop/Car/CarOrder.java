@@ -8,8 +8,17 @@ import swop.Miscellaneous.TimeStamp;
  * A car order made by a garage holder for a specific {@code Car}
  */
 public class CarOrder implements Comparable<CarOrder> {
+	/**
+	 * The car of this CarOrder
+	 */
 	private final Car car;
+	/**
+	 * The ID associated with this CarOrder
+	 */
 	private final String ID;
+	/**
+	 * The time of placing this CarOrder
+	 */
 	private TimeStamp orderTime;
 
 	/**
@@ -17,8 +26,10 @@ public class CarOrder implements Comparable<CarOrder> {
 	 * @param carModel the given carModel
 	 */
 	public CarOrder(CarModel carModel) {
+		if (carModel == null)
+			throw new IllegalArgumentException("no valid carmodel was specified");
 		this.car = new Car(carModel);
-		this.ID = RandomID.random(7);
+		this.ID = RandomID.generateRandomID(7);
 	}
 
 	/**
@@ -61,9 +72,12 @@ public class CarOrder implements Comparable<CarOrder> {
 
 	@Override
 	public int compareTo(CarOrder carOrder) {
-		if (!carOrder.isCompleted()) {
+		if (carOrder == null)
+			throw new IllegalArgumentException("Can't compare to null");
+
+		if (!carOrder.isCompleted())
 			return this.getEstimatedCompletionTime().compareTo(carOrder.getEstimatedCompletionTime());
-		}
+
 		return this.getCompletionTime().compareTo(carOrder.getCompletionTime());
 	}
 
@@ -72,6 +86,8 @@ public class CarOrder implements Comparable<CarOrder> {
 	 * @param time the time of ordering
 	 */
 	public void setOrderTime(TimeStamp time) {
+		if (time == null)
+			throw new IllegalArgumentException("Timestamp is not valid");
 		this.orderTime = time;
 	}
 
@@ -98,6 +114,5 @@ public class CarOrder implements Comparable<CarOrder> {
 				this.getCar().getCarModel().getCarModelSpecification().getAllParts(),
 				this.getOrderTime(),
 				this.getCompletionTime());
-
 	}
 }

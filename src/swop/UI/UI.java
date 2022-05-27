@@ -10,7 +10,10 @@ import swop.UI.Generators.UserGenerator;
 /**
  * Interface used to make abstraction between the program and the user IO
  */
-interface UI {
+public interface UI {
+	/**
+	 * The scanner used for scanning input by a user
+	 */
 	InputScanner scanner = new InputScanner(new Scanner(System.in));
 
 	/**
@@ -20,6 +23,7 @@ interface UI {
 	 * @throws CancelException when the user types "Cancel"
 	 */
 	static String indicateYesNo(String action) throws CancelException {
+		if (action == null) throw new IllegalArgumentException("null string provided");
 		System.out.println();
 		System.out.printf("%s %n[y] Yes [n] No%n", action);
 		return scanner.scanNextLineOfTypeString(new String[]{"y","n"});
@@ -30,6 +34,7 @@ interface UI {
 	 * @param e the error message to print
 	 */
 	static void printError(String e) {
+		if (e == null) throw new IllegalArgumentException("null string provided");
 		System.out.println(e);
 	}
 
@@ -38,6 +43,7 @@ interface UI {
 	 * @param e the error message to print
 	 */
 	static void printErrorln(String e) {
+		if (e == null) throw new IllegalArgumentException("null string provided");
 		System.out.println(e);
 	}
 
@@ -50,6 +56,8 @@ interface UI {
 	 * @throws CancelException when the user types 'Cancel'
 	 */
 	static int selectAction(UserGenerator generator, List<String> actions, String question) throws CancelException {
+		if (actions == null) throw new IllegalArgumentException("list of actions is null");
+		if (question == null) throw new IllegalArgumentException("null string provided");
 		DisplayStatus builder = new DisplayStatus();
 		generator.selectAction(builder, actions, question);
 		System.out.println(builder.getDisplay());

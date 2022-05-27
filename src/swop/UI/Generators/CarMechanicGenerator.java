@@ -1,7 +1,6 @@
 package swop.UI.Generators;
 
 import swop.CarManufactoring.Task;
-import swop.CarManufactoring.WorkStation;
 import swop.UI.Builders.FormBuilder;
 
 import java.util.List;
@@ -15,16 +14,15 @@ public class CarMechanicGenerator extends UserGenerator {
     /**
      * Given a list of workstations display this list
      * @param builder the builder used in displaying the workStations
-     * @param workStations the workstations to display
+     * @param workstationNames the names of the workstations to display
      */
-    public void generateStationList(FormBuilder builder, List<WorkStation> workStations) {
+    public void generateStationList(FormBuilder builder, List<String> workstationNames) {
         builder.appendTitle("Current Stations");
-        ListIterator<WorkStation> w = workStations.listIterator();
+        ListIterator<String> w = workstationNames.listIterator();
         while (w.hasNext()) {
-            builder.inputInfo(String.format("%s [%s]", w.next().getName(), (w.nextIndex() - 1)));
+            builder.inputInfo(String.format("%s [%s]", w.next(), (w.nextIndex() - 1)));
         }
         builder.endInfo();
-      //builder.addOption("Select station", workStations.size()); // breaks the use case tests
     }
 
     /**
@@ -50,7 +48,7 @@ public class CarMechanicGenerator extends UserGenerator {
     public void generateAvailableTasks(FormBuilder builder, List<Task> taskList){
         builder.appendTitle("Available tasks");
         ListIterator<Task> it = taskList.listIterator();
-        // cant be empty check CarMechanic.selectTask
+        // can't be empty check CarMechanic.selectTask
         while (it.hasNext()){
             builder.inputInfo(String.format("%s [%d] ",it.next().getName(), (it.nextIndex()-1)));
         }
@@ -62,13 +60,10 @@ public class CarMechanicGenerator extends UserGenerator {
      * @param builder the builder used in displaying the info
      * @param info the info to display
      */
-    public void generateTaskInfo(FormBuilder builder, List<String> info){
+    public void generateTaskInfo(FormBuilder builder, String info){
         builder.appendSubTitle("Info For Task");
-        for (String s : info) {
-            builder.inputInfo(s);
-        }
+        builder.inputInfo(info);
         builder.appendSubTitle("-------------");
-        //TODO: kind of janky need to rewrite
-        builder.inputInfo(String.format("Finished -> Press Enter"));
+        builder.inputInfo("Finished -> Press Enter");
     }
 }

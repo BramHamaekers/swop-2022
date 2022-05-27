@@ -1,79 +1,113 @@
 package swop.Car;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import swop.Car.CarModel.CarModel;
-import swop.CarManufactoring.Task;
+import swop.CarManufactoring.Tasks.*;
 import swop.Miscellaneous.TimeStamp;
+import swop.CarManufactoring.Task;
 
 /**
  * A car representation in assem assist, consisting of tasks and deliver times
  */
 public class Car {
-	private Set<Task> uncompletedTasks;
-	private Set<Task> allTasks;
+	/**
+	 * The tasks associated with this car
+	 */
+	private Set<Task> tasks;
+	/**
+	 * The carModel associated with this car
+	 */
     private CarModel carModel;
+	/**
+	 * The initial estimated completionTime of this car
+	 */
 	private TimeStamp initialCompletionTime;
+	/**
+	 * The actual estimated completionTime of this car
+	 */
 	private TimeStamp estimatedCompletionTime;
+	/**
+	 * The actual TimeStamp that the car was finished at
+	 */
 	private TimeStamp deliveryTime;
 
 	/**
 	 * initializes a car with a {@code CarModel}
-	 * @param model a selected carmodel
+	 * @param model a selected carModel
 	 */
 	public Car(CarModel model){
+		if (model == null)
+			throw new IllegalArgumentException("model is null");
         this.setCarModel(model);
-		this.initiateUncompletedTasks();
+		this.initiateTasks();
     }
 
 	/**
-	 * Complete a remaining task for assembly
-	 * @param task given a completed task
-	 * @throws IllegalArgumentException when task is null
-	 * */
-	public void completeTask(Task task) {
-		if (task == null)
-			throw new IllegalArgumentException("task is null");
-		if (!uncompletedTasks.contains(task))
-			throw new IllegalArgumentException("task not in todo list");
-		for(Task t: uncompletedTasks) {
-			if (Objects.equals(task.getName(), t.getName())) {
-				this.uncompletedTasks.remove(t);
-				break;
-			}
-		}
+	 * Checks if all tasks are completed
+	 * @return true if all tasks in this.task are completed
+	 */
+	public boolean isCompleted() {
+		return this.tasks.stream().allMatch(Task::isComplete);
 	}
 
 	/**
-	 * Checks if all tasks are completed
-	 * @return true if Set of uncompletedTasks is empty
+	 * Return a set of all Tasks of this car that are completed
+	 * @return Set of all completed tasks in this.tasks
 	 */
-	public boolean isCompleted() {
-		return this.getUncompletedTasks().isEmpty();
+	public Set<Task> getCompletedTasks() {
+		return this.tasks.stream().filter(Task::isComplete).collect(Collectors.toSet());
 	}
 
 	/**
 	 * Return a set of all Tasks of this car that still need to be completed
-	 * @return copy of this.uncompletedTasks
+	 * @return Set of all uncompleted tasks in this.tasks
 	 */
 	public Set<Task> getUncompletedTasks() {
-		return Set.copyOf(uncompletedTasks);
+		return this.tasks.stream().filter(t -> !t.isComplete()).collect(Collectors.toSet());
 	}
 
 	/**
-	 * Sets all tasks that need to be done
+	 * Sets all tasks that need to be done for a specific car model
 	 */
-	private void initiateUncompletedTasks() {
-		this.uncompletedTasks = Task.getAllTasks(this.getCarModel().getCarModelSpecification().getAllParts());
-		this.allTasks = this.getUncompletedTasks();
+	private void initiateTasks() {
+		Map<String, String> parts = this.getCarModel().getCarModelSpecification().getAllParts();
+		if(parts == null) throw new IllegalArgumentException("getAllParts returns null");
+		this.tasks = new HashSet<>();
+		parts.forEach((key, value) -> this.tasks.add(createTask(key, value)));
 	}
 
 	/**
-	 * Returns this.allTasks
+	 * Makes a new task for a specified part and the selected option for that part
+	 * @param part the category for the part e.g. "Body"
+	 * @param option the selected option for the part by the garageholder
+	 * @return a new task
+	 */
+	private Task createTask(String part, String option) {
+		if (part == null)
+			throw new IllegalArgumentException("Null string provided");
+		if (option == null)
+			throw new IllegalArgumentException("Null string provided");
+		return switch (part) {
+			case "Body" -> new AssemblyCarBody(option);
+			case "Color" -> new PaintCar(option);
+			case "Engine" -> new InsertEngine(option);
+			case "Gearbox" -> new InstallGearbox(option);
+			case "Seats" -> new InstallSeats(option);
+			case "Airco" -> new InstallAirco(option);
+			case "Wheels" -> new MountWheels(option);
+			case "Spoiler" -> new InstallSpoiler(option);
+			default -> throw new IllegalArgumentException("part is not valid");
+		};
+	}
+
+	/**
+	 * Returns this.tasks
 	 * @return all tasks from the car
 	 */
-	public Set<Task> getAllTasks(){
-		return this.allTasks;
+	public Set<Task> getTasks(){
+		return this.tasks;
 	}
 	
 	/**
@@ -85,7 +119,7 @@ public class Car {
 	}
 
 	/**
-	 * get name of carModel
+	 * get name of the carModel
 	 * @return this.carModel.getName()
 	 */
 	public String getCarModelName() {
@@ -93,9 +127,8 @@ public class Car {
 	}
 
 	/**
-	 * Set this.carModel to the given carModel
-	 * @param carModel the given carModel
-	 * @throws IllegalArgumentException when car is null
+	 * Specify the carModel for this car
+	 * @param carModel the specified carModel
 	 */
 	private void setCarModel(CarModel carModel) {
 		if (carModel == null)
@@ -104,23 +137,27 @@ public class Car {
 	}
 
 	/**
-	 * Returns the value of given carOptionCategory based on the model of this car.
+	 * Returns the selected part for a category in the carmodelspecification
 	 * @param category the given carOptionCategory
 	 * @return value carOptionCategory
 	 */
-	public String getValueOfPart(String category) {
-		return this.getCarModel().getCarModelSpecification().getValueOfPart(category);
+	public String getSelectionForPart(String category) {
+		if (category == null)
+			throw new IllegalArgumentException("Null string provided");
+		return this.carModel.getCarModelSpecification().getSelectionForPart(category);
 	}
 
 	/**
-	 * @return returns a map of all the categories with their selected specification
+	 * Get a map of all the categories with their selected specification
+	 * @return a map of all the categories with their selected specification
 	 */
 	public Map<String, String> getPartsMap() {
-		return this.getCarModel().getCarModelSpecification().getAllParts();
+		return this.carModel.getCarModelSpecification().getAllParts();
 	}
 
 	/**
-	 * @return this.initialCompletionTime
+	 * Get the initial completion time calculated when the car was first ordered
+	 * @return  the initial completion time for this car
 	 */
 	public TimeStamp getInitialCompletionTime() {
 		return this.initialCompletionTime;
@@ -132,6 +169,8 @@ public class Car {
 	 * @param timeStamp the timeStamp to update the estimatedCompletionTime with
 	 */
 	public void setEstimatedCompletionTime(TimeStamp timeStamp) {
+		if (timeStamp == null)
+			throw new IllegalArgumentException("not a valid timestamp specified");
 		if (this.initialCompletionTime == null) this.initialCompletionTime = timeStamp;
 		this.estimatedCompletionTime = timeStamp;
 	}
@@ -146,7 +185,7 @@ public class Car {
 
 	/**
 	 * get the time that this car was finished at
-	 * @return this.deliveryTime
+	 * @return the delivery time of a finished car, null if it was not finished
 	 */
 	public TimeStamp getCompletionTime() {
 		return this.deliveryTime;
@@ -157,6 +196,8 @@ public class Car {
 	 * @param timeStamp the given timestamp
 	 */
 	public void setDeliveryTime(TimeStamp timeStamp) {
+		if (timeStamp == null)
+			throw new IllegalArgumentException("not a valid timestamp specified");
 		this.deliveryTime = timeStamp;
 	}
 }

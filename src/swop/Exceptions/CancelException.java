@@ -8,6 +8,6 @@ public class CancelException extends Exception{
 	 * The default message after a CancelException has occurred
 	 */
 	public void printMessage() {
-		System.out.println("CANCELED");
+		System.out.println("CANCELLED");
 	}
 }

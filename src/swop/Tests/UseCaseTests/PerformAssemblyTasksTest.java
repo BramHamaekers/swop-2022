@@ -3,18 +3,14 @@ package swop.Tests.UseCaseTests;
 import org.junit.jupiter.api.Test;
 import swop.Car.CarOrder;
 import swop.CarManufactoring.Task;
+import swop.CarManufactoring.WorkStation;
 import swop.Main.AssemAssist;
-import swop.UI.LoginUI;
 import swop.UI.Builders.DisplayStatus;
 import swop.UI.Generators.CarMechanicGenerator;
 import swop.Users.CarMechanic;
 import swop.Users.GarageHolder;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.io.PrintStream;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
@@ -34,7 +30,7 @@ public class PerformAssemblyTasksTest {
 
         setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
         
-        List<Task> tasks = this.assem.getStations().get(0).getUncompletedTasks();
+        List<Task> tasks = this.assem.getController().getAssembly().getWorkStations().get(0).getUncompletedTasks();
         
         assert tasks.size() == 2; // no tasks are finished on workstation
 
@@ -50,11 +46,11 @@ public class PerformAssemblyTasksTest {
         
         indicateTimePassed(output);
         
-        tasks = this.assem.getStations().get(0).getUncompletedTasks();
+        tasks = this.assem.getController().getAssembly().getWorkStations().get(0).getUncompletedTasks();
 
         presentAvailableTasks(output, tasks); // shows 1 task can be finished
         
-        tasks = this.assem.getStations().get(0).getUncompletedTasks();
+        tasks = this.assem.getController().getAssembly().getWorkStations().get(0).getUncompletedTasks();
         
         assert tasks.size() == 1; // 1 task is finished on workstation
     }
@@ -63,7 +59,7 @@ public class PerformAssemblyTasksTest {
     void completeAllTasksOfStationTest() {
 		setupUITest(String.format("a%n0%n0%n1%n1%n1%n1%n1%n1%n1%nQUIT"), 1);// place order
 		
-        List<Task> tasks = this.assem.getStations().get(0).getUncompletedTasks();
+        List<Task> tasks = this.assem.getController().getAssembly().getWorkStations().get(0).getUncompletedTasks();
         
         assert tasks.size() == 2; // no tasks are finished on workstation
 
@@ -71,7 +67,7 @@ public class PerformAssemblyTasksTest {
 		
 		presentAvailableTasks(output, tasks);
 
-		tasks = this.assem.getStations().get(0).getUncompletedTasks();
+		tasks = this.assem.getController().getAssembly().getWorkStations().get(0).getUncompletedTasks();
 		
 		assert tasks.size() == 1; // 1 task is finished on workstation
 		
@@ -79,9 +75,9 @@ public class PerformAssemblyTasksTest {
 		
 		presentAvailableTasks(output, tasks);
 		
-		tasks = this.assem.getStations().get(0).getUncompletedTasks();
+		tasks = this.assem.getController().getAssembly().getWorkStations().get(0).getUncompletedTasks();
 		
-		assert tasks == null; //maybe return empty list?
+		assertTrue(tasks.isEmpty());
 		
 		skip(output, 6);
 		
@@ -109,7 +105,7 @@ public class PerformAssemblyTasksTest {
 		skip(output, 4);
 		invalidOptionMessage(output); //invalid 2
 		
-		List<Task> tasks = this.assem.getStations().get(0).getUncompletedTasks();
+		List<Task> tasks = this.assem.getController().getAssembly().getWorkStations().get(0).getUncompletedTasks();
 		
 		assert tasks.size() == 1; // 1 task is finished on workstation
 	}
@@ -162,22 +158,14 @@ public class PerformAssemblyTasksTest {
 
     private void showTaskInfo(ListIterator<String> output, Task t) {
 		DisplayStatus builder = new DisplayStatus();
-		carMechanicGenerator.generateTaskInfo(builder, t.getTaskDescription());
+		carMechanicGenerator.generateTaskInfo(builder, t.getDescription());
 		for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
 
     }
-    
-    private void askWorkPostCanceled(ListIterator<String> output) {
-    	DisplayStatus builder = new DisplayStatus();
-		carMechanicGenerator.generateStationList(builder, assem.getStations());
-		for (String s : (builder.getDisplay() + "CANCELED").split(String.format("%n")))
-			assertEquals(s, output.next());
-		
-	}
 
     private void askWorkPost(ListIterator<String> output) {
     	DisplayStatus builder = new DisplayStatus();
-		carMechanicGenerator.generateStationList(builder, assem.getStations());
+		carMechanicGenerator.generateStationList(builder, assem.getController().getAssembly().getWorkStations().stream().map(WorkStation::getName).toList());
 		for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
     }
     
@@ -185,49 +173,19 @@ public class PerformAssemblyTasksTest {
     
     ////////////////////////////////////////////////////////////////////////////////////////////////
     
-    private void skip(ListIterator<String> output, int skips) {
-		for(int i =0; i < skips; i++)
-			output.next();
-		
-	}
-
-    private ListIterator<String> continueUITest(String inputString, int skips) {
-    	 this.input = new ByteArrayInputStream(inputString.getBytes());
-         System.setIn(input);
-         LoginUI.scanner.updateScanner();
-
-         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-         System.setOut(new PrintStream(outContent));
-         assem.run();
-
-         ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
-                 .listIterator();
-
-         for(int i =0; i < skips; i++)
-         	output.next();
-         
-         return output;
+    private ListIterator<String> continueUITest(String inputString, int skips) { 
+        return handleInputOutput.continueUITest(inputString, skips);
     }
 
     private ListIterator<String> setupUITest(String inputString, int skips) {
-        this.assem = new AssemAssist();
-        this.carMechanic = (CarMechanic) this.assem.getUserMap().get("b"); 
-
-        this.input = new ByteArrayInputStream(inputString.getBytes());
-        System.setIn(input);
-        LoginUI.scanner.updateScanner();
-
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-        assem.run();
-
-        ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
-                .listIterator();
-
-        for(int i =0; i < skips; i++)
-        	output.next();
-
-        return output;
+       	ListIterator<String> output = handleInputOutput.setupUITest(inputString, skips);
+    	this.assem = handleInputOutput.getAssem(); 
+    	this.carMechanic = (CarMechanic) handleInputOutput.getUser("b");
+    	return output;
     }
+    
+    void skip(ListIterator<String> output, int skips) {
+    	handleInputOutput.skip(output, skips);	
+	}
 
 }

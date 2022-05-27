@@ -4,23 +4,42 @@ import swop.Car.CarModelSpecification;
 import java.util.*;
 
 /**
- * The super class for all carmodels
+ * The super class for all car models
  */
 public abstract class CarModel {
+    /**
+     * The carModelSpecifiaction of this CarModel
+     */
     private CarModelSpecification carModelSpecification = null;
+
+    /**
+     * The name of this CarModel
+     */
     protected String name;
+
+    /**
+     * A Map that maps all valid options of this CarModel to every part
+     */
     protected Map<String, List<String>> validOptions;
+
+    /**
+     * A list of all parts that are mandatory for this CarModel
+     */
     protected List<String> mandatoryParts;
-    public static final SortedSet<String> types = new TreeSet<>(List.of("ModelA", "ModelB", "ModelC"));
+
+    /**
+     * A list of all possible types of CarModels
+     */
+    public static final List<String> types = List.of("ModelA", "ModelB", "ModelC");
 
     /**
      * set a selection specification for this carModel if it is valid
      * @param selected a selected {@code CarModelSpecification}
      */
     public void setCarModelSpecification(CarModelSpecification selected){
-        if (!this.isValidSpecification(selected)){
+        if (!this.isValidSpecification(selected))
             throw new IllegalArgumentException("invalid car specification for this model");
-        }
+
         this.carModelSpecification = selected;
     }
 
@@ -34,7 +53,7 @@ public abstract class CarModel {
 
     /**
      * Get all valid carOptionCategories and their options as sorted Map
-     * @return Map of the valid options for a certain carmodel
+     * @return Map of the valid options for a certain car model
      */
     public SortedMap<String, List<String>> getValidOptions(){
         return new TreeMap<>(this.validOptions);
@@ -46,15 +65,24 @@ public abstract class CarModel {
      * @return true if all parts are valid
      */
     private boolean isValidSpecification(CarModelSpecification specification){
-        for(Map.Entry<String,String> selectedMap: specification.getAllParts().entrySet()){
-            String option = selectedMap.getKey();
-            String selected = selectedMap.getValue();
-            if (!validOptions.containsKey(option))
-                return false;
-            if (!validOptions.get(option).contains(selected))
-                return false;
+        if (specification == null){
+            return false;
+        }
+        for(Map.Entry<String,String> selectedMap: specification.getAllParts().entrySet()){	
+            if (!this.IsValidOption(selectedMap.getKey(), selectedMap.getValue())) return false;
         }
         return this.satisfiesConstraints(specification);
+    }
+
+    /**
+     * Checks if a given option/value combination is valid
+     * @param option that needs to be checked
+     * @param value that needs to be checked
+     * @return false if !validOptions.contains(option/value) else true
+     */
+	private boolean IsValidOption(String option, String value) {
+        return (option != null) && (value != null) && 
+        		validOptions.containsKey(option) && validOptions.get(option).contains(value);
     }
 
     /**
@@ -63,6 +91,8 @@ public abstract class CarModel {
      * @return True if the specification satisfies all constraints
      */
     private boolean satisfiesConstraints(CarModelSpecification specification){
+        if (specification == null)
+            throw new IllegalArgumentException("Provided CarModelSpecification is null");
         for(String part : this.mandatoryParts){
             if (!specification.getAllParts().containsKey(part))
                 return false;

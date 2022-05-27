@@ -1,5 +1,6 @@
 package swop.UI.Generators;
 
+import swop.Car.CarModel.CarModel;
 import swop.Car.CarOrder;
 import swop.UI.Builders.FormBuilder;
 
@@ -15,7 +16,7 @@ public class GarageHolderGenerator extends UserGenerator {
      * @param builder the builder used in displaying the carModels
      * @param carModels the carModels to display
      */
-    public void generateCarModels(FormBuilder builder, Set<String> carModels) {
+    public void generateCarModels(FormBuilder builder, List<String> carModels) {
         builder.appendTitle("Car Models");
         Iterator<String> it = carModels.iterator();
         int i = 0;
@@ -48,7 +49,6 @@ public class GarageHolderGenerator extends UserGenerator {
      * @return a string containing the output text
      */
     public String optionListToString(List<String> options) {
-        //TODO: wrong builder method
         StringBuilder builder = new StringBuilder();
         ListIterator<String> it = options.listIterator();
         while (it.hasNext()) {
@@ -91,11 +91,11 @@ public class GarageHolderGenerator extends UserGenerator {
     /**
      * generate an estimated time for this order
      * @param builder the builder used in displaying the estimated time
-     * @param order a carorder
+     * @param estimatedCompletionTime the estimated completion time for an order
      */
-    public void generateEstimatedTime(FormBuilder builder, CarOrder order){
+    public void generateEstimatedTime(FormBuilder builder, String estimatedCompletionTime){
         builder.appendTitle("Estimated Completion Time");
-        builder.inputInfo(order.getEstimatedCompletionTime().toString());
+        builder.inputInfo(estimatedCompletionTime);
         builder.endInfo();
     }
 }

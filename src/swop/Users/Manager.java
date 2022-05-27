@@ -4,9 +4,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import swop.Car.Car;
-import swop.Exceptions.CancelException;
 import swop.Main.AssemAssist;
-import swop.UI.ManagerUI;
+import swop.Records.AllStats;
 
 /**
  * A manager user
@@ -15,91 +14,67 @@ public class Manager extends User{
 	/**
 	 * initializes a manager user
 	 * @param id a given id for the manager
+	 * @param assemAssist the given assemassist used to communicate with the assemblyline and the controller etc.
 	 */
-    public Manager(String id) {
-        super(id); 
+    public Manager(String id, AssemAssist assemAssist) {
+        super(id, assemAssist);
     }
 
-    /**
-     * Called when logging in as Manager
-	 * @param assemAssist assemAssist given the main program
-     */
-	@Override
-	public void load(AssemAssist assemAssist) {
-		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
-
-		try {
-			ManagerUI.init(this.getId());
-			this.selectAction(assemAssist);
-		} catch (CancelException e) {
-			e.printMessage();
-		}
-		}
-
 	/**
-	 * Function that handles selecting an action for Manager
-	 * @param assemAssist the central system the action is performed on
+	 * Method lets the manager select a new schedulingAlgorithm
+	 * @param algorithm the selected algorithm
+	 * @param batchOptions the batchOptions you want to use in the case of choosing the 'batch' algorithm
 	 */
-	@Override
-	public void selectAction(AssemAssist assemAssist) throws CancelException {
-		if (assemAssist == null) throw new IllegalArgumentException("assemAssist is null");
-		List<String> actions = Arrays.asList("Check Production Statistics", "Adapt Scheduling Algorithm", "Exit");
-		int action = ManagerUI.selectFlow(actions, "What would you like to do?");
-
-		switch (action) {
-			case 0 -> this.checkProductionStatistics(assemAssist);
-			case 1 -> this.AdaptSchedulingAlgorithm(assemAssist);
-			case 2 -> {
-				// Do Nothing
-			}
-			default -> throw new IllegalArgumentException("Unexpected value: " + action);
-		}
+	public void setSchedulingAlgorithm(String algorithm, Map<String, String> batchOptions){
+		if (!isValidSchedulingAlgorithm(algorithm))
+			throw new IllegalArgumentException("Provided algorithm " + algorithm + " is not a valid algorithm");
+		if (algorithm.equals("BATCH") && batchOptions == null)
+			throw new IllegalArgumentException("batch options provided are null");
+		this.assemAssist.getController().getScheduler().setSchedulingAlgorithm(algorithm, batchOptions);
 	}
 
 	/**
-	 * Ask the user which algorithm it would like to use and change the scheduling algorithm
-	 * @param assemAssist the central system the action is performed on
-	 * @throws CancelException when the user types 'cancel'
+	 * Get the scheduling algorithm that is currently active from the scheduler
+	 * @return the active scheduling algorithm
 	 */
-	private void AdaptSchedulingAlgorithm(AssemAssist assemAssist) throws CancelException {
-
-		List<String> algorithms = assemAssist.getController().getScheduler().getValidAlgorithms();
-		String active = assemAssist.getController().getScheduler().getSchedulingAlgorithm();
-		int option = ManagerUI.selectAction(algorithms, active);
-
-		switch (option) {
-			case 0 -> this.changeAlgorithmToBatch(assemAssist);
-			case 1 -> assemAssist.getController().getScheduler().setSchedulingAlgorithm("FIFO", null);
-			case 2 -> {}
-			default -> throw new IllegalArgumentException("Unexpected value: " + option);
-		}
-
+	public String getActiveAlgorithm() {
+		if (this.assemAssist == null) throw new IllegalStateException("no assemAssist instantiated");
+		return this.assemAssist.getController().getScheduler().getSchedulingAlgorithm();
 	}
 
 	/**
-	 * Change the scheduling algorithm to batch
-	 * @param assemAssist the central system to change the algorithm on
-	 * @throws CancelException when the user types "cancel"
+	 * Get a list of all valid scheduling algorithms of the scheduler
+	 * @return list of valid scheduling algorithms
 	 */
-	private void changeAlgorithmToBatch(AssemAssist assemAssist) throws CancelException {
-		// get all parts from carQueue
-		List<Map<String, String>> partMaps =  assemAssist.getController().getCarQueue().stream().map(Car::getPartsMap).toList();
-		List<Map<String, String>> possibleBatch = getBatchOptions(partMaps);
-		if (!possibleBatch.isEmpty()) {
-			Map<String, String> selection = ManagerUI.getBatchSelection(possibleBatch);
-			assemAssist.getController().getScheduler().setSchedulingAlgorithm("BATCH", selection);
-		}
-		else {
-			ManagerUI.printError("No batchoptions available -> Algoritm will stay FIFO");
-		}
+	public List<String> getValidAlgorithms(){
+		if (this.assemAssist == null) throw new IllegalStateException("no assemAssist instantiated");
+		return this.assemAssist.getController().getScheduler().getValidAlgorithms();
+	}
+
+	/**
+	 * Check if the given algorithm is a valid algorithm
+	 * @param algorithm the given algorithm
+	 * @return True if the given algorithm is valid
+	 */
+	private boolean isValidSchedulingAlgorithm(String algorithm) {
+		return algorithm != null && this.getValidAlgorithms().contains(algorithm);
+	}
+
+	/**
+	 * gets a list of partMaps from all the cars in the car queue
+	 * @return a list of partMaps
+	 */
+	public List<Map<String, String>> getPartMapsOfCarQueue() {
+		if (this.assemAssist == null) throw new IllegalStateException("no assemAssist instantiated");
+		return this.assemAssist.getController().getCarQueue().stream().map(Car::getPartsMap).toList();
 	}
 
 	/**
 	 * Returns the possible batch options given a list of part maps
-	 * @param partMaps map of parts
 	 * @return List of batch options
 	 */
-	public List<Map<String, String>> getBatchOptions(List<Map<String, String>> partMaps) {
+	public List<Map<String, String>> getBatchOptions() {
+		List<Map<String, String>> partMaps = this.getPartMapsOfCarQueue();
 		List<Map<String, String>> possibleBatch = new ArrayList<>();
 
 		// map all selections on top of optionCategory
@@ -121,12 +96,13 @@ public class Manager extends User{
 	}
 
 	/**
-	 * check the production statistics on a given assemAssist
-	 * @param assemAssist the given central system
-	 * @throws CancelException when the user types "CANCEL"
+	 * Get the stats of the production so far from the assemAssist
+	 * @return a record of mean, average cars produced in a day and info on delays in the production
 	 */
-	private void checkProductionStatistics(AssemAssist assemAssist) throws CancelException {
-		ManagerUI.showProductionStatistics(assemAssist.getStats());
+	public AllStats getStats(){
+		if (this.assemAssist == null) throw new IllegalStateException("no assemAssist instantiated");
+		return this.assemAssist.getStats();
 	}
+
 
 }

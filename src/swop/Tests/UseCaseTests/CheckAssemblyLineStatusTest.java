@@ -2,11 +2,7 @@ package swop.Tests.UseCaseTests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.io.PrintStream;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -14,14 +10,12 @@ import org.junit.jupiter.api.Test;
 
 import swop.CarManufactoring.WorkStation;
 import swop.Main.AssemAssist;
-import swop.UI.LoginUI;
 import swop.UI.Builders.DisplayStatus;
 import swop.UI.Generators.CarMechanicGenerator;
-import swop.Users.CarMechanic;
 
 public class CheckAssemblyLineStatusTest {
     AssemAssist assem;
-    CarMechanic carMechanic;
+    //CarMechanic carMechanic;
     InputStream input;
     private static final CarMechanicGenerator carMechanicGenerator = new CarMechanicGenerator(); 
     
@@ -69,10 +63,10 @@ public class CheckAssemblyLineStatusTest {
 
 
     private void emptyWorkStation(ListIterator<String> output, int i, boolean b) {
-    	WorkStation w = this.assem.getStations().get(i);
+    	WorkStation w = this.assem.getController().getAssembly().getWorkStations().get(i);
     	if(b) {
-     		assert w.getCompletedTasks() == null;
-     		assert w.getUncompletedTasks() == null;
+			assertTrue(w.getCompletedTasks().isEmpty());
+			assertTrue(w.getUncompletedTasks().isEmpty());
     	}
     	else {
     		assert w.getCompletedTasks() != null || w.getUncompletedTasks() != null || !w.getUncompletedTasks().isEmpty() || !w.getCompletedTasks().isEmpty();
@@ -81,11 +75,11 @@ public class CheckAssemblyLineStatusTest {
 
 	private void presentAssemblyLineAllEmptyStatus(ListIterator<String> output) {
 		DisplayStatus builder = new DisplayStatus();
-		List<WorkStation> workstations = this.assem.getStations();
+		List<WorkStation> workstations = this.assem.getController().getAssembly().getWorkStations();
 		for(WorkStation w:  workstations) {
 			carMechanicGenerator.generateWorkStationStatus(builder, w.getName(), w.getUncompletedTasks(), w.getCompletedTasks());
-			assert w.getCompletedTasks() == null;
-			assert w.getUncompletedTasks() == null;
+			assertTrue(w.getCompletedTasks().isEmpty());
+			assertTrue(w.getUncompletedTasks().isEmpty());
 		}
 		for (String s : builder.getDisplay().split(String.format("%n"))) assertEquals(s, output.next());
 
@@ -93,7 +87,7 @@ public class CheckAssemblyLineStatusTest {
 
     private void pendingInWorkstationStatus(ListIterator<String> output, int station, boolean b) {
     	DisplayStatus builder = new DisplayStatus();
-    	List<WorkStation> workstations = this.assem.getStations();
+    	List<WorkStation> workstations = this.assem.getController().getAssembly().getWorkStations();
     	int i = 0;
     	for(WorkStation w:  workstations) {
     		carMechanicGenerator.generateWorkStationStatus(builder, w.getName(), w.getUncompletedTasks(), w.getCompletedTasks());
@@ -113,7 +107,7 @@ public class CheckAssemblyLineStatusTest {
 
     private void completedInWorkstationStatus(ListIterator<String> output, int station, boolean b) {
     	DisplayStatus builder = new DisplayStatus();
-    	List<WorkStation> workstations = this.assem.getStations();
+    	List<WorkStation> workstations = this.assem.getController().getAssembly().getWorkStations();
     	int i = 0;
     	for(WorkStation w:  workstations) {
     		carMechanicGenerator.generateWorkStationStatus(builder, w.getName(), w.getUncompletedTasks(), w.getCompletedTasks());
@@ -134,32 +128,24 @@ public class CheckAssemblyLineStatusTest {
     
 ///////////////////////////////////////////////////////
 
-	private void skip(ListIterator<String> output, int skips) {
-		for(int i =0; i < skips; i++)
-			output.next();
-		
-	}
 
-    private ListIterator<String> continueUITest(String inputString, int skips) {
-    	 this.input = new ByteArrayInputStream(inputString.getBytes());
-         System.setIn(input);
-         LoginUI.scanner.updateScanner();
 
-         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-         System.setOut(new PrintStream(outContent));
-         assem.run();
-
-         ListIterator<String> output = Arrays.asList(outContent.toString().split(String.format("%n")))
-                 .listIterator();
-
-         skip(output,skips);
-         
-         return output;
+    private ListIterator<String> continueUITest(String inputString, int skips) { 
+        return handleInputOutput.continueUITest(inputString, skips);
     }
 
     private ListIterator<String> setupUITest(String inputString, int skips) {
-        this.assem = new AssemAssist();
-        this.carMechanic = (CarMechanic) this.assem.getUserMap().get("b");
-        return continueUITest(inputString, skips);
+       	ListIterator<String> output = handleInputOutput.setupUITest(inputString, skips);
+    	this.assem = handleInputOutput.getAssem();  
+    	return output;
     }
+    
+    void skip(ListIterator<String> output, int skips) {
+    	handleInputOutput.skip(output, skips);	
+	}
 }
+
+
+
+
+
