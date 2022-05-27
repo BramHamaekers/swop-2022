@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.0.0">
-  <zoom_level>4</zoom_level>
+  <zoom_level>8</zoom_level>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>664</x>
-      <y>140</y>
-      <w>40</w>
-      <h>12</h>
+      <x>960</x>
+      <y>0</y>
+      <w>80</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>:Manager</panel_attributes>
     <additional_attributes/>
@@ -15,21 +15,21 @@
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>864</x>
-      <y>140</y>
-      <w>40</w>
-      <h>12</h>
+      <x>1360</x>
+      <y>0</y>
+      <w>80</w>
+      <h>24</h>
     </coordinates>
-    <panel_attributes>:UI</panel_attributes>
+    <panel_attributes>:ManagerUI</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>680</x>
-      <y>148</y>
-      <w>12</w>
-      <h>44</h>
+      <x>992</x>
+      <y>16</y>
+      <w>24</w>
+      <h>88</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
@@ -37,10 +37,10 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>880</x>
-      <y>148</y>
-      <w>12</w>
-      <h>28</h>
+      <x>1392</x>
+      <y>16</y>
+      <w>24</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
@@ -48,10 +48,10 @@
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>680</x>
-      <y>184</y>
-      <w>8</w>
-      <h>76</h>
+      <x>992</x>
+      <y>88</y>
+      <w>16</w>
+      <h>160</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -59,10 +59,10 @@
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>880</x>
-      <y>168</y>
-      <w>8</w>
-      <h>344</h>
+      <x>1392</x>
+      <y>56</y>
+      <w>16</w>
+      <h>688</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -70,10 +70,10 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>684</x>
-      <y>180</y>
-      <w>204</w>
-      <h>16</h>
+      <x>1000</x>
+      <y>80</y>
+      <w>408</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 List&lt;String&gt; manager.getValidAlgorithms()</panel_attributes>
@@ -82,10 +82,10 @@ List&lt;String&gt; manager.getValidAlgorithms()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>684</x>
-      <y>196</y>
-      <w>204</w>
-      <h>16</h>
+      <x>1000</x>
+      <y>112</y>
+      <w>408</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=.&gt;
 return algorithms</panel_attributes>
@@ -94,10 +94,10 @@ return algorithms</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>524</x>
-      <y>140</y>
-      <w>40</w>
-      <h>12</h>
+      <x>640</x>
+      <y>0</y>
+      <w>80</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>:Scheduler</panel_attributes>
     <additional_attributes/>
@@ -105,10 +105,10 @@ return algorithms</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>540</x>
-      <y>148</y>
-      <w>12</w>
-      <h>48</h>
+      <x>672</x>
+      <y>16</y>
+      <w>24</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
@@ -116,10 +116,10 @@ return algorithms</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>540</x>
-      <y>388</y>
-      <w>8</w>
-      <h>112</h>
+      <x>672</x>
+      <y>496</y>
+      <w>16</w>
+      <h>224</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -127,70 +127,70 @@ return algorithms</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>544</x>
-      <y>184</y>
-      <w>144</w>
-      <h>16</h>
+      <x>680</x>
+      <y>88</y>
+      <w>328</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 List&lt;String&gt; getValidAlgorithms()</panel_attributes>
-    <additional_attributes>10.0;20.0;340.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;390.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>544</x>
-      <y>192</y>
-      <w>144</w>
-      <h>16</h>
+      <x>680</x>
+      <y>104</y>
+      <w>328</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 return algorithms</panel_attributes>
-    <additional_attributes>340.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>390.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>544</x>
-      <y>208</y>
-      <w>144</w>
-      <h>16</h>
+      <x>680</x>
+      <y>136</y>
+      <w>328</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 String getSchedulingAlgorithm()</panel_attributes>
-    <additional_attributes>10.0;20.0;340.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;390.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>544</x>
-      <y>216</y>
-      <w>144</w>
-      <h>16</h>
+      <x>680</x>
+      <y>152</y>
+      <w>328</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 return algoritm</panel_attributes>
-    <additional_attributes>340.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>390.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>684</x>
-      <y>380</y>
-      <w>204</w>
-      <h>16</h>
+      <x>1000</x>
+      <y>480</y>
+      <w>408</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-3. void manager.setSchedulingAlgorithm()</panel_attributes>
+3. void manager.setSchedulingAlgorithm(String, Map&lt;String, String&gt;)</panel_attributes>
     <additional_attributes>10.0;20.0;490.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>680</x>
-      <y>256</y>
-      <w>8</w>
-      <h>8</h>
+      <x>992</x>
+      <y>240</y>
+      <w>16</w>
+      <h>16</h>
     </coordinates>
     <panel_attributes>type=termination</panel_attributes>
     <additional_attributes/>
@@ -198,10 +198,10 @@ return algoritm</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>684</x>
-      <y>248</y>
-      <w>204</w>
-      <h>16</h>
+      <x>1000</x>
+      <y>224</y>
+      <w>408</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 2a. CancelException</panel_attributes>
@@ -210,21 +210,21 @@ return algoritm</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>680</x>
-      <y>256</y>
-      <w>12</w>
-      <h>32</h>
+      <x>992</x>
+      <y>248</y>
+      <w>24</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;40.0</additional_attributes>
   </element>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>632</x>
-      <y>248</y>
-      <w>264</w>
-      <h>20</h>
+      <x>896</x>
+      <y>224</y>
+      <w>528</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>Alternate Flow</panel_attributes>
     <additional_attributes/>
@@ -232,10 +232,10 @@ return algoritm</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>680</x>
+      <x>992</x>
       <y>280</y>
-      <w>8</w>
-      <h>228</h>
+      <w>16</w>
+      <h>456</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -243,22 +243,22 @@ return algoritm</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>544</x>
-      <y>384</y>
-      <w>144</w>
-      <h>16</h>
+      <x>680</x>
+      <y>488</y>
+      <w>328</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-4. void setSchedulingAlgorithm()</panel_attributes>
-    <additional_attributes>10.0;20.0;340.0;20.0</additional_attributes>
+4. void setSchedulingAlgorithm(String, Map&lt;String, String&gt;)</panel_attributes>
+    <additional_attributes>10.0;20.0;390.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>368</x>
-      <y>140</y>
-      <w>96</w>
-      <h>12</h>
+      <x>328</x>
+      <y>0</y>
+      <w>192</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>:CarManuFactoringController</panel_attributes>
     <additional_attributes/>
@@ -266,10 +266,10 @@ return algoritm</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>412</x>
-      <y>148</y>
-      <w>12</w>
-      <h>256</h>
+      <x>416</x>
+      <y>16</y>
+      <w>24</w>
+      <h>512</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;620.0</additional_attributes>
@@ -277,10 +277,10 @@ return algoritm</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>412</x>
-      <y>396</y>
-      <w>8</w>
-      <h>96</h>
+      <x>416</x>
+      <y>512</y>
+      <w>16</w>
+      <h>192</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -288,10 +288,10 @@ return algoritm</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>416</x>
-      <y>392</y>
-      <w>132</w>
-      <h>16</h>
+      <x>424</x>
+      <y>504</y>
+      <w>264</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 void updateEstimatedCompletionTime()</panel_attributes>
@@ -300,10 +300,10 @@ void updateEstimatedCompletionTime()</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>272</x>
-      <y>140</y>
-      <w>40</w>
-      <h>12</h>
+      <x>128</x>
+      <y>0</y>
+      <w>80</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>:Car</panel_attributes>
     <additional_attributes/>
@@ -311,20 +311,20 @@ void updateEstimatedCompletionTime()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>288</x>
-      <y>148</y>
-      <w>12</w>
-      <h>176</h>
+      <x>160</x>
+      <y>16</y>
+      <w>24</w>
+      <h>368</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;420.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;440.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>288</x>
-      <y>400</y>
-      <w>8</w>
+      <x>160</x>
+      <y>536</y>
+      <w>16</w>
       <h>32</h>
     </coordinates>
     <panel_attributes/>
@@ -333,22 +333,22 @@ void updateEstimatedCompletionTime()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>292</x>
-      <y>404</y>
-      <w>128</w>
-      <h>16</h>
+      <x>168</x>
+      <y>528</y>
+      <w>264</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-void setEstimatedCompletionTime()</panel_attributes>
-    <additional_attributes>10.0;20.0;300.0;20.0</additional_attributes>
+void setEstimatedCompletionTime(TimeStamp)</panel_attributes>
+    <additional_attributes>10.0;20.0;310.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>212</x>
-      <y>140</y>
-      <w>40</w>
-      <h>12</h>
+      <x>8</x>
+      <y>0</y>
+      <w>80</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>:WorkStation</panel_attributes>
     <additional_attributes/>
@@ -356,20 +356,66 @@ void setEstimatedCompletionTime()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>228</x>
-      <y>148</y>
-      <w>12</w>
-      <h>292</h>
+      <x>40</x>
+      <y>16</y>
+      <w>24</w>
+      <h>600</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;710.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;730.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>228</x>
-      <y>432</y>
-      <w>8</w>
+      <x>40</x>
+      <y>600</y>
+      <w>16</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>48</x>
+      <y>600</y>
+      <w>384</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+Car getCar()</panel_attributes>
+    <additional_attributes>10.0;20.0;460.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>48</x>
+      <y>616</y>
+      <w>384</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+return car</panel_attributes>
+    <additional_attributes>460.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>160</x>
+      <y>560</y>
+      <w>24</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>160</x>
+      <y>648</y>
+      <w>16</w>
       <h>32</h>
     </coordinates>
     <panel_attributes/>
@@ -378,68 +424,22 @@ void setEstimatedCompletionTime()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>232</x>
-      <y>440</y>
-      <w>188</w>
-      <h>16</h>
+      <x>168</x>
+      <y>640</y>
+      <w>264</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-Car getCar()</panel_attributes>
-    <additional_attributes>10.0;20.0;450.0;20.0</additional_attributes>
+void setEstimatedCompletionTime(TimeStamp)</panel_attributes>
+    <additional_attributes>10.0;20.0;310.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>232</x>
-      <y>448</y>
-      <w>188</w>
-      <h>16</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;.
-return car</panel_attributes>
-    <additional_attributes>450.0;20.0;10.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>288</x>
-      <y>428</y>
-      <w>12</w>
-      <h>44</h>
-    </coordinates>
-    <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLGeneric</id>
-    <coordinates>
-      <x>288</x>
-      <y>464</y>
-      <w>8</w>
-      <h>24</h>
-    </coordinates>
-    <panel_attributes/>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>292</x>
-      <y>464</y>
-      <w>128</w>
-      <h>16</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-
-void setEstimatedCompletionTime()</panel_attributes>
-    <additional_attributes>10.0;20.0;300.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>416</x>
-      <y>476</y>
-      <w>132</w>
-      <h>16</h>
+      <x>424</x>
+      <y>680</y>
+      <w>264</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 return</panel_attributes>
@@ -448,22 +448,22 @@ return</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>544</x>
-      <y>484</y>
-      <w>144</w>
-      <h>16</h>
+      <x>680</x>
+      <y>688</y>
+      <w>328</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 return</panel_attributes>
-    <additional_attributes>340.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>390.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>684</x>
-      <y>296</y>
-      <w>204</w>
-      <h>16</h>
+      <x>1000</x>
+      <y>312</y>
+      <w>408</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 List&lt;Map&lt;String, String&gt;&gt; manager.getBatchOptions()</panel_attributes>
@@ -472,34 +472,34 @@ List&lt;Map&lt;String, String&gt;&gt; manager.getBatchOptions()</panel_attribute
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>292</x>
-      <y>324</y>
-      <w>396</w>
-      <h>16</h>
+      <x>168</x>
+      <y>368</y>
+      <w>840</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 Map&lt;String, String&gt; getPartsMap()</panel_attributes>
-    <additional_attributes>10.0;20.0;970.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;1030.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>292</x>
-      <y>332</y>
-      <w>396</w>
-      <h>16</h>
+      <x>168</x>
+      <y>384</y>
+      <w>840</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 return partMap</panel_attributes>
-    <additional_attributes>970.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>1030.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>288</x>
-      <y>316</y>
-      <w>8</w>
-      <h>36</h>
+      <x>160</x>
+      <y>368</y>
+      <w>16</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -507,10 +507,10 @@ return partMap</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>268</x>
-      <y>404</y>
-      <w>156</w>
-      <h>24</h>
+      <x>120</x>
+      <y>528</y>
+      <w>320</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>loop</panel_attributes>
     <additional_attributes/>
@@ -518,10 +518,10 @@ return partMap</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>244</x>
-      <y>284</y>
-      <w>776</w>
-      <h>92</h>
+      <x>112</x>
+      <y>288</y>
+      <w>1688</w>
+      <h>184</h>
     </coordinates>
     <panel_attributes>Alternate Flow</panel_attributes>
     <additional_attributes/>
@@ -529,24 +529,24 @@ return partMap</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>884</x>
-      <y>168</y>
-      <w>104</w>
-      <h>24</h>
+      <x>1400</x>
+      <y>56</y>
+      <w>232</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 1. int selectAction()
- -&gt; AdaptSchedulingAlgorithm()
+ -&gt; void AdaptSchedulingAlgorithm()
 </panel_attributes>
     <additional_attributes>10.0;40.0;50.0;40.0;50.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>684</x>
-      <y>204</y>
-      <w>204</w>
-      <h>16</h>
+      <x>1000</x>
+      <y>128</y>
+      <w>408</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
  manager.getActiveAlgorithm()</panel_attributes>
@@ -555,23 +555,23 @@ return partMap</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>884</x>
-      <y>228</y>
-      <w>120</w>
-      <h>24</h>
+      <x>1400</x>
+      <y>176</y>
+      <w>400</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 2. int selectAction()
- -&gt; manager.setSchedulingAlgorithm()</panel_attributes>
+ -&gt; void manager.setSchedulingAlgorithm(String, Map&lt;String, String&gt;)</panel_attributes>
     <additional_attributes>10.0;40.0;50.0;40.0;50.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>684</x>
-      <y>220</y>
-      <w>204</w>
-      <h>16</h>
+      <x>1000</x>
+      <y>160</y>
+      <w>408</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 return algoritm</panel_attributes>
@@ -580,10 +580,10 @@ return algoritm</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>204</x>
-      <y>436</y>
-      <w>220</w>
-      <h>48</h>
+      <x>0</x>
+      <y>592</y>
+      <w>440</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>loop</panel_attributes>
     <additional_attributes/>
@@ -591,34 +591,34 @@ return algoritm</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>292</x>
-      <y>472</y>
-      <w>128</w>
-      <h>16</h>
+      <x>168</x>
+      <y>656</y>
+      <w>264</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 return</panel_attributes>
-    <additional_attributes>300.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>310.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>292</x>
-      <y>412</y>
-      <w>128</w>
-      <h>16</h>
+      <x>168</x>
+      <y>544</y>
+      <w>264</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 return</panel_attributes>
-    <additional_attributes>300.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>310.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>684</x>
-      <y>488</y>
-      <w>204</w>
-      <h>16</h>
+      <x>1000</x>
+      <y>696</y>
+      <w>408</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 return</panel_attributes>
@@ -627,23 +627,23 @@ return</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>884</x>
-      <y>284</y>
-      <w>104</w>
-      <h>24</h>
+      <x>1400</x>
+      <y>288</y>
+      <w>232</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 3a. int selectAction()
- -&gt; changeAlgorithmToBatch()</panel_attributes>
+ -&gt; void changeAlgorithmToBatch()</panel_attributes>
     <additional_attributes>10.0;40.0;50.0;40.0;50.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>684</x>
-      <y>304</y>
-      <w>156</w>
-      <h>56</h>
+      <x>1000</x>
+      <y>328</y>
+      <w>312</w>
+      <h>112</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 List&lt;Map&lt;String, String&gt;&gt; getPartMapsOfCarQueue()</panel_attributes>
@@ -652,10 +652,10 @@ List&lt;Map&lt;String, String&gt;&gt; getPartMapsOfCarQueue()</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>248</x>
-      <y>320</y>
-      <w>444</w>
-      <h>28</h>
+      <x>120</x>
+      <y>360</y>
+      <w>896</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>loop</panel_attributes>
     <additional_attributes/>
@@ -663,10 +663,10 @@ List&lt;Map&lt;String, String&gt;&gt; getPartMapsOfCarQueue()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>684</x>
-      <y>348</y>
-      <w>208</w>
-      <h>16</h>
+      <x>1000</x>
+      <y>416</y>
+      <w>416</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 return possibleBatch</panel_attributes>
@@ -675,22 +675,22 @@ return possibleBatch</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>884</x>
-      <y>356</y>
-      <w>140</w>
-      <h>24</h>
+      <x>1400</x>
+      <y>432</y>
+      <w>400</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
- 4,5. Map&lt;String,String&gt; getBatchSelection()</panel_attributes>
+ 4,5. Map&lt;String,String&gt; getBatchSelection(List&lt;Map&lt;String, String&gt;&gt;)</panel_attributes>
     <additional_attributes>10.0;40.0;50.0;40.0;50.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>540</x>
-      <y>188</y>
-      <w>8</w>
-      <h>44</h>
+      <x>672</x>
+      <y>96</y>
+      <w>16</w>
+      <h>88</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -698,10 +698,10 @@ return possibleBatch</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>540</x>
-      <y>228</y>
-      <w>12</w>
-      <h>168</h>
+      <x>672</x>
+      <y>176</y>
+      <w>24</w>
+      <h>336</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;400.0</additional_attributes>
@@ -709,12 +709,12 @@ return possibleBatch</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>288</x>
-      <y>348</y>
-      <w>12</w>
-      <h>60</h>
+      <x>160</x>
+      <y>400</y>
+      <w>24</w>
+      <h>152</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;130.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;170.0</additional_attributes>
   </element>
 </diagram>
