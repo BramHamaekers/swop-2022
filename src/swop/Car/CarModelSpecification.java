@@ -9,7 +9,10 @@ import java.util.stream.Collectors;
  * A selection for each category for a carModel
  */
 public class CarModelSpecification {
-	
+
+	/**
+	 * The options chosen for this carModelSpecification
+	 */
 	Map<String, String> chosenOptions;
 
 	/**

@@ -15,11 +15,19 @@ import static swop.UI.UI.scanner;
  * A cli class used to implement garage holder's UI
  */
 public class GarageHolderUI {
-
+    /**
+     * The generator used in displaying information to the user
+     */
     private static final GarageHolderGenerator garageHolderGenerator = new GarageHolderGenerator();
 
+    /**
+     * A list of all actions a GarageHolder can perform
+     */
     private static final List<String> actions = Arrays.asList("Place new order", "Check order details", "Exit");
 
+    /**
+     * A GarageHolder associated with this CarMechanicUI
+     */
     private GarageHolder garageHolder;
 
     /**

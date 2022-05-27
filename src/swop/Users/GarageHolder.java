@@ -13,6 +13,9 @@ import java.util.*;
  * A garage holder user
  */
 public class GarageHolder extends User{
+    /**
+     * All the orders this GarageHolder has placed
+     */
     private final Set<CarOrder> carOrders;
 
     /**

@@ -7,7 +7,15 @@ import java.util.Map;
  * A carModel subclass
  */
 public class ModelB extends CarModel {
+
+    /**
+     * A list of mandatory Parts of a model B Car
+     */
     private static final List<String> modelBMandatory = List.of("Body","Color", "Engine", "Gearbox", "Seats", "Wheels");
+
+    /**
+     * A Map that maps all valid options of a carModel B to every part
+     */
     private static final Map<String, List<String>> modelBOptions = Map.of(
             "Body", List.of("sedan", "break", "sport"),
             "Color", List.of("red", "blue", "green", "yellow"),

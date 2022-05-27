@@ -9,9 +9,21 @@ import swop.Listeners.TaskCompletedListener;
  * This class represents a workstation
  */
 public class WorkStation {
+	/**
+	 * The name of this workstation
+	 */
 	private final String name;
+	/**
+	 * The car currently located at this workstation. Equals null if there is no car currently at this station
+	 */
 	private Car car;
+	/**
+	 * The amount of time that was worked on the current car so far at this workstation
+	 */
 	private int currentWorkingTime = 0;
+	/**
+	 * Listeners from the CarManufacturingController to listen if a task was completed at this workstation
+	 */
 	private final List<TaskCompletedListener> listeners = new ArrayList<>();
 
 	/**

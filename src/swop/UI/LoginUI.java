@@ -14,10 +14,19 @@ import static swop.UI.UI.scanner;
  */
 public class LoginUI {
 
+    /**
+     * The UI used when the user logs in as a GarageHolder
+     */
     private final GarageHolderUI garageHolderUI;
 
+    /**
+     * The UI used when the user logs in as a CarMechanic
+     */
     private final CarMechanicUI carMechanicUI;
 
+    /**
+     * The UI used when the user logs in as a Manager
+     */
     private final ManagerUI managerUI;
 
     /**

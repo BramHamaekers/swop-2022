@@ -10,6 +10,9 @@ import java.util.*;
  */
 public class AssemblyLine {
 
+	/**
+	 * The workstations that make up this AssemblyLine
+	 */
 	private final LinkedList<WorkStation> workStations;
 
 	/**

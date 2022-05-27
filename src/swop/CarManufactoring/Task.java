@@ -4,9 +4,21 @@ package swop.CarManufactoring;
  * The superclass Task implements common methods for the specific tasks
  */
 public abstract class Task implements Cloneable {
+    /**
+     * The name of this task
+     */
     protected String name;
+    /**
+     * The description for this task
+     */
     protected String description;
+    /**
+     * The option that was chosen for the part associated with this task
+     */
     protected String chosenOption;
+    /**
+     * A boolean indicating if this task was completed or not
+     */
     protected boolean isComplete = false;
 
     /**

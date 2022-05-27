@@ -15,8 +15,17 @@ import java.util.*;
  */
 public class AssemAssist {
 
+	/**
+	 * The CarManufacturingController associated with this AssemAssist
+	 */
 	private final CarManufacturingController controller;
+	/**
+	 * The statistics associated with this AssemAssist
+	 */
 	private final Statistics statistics;
+	/**
+	 * A database of users known to this AssemAssist
+	 */
 	final Map <String, User> userDatabase = new HashMap<>();
 
 	/**

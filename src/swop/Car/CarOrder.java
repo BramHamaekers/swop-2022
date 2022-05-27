@@ -8,8 +8,17 @@ import swop.Miscellaneous.TimeStamp;
  * A car order made by a garage holder for a specific {@code Car}
  */
 public class CarOrder implements Comparable<CarOrder> {
+	/**
+	 * The car of this CarOrder
+	 */
 	private final Car car;
+	/**
+	 * The ID associated with this CarOrder
+	 */
 	private final String ID;
+	/**
+	 * The time of placing this CarOrder
+	 */
 	private TimeStamp orderTime;
 
 	/**

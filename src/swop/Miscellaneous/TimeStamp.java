@@ -7,7 +7,13 @@ import java.util.Objects;
  */
 public class TimeStamp implements Comparable<TimeStamp> {
 
+    /**
+     * The day associated with this TimeStamp
+     */
     private final int day;
+    /**
+     * The minutes associated with this TimeStamp
+     */
     private final int minutes;
 
     /**

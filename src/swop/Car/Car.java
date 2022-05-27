@@ -12,10 +12,25 @@ import swop.CarManufactoring.Task;
  * A car representation in assem assist, consisting of tasks and deliver times
  */
 public class Car {
+	/**
+	 * The tasks associated with this car
+	 */
 	private Set<Task> tasks;
+	/**
+	 * The carModel associated with this car
+	 */
     private CarModel carModel;
+	/**
+	 * The initial estimated completionTime of this car
+	 */
 	private TimeStamp initialCompletionTime;
+	/**
+	 * The actual estimated completionTime of this car
+	 */
 	private TimeStamp estimatedCompletionTime;
+	/**
+	 * The actual TimeStamp that the car was finished at
+	 */
 	private TimeStamp deliveryTime;
 
 	/**

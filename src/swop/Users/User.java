@@ -6,7 +6,13 @@ import swop.Main.AssemAssist;
  * This is an abstract class: garage holder, manager and car mechanic are subclasses of user
  */
 public abstract class User {
+    /**
+     * The ID of this user, used for logging in.
+     */
     private final String id;
+    /**
+     * The assemAssist this user interacts with
+     */
     protected final AssemAssist assemAssist;
 
     /**

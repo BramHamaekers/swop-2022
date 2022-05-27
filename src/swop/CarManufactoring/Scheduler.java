@@ -29,18 +29,45 @@ interface QueueIterator<T> {
  */
 public class Scheduler {
 
+	/**
+	 * The CarManufacturingController that this Scheduler provides the scheduling for
+	 */
     private final CarManufacturingController controller;
+	/**
+	 * The amount of minutes that have past this day
+	 */
     private int minutes;
+	/**
+	 * The current day the program is at
+	 */
     private int day;
+	/**
+	 * The amount of minutes that CarMechanics will maximally work this day.
+	 */
     private int workingDayMinutes;
+	/**
+	 * The amount of overtime that occurred so fat this day
+	 */
     private int overTime;
+	/**
+	 * Maps the amount of time it takes to complete all tasks at a workstation for every type of CarModel
+	 */
     private final Map<Class<? extends CarModel>, Integer> timePerWorkstationMap = new HashMap<>(){{
 		put(ModelA.class, 50);
 		put(ModelB.class, 70);
 		put(ModelC.class, 60);
 	}};
+	/**
+	 * A list of valid scheduling algorithms
+	 */
 	private final List<String> validAlgorithms = List.of("BATCH", "FIFO");
+	/**
+	 * The currently active scheduling algorithm
+	 */
 	private String algorithm;
+	/**
+	 * The batchOptions that are currently used if the scheduling algorithm is "BATCH"
+	 */
 	private Map<String,String> batchOptions;
 
 	/**

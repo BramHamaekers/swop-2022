@@ -15,10 +15,18 @@ import static swop.UI.UI.scanner;
  * A cli class used to implement car mechanic's UI
  */
 public class CarMechanicUI {
+    /**
+     * The generator used in displaying information to the user
+     */
     private final static CarMechanicGenerator cmGenerator = new CarMechanicGenerator();
-
+    /**
+     * A list of all actions a CarMechanic can perform
+     */
     private final static List<String> actions = Arrays.asList("performAssemblyTask", "checkAssemblyLineStatus", "Exit");
 
+    /**
+     * A CarMechanic associated with this CarMechanicUI
+     */
     private CarMechanic carmechanic;
 
     /**

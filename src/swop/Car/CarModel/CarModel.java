@@ -7,10 +7,29 @@ import java.util.*;
  * The super class for all car models
  */
 public abstract class CarModel {
+    /**
+     * The carModelSpecifiaction of this CarModel
+     */
     private CarModelSpecification carModelSpecification = null;
+
+    /**
+     * The name of this CarModel
+     */
     protected String name;
+
+    /**
+     * A Map that maps all valid options of this CarModel to every part
+     */
     protected Map<String, List<String>> validOptions;
+
+    /**
+     * A list of all parts that are mandatory for this CarModel
+     */
     protected List<String> mandatoryParts;
+
+    /**
+     * A list of all possible types of CarModels
+     */
     public static final List<String> types = List.of("ModelA", "ModelB", "ModelC");
 
     /**
