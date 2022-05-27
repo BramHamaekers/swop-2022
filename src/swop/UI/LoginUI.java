@@ -57,6 +57,8 @@ public class LoginUI {
 
     /**
      * Handles logging in to the system
+     * @param assem the given assemassist used to get the relevant {@code User} for a given UI, e.g. {@code GarageHolder} for {@code GarageHolderUI}
+     * @return Returns the active {@code User} for a given an id in the assemassist
      */
     private User login(AssemAssist assem) {
         init();

@@ -45,6 +45,7 @@ public class CarMechanicUI {
 
     /**
      * Function that handles selecting an action for CarMechanic
+     * @throws CancelException when a user wants to cancel his operation by typing "cancel"
      */
     private void selectAction() throws CancelException {
         int action = UI.selectAction(cmGenerator, actions, "What would you like to do?");

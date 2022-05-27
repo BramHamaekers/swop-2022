@@ -14,6 +14,7 @@ public class Manager extends User{
 	/**
 	 * initializes a manager user
 	 * @param id a given id for the manager
+	 * @param assemAssist the given assemassist used to communicate with the assemblyline and the controller etc.
 	 */
     public Manager(String id, AssemAssist assemAssist) {
         super(id, assemAssist);
