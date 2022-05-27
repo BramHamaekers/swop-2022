@@ -11,6 +11,9 @@ import java.util.List;
 
 import static swop.UI.UI.scanner;
 
+/**
+ * A cli class used to implement car mechanic's UI
+ */
 public class CarMechanicUI {
     private final static CarMechanicGenerator cmGenerator = new CarMechanicGenerator();
 
@@ -18,10 +21,19 @@ public class CarMechanicUI {
 
     private CarMechanic carmechanic;
 
+    /**
+     * Set this.carmechanic to the give CarMechanic
+     * @param carmechanic the given CarMechanic
+     */
     public void setCarMechanic(CarMechanic carmechanic){
         this.carmechanic = carmechanic;
     }
 
+    /**
+     * Start the main loop that interacts with the CarMechanic
+     * @param carmechanic the carMechanic user to interact with the AssemAssist
+     * @throws CancelException when a user wants to cancel his operation by typing "cancel"
+     */
     public void run(CarMechanic carmechanic) throws CancelException {
         if (carmechanic == null)
             throw new IllegalArgumentException("carmechanic is null");

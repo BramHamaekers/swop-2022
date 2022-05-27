@@ -9,6 +9,9 @@ import swop.Users.User;
 
 import static swop.UI.UI.scanner;
 
+/**
+ * A cli class used to implement the UI for logging in
+ */
 public class LoginUI {
 
     private final GarageHolderUI garageHolderUI;
@@ -17,6 +20,10 @@ public class LoginUI {
 
     private final ManagerUI managerUI;
 
+    /**
+     * initializes a loginUI
+     * @param assem the AssemAssist central system you want to login to
+     */
     public LoginUI(AssemAssist assem) {
         if (assem == null)
             throw new IllegalArgumentException("provided assemAssist is null");
@@ -26,6 +33,10 @@ public class LoginUI {
         this.run(assem);
     }
 
+    /**
+     * Runs the main loop for logging in to a given AssemAssist
+     * @param assem the given AssemAssist
+     */
     private void run(AssemAssist assem) {
         while (true) {
             User user = login(assem);

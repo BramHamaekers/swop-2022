@@ -22,13 +22,17 @@ public class GarageHolderUI {
 
     private GarageHolder garageHolder;
 
+    /**
+     * Set this.garageHolder to the give garageHolder
+     * @param garageHolder the given garageHolder
+     */
     public void setGarageHolder(GarageHolder garageHolder){
         this.garageHolder = garageHolder;
     }
 
     /**
-     * order a new car
-     * @param gh the garage holder class to interact with the AssemAssist
+     * Start the main loop that interacts with the garageHolder
+     * @param gh the garage holder user to interact with the AssemAssist
      * @throws CancelException when a user wants to cancel his operation by typing "cancel"
      */
     public void run(GarageHolder gh) throws CancelException {
@@ -94,6 +98,12 @@ public class GarageHolderUI {
             }
     }
 
+    /**
+     * Method gets the input from the ordering form and converts it to a car configuration
+     * @param options The options on the ordering form
+     * @return carConfig: a configuration of options chosen for a car
+     * @throws CancelException when the user types 'cancel'
+     */
     private static Map<String, Integer> getOrderForm(SortedMap<String, List<String>> options) throws CancelException {
         Map<String,Integer> carConfig = new HashMap<>();
         for (var entry : options.entrySet()) {

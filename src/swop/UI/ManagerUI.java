@@ -12,6 +12,9 @@ import java.util.Map;
 
 import static swop.UI.UI.scanner;
 
+/**
+ * A cli class used to implement manager's UI
+ */
 public class ManagerUI {
 
     private final static ManagerGenerator managerGenerator = new ManagerGenerator();
@@ -20,10 +23,19 @@ public class ManagerUI {
 
     private Manager manager;
 
+    /**
+     * Set this.manager to the give Manager
+     * @param manager the given Manager
+     */
     public void setManager(Manager manager){
         this.manager = manager;
     }
 
+    /**
+     * Start the main loop that interacts with the Manager
+     * @param manager the Manager user to interact with the AssemAssist
+     * @throws CancelException when a user wants to cancel his operation by typing "cancel"
+     */
     public void run(Manager manager) throws CancelException {
         if (manager == null)
             throw new IllegalArgumentException("manager is null");
