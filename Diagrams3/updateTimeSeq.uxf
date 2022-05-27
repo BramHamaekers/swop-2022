@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.0.0">
-  <zoom_level>8</zoom_level>
+  <zoom_level>9</zoom_level>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>608</x>
-      <y>184</y>
-      <w>144</w>
-      <h>24</h>
+      <x>495</x>
+      <y>36</y>
+      <w>162</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>:CarManufacturingController</panel_attributes>
     <additional_attributes/>
@@ -15,10 +15,10 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>672</x>
-      <y>200</y>
-      <w>24</w>
-      <h>40</h>
+      <x>567</x>
+      <y>54</y>
+      <w>27</w>
+      <h>45</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;30.0</additional_attributes>
@@ -26,10 +26,10 @@
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>672</x>
-      <y>224</y>
-      <w>16</w>
-      <h>456</h>
+      <x>567</x>
+      <y>81</y>
+      <w>18</w>
+      <h>684</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -37,10 +37,10 @@
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>400</x>
-      <y>184</y>
-      <w>80</w>
-      <h>24</h>
+      <x>261</x>
+      <y>36</y>
+      <w>90</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>:Scheduler</panel_attributes>
     <additional_attributes/>
@@ -48,56 +48,32 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>432</x>
-      <y>200</y>
-      <w>24</w>
-      <h>192</h>
+      <x>297</x>
+      <y>54</y>
+      <w>27</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;220.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>432</x>
-      <y>376</y>
-      <w>16</w>
-      <h>96</h>
+      <x>297</x>
+      <y>315</y>
+      <w>18</w>
+      <h>108</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
   </element>
   <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>680</x>
-      <y>368</y>
-      <w>216</w>
-      <h>128</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-
-void updateScheduleTime(int)</panel_attributes>
-    <additional_attributes>10.0;140.0;70.0;140.0;70.0;10.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>680</x>
-      <y>480</y>
-      <w>264</w>
-      <h>208</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-
-void updateEstimatedCompletionTime()</panel_attributes>
-    <additional_attributes>10.0;240.0;70.0;240.0;70.0;10.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>296</x>
-      <y>184</y>
-      <w>80</w>
-      <h>24</h>
+      <x>144</x>
+      <y>36</y>
+      <w>90</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>:Car</panel_attributes>
     <additional_attributes/>
@@ -105,10 +81,10 @@ void updateEstimatedCompletionTime()</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>176</x>
-      <y>184</y>
-      <w>80</w>
-      <h>24</h>
+      <x>9</x>
+      <y>36</y>
+      <w>90</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>:WorkStation</panel_attributes>
     <additional_attributes/>
@@ -116,32 +92,32 @@ void updateEstimatedCompletionTime()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>328</x>
-      <y>200</y>
-      <w>24</w>
-      <h>64</h>
+      <x>180</x>
+      <y>54</y>
+      <w>27</w>
+      <h>126</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>208</x>
-      <y>200</y>
-      <w>24</w>
-      <h>392</h>
+      <x>45</x>
+      <y>54</y>
+      <w>27</w>
+      <h>603</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;470.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;650.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>328</x>
-      <y>512</y>
-      <w>16</w>
-      <h>32</h>
+      <x>180</x>
+      <y>567</y>
+      <w>18</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -149,10 +125,10 @@ void updateEstimatedCompletionTime()</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>288</x>
-      <y>504</y>
-      <w>408</w>
-      <h>48</h>
+      <x>135</x>
+      <y>450</y>
+      <w>459</w>
+      <h>162</h>
     </coordinates>
     <panel_attributes>loop</panel_attributes>
     <additional_attributes/>
@@ -160,10 +136,10 @@ void updateEstimatedCompletionTime()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>336</x>
-      <y>504</y>
-      <w>352</w>
-      <h>32</h>
+      <x>189</x>
+      <y>558</y>
+      <w>396</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 void setEstimatedCompletionTime(TimeStamp)</panel_attributes>
@@ -172,10 +148,10 @@ void setEstimatedCompletionTime(TimeStamp)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>336</x>
-      <y>520</y>
-      <w>352</w>
-      <h>32</h>
+      <x>189</x>
+      <y>576</y>
+      <w>396</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 return</panel_attributes>
@@ -184,10 +160,10 @@ return</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>208</x>
-      <y>576</y>
-      <w>16</w>
-      <h>48</h>
+      <x>45</x>
+      <y>639</y>
+      <w>18</w>
+      <h>54</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -195,10 +171,10 @@ return</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>216</x>
-      <y>592</y>
-      <w>472</w>
-      <h>32</h>
+      <x>54</x>
+      <y>657</y>
+      <w>531</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 return car</panel_attributes>
@@ -207,10 +183,10 @@ return car</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>216</x>
-      <y>576</y>
-      <w>472</w>
-      <h>32</h>
+      <x>54</x>
+      <y>639</y>
+      <w>531</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 Car getCar()</panel_attributes>
@@ -219,10 +195,10 @@ Car getCar()</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>168</x>
-      <y>568</y>
-      <w>528</w>
-      <h>96</h>
+      <x>18</x>
+      <y>630</y>
+      <w>576</w>
+      <h>108</h>
     </coordinates>
     <panel_attributes>loop</panel_attributes>
     <additional_attributes/>
@@ -230,10 +206,10 @@ Car getCar()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>336</x>
-      <y>616</y>
-      <w>352</w>
-      <h>32</h>
+      <x>189</x>
+      <y>684</y>
+      <w>396</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 void setEstimatedCompletionTime(TimeStamp)</panel_attributes>
@@ -242,10 +218,10 @@ void setEstimatedCompletionTime(TimeStamp)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>336</x>
-      <y>632</y>
-      <w>352</w>
-      <h>32</h>
+      <x>189</x>
+      <y>702</y>
+      <w>396</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 return</panel_attributes>
@@ -254,10 +230,10 @@ return</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>328</x>
-      <y>624</y>
-      <w>16</w>
-      <h>32</h>
+      <x>180</x>
+      <y>693</y>
+      <w>18</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -265,10 +241,10 @@ return</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>328</x>
-      <y>536</y>
-      <w>24</w>
-      <h>104</h>
+      <x>180</x>
+      <y>594</y>
+      <w>27</w>
+      <h>117</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
@@ -276,10 +252,10 @@ return</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>440</x>
-      <y>368</y>
-      <w>248</w>
-      <h>32</h>
+      <x>306</x>
+      <y>306</y>
+      <w>279</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 void addTime(minutes)</panel_attributes>
@@ -288,10 +264,10 @@ void addTime(minutes)</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>376</x>
-      <y>416</y>
-      <w>320</w>
-      <h>48</h>
+      <x>234</x>
+      <y>360</y>
+      <w>774</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>optional</panel_attributes>
     <additional_attributes/>
@@ -299,10 +275,10 @@ void addTime(minutes)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>440</x>
-      <y>416</y>
-      <w>248</w>
-      <h>32</h>
+      <x>306</x>
+      <y>360</y>
+      <w>279</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 void advanceDay()</panel_attributes>
@@ -311,10 +287,10 @@ void advanceDay()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>440</x>
-      <y>432</y>
-      <w>248</w>
-      <h>32</h>
+      <x>306</x>
+      <y>378</y>
+      <w>279</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 return</panel_attributes>
@@ -323,10 +299,10 @@ return</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>440</x>
-      <y>384</y>
-      <w>248</w>
-      <h>32</h>
+      <x>306</x>
+      <y>324</y>
+      <w>279</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 return</panel_attributes>
@@ -335,22 +311,22 @@ return</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>680</x>
-      <y>224</y>
-      <w>256</w>
-      <h>40</h>
+      <x>576</x>
+      <y>81</y>
+      <w>288</w>
+      <h>45</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 void setFinishedCarDeliveryTime(int, Car)</panel_attributes>
-    <additional_attributes>20.0;30.0;40.0;30.0;40.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;30.0;40.0;30.0;40.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>960</x>
-      <y>184</y>
-      <w>80</w>
-      <h>24</h>
+      <x>891</x>
+      <y>36</y>
+      <w>90</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>:Statistics</panel_attributes>
     <additional_attributes/>
@@ -358,10 +334,10 @@ void setFinishedCarDeliveryTime(int, Car)</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>328</x>
-      <y>248</y>
-      <w>16</w>
-      <h>40</h>
+      <x>180</x>
+      <y>162</y>
+      <w>18</w>
+      <h>45</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -369,21 +345,21 @@ void setFinishedCarDeliveryTime(int, Car)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>328</x>
-      <y>280</y>
-      <w>24</w>
-      <h>248</h>
+      <x>180</x>
+      <y>198</y>
+      <w>27</w>
+      <h>387</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;290.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;410.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>336</x>
-      <y>240</y>
-      <w>352</w>
-      <h>32</h>
+      <x>189</x>
+      <y>162</y>
+      <w>396</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 void setDeliveryTime(TimeStamp)</panel_attributes>
@@ -392,56 +368,22 @@ void setDeliveryTime(TimeStamp)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>336</x>
-      <y>256</y>
-      <w>352</w>
-      <h>32</h>
+      <x>189</x>
+      <y>180</y>
+      <w>396</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 return</panel_attributes>
     <additional_attributes>420.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>688</x>
-      <y>272</y>
-      <w>272</w>
-      <h>40</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-
-void setFinishedCarDeliveryTime(int, Car)</panel_attributes>
-    <additional_attributes>20.0;30.0;60.0;30.0;60.0;10.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>680</x>
-      <y>248</y>
-      <w>16</w>
-      <h>120</h>
-    </coordinates>
-    <panel_attributes/>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLGeneric</id>
-    <coordinates>
-      <x>688</x>
-      <y>296</y>
-      <w>16</w>
-      <h>64</h>
-    </coordinates>
-    <panel_attributes/>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLGeneric</id>
-    <coordinates>
-      <x>800</x>
-      <y>184</y>
-      <w>104</w>
-      <h>24</h>
+      <x>711</x>
+      <y>36</y>
+      <w>117</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>:StatisticsListener</panel_attributes>
     <additional_attributes/>
@@ -449,21 +391,21 @@ void setFinishedCarDeliveryTime(int, Car)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>840</x>
-      <y>200</y>
-      <w>24</w>
-      <h>112</h>
+      <x>756</x>
+      <y>54</y>
+      <w>27</w>
+      <h>189</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;190.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>840</x>
-      <y>296</y>
-      <w>16</w>
-      <h>64</h>
+      <x>756</x>
+      <y>225</y>
+      <w>18</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -471,33 +413,33 @@ void setFinishedCarDeliveryTime(int, Car)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>984</x>
-      <y>200</y>
-      <w>24</w>
-      <h>112</h>
+      <x>918</x>
+      <y>54</y>
+      <w>27</w>
+      <h>189</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;190.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>696</x>
-      <y>296</y>
-      <w>160</w>
-      <h>32</h>
+      <x>576</x>
+      <y>225</y>
+      <w>198</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 void updateDelay(Car)</panel_attributes>
-    <additional_attributes>10.0;20.0;180.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;200.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>848</x>
-      <y>304</y>
-      <w>152</w>
-      <h>32</h>
+      <x>765</x>
+      <y>234</y>
+      <w>171</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 void updateDelay(Car)</panel_attributes>
@@ -506,10 +448,10 @@ void updateDelay(Car)</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>984</x>
-      <y>296</y>
-      <w>16</w>
-      <h>56</h>
+      <x>918</x>
+      <y>225</y>
+      <w>18</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -517,22 +459,22 @@ void updateDelay(Car)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>992</x>
-      <y>312</y>
-      <w>216</w>
-      <h>40</h>
+      <x>927</x>
+      <y>243</y>
+      <w>315</w>
+      <h>45</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-void addTimeToDelayMap(int, int)</panel_attributes>
+void addTimeToDelayMap(int minutes, int day)</panel_attributes>
     <additional_attributes>10.0;30.0;40.0;30.0;40.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>848</x>
-      <y>328</y>
-      <w>152</w>
-      <h>32</h>
+      <x>765</x>
+      <y>261</y>
+      <w>171</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>lt=.&gt;
 return</panel_attributes>
@@ -541,13 +483,128 @@ return</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>696</x>
-      <y>336</y>
-      <w>160</w>
-      <h>32</h>
+      <x>576</x>
+      <y>270</y>
+      <w>198</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>lt=.&gt;
 return</panel_attributes>
-    <additional_attributes>180.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>200.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLFrame</id>
+    <coordinates>
+      <x>522</x>
+      <y>81</y>
+      <w>333</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>optional</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>297</x>
+      <y>126</y>
+      <w>18</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>297</x>
+      <y>153</y>
+      <w>27</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;180.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>306</x>
+      <y>117</y>
+      <w>279</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+int getDay(), int getMinutes()</panel_attributes>
+    <additional_attributes>10.0;20.0;290.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>306</x>
+      <y>135</y>
+      <w>279</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=.&gt;
+return day, minutes</panel_attributes>
+    <additional_attributes>10.0;20.0;290.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>576</x>
+      <y>387</y>
+      <w>405</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+void advanceAssemblyAndUpdateSchedular()</panel_attributes>
+    <additional_attributes>10.0;10.0;150.0;10.0;150.0;40.0;10.0;40.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>297</x>
+      <y>414</y>
+      <w>27</w>
+      <h>81</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>297</x>
+      <y>477</y>
+      <w>18</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>306</x>
+      <y>468</y>
+      <w>279</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+TimeStamp getEstimatedCompletionTime(Car)</panel_attributes>
+    <additional_attributes>10.0;20.0;290.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>306</x>
+      <y>495</y>
+      <w>279</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=.&gt;
+return timestamp</panel_attributes>
+    <additional_attributes>10.0;20.0;290.0;20.0</additional_attributes>
   </element>
 </diagram>

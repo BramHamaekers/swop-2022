@@ -4,8 +4,8 @@
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>351</x>
-      <y>144</y>
+      <x>342</x>
+      <y>180</y>
       <w>90</w>
       <h>27</h>
     </coordinates>
@@ -15,8 +15,8 @@
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>972</x>
-      <y>153</y>
+      <x>963</x>
+      <y>189</y>
       <w>108</w>
       <h>27</h>
     </coordinates>
@@ -26,8 +26,8 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>387</x>
-      <y>162</y>
+      <x>378</x>
+      <y>198</y>
       <w>27</w>
       <h>63</h>
     </coordinates>
@@ -37,8 +37,8 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1008</x>
-      <y>171</y>
+      <x>999</x>
+      <y>207</y>
       <w>27</w>
       <h>63</h>
     </coordinates>
@@ -48,10 +48,10 @@
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1008</x>
-      <y>216</y>
+      <x>999</x>
+      <y>252</y>
       <w>18</w>
-      <h>324</h>
+      <h>360</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -59,20 +59,20 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>396</x>
-      <y>198</y>
+      <x>387</x>
+      <y>234</y>
       <w>630</w>
       <h>36</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-Set&lt;CarOrder&gt; garageHolder.getOrders()</panel_attributes>
+Set&lt;CarOrder&gt; getOrders()</panel_attributes>
     <additional_attributes>680.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>396</x>
-      <y>225</y>
+      <x>387</x>
+      <y>261</y>
       <w>630</w>
       <h>36</h>
     </coordinates>
@@ -83,8 +83,8 @@ return orders</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>387</x>
-      <y>207</y>
+      <x>378</x>
+      <y>243</y>
       <w>18</w>
       <h>207</h>
     </coordinates>
@@ -94,32 +94,32 @@ return orders</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1017</x>
-      <y>243</y>
-      <w>459</w>
+      <x>1008</x>
+      <y>270</y>
+      <w>441</w>
       <h>45</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 1. void displayOrders(Set&lt;CarOrder&gt;)</panel_attributes>
-    <additional_attributes>10.0;10.0;250.0;10.0;250.0;30.0;10.0;30.0</additional_attributes>
+    <additional_attributes>10.0;10.0;230.0;10.0;230.0;30.0;10.0;30.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1017</x>
-      <y>315</y>
-      <w>387</w>
+      <x>1008</x>
+      <y>351</y>
+      <w>360</w>
       <h>45</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 void checkOrderDetails()</panel_attributes>
-    <additional_attributes>10.0;30.0;260.0;30.0;260.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;30.0;230.0;30.0;230.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>900</x>
-      <y>279</y>
+      <x>891</x>
+      <y>306</y>
       <w>378</w>
       <h>36</h>
     </coordinates>
@@ -129,20 +129,20 @@ void checkOrderDetails()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1017</x>
-      <y>279</y>
+      <x>1008</x>
+      <y>306</y>
       <w>342</w>
-      <h>36</h>
+      <h>45</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 1a. CancelException</panel_attributes>
-    <additional_attributes>10.0;20.0;230.0;20.0;230.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;30.0;230.0;30.0;230.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>1008</x>
-      <y>288</y>
+      <x>999</x>
+      <y>324</y>
       <w>18</w>
       <h>18</h>
     </coordinates>
@@ -152,8 +152,8 @@ void checkOrderDetails()</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>945</x>
-      <y>378</y>
+      <x>936</x>
+      <y>414</y>
       <w>450</w>
       <h>45</h>
     </coordinates>
@@ -163,20 +163,20 @@ void checkOrderDetails()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>387</x>
-      <y>351</y>
-      <w>630</w>
+      <x>378</x>
+      <y>387</y>
+      <w>639</w>
       <h>36</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-Set&lt;CarOrder&gt; garageHolder.getOrders()</panel_attributes>
-    <additional_attributes>680.0;20.0;10.0;20.0</additional_attributes>
+Set&lt;CarOrder&gt; getOrders()</panel_attributes>
+    <additional_attributes>690.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>396</x>
-      <y>369</y>
+      <x>387</x>
+      <y>405</y>
       <w>630</w>
       <h>36</h>
     </coordinates>
@@ -187,60 +187,84 @@ return orders</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>306</x>
-      <y>351</y>
-      <w>1161</w>
-      <h>225</h>
+      <x>288</x>
+      <y>387</y>
+      <w>1188</w>
+      <h>234</h>
     </coordinates>
-    <panel_attributes>loop</panel_attributes>
+    <panel_attributes>optional loop 4a</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1017</x>
-      <y>378</y>
-      <w>459</w>
+      <x>1008</x>
+      <y>414</y>
+      <w>441</w>
       <h>45</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 1. void displayOrders(Set&lt;CarOrder&gt;)</panel_attributes>
-    <additional_attributes>10.0;10.0;250.0;10.0;250.0;30.0;10.0;30.0</additional_attributes>
+    <additional_attributes>10.0;10.0;230.0;10.0;230.0;30.0;10.0;30.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1017</x>
-      <y>423</y>
-      <w>270</w>
+      <x>1008</x>
+      <y>468</y>
+      <w>360</w>
       <h>45</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 2. String selectOrderID()</panel_attributes>
-    <additional_attributes>10.0;30.0;130.0;30.0;130.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;30.0;230.0;30.0;230.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1017</x>
-      <y>450</y>
-      <w>414</w>
+      <x>1008</x>
+      <y>495</y>
+      <w>549</w>
       <h>45</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-CarOrder getOrderFromID(Set&lt;CarOrder&gt;, String)</panel_attributes>
-    <additional_attributes>10.0;30.0;130.0;30.0;130.0;10.0;10.0;10.0</additional_attributes>
+CarOrder getOrderFromID(Set&lt;CarOrder&gt;, String orderid)</panel_attributes>
+    <additional_attributes>10.0;30.0;230.0;30.0;230.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1017</x>
-      <y>486</y>
-      <w>306</w>
+      <x>1008</x>
+      <y>522</y>
+      <w>477</w>
       <h>45</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-void showOrderDetails(String)</panel_attributes>
-    <additional_attributes>10.0;30.0;130.0;30.0;130.0;10.0;10.0;10.0</additional_attributes>
+3. void showOrderDetails(String orderDetails)</panel_attributes>
+    <additional_attributes>10.0;30.0;230.0;30.0;230.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1008</x>
+      <y>549</y>
+      <w>468</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+4. String UI.indicateYesNo(String question)</panel_attributes>
+    <additional_attributes>10.0;30.0;230.0;30.0;230.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1008</x>
+      <y>576</y>
+      <w>468</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+4a. String UI.indicateYesNo(String question)</panel_attributes>
+    <additional_attributes>10.0;30.0;230.0;30.0;230.0;10.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>
