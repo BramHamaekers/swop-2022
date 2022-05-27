@@ -56,8 +56,12 @@ public class Scheduler {
         this.workingDayMinutes = 960; // 06:00 -> 22:00
         this.setSchedulingAlgorithm("FIFO", null);
     }
-    
-    public int getWorkingDayMinutes() {
+
+	/**
+	 * Get the working day minutes -> the total number of minutes the factory can work on a car this day
+	 * @return int of the minutes in this day
+	 */
+	public int getWorkingDayMinutes() {
     	return this.workingDayMinutes;
     }
 
