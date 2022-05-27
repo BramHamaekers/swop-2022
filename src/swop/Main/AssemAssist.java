@@ -30,9 +30,6 @@ public class AssemAssist {
 		this.userDatabase.put("b", new CarMechanic("b", this));
 		this.userDatabase.put("c", new Manager("c", this));
     }
-	public void run(){
-
-	}
 
 	/**
 	 * getter for carcontroller

@@ -26,8 +26,8 @@ public class Statistics {
     }
 
     /**
-     * returns a array with in [0] the finished day and on [1] the total delay in minutes
-     * @param car
+     * returns an array with in [0] the finished day and on [1] the total delay in minutes of a given car
+     * @param car The car where we want the data from
      * @return int[] {finishedDay, delayMinutes}
      */
     private int[] getDayAndDelayMinutesCar(Car car) {

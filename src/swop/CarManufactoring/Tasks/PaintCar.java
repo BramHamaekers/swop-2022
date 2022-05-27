@@ -4,11 +4,11 @@ import swop.CarManufactoring.Task;
 
 public class PaintCar extends Task {
 
+    /**
+     * Initializes a PaintCar task
+     * @param chosenOption
+     */
     public PaintCar(String chosenOption) {
-        if (chosenOption == null)
-            throw new IllegalArgumentException("Not a valid option for the color");
-        this.name = "Paint Car";
-        this.description = "Paint the body in colour: ";
-        this.chosenOption = chosenOption;
+        super("Paint Car", "Paint the body in colour: ", chosenOption);
     }
 }

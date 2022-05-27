@@ -1,15 +1,32 @@
 package swop.CarManufactoring;
 
+/**
+ * The superclass Task implements common methods for the specific tasks
+ */
 public abstract class Task implements Cloneable {
     protected String name;
     protected String description;
     protected String chosenOption;
     protected boolean isComplete = false;
 
+    public Task(String name, String description, String chosenOption) {
+        if (description == null)
+            throw new IllegalArgumentException("Null string provided");
+        if (name == null)
+            throw new IllegalArgumentException("Null string provided");
+        if (chosenOption == null)
+            throw new IllegalArgumentException("Null string provided");
+        this.name = name;
+        this.description = description;
+        this.chosenOption = chosenOption;
+    }
+
     /**
      * Set this.isComplete equal to true.
      */
     public void complete() {
+        if (this.isComplete)
+            throw new IllegalStateException("Task is already finished");
         this.isComplete = true;
     }
 
