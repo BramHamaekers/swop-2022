@@ -4,8 +4,8 @@
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>656</x>
-      <y>72</y>
+      <x>608</x>
+      <y>184</y>
       <w>144</w>
       <h>24</h>
     </coordinates>
@@ -15,21 +15,21 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>720</x>
-      <y>88</y>
+      <x>672</x>
+      <y>200</y>
       <w>24</w>
-      <h>64</h>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;30.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>720</x>
-      <y>136</y>
+      <x>672</x>
+      <y>224</y>
       <w>16</w>
-      <h>472</h>
+      <h>456</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -37,8 +37,8 @@
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>448</x>
-      <y>72</y>
+      <x>400</x>
+      <y>184</y>
       <w>80</w>
       <h>24</h>
     </coordinates>
@@ -48,21 +48,21 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>480</x>
-      <y>88</y>
+      <x>432</x>
+      <y>200</y>
       <w>24</w>
-      <h>64</h>
+      <h>192</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;220.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>480</x>
-      <y>136</y>
+      <x>432</x>
+      <y>376</y>
       <w>16</w>
-      <h>112</h>
+      <h>96</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -70,8 +70,8 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>728</x>
-      <y>144</y>
+      <x>680</x>
+      <y>368</y>
       <w>216</w>
       <h>128</h>
     </coordinates>
@@ -82,20 +82,20 @@ void updateScheduleTime(int)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>728</x>
-      <y>264</y>
+      <x>680</x>
+      <y>480</y>
       <w>264</w>
-      <h>200</h>
+      <h>208</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 void updateEstimatedCompletionTime()</panel_attributes>
-    <additional_attributes>10.0;230.0;70.0;230.0;70.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;240.0;70.0;240.0;70.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>344</x>
-      <y>72</y>
+      <x>296</x>
+      <y>184</y>
       <w>80</w>
       <h>24</h>
     </coordinates>
@@ -105,8 +105,8 @@ void updateEstimatedCompletionTime()</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>224</x>
-      <y>72</y>
+      <x>176</x>
+      <y>184</y>
       <w>80</w>
       <h>24</h>
     </coordinates>
@@ -116,30 +116,30 @@ void updateEstimatedCompletionTime()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>376</x>
-      <y>88</y>
+      <x>328</x>
+      <y>200</y>
       <w>24</w>
-      <h>216</h>
+      <h>64</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;250.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>256</x>
-      <y>88</y>
+      <x>208</x>
+      <y>200</y>
       <w>24</w>
-      <h>280</h>
+      <h>392</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;330.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;470.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>376</x>
-      <y>288</y>
+      <x>328</x>
+      <y>512</y>
       <w>16</w>
       <h>32</h>
     </coordinates>
@@ -149,8 +149,8 @@ void updateEstimatedCompletionTime()</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>336</x>
-      <y>280</y>
+      <x>288</x>
+      <y>504</y>
       <w>408</w>
       <h>48</h>
     </coordinates>
@@ -160,8 +160,8 @@ void updateEstimatedCompletionTime()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>384</x>
-      <y>280</y>
+      <x>336</x>
+      <y>504</y>
       <w>352</w>
       <h>32</h>
     </coordinates>
@@ -172,8 +172,8 @@ void setEstimatedCompletionTime(TimeStamp)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>384</x>
-      <y>296</y>
+      <x>336</x>
+      <y>520</y>
       <w>352</w>
       <h>32</h>
     </coordinates>
@@ -184,8 +184,8 @@ return</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>256</x>
-      <y>352</y>
+      <x>208</x>
+      <y>576</y>
       <w>16</w>
       <h>48</h>
     </coordinates>
@@ -195,8 +195,8 @@ return</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>264</x>
-      <y>368</y>
+      <x>216</x>
+      <y>592</y>
       <w>472</w>
       <h>32</h>
     </coordinates>
@@ -207,8 +207,8 @@ return car</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>264</x>
-      <y>352</y>
+      <x>216</x>
+      <y>576</y>
       <w>472</w>
       <h>32</h>
     </coordinates>
@@ -219,8 +219,8 @@ Car getCar()</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>216</x>
-      <y>344</y>
+      <x>168</x>
+      <y>568</y>
       <w>528</w>
       <h>96</h>
     </coordinates>
@@ -230,8 +230,8 @@ Car getCar()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>384</x>
-      <y>392</y>
+      <x>336</x>
+      <y>616</y>
       <w>352</w>
       <h>32</h>
     </coordinates>
@@ -242,8 +242,8 @@ void setEstimatedCompletionTime(TimeStamp)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>384</x>
-      <y>408</y>
+      <x>336</x>
+      <y>632</y>
       <w>352</w>
       <h>32</h>
     </coordinates>
@@ -254,8 +254,8 @@ return</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>376</x>
-      <y>400</y>
+      <x>328</x>
+      <y>624</y>
       <w>16</w>
       <h>32</h>
     </coordinates>
@@ -265,8 +265,8 @@ return</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>376</x>
-      <y>312</y>
+      <x>328</x>
+      <y>536</y>
       <w>24</w>
       <h>104</h>
     </coordinates>
@@ -276,8 +276,8 @@ return</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>488</x>
-      <y>144</y>
+      <x>440</x>
+      <y>368</y>
       <w>248</w>
       <h>32</h>
     </coordinates>
@@ -288,8 +288,8 @@ void addTime(minutes)</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>424</x>
-      <y>192</y>
+      <x>376</x>
+      <y>416</y>
       <w>320</w>
       <h>48</h>
     </coordinates>
@@ -299,8 +299,8 @@ void addTime(minutes)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>488</x>
-      <y>192</y>
+      <x>440</x>
+      <y>416</y>
       <w>248</w>
       <h>32</h>
     </coordinates>
@@ -311,8 +311,8 @@ void advanceDay()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>488</x>
-      <y>208</y>
+      <x>440</x>
+      <y>432</y>
       <w>248</w>
       <h>32</h>
     </coordinates>
@@ -323,13 +323,231 @@ return</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>488</x>
-      <y>160</y>
+      <x>440</x>
+      <y>384</y>
       <w>248</w>
       <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 return</panel_attributes>
     <additional_attributes>290.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>680</x>
+      <y>224</y>
+      <w>256</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+void setFinishedCarDeliveryTime(int, Car)</panel_attributes>
+    <additional_attributes>20.0;30.0;40.0;30.0;40.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>960</x>
+      <y>184</y>
+      <w>80</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>:Statistics</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>328</x>
+      <y>248</y>
+      <w>16</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>328</x>
+      <y>280</y>
+      <w>24</w>
+      <h>248</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;290.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>336</x>
+      <y>240</y>
+      <w>352</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+void setDeliveryTime(TimeStamp)</panel_attributes>
+    <additional_attributes>10.0;20.0;420.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>336</x>
+      <y>256</y>
+      <w>352</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+return</panel_attributes>
+    <additional_attributes>420.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>688</x>
+      <y>272</y>
+      <w>272</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+void setFinishedCarDeliveryTime(int, Car)</panel_attributes>
+    <additional_attributes>20.0;30.0;60.0;30.0;60.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>680</x>
+      <y>248</y>
+      <w>16</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>688</x>
+      <y>296</y>
+      <w>16</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>800</x>
+      <y>184</y>
+      <w>104</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>:StatisticsListener</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>840</x>
+      <y>200</y>
+      <w>24</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>840</x>
+      <y>296</y>
+      <w>16</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>984</x>
+      <y>200</y>
+      <w>24</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>696</x>
+      <y>296</y>
+      <w>160</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+void updateDelay(Car)</panel_attributes>
+    <additional_attributes>10.0;20.0;180.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>848</x>
+      <y>304</y>
+      <w>152</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+void updateDelay(Car)</panel_attributes>
+    <additional_attributes>10.0;20.0;170.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>984</x>
+      <y>296</y>
+      <w>16</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>992</x>
+      <y>312</y>
+      <w>216</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+void addTimeToDelayMap(int, int)</panel_attributes>
+    <additional_attributes>10.0;30.0;40.0;30.0;40.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>848</x>
+      <y>328</y>
+      <w>152</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=.&gt;
+return</panel_attributes>
+    <additional_attributes>170.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>696</x>
+      <y>336</y>
+      <w>160</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=.&gt;
+return</panel_attributes>
+    <additional_attributes>180.0;20.0;10.0;20.0</additional_attributes>
   </element>
 </diagram>
