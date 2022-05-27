@@ -4,7 +4,13 @@ package swop.UI.Builders;
  * A class to implement the {@code FormBuilder} for our cli interface
  */
 public class DisplayStatus implements FormBuilder {
-    int titlelength = 0;
+    /**
+     * The length that the title has when displaying a title
+     */
+    int titleLength = 0;
+    /**
+     * The StringBuilder used in displaying information.
+     */
     StringBuilder builder = new StringBuilder();
 
     /**
@@ -47,7 +53,7 @@ public class DisplayStatus implements FormBuilder {
     public void appendTitle(String title){
         String str = String.format("============ %s ============",title);
         println(str);
-        this.titlelength = str.length();
+        this.titleLength = str.length();
     }
 
     @Override
@@ -57,7 +63,7 @@ public class DisplayStatus implements FormBuilder {
 
     @Override
     public void endInfo() {
-        for(int i = 0; i< (this.titlelength-1); i++){
+        for(int i = 0; i< (this.titleLength -1); i++){
             print("=");
         }
         println("=");

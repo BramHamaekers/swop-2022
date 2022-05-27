@@ -10,8 +10,14 @@ import java.util.Map.Entry;
 /**
  * A class containing all delays and orders for a controller
  */
-public class Statistics { 
+public class Statistics {
+    /**
+     * A Map that maps the all the delays of a day to an integer associated with that day
+     */
     private final Map<Integer, List<Integer>> carDelayMap = new HashMap<>();
+    /**
+     * A listener used for listening to the CarManufacturingController for when a car is finished
+     */
     public final StatisticsListener statisticsListener = this::updateDelay;
 
     /**

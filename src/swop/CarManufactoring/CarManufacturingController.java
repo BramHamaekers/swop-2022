@@ -13,10 +13,25 @@ import swop.Miscellaneous.TimeStamp;
  * A controller class which handles most of the operations fe. advancing the assembly line
  */
 public class CarManufacturingController {
+	/**
+	 * The Queue of cars still waiting to be placed on the assemblyLine
+	 */
 	private final LinkedList<Car> carQueue;
+	/**
+	 * The assemblyLine associated with this CarManufacturingController
+	 */
 	private final AssemblyLine assemblyLine;
+	/**
+	 * The scheduler associated with this CarManufacturingController
+	 */
 	private final Scheduler scheduler;
+	/**
+	 * A list of listeners from the StatisticsClass that listen to this CarManufacturingController for its information
+	 */
 	private final List<StatisticsListener> statisticsListeners = new ArrayList<>();
+	/**
+	 * A listener used for listening to workstations for when a task was completed at that workstation
+	 */
 	private final TaskCompletedListener taskCompletedListener = () -> {
 				try {advanceAssemblyAndUpdateSchedular();}
 				catch (NotAllTasksCompleteException ignored) {}

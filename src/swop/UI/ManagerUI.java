@@ -16,11 +16,19 @@ import static swop.UI.UI.scanner;
  * A cli class used to implement manager's UI
  */
 public class ManagerUI {
-
+    /**
+     * The generator used in displaying information to the user
+     */
     private final static ManagerGenerator managerGenerator = new ManagerGenerator();
 
+    /**
+     * A list of all actions a Manager can perform
+     */
     private final static List<String> actions = List.of("Check Production Statistics", "Adapt Scheduling Algorithm", "Exit");
 
+    /**
+     * A Manager associated with this CarMechanicUI
+     */
     private Manager manager;
 
     /**

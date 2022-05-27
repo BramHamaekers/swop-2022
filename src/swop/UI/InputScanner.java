@@ -8,6 +8,9 @@ import swop.Exceptions.CancelException;
  * A class used to scan and get the user input
  */
 public class InputScanner {
+	/**
+	 * The scanner used for scanning input by a user
+	 */
 	Scanner inputScanner;
 
 	/**
